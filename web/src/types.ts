@@ -77,3 +77,13 @@ export interface FireEvent {
   official?: boolean
   t?: number // minutes since t0, filled on load
 }
+
+// [minutes since t0, title, outlet, url, region indexes]
+export type Article = [number, string, string, string, number[]]
+
+export interface NewsData {
+  regions: string[]
+  hourly: [number, number][]
+  articles: Article[]
+  meta: { count: number; source: string }
+}

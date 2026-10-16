@@ -1,9 +1,10 @@
 import { useEffect, useMemo, useRef, useState } from 'react'
-import type { FireData, FireEvent } from './types'
+import type { FireData, FireEvent, NewsData } from './types'
 import { T_MAX, T_MIN, eventLabel, fmt, hourIndex } from './time'
 
 interface Props {
   data: FireData
+  news: NewsData | null
   events: FireEvent[]
   t: number
   onSeek: (t: number) => void
@@ -25,7 +26,7 @@ function useWidth<T extends HTMLElement>() {
   return [ref, w] as const
 }
 
-export default function Timeline({ data, events, t, onSeek, onSelectEvent }: Props) {
+export default function Timeline({ data, news, events, t, onSeek, onSelectEvent }: Props) {
   const [ref, width] = useWidth<HTMLDivElement>()
   const [hover, setHover] = useState<number | null>(null)
   const dragging = useRef(false)
@@ -84,7 +85,10 @@ export default function Timeline({ data, events, t, onSeek, onSelectEvent }: Pro
     return inv(e.clientX - r.left)
   }
 
-  const totalH = 26 + ROW_H * 4 + 22
+  const newsHourly = news?.hourly.filter(([m]) => m >= T_MIN && m < T_MAX) ?? []
+  const maxNews = Math.max(1, ...newsHourly.map(([, n]) => n))
+  const curNews = newsHourly.find(([m]) => m <= hv && hv < m + 60)?.[1] ?? 0
+  const totalH = 26 + ROW_H * 5 + 22
   const rowY = (i: number) => 26 + i * ROW_H
 
   return (
@@ -205,6 +209,20 @@ export default function Timeline({ data, events, t, onSeek, onSelectEvent }: Pro
             30%
           </text>
           <path d={rows.rh} className="rh-line" />
+        </g>
+
+        {/* row 5: press volume */}
+        <g transform={`translate(0,${rowY(4)})`}>
+          <text x={8} y={18} className="row-label">
+            보도량 (시간당)
+          </text>
+          <text x={8} y={36} className="row-value">
+            {news ? `${curNews}건` : '–'}
+          </text>
+          {newsHourly.map(([m, n]) => {
+            const h = (n / maxNews) * (ROW_H - 18)
+            return <rect key={m} x={x(m)} width={Math.max(1, x(m + 60) - x(m) - 0.5)} y={ROW_H - 8 - h} height={h} className="news-bar" />
+          })}
         </g>
 
         {/* hover crosshair */}

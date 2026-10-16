@@ -1,7 +1,7 @@
 import { useEffect, useMemo, useRef, useState } from 'react'
 import MapView, { type Layers } from './MapView'
 import Timeline from './Timeline'
-import type { FireData, FireEvent } from './types'
+import type { FireData, FireEvent, NewsData } from './types'
 import { ACTIVE_WINDOW, T_MAX, T_MIN, compass, eventLabel, fmt, hourIndex, toMinutes } from './time'
 import './App.css'
 
@@ -10,10 +10,11 @@ const SPEEDS = [60, 180, 360] // simulated minutes per second
 export default function App() {
   const [data, setData] = useState<FireData | null>(null)
   const [events, setEvents] = useState<FireEvent[]>([])
+  const [news, setNews] = useState<NewsData | null>(null)
   const [t, setT] = useState(T_MIN + 13 * 60)
   const [playing, setPlaying] = useState(false)
   const [speed, setSpeed] = useState(1)
-  const [tab, setTab] = useState<'overview' | 'events' | 'sources'>('overview')
+  const [tab, setTab] = useState<'overview' | 'events' | 'news' | 'sources'>('overview')
   const [selected, setSelected] = useState<string | null>(null)
   const [layers, setLayers] = useState<Layers>({ stations: true, burned: true, active: true, wind: true, events: true, terrain: true })
 
@@ -28,6 +29,10 @@ export default function App() {
       .then((r) => (r.ok ? r.json() : []))
       .then((list: FireEvent[]) => setEvents(list.map((e) => ({ ...e, t: toMinutes(e.time) })).sort((a, b) => a.t! - b.t!)))
       .catch(() => setEvents([]))
+    fetch('data/news.json')
+      .then((r) => (r.ok ? r.json() : null))
+      .then(setNews)
+      .catch(() => setNews(null))
   }, [])
 
   // playback
@@ -81,6 +86,7 @@ export default function App() {
   const sel = events.find((e) => e.id === selected)
   const officialStats = events.filter((e) => e.type === 'official_stat')
   const seen = events.filter((e) => (e.t ?? 0) <= tm)
+  const recentNews = news ? news.articles.filter((a) => a[0] <= tm && a[0] > tm - 60).reverse() : []
 
   const selectEvent = (id: string) => {
     const e = events.find((x) => x.id === id)
@@ -114,7 +120,7 @@ export default function App() {
               <i className="sw wind">➜</i> 바람 (ERA5 재분석, 길이·진하기 = 풍속)
             </div>
             <div>
-              <i className="sw stn" /> 기상청 관측소 (시간 풍속·습도)
+              <i className="sw stn-key" /> 기상청 관측소 (시간 풍속·습도)
             </div>
             <div>
               <i className="sw origin" /> 첫 위성 탐지 지점
@@ -157,6 +163,7 @@ export default function App() {
               [
                 ['overview', '개요'],
                 ['events', `기록 ${events.length ? `(${seen.length}/${events.length})` : ''}`],
+                ['news', `보도 ${news ? `(${recentNews.length})` : ''}`],
                 ['sources', '출처'],
               ] as const
             ).map(([k, label]) => (
@@ -280,6 +287,32 @@ export default function App() {
             </div>
           )}
 
+          {tab === 'news' && (
+            <div className="pane">
+              <p className="note top">
+                {fmt(tm - 60)} ~ {fmt(tm, false)} 사이 발행된 기사 {recentNews.length}건
+              </p>
+              <ol className="news-list">
+                {recentNews.slice(0, 80).map((a) => (
+                  <li key={a[3]}>
+                    <a href={a[3]} target="_blank" rel="noreferrer">
+                      {a[1]}
+                    </a>
+                    <div className="news-meta">
+                      {fmt(a[0], false)} · {a[2]}
+                      {a[4].map((r) => (
+                        <span key={r} className="chip">
+                          {news!.regions[r]}
+                        </span>
+                      ))}
+                    </div>
+                  </li>
+                ))}
+              </ol>
+              {recentNews.length > 80 && <p className="note">외 {recentNews.length - 80}건</p>}
+            </div>
+          )}
+
           {tab === 'sources' && (
             <div className="pane sources">
               <h3>데이터</h3>
@@ -295,6 +328,9 @@ export default function App() {
                 </li>
                 <li>
                   <b>AWS Terrain Tiles</b> 고도 (3D 지형) · <b>Esri</b> 위성영상
+                </li>
+                <li>
+                  <b>네이버 뉴스 검색 API</b> {news ? `${news.meta.count.toLocaleString()}건` : ''} (지역×주제 48개 검색어, 관련도순 상위 1,000건씩, 발행 3/22~31). 전수가 아닌 표본입니다.
                 </li>
                 <li>
                   <b>언론·정부 발표</b> 원문 링크와 인용문 포함, 공식 기록은 파란 점
@@ -330,7 +366,7 @@ export default function App() {
             +1h
           </button>
         </div>
-        <Timeline data={data} events={events} t={tm} onSeek={setT} onSelectEvent={selectEvent} />
+        <Timeline data={data} news={news} events={events} t={tm} onSeek={setT} onSelectEvent={selectEvent} />
       </footer>
     </div>
   )
