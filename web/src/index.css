@@ -1,0 +1,10 @@
+@import url('https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable.min.css');
+:root {
+  --bg: #f4f1ec; --surface: #fbfaf7; --ink: #1d1a16; --ink-2: #5b554c; --ink-3: #8f877b;
+  --line: #e2ddd4; --fire: #e8551b; --fire-dark: #8a2a0c; --wind: #2f7fc8; --rh: #2a8f86; --event: #1f4fd1;
+  font-family: 'Pretendard Variable', Pretendard, -apple-system, 'Apple SD Gothic Neo', sans-serif;
+  color: var(--ink); background: var(--bg);
+}
+* { box-sizing: border-box; }
+html, body, #root { margin: 0; height: 100%; }
+button { font: inherit; cursor: pointer; }
