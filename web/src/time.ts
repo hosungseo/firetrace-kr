@@ -19,3 +19,12 @@ export const compass = (deg: number) =>
   ['북', '북북동', '북동', '동북동', '동', '동남동', '남동', '남남동', '남', '남남서', '남서', '서남서', '서', '서북서', '북서', '북북서'][
     Math.round(deg / 22.5) % 16
   ]
+
+// Event label from the ISO string itself, honoring the reported precision.
+export function eventLabel(iso: string, precision?: string) {
+  const [, mo, d, hh, mm] = iso.match(/^\d{4}-(\d{2})-(\d{2})T(\d{2}):(\d{2})/) ?? []
+  const day = `${Number(mo)}월 ${Number(d)}일`
+  if (precision === 'day') return day
+  if (precision === 'hour') return `${day} ${hh}시경`
+  return `${day} ${hh}:${mm}`
+}

@@ -6,6 +6,7 @@ import type { FireData, FireEvent } from './types'
 import { ACTIVE_WINDOW, hourIndex } from './time'
 
 export interface Layers {
+  stations: boolean
   burned: boolean
   active: boolean
   wind: boolean
@@ -88,6 +89,7 @@ export default function MapView({ data, events, t, layers, selected, onSelectEve
   const el = useRef<HTMLDivElement>(null)
   const mapRef = useRef<maplibregl.Map | null>(null)
   const ready = useRef(false)
+  const stationEls = useRef<HTMLDivElement[]>([])
   const latest = useRef({ t, layers, events, selected })
   latest.current = { t, layers, events, selected }
 
@@ -206,6 +208,13 @@ export default function MapView({ data, events, t, layers, selected, onSelectEve
       map.on('mouseenter', 'events', () => (map.getCanvas().style.cursor = 'pointer'))
       map.on('mouseleave', 'events', () => (map.getCanvas().style.cursor = ''))
 
+      stationEls.current = data.stations.map((st) => {
+        const div = document.createElement('div')
+        div.className = 'stn'
+        new maplibregl.Marker({ element: div, anchor: 'left', offset: [-7, 0] }).setLngLat([st.lon, st.lat]).addTo(map)
+        return div
+      })
+
       ready.current = true
       apply(map)
     })
@@ -230,6 +239,18 @@ export default function MapView({ data, events, t, layers, selected, onSelectEve
     map.setLayoutProperty('active-glow', 'visibility', vis(layers.active))
     map.setLayoutProperty('wind', 'visibility', vis(layers.wind))
     map.setLayoutProperty('events', 'visibility', vis(layers.events))
+    const hi = hourIndex(t)
+    data.stations.forEach((st, k) => {
+      const el = stationEls.current[k]
+      if (!el) return
+      const ws = st.ws[hi]
+      const wd = st.wd[hi]
+      el.style.display = layers.stations ? '' : 'none'
+      el.innerHTML =
+        `<i class="stn-dot"></i><span class="stn-arrow" style="transform:rotate(${((wd ?? 0) + 180) % 360}deg);opacity:${ws ? 1 : 0.2}">↑</span>` +
+        `<b>${st.name}</b> ${ws != null ? ws.toFixed(1) : '–'}<small>m/s</small> · ${st.rh[hi] ?? '–'}%`
+      el.classList.toggle('strong', (ws ?? 0) >= 6)
+    })
     map.setTerrain(layers.terrain ? { source: 'dem', exaggeration: 1.6 } : null)
   }
 

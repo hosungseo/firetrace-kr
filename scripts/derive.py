@@ -84,8 +84,30 @@ for i, hm in enumerate(hours):
     front.append({"t": hm, "ws": g["ws"][i], "gust": g["gust"][i], "wd": g["wd"][i], "rh": g["rh"][i],
                   "temp": g["temp"][i], "rain": g["rain"][i], "lat": g["lat"], "lon": g["lon"]})
 
+
+# 4) KMA ASOS station observations (hourly + daily max instantaneous wind)
+STN_POS = {"278": (128.6886, 36.3561), "136": (128.7073, 36.5729), "276": (129.0400, 36.4351),
+           "277": (129.4093, 36.5333), "271": (128.9145, 36.9436), "138": (129.3800, 36.0326)}  # approx.
+num = lambda v: None if v in ("", None) else float(v)
+kma = json.load(open("data/raw/kma_asos.json"))
+stations = []
+for stn, name in kma["stations"].items():
+    hrs = kma["hourly"][stn]
+    gusts = []
+    for d in kma["daily"][stn]:
+        hm = d.get("maxInsWsHrmt", "")
+        if d.get("maxInsWs") and len(hm) == 4:
+            tm = datetime.fromisoformat(d["tm"]).replace(hour=int(hm[:2]), minute=int(hm[2:]), tzinfo=KST)
+            gusts.append({"t": round((tm - T0).total_seconds() / 60), "v": float(d["maxInsWs"]),
+                          "wd": num(d.get("maxInsWsWd")), "min_rh": num(d.get("minRhm"))})
+    stations.append({"id": int(stn), "name": name, "lon": STN_POS[stn][0], "lat": STN_POS[stn][1],
+                     "ws": [num(h["ws"]) for h in hrs], "wd": [num(h["wd"]) for h in hrs],
+                     "rh": [num(h["hm"]) for h in hrs], "ta": [num(h["ta"]) for h in hrs],
+                     "rn": [num(h["rn"]) for h in hrs], "daily_gust": gusts})
+
 out = {"t0": T0.isoformat(), "hotspots": hotspots, "area": series,
        "weather": {"hours": hours, "grid": grid, "front": front},
+       "stations": stations,
        "meta": {"first_detection": {"lon": first[0], "lat": first[1], "t": first[2]},
                 "hotspot_count": len(hotspots), "cell_km2": CELL_KM2}}
 for p in ("data/derived/fire.json", "web/public/data/fire.json"):

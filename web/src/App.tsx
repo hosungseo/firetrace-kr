@@ -2,7 +2,7 @@ import { useEffect, useMemo, useRef, useState } from 'react'
 import MapView, { type Layers } from './MapView'
 import Timeline from './Timeline'
 import type { FireData, FireEvent } from './types'
-import { ACTIVE_WINDOW, T_MAX, T_MIN, compass, fmt, hourIndex, toMinutes } from './time'
+import { ACTIVE_WINDOW, T_MAX, T_MIN, compass, eventLabel, fmt, hourIndex, toMinutes } from './time'
 import './App.css'
 
 const SPEEDS = [60, 180, 360] // simulated minutes per second
@@ -15,7 +15,7 @@ export default function App() {
   const [speed, setSpeed] = useState(1)
   const [tab, setTab] = useState<'overview' | 'events' | 'sources'>('overview')
   const [selected, setSelected] = useState<string | null>(null)
-  const [layers, setLayers] = useState<Layers>({ burned: true, active: true, wind: true, events: true, terrain: true })
+  const [layers, setLayers] = useState<Layers>({ stations: true, burned: true, active: true, wind: true, events: true, terrain: true })
 
   useEffect(() => {
     fetch('data/fire.json')
@@ -64,7 +64,12 @@ export default function App() {
     const peakFrom = data.area[peakIdx - 1]?.t ?? peak.t
     const gust = data.weather.front.filter((f) => f.t >= T_MIN && f.t <= T_MAX).reduce((a, b) => (b.gust > a.gust ? b : a))
     const minRh = data.weather.front.filter((f) => f.t >= T_MIN && f.t <= T_MAX).reduce((a, b) => (b.rh < a.rh ? b : a))
-    return { peak, peakFrom, gust, minRh, final: data.area[data.area.length - 1] }
+    const obsGusts = data.stations
+      .flatMap((st) => st.daily_gust.map((g) => ({ ...g, name: st.name })))
+      .filter((g) => g.t >= T_MIN && g.t <= T_MAX)
+      .sort((a, b) => b.v - a.v)
+      .slice(0, 3)
+    return { peak, peakFrom, gust, minRh, obsGusts, final: data.area[data.area.length - 1] }
   }, [data])
 
   if (!data || !stats) return <div className="loading">데이터 불러오는 중…</div>
@@ -107,6 +112,9 @@ export default function App() {
             </div>
             <div>
               <i className="sw wind">➜</i> 바람 (ERA5 재분석, 길이·진하기 = 풍속)
+            </div>
+            <div>
+              <i className="sw stn" /> 기상청 관측소 (시간 풍속·습도)
             </div>
             <div>
               <i className="sw origin" /> 첫 위성 탐지 지점
@@ -165,7 +173,8 @@ export default function App() {
                 [
                   ['active', '활성 열점'],
                   ['burned', '연소 흔적'],
-                  ['wind', '바람장'],
+                  ['wind', '바람장 (재분석)'],
+                  ['stations', '기상청 관측소'],
                   ['events', '보도·공식 기록'],
                   ['terrain', '3D 지형'],
                 ] as const
@@ -197,6 +206,14 @@ export default function App() {
 
               <h3>바람과 습도</h3>
               <dl className="facts">
+                <dt>관측 최대순간풍속</dt>
+                <dd>
+                  {stats.obsGusts.map((g) => (
+                    <button key={g.name + g.t} className="link-row" onClick={() => setT(g.t)}>
+                      <b className="hot">{g.v.toFixed(1)}</b> m/s {g.name} · {fmt(g.t)}
+                    </button>
+                  ))}
+                </dd>
                 <dt>최대 돌풍(재분석)</dt>
                 <dd>
                   {stats.gust.gust.toFixed(1)} m/s · {fmt(stats.gust.t)}
@@ -213,7 +230,7 @@ export default function App() {
                   {officialStats.map((e) => (
                     <button key={e.id} className="stat-row" onClick={() => selectEvent(e.id)}>
                       <span>{e.title}</span>
-                      <small>{e.sources[0]?.outlet}</small>
+                      <small>{eventLabel(e.time, 'day')}</small>
                     </button>
                   ))}
                 </>
@@ -231,7 +248,7 @@ export default function App() {
               {sel && (
                 <article className="ev-detail">
                   <div className="ev-time">
-                    {fmt(sel.t ?? 0)} {sel.official && <span className="badge">공식</span>}
+                    {eventLabel(sel.time, sel.time_precision)} {sel.official && <span className="badge">공식</span>}
                   </div>
                   <h4>{sel.title}</h4>
                   {sel.place && <div className="ev-place">{sel.place}</div>}
@@ -251,7 +268,7 @@ export default function App() {
                 {events.map((e) => (
                   <li key={e.id} className={`${(e.t ?? 0) <= tm ? 'past' : 'future'} ${e.id === selected ? 'sel' : ''}`}>
                     <button onClick={() => selectEvent(e.id)}>
-                      <span className="ev-t">{fmt(e.t ?? 0)}</span>
+                      <span className="ev-t">{eventLabel(e.time, e.time_precision)}</span>
                       <span className="ev-title">
                         {e.official && <span className="dot" />}
                         {e.title}
@@ -274,6 +291,9 @@ export default function App() {
                   <b>Open-Meteo</b> ERA5 재분석 기상, 0.1° 격자 84개 지점, 시간별 풍속·풍향·돌풍·습도
                 </li>
                 <li>
+                  <b>기상청 ASOS</b> 종관기상관측 6개 지점(의성·안동·청송·영덕·봉화·포항) 시간자료·일 최대순간풍속 (공공데이터포털)
+                </li>
+                <li>
                   <b>AWS Terrain Tiles</b> 고도 (3D 지형) · <b>Esri</b> 위성영상
                 </li>
                 <li>
@@ -282,7 +302,7 @@ export default function App() {
               </ul>
               <h3>주의</h3>
               <ul>
-                <li>재분석 기상은 격자 평균값이라 관측소 순간최대풍속보다 낮게 나옵니다.</li>
+                <li>재분석 기상은 격자 평균값이라 관측소 순간최대풍속보다 낮게 나옵니다. 관측소 위치는 근삿값입니다.</li>
                 <li>"불 앞 날씨"는 최근 12시간 열점 중심에서 가장 가까운 격자의 값입니다.</li>
                 <li>확산 속도는 위성 통과 사이의 열점 면적 증가분을 시간으로 나눈 값입니다.</li>
               </ul>

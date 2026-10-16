@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useRef, useState } from 'react'
 import type { FireData, FireEvent } from './types'
-import { T_MAX, T_MIN, fmt, hourIndex } from './time'
+import { T_MAX, T_MIN, eventLabel, fmt, hourIndex } from './time'
 
 interface Props {
   data: FireData
@@ -37,7 +37,8 @@ export default function Timeline({ data, events, t, onSeek, onSelectEvent }: Pro
   const area = data.area
   const maxArea = Math.max(...area.map((a) => a.area_ha))
   const maxRate = Math.max(...area.map((a) => a.rate_ha_h ?? 0))
-  const maxWind = Math.ceil(Math.max(...front.map((f) => f.gust)) / 5) * 5
+  const obs = data.stations.flatMap((st) => st.daily_gust.filter((g) => g.t >= T_MIN && g.t <= T_MAX).map((g) => ({ ...g, name: st.name })))
+  const maxWind = Math.ceil(Math.max(...front.map((f) => f.gust), ...obs.map((g) => g.v)) / 5) * 5
 
   const rows = useMemo(() => {
     const y = (v: number, max: number) => ROW_H - 8 - (v / max) * (ROW_H - 18)
@@ -134,7 +135,7 @@ export default function Timeline({ data, events, t, onSeek, onSelectEvent }: Pro
               }}
             >
               <title>
-                {fmt(e.t)} · {e.title}
+                {eventLabel(e.time, e.time_precision)} · {e.title}
               </title>
             </rect>
           ) : null,
@@ -172,16 +173,23 @@ export default function Timeline({ data, events, t, onSeek, onSelectEvent }: Pro
         {/* row 3: wind */}
         <g transform={`translate(0,${rowY(2)})`}>
           <text x={8} y={18} className="row-label">
-            바람 <tspan className="legend-ws">━ 풍속</tspan> <tspan className="legend-gust">┅ 돌풍</tspan>
+            바람 <tspan className="legend-ws">━풍속</tspan> <tspan className="legend-gust">┅돌풍</tspan> <tspan className="legend-obs">●관측</tspan>
           </text>
           <text x={8} y={36} className="row-value">
             {fw ? `${fw.ws.toFixed(1)} / ${fw.gust.toFixed(1)} m/s` : '–'}
           </text>
-          <text x={LABEL_W - 4} y={rows.y(maxWind, maxWind) + 4} className="axis" textAnchor="end">
-            {maxWind}
+          <text x={LABEL_W + 4} y={rows.y(maxWind, maxWind) + 4} className="axis">
+            {maxWind} m/s
           </text>
           <path d={rows.gust} className="gust-line" />
           <path d={rows.ws} className="ws-line" />
+          {obs.map((g) => (
+            <circle key={g.name + g.t} cx={x(g.t)} cy={rows.y(g.v, maxWind)} r={g.v >= 20 ? 4.5 : 3} className={`obs-dot ${g.v >= 20 ? 'strong' : ''}`}>
+              <title>
+                {g.name} 최대순간풍속 {g.v} m/s · {fmt(g.t)}
+              </title>
+            </circle>
+          ))}
         </g>
 
         {/* row 4: humidity */}

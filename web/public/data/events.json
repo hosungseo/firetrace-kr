@@ -1,0 +1,2036 @@
+[
+  {
+    "id": "e01",
+    "time": "2025-03-22T00:00:00+09:00",
+    "time_precision": "day",
+    "type": "ignition",
+    "place": "의성군 안평면 괴산리",
+    "lat": 36.33,
+    "lon": 128.63,
+    "title": "원인: 성묘객 실화, 실화자 119 자진신고",
+    "detail": "의성군은 괴산리 산불이 묘지 정리 중 성묘객 실화로 발생했으며 실화자가 119에 직접 신고했다고 밝혔다. 산림청은 28일까지도 \"성묘객 실화로 추정, 정확한 원인은 조사 중\"이라고 표현.",
+    "numbers": {},
+    "sources": [
+      {
+        "outlet": "뉴시스",
+        "url": "https://www.newsis.com/view/NISX20250322_0003109003",
+        "published": "2025-03-22",
+        "quote": "의성군 관계자는 \"안평면 괴산리 야산에서 발생한 산불은 성묘객 실화\"라며 \"실화자가 119에 전화를 걸어와 '묘지 정리 중 불을 냈다'고 자진신고했다\"라고 말했다."
+      },
+      {
+        "outlet": "위키트리(산림청장 브리핑 전문)",
+        "url": "https://www.wikitree.co.kr/articles/1037538",
+        "published": "2025-03-28",
+        "quote": "의성지역의 산불 원인은 성묘객 실화로 추정하고 있으나 정확한 원인은 조사 중입니다."
+      }
+    ],
+    "official": false
+  },
+  {
+    "id": "e02",
+    "time": "2025-03-22T00:00:00+09:00",
+    "time_precision": "day",
+    "type": "alert",
+    "place": "의성군 의성읍 철파리·원당2리·후죽1리",
+    "lat": 36.34,
+    "lon": 128.67,
+    "title": "의성군 긴급재난문자로 실내체육관 대피 안내",
+    "detail": "불길이 의성읍 철파리 방향으로 번지자 의성군이 긴급재난문자로 철파리·원당2리·후죽1리 주민에게 실내체육관 대피를 안내했다. 대피소는 처음 경로당에서 실내체육관으로 변경됐다.",
+    "numbers": {},
+    "sources": [
+      {
+        "outlet": "뉴시스",
+        "url": "https://www.newsis.com/view/NISX20250322_0003109003",
+        "published": "2025-03-22",
+        "quote": "의성군은 긴급 재난 문자를 보내 의성읍 철파리, 원당2리, 후죽1리 등으로 산불이 확산하고 있다며 실내체육관으로 대피하라고 안내했다."
+      },
+      {
+        "outlet": "경북매일",
+        "url": "https://kbmaeil.com/article/202503220912959",
+        "published": "2025-03-22",
+        "quote": "처음에는 인근 경로당 등으로 대피를 유도했으나 불길이 점점 의성읍 방향으로 확산되자 실내체육관으로 대피소를 변경했다."
+      }
+    ],
+    "official": false
+  },
+  {
+    "id": "e03",
+    "time": "2025-03-22T00:00:00+09:00",
+    "time_precision": "day",
+    "type": "evacuation",
+    "place": "의성군 의성읍 철파리",
+    "lat": 36.34,
+    "lon": 128.67,
+    "title": "요양병원 환자·주민 대피, 요양병원 환자 안동 이송",
+    "detail": "산불이 의성읍 방향으로 옮겨가며 요양병원 환자와 주민 200여 명이 의성실내체육관으로 대피했고, 철파리 의성공립요양병원 입원자 150여 명은 안동으로 긴급 이송됐다.",
+    "numbers": {
+      "evacuees_approx": 200,
+      "hospital_transfers": 150
+    },
+    "sources": [
+      {
+        "outlet": "뉴시스",
+        "url": "https://www.newsis.com/view/NISX20250322_0003109003",
+        "published": "2025-03-22",
+        "quote": "산불이 의성읍 방향으로 옮겨가면서 요양병원 환자와 주민 등 200여 명이 의성 실내체육관으로 대피했다."
+      },
+      {
+        "outlet": "경북매일",
+        "url": "https://kbmaeil.com/article/202503220912959",
+        "published": "2025-03-22",
+        "quote": "철파리 소재 의성공립요양병원에 있던 어르신 등 150여 명은 인근 안동 지역으로 긴급 이송 조치 했다."
+      }
+    ],
+    "official": false
+  },
+  {
+    "id": "e04",
+    "time": "2025-03-22T00:00:00+09:00",
+    "time_precision": "day",
+    "type": "weather",
+    "place": "의성군",
+    "lat": 36.353,
+    "lon": 128.697,
+    "title": "22일 최대 초속 16m 바람(남부지방산림청장)",
+    "detail": "임하수 남부지방산림청장은 23일 브리핑에서 22일 바람이 초속 16m까지 불어 화선이 길어지고 진화율이 낮아졌다고 설명했다. 관측 지점은 명시되지 않음.",
+    "numbers": {
+      "max_wind_ms": 16
+    },
+    "sources": [
+      {
+        "outlet": "뉴시스",
+        "url": "https://www.newsis.com/view/NISX20250323_0003109219",
+        "published": "2025-03-23",
+        "quote": "임하수 남부지방산림청장은 진화율이 낮은 이유와 관련 \"어제 바람이 초속 16m까지 불었다. 풍속이 증가함에 따라 화선이 길이지면서 진화율이 낮아졌다\"며"
+      }
+    ],
+    "official": true
+  },
+  {
+    "id": "e05",
+    "time": "2025-03-22T11:25:00+09:00",
+    "time_precision": "minute",
+    "type": "ignition",
+    "place": "의성군 안평면 괴산리 산61 일원",
+    "lat": 36.33,
+    "lon": 128.63,
+    "title": "의성 안평면 괴산리 야산에서 산불 발생",
+    "detail": "3월 22일 오전 11시 24~25분께 의성군 안평면 괴산리 야산 정상 부근에서 산불이 발생했다. 산림청·중대본은 11시 25분, 일부 언론은 11시 24분(또는 26분)으로 보도.",
+    "numbers": {
+      "wind_ms_at_ignition_newsis": 5.6
+    },
+    "sources": [
+      {
+        "outlet": "뉴시스",
+        "url": "https://mobile.newsis.com/view/NISX20250328_0003118014",
+        "published": "2025-03-28",
+        "quote": "산림청 중앙사고수습본부는 지난 22일 낮 11시 25분께 경북 의성군 안평면 괴산리~양곡리 야산 일원에서 발생한 의성산불의 주불을 비롯해 경북지역 산불을 모두 진화했다고 밝혔다."
+      },
+      {
+        "outlet": "뉴시스",
+        "url": "https://www.newsis.com/view/NISX20250322_0003109003",
+        "published": "2025-03-22",
+        "quote": "오전 11시 24분께 의성군 안평면 괴산리 야산 정상에서 발생한 불은 초속 5.6m의 강풍을 타고 순식간에 의성읍 철파리 민가 및 전신주 전선 등을 덮치며 계속 확산하고 있다."
+      },
+      {
+        "outlet": "뉴시스",
+        "url": "https://www.newsis.com/view/NISX20250323_0003109219",
+        "published": "2025-03-23",
+        "quote": "앞서 전날 오전 11시 24분께 의성군 안평면 괴산리 산 61 일원에서 성묘객 실화로 인한 산불이 발생했다."
+      }
+    ],
+    "official": true
+  },
+  {
+    "id": "e06",
+    "time": "2025-03-22T14:10:00+09:00",
+    "time_precision": "minute",
+    "type": "response",
+    "place": "의성군",
+    "lat": 36.353,
+    "lon": 128.697,
+    "title": "산불 대응 3단계 발령",
+    "detail": "괴산리 산불이 급속히 확산하자 산림당국이 최고 수준인 산불 대응 3단계를 발령했다. 발령 시각은 보도에 따라 오후 2시 10분(22일 뉴시스·아주) 또는 2시 20분(23일 뉴시스)으로 엇갈림.",
+    "numbers": {},
+    "sources": [
+      {
+        "outlet": "뉴시스",
+        "url": "https://www.newsis.com/view/NISX20250322_0003109003",
+        "published": "2025-03-22",
+        "quote": "산림당국은 이 중 안평면 괴산리 산불이 급속히 확산됨에 따라 이날 오후 2시 10분께 최고 수준인 '산불 대응 3단계'를 발령했다."
+      },
+      {
+        "outlet": "뉴시스",
+        "url": "https://www.newsis.com/view/NISX20250323_0003109219",
+        "published": "2025-03-23",
+        "quote": "당국은 오후 2시20분께 '산불 3단계'를 발령했다."
+      }
+    ],
+    "official": true
+  },
+  {
+    "id": "e07",
+    "time": "2025-03-22T14:36:00+09:00",
+    "time_precision": "minute",
+    "type": "ignition",
+    "place": "의성군 안계면 용기리(양곡리)",
+    "lat": 36.39,
+    "lon": 128.45,
+    "title": "의성 금성면·안계면에서 추가 산불 발생",
+    "detail": "같은 날 오후 1시 57분께 금성면 청로리, 오후 2시 36분께 안계면에서 산불이 잇따라 발생했다. 안계면 산불 시각·지번은 보도마다 다름(14:36 용기리 / 14:39 양곡리 산83-19).",
+    "numbers": {},
+    "sources": [
+      {
+        "outlet": "뉴시스",
+        "url": "https://www.newsis.com/view/NISX20250322_0003109003",
+        "published": "2025-03-22",
+        "quote": "이어 오후 1시 57분께 의성군 금성면 청로리, 오후 2시 36분께는 안계면 용기리에서 각각 산불이 발생했다."
+      },
+      {
+        "outlet": "뉴시스",
+        "url": "https://mobile.newsis.com/view/NISX20250323_0003109505",
+        "published": "2025-03-23",
+        "quote": "또 같은 날 오후 2시 39분께 안계면 양곡리 산 83-19번지 일원에서 원인 미상의 산불이 났다."
+      }
+    ],
+    "official": false
+  },
+  {
+    "id": "e08",
+    "time": "2025-03-22T16:00:00+09:00",
+    "time_precision": "hour",
+    "type": "containment_rate",
+    "place": "의성군 안평면",
+    "lat": 36.33,
+    "lon": 128.6,
+    "title": "첫날 진화율 30%, 영향구역 130㏊",
+    "detail": "당국 공식 발표 기준 오후 4시 진화율은 30% 정도, 산불영향구역은 130㏊로 잠정 집계됐다. 주민 392명이 종합운동체육관 등으로 대피.",
+    "numbers": {
+      "containment_pct": 30,
+      "impact_area_ha": 130,
+      "evacuees": 392
+    },
+    "sources": [
+      {
+        "outlet": "아주경제",
+        "url": "https://www.ajunews.com/view/20250322192822342",
+        "published": "2025-03-22",
+        "quote": "현재 당국이 공식 발표한 진화율은 오후 4시 기준 30% 정도다."
+      },
+      {
+        "outlet": "아주경제",
+        "url": "https://www.ajunews.com/view/20250322192822342",
+        "published": "2025-03-22",
+        "quote": "또 이날 산불에 따른 영향 구역은 130ha로 집계됐으며,"
+      },
+      {
+        "outlet": "뉴시스",
+        "url": "https://www.newsis.com/view/NISX20250322_0003109003",
+        "published": "2025-03-22",
+        "quote": "이날 발생한 산불로 인한 영향 구역은 130㏊로 잠정 집계됐다."
+      }
+    ],
+    "official": true
+  },
+  {
+    "id": "e09",
+    "time": "2025-03-22T18:00:00+09:00",
+    "time_precision": "hour",
+    "type": "containment_rate",
+    "place": "의성군 안평면",
+    "lat": 36.33,
+    "lon": 128.6,
+    "title": "오후 6시 진화율 50%가량(언론 보도)",
+    "detail": "경북매일은 오후 6시 기준 진화율을 50%가량으로 보도했다. 같은 날 오후 4시 공식 30%와 차이가 있고, 이튿날 오전에는 2%대로 급락(영향구역 확대 때문).",
+    "numbers": {
+      "containment_pct": 50
+    },
+    "sources": [
+      {
+        "outlet": "경북매일",
+        "url": "https://kbmaeil.com/article/202503220912959",
+        "published": "2025-03-22",
+        "quote": "이날 오후 6시 기준 진화율은 50%가량이었다."
+      }
+    ],
+    "official": false
+  },
+  {
+    "id": "e10",
+    "time": "2025-03-22T18:00:00+09:00",
+    "time_precision": "minute",
+    "type": "response",
+    "place": "울산·경북·경남",
+    "lat": null,
+    "lon": null,
+    "title": "울산·경북·경남 재난사태 선포",
+    "detail": "정부는 3월 22일 18시부로 울산·경북·경남 지역에 재난사태를 선포했다(재난안전법 제36조).",
+    "numbers": {},
+    "sources": [
+      {
+        "outlet": "행정안전부(보도자료 PDF)",
+        "url": "https://www.mois.go.kr/frt/bbs/type010/commonSelectBoardArticle.do?bbsId=BBSMSTR_000000000008&nttId=116483",
+        "published": "2025-03-23",
+        "quote": "3월 22일(토) 18시 부로 울산광역시, 경상북도, 경상남도 지역에 재난사태를 선포*하는 등 산불 대응에 총력을 다하고 있다."
+      }
+    ],
+    "official": true
+  },
+  {
+    "id": "e11",
+    "time": "2025-03-22T18:15:00+09:00",
+    "time_precision": "minute",
+    "type": "response",
+    "place": "의성군",
+    "lat": 36.353,
+    "lon": 128.697,
+    "title": "중앙선 안동~경주 열차 중단, 일몰 후 헬기 철수",
+    "detail": "한국철도공사가 오후 6시 15분께 안동~경주 열차 운행을 중단했고, 진화헬기는 일몰 직후 오후 6시 40분께 철수해 야간 방화선 작업으로 전환했다.",
+    "numbers": {},
+    "sources": [
+      {
+        "outlet": "뉴시스",
+        "url": "https://www.newsis.com/view/NISX20250322_0003109003",
+        "published": "2025-03-22",
+        "quote": "한국철도공사는 오후 6시 15분께 산불로 인해 안동~경주간 열차 운행이 중단됐다며 다른 교통수단 이용을 당부했다."
+      },
+      {
+        "outlet": "뉴시스",
+        "url": "https://www.newsis.com/view/NISX20250322_0003109003",
+        "published": "2025-03-22",
+        "quote": "산불진화에 투입됐던 헬기는 일몰 직후인 오후 6시 40분께 철수했다."
+      }
+    ],
+    "official": false
+  },
+  {
+    "id": "e12",
+    "time": "2025-03-23T00:00:00+09:00",
+    "time_precision": "day",
+    "type": "response",
+    "place": "의성군",
+    "lat": 36.353,
+    "lon": 128.697,
+    "title": "영향구역 1,000㏊ 초과 → 산림청장 통합지휘",
+    "detail": "발생 당일 100㏊ 초과로 경북도지사가, 23일 1,000㏊ 초과로 산림청장이 통합 지휘를 맡았다(산림청장 28일 브리핑).",
+    "numbers": {},
+    "sources": [
+      {
+        "outlet": "위키트리(산림청장 브리핑 전문)",
+        "url": "https://www.wikitree.co.kr/articles/1037538",
+        "published": "2025-03-28",
+        "quote": "3월 23일 산불영향구역이 1000헥타르를 넘어서 관련 규정에 따라서 산림청장이 산불진화를 통합 지휘하였습니다."
+      }
+    ],
+    "official": true
+  },
+  {
+    "id": "e13",
+    "time": "2025-03-23T08:00:00+09:00",
+    "time_precision": "hour",
+    "type": "official_stat",
+    "place": "의성군",
+    "lat": 36.353,
+    "lon": 128.697,
+    "title": "중대본: 의성 산림피해 1,802㏊·주택 24동 전소",
+    "detail": "중대본 23일 오전 8시 기준 집계에서 의성 산림피해 1,802㏊, 주택 24동 전소·5동 일부 피해, 의성 주민 951명 대피.",
+    "numbers": {
+      "forest_damage_ha_uiseong": 1802,
+      "houses_burned": 24,
+      "evacuees_uiseong": 951
+    },
+    "sources": [
+      {
+        "outlet": "경북매일",
+        "url": "https://kbmaeil.com/article/202503230912985",
+        "published": "2025-03-23",
+        "quote": "산림 피해는 3천286.11㏊가 탔다. 피해 규모로만 보면 축구장약 4천600개 크기이다. 지역별로 보면 의성 1천802㏊, 산청 1천329㏊, 울주 85㏊, 경남 김해 70.11㏊다."
+      },
+      {
+        "outlet": "경북매일",
+        "url": "https://kbmaeil.com/article/202503230912985",
+        "published": "2025-03-23",
+        "quote": "의성에서는 주택 24동이 전소하고, 5동이 일부 산불 피해를 봤다."
+      }
+    ],
+    "official": true
+  },
+  {
+    "id": "e14",
+    "time": "2025-03-23T09:00:00+09:00",
+    "time_precision": "hour",
+    "type": "containment_rate",
+    "place": "의성군",
+    "lat": 36.353,
+    "lon": 128.697,
+    "title": "밤새 확산으로 진화율 2%대로 급락",
+    "detail": "영향구역 확대로 진화율이 오전 7시 4.8%, 9시 2%, 10시 2.0%로 떨어졌다. 같은 시점 영향구역은 2,602㏊(뉴시스, 9시)로 추정되나 이철우 지사 10시 브리핑은 1,802㏊·진화율 2.8%로 발표해 수치가 엇갈림.",
+    "numbers": {
+      "containment_pct": 2,
+      "impact_area_ha": 2602,
+      "fireline_km": 67
+    },
+    "sources": [
+      {
+        "outlet": "뉴시스",
+        "url": "https://www.newsis.com/view/NISX20250323_0003109219",
+        "published": "2025-03-23",
+        "quote": "의성 산불 진화율은 전날 오후 한 때 30%를 보였다가 산불영향구역이 확대되며 23일 오전 9시 기준 2%로 떨어졌다."
+      },
+      {
+        "outlet": "뉴시스",
+        "url": "https://www.newsis.com/view/NISX20250323_0003109219",
+        "published": "2025-03-23",
+        "quote": "전체 화선 67㎞ 중 진행 중인 화선은 65.7㎞, 완료는 1.3㎞며, 산불영향구역은 2602㏊로 추정되고 있다."
+      },
+      {
+        "outlet": "경북매일",
+        "url": "https://kbmaeil.com/article/202503230912987",
+        "published": "2025-03-23",
+        "quote": "앞서 이날 오전 7시 의성 산불 진화율은 4.8％로, 오전 10시는 2.0％로 각각 나타났다."
+      }
+    ],
+    "official": true
+  },
+  {
+    "id": "e15",
+    "time": "2025-03-23T10:00:00+09:00",
+    "time_precision": "minute",
+    "type": "response",
+    "place": "의성군 안평면사무소",
+    "lat": 36.33,
+    "lon": 128.6,
+    "title": "1차 현장 브리핑: 특별재난지역 선포 건의",
+    "detail": "이철우 경북지사는 의성군 안평면사무소 1차 브리핑에서 1,802㏊가 불타고 있고 밤샘 진화에도 진화율이 2.8%라며 의성군 특별재난지역 선포를 건의하겠다고 밝혔다.",
+    "numbers": {
+      "impact_area_ha": 1802,
+      "containment_pct": 2.8
+    },
+    "sources": [
+      {
+        "outlet": "뉴시스",
+        "url": "https://www.newsis.com/view/NISX20250323_0003109219",
+        "published": "2025-03-23",
+        "quote": "이 지사는 이날 오전 10시 의성군 안평면사무소에서 열린 '의성산불 상황 브리핑' 자리에서 \"불이 확대해 오늘까지 1802㏊가 불에 타고 있고, 잔여 화선은 67㎞에 달한다\"며 이같이 밝혔다."
+      },
+      {
+        "outlet": "뉴시스",
+        "url": "https://www.newsis.com/view/NISX20250323_0003109219",
+        "published": "2025-03-23",
+        "quote": "진화율은 2.8% 밖에 안된다\"며"
+      }
+    ],
+    "official": true
+  },
+  {
+    "id": "e16",
+    "time": "2025-03-23T11:00:00+09:00",
+    "time_precision": "hour",
+    "type": "containment_rate",
+    "place": "의성군",
+    "lat": 36.353,
+    "lon": 128.697,
+    "title": "오전 11시 진화율 30%, 영향구역 3,510㏊",
+    "detail": "산림청 중앙사고수습본부 집계로 오전 11시 진화율 30%, 영향구역 3,510㏊(추정), 총 화선 68㎞.",
+    "numbers": {
+      "containment_pct": 30,
+      "impact_area_ha": 3510,
+      "fireline_km": 68
+    },
+    "sources": [
+      {
+        "outlet": "뉴시스",
+        "url": "https://mobile.newsis.com/view/NISX20250323_0003109282",
+        "published": "2025-03-23",
+        "quote": "또 전날 발생해 산불 3단계가 발령됐던 경북 의성 산불의 진화율은 오전 11시 기준 30%를 기록중이다."
+      },
+      {
+        "outlet": "경북매일",
+        "url": "https://kbmaeil.com/article/202503230912987",
+        "published": "2025-03-23",
+        "quote": "현재 산불영향구역은 3천510㏊이다. 전체 화선 68㎞ 가운데 20.4㎞에서 진화가 완료고 47.6㎞는 여전히 진화 중이다."
+      }
+    ],
+    "official": true
+  },
+  {
+    "id": "e17",
+    "time": "2025-03-23T13:00:00+09:00",
+    "time_precision": "hour",
+    "type": "containment_rate",
+    "place": "의성군 안평면",
+    "lat": 36.33,
+    "lon": 128.6,
+    "title": "오후 1시 진화율 51%",
+    "detail": "바람이 잦아들며 오후 1시 진화율이 51%로 올랐다(매일신문, 산림청 중수본·경북도 인용).",
+    "numbers": {
+      "containment_pct": 51
+    },
+    "sources": [
+      {
+        "outlet": "매일신문",
+        "url": "https://www.imaeil.com/page/view/2025032315010653352",
+        "published": "2025-03-23",
+        "quote": "산림청 중앙사고수습본부와 경북도 등에 따르면 23일 오후 1시 기준 의성군 안평면 산불 진화율은 51%로 집계됐다."
+      }
+    ],
+    "official": true
+  },
+  {
+    "id": "e18",
+    "time": "2025-03-23T18:00:00+09:00",
+    "time_precision": "hour",
+    "type": "official_stat",
+    "place": "의성군",
+    "lat": 36.353,
+    "lon": 128.697,
+    "title": "23일 오후 6시 영향구역 6,028㏊, 진화율 60%대",
+    "detail": "진화율이 60%를 넘겼으나 주불을 잡지 못하고 오후 6시 40분 헬기 48대 철수 후 야간 진화로 전환. 영향구역 6,028㏊, 화선 98㎞ 중 59㎞ 완료. 건축물 94채 소실, 주민 1,503명 대피.",
+    "numbers": {
+      "impact_area_ha": 6028,
+      "fireline_km": 98,
+      "containment_pct_min": 60,
+      "buildings_lost": 94,
+      "evacuees": 1503
+    },
+    "sources": [
+      {
+        "outlet": "뉴시스",
+        "url": "https://mobile.newsis.com/view/NISX20250323_0003109505",
+        "published": "2025-03-23",
+        "quote": "이날 오후 6시 기준 산림 피해 영향 구역은 6028ha, 전체 화선98㎞ 중 59㎞는 완료됐고 나머지는 진행 중이다."
+      },
+      {
+        "outlet": "뉴시스",
+        "url": "https://mobile.newsis.com/view/NISX20250323_0003109505",
+        "published": "2025-03-23",
+        "quote": "경북 의성 산불 이틀째인 23일 진화율 60%를 넘긴 가운데 산림 당국이 야간 진화 작업체제로 전환했다."
+      },
+      {
+        "outlet": "뉴시스",
+        "url": "https://mobile.newsis.com/view/NISX20250323_0003109505",
+        "published": "2025-03-23",
+        "quote": "건축물 74채가 전소되는 등 총 94채가 소실되고 주민 1503명이 실내체육관 등으로 대피했다."
+      }
+    ],
+    "official": true
+  },
+  {
+    "id": "e19",
+    "time": "2025-03-23T18:40:00+09:00",
+    "time_precision": "minute",
+    "type": "weather",
+    "place": "의성군",
+    "lat": 36.353,
+    "lon": 128.697,
+    "title": "23일 저녁 바람 잦아듦(남풍 1㎧, 습도 16%)",
+    "detail": "헬기 철수 시점 현장 기상은 남풍 1㎧(최대 3㎧), 기온 23.6℃, 습도 16%로 바람은 약했지만 매우 건조했다.",
+    "numbers": {
+      "wind_ms": 1,
+      "max_wind_ms": 3,
+      "temp_c": 23.6,
+      "humidity_pct": 16
+    },
+    "sources": [
+      {
+        "outlet": "뉴시스",
+        "url": "https://mobile.newsis.com/view/NISX20250323_0003109505",
+        "published": "2025-03-23",
+        "quote": "현장에 투입됐던 헬기 48대는 이날 오후 6시40분을 기해 안전을 위해 철수했다. 기상 상황은 남풍 1㎧(최대 3㎧), 기온 23.6˚C, 습도 16%다."
+      }
+    ],
+    "official": false
+  },
+  {
+    "id": "e20",
+    "time": "2025-03-24T00:00:00+09:00",
+    "time_precision": "day",
+    "type": "response",
+    "place": "의성군",
+    "lat": 36.353,
+    "lon": 128.697,
+    "title": "의성군 특별재난지역 선포",
+    "detail": "24일 의성군이 특별재난지역으로 선포됐다(27일 안동·청송·영양·영덕 추가).",
+    "numbers": {},
+    "sources": [
+      {
+        "outlet": "경북매일",
+        "url": "https://kbmaeil.com/article/202503290913867",
+        "published": "2025-03-29",
+        "quote": "산불피해와 관련해 24일에는 의성, 27일에는 안동, 청송, 영양, 영덕지역이 특별재난지역으로 선포됐다."
+      }
+    ],
+    "official": true
+  },
+  {
+    "id": "e21",
+    "time": "2025-03-24T00:00:00+09:00",
+    "time_precision": "day",
+    "type": "response",
+    "place": "의성군·안동시",
+    "lat": 36.353,
+    "lon": 128.697,
+    "title": "국가소방동원령 3호 발령, 지휘본부 이전",
+    "detail": "산불이 안동까지 번지자 소방청이 국가소방동원령 3호를 추가 발령했다. 산불현장지휘본부도 안평면사무소 인근까지 불이 번져 의성읍 철파리 제2청사로 옮겼다.",
+    "numbers": {},
+    "sources": [
+      {
+        "outlet": "뉴시스",
+        "url": "https://mobile.newsis.com/view/NISX20250325_0003111258",
+        "published": "2025-03-25",
+        "quote": "특히 전날 오후 5시 2분께 의성군 일대 산불이 강풍으로 인해 안동지역까지 확대되면서 소방청이 진화 작업을 위해 전국 모든 소방 인력과 장비를 추가 투입하는 '국가소방동원령' 3호를 추가 발령했다."
+      },
+      {
+        "outlet": "뉴시스",
+        "url": "https://mobile.newsis.com/view/NISX20250325_0003111258",
+        "published": "2025-03-25",
+        "quote": "앞서 전날 오후 산불이 산불현장지휘본부가 차려진 안평면사무소 인근까지 확산되면서 지휘본부를 의성군 제2청사가 있는 의성읍 철파리로 긴급히 옮겼다."
+      }
+    ],
+    "official": true
+  },
+  {
+    "id": "e22",
+    "time": "2025-03-24T12:00:00+09:00",
+    "time_precision": "hour",
+    "type": "containment_rate",
+    "place": "의성군",
+    "lat": 36.353,
+    "lon": 128.697,
+    "title": "24일 낮 진화율 71%, 영향구역 7,516㏊",
+    "detail": "헬기 57대·인력 2,728명 투입. 낮 12시 영향구역 7,516㏊, 화선 133.9㎞ 중 95.2㎞ 진화 완료, 진화율 71%.",
+    "numbers": {
+      "containment_pct": 71,
+      "impact_area_ha": 7516,
+      "fireline_km": 133.9
+    },
+    "sources": [
+      {
+        "outlet": "경북매일",
+        "url": "https://kbmaeil.com/article/202503240913275",
+        "published": "2025-03-24",
+        "quote": "이날 낮 12시 기준 산불영향구역은 7516㏊이며, 전체 화선 133.9㎞ 가운데 95.2㎞에서 진화가 완료됐지만,"
+      },
+      {
+        "outlet": "뉴시스",
+        "url": "https://mobile.newsis.com/view/NISX20250325_0003111258",
+        "published": "2025-03-25",
+        "quote": "진화율은 전날 낮 12시 71%까지 올랐지만 강풍을 타고 불길이 확산되면서 오후 8시 기준 60%로 떨어졌다."
+      }
+    ],
+    "official": true
+  },
+  {
+    "id": "e23",
+    "time": "2025-03-24T15:00:00+09:00",
+    "time_precision": "hour",
+    "type": "weather",
+    "place": "의성군 안평면·안계면",
+    "lat": 36.33,
+    "lon": 128.6,
+    "title": "순간풍속 최대 15㎧ 서풍, 진화대원 대피명령",
+    "detail": "오후 3시 기준 안평·안계 진화율은 72%·69%였으나 순간풍속 최대 15㎧의 서풍이 불어 산림청이 산속 진화대원에게 대피 명령을 내렸다.",
+    "numbers": {
+      "max_gust_ms": 15,
+      "containment_pct_anpyeong": 72,
+      "containment_pct_angye": 69
+    },
+    "sources": [
+      {
+        "outlet": "경북매일",
+        "url": "https://kbmaeil.com/article/202503240913275",
+        "published": "2025-03-24",
+        "quote": "이날 오후 3시 기준 의성군 안평면과 안계면 산불 진화율은 각 72%, 69%였으나 순간풍속 최대 15㎧의 서풍이 불면서 안전에 위험 우려가 있다고 보고 이같이 조치했다."
+      }
+    ],
+    "official": true
+  },
+  {
+    "id": "e24",
+    "time": "2025-03-24T15:40:00+09:00",
+    "time_precision": "minute",
+    "type": "spread",
+    "place": "의성군 점곡면 점곡휴게소(서산~영덕고속도로)",
+    "lat": 36.4,
+    "lon": 128.83,
+    "title": "점곡휴게소 화재, 고속도로 북의성IC~영덕TG 통제",
+    "detail": "오후 3시 35분부터 서산~영덕고속도로 북의성IC~영덕TG 양방향이 통제됐고, 3시 40분쯤 점곡휴게소 화장실·편의점 건물이 불탔다.",
+    "numbers": {},
+    "sources": [
+      {
+        "outlet": "경북매일",
+        "url": "https://kbmaeil.com/article/202503240913275",
+        "published": "2025-03-24",
+        "quote": "또 오후 3시40분쯤에는 서산~영덕고속도로 영덕 방면 미니 휴게소인 점곡휴게소 화장실 건물에 불이 붙었고 불길이 옆에 있는 편의점 건물로 번져 피해를 입혔다."
+      },
+      {
+        "outlet": "경북매일",
+        "url": "https://kbmaeil.com/article/202503240913275",
+        "published": "2025-03-24",
+        "quote": "한국도로공사는 산불이 확산하자 오후 3시35분쯤 부터 서산~영덕고속도로 북의성IC에서 영덕 톨게이트까지 양방향 통행을 전면 통제했다."
+      }
+    ],
+    "official": false
+  },
+  {
+    "id": "e25",
+    "time": "2025-03-24T17:02:00+09:00",
+    "time_precision": "minute",
+    "type": "spread",
+    "place": "안동시 길안면 백자리 산38 일원",
+    "lat": 36.42,
+    "lon": 128.88,
+    "title": "산불, 안동시 길안면으로 비화",
+    "detail": "의성 산불이 경계를 넘어 안동 길안면으로 번졌다. 청송군·안동시 인용 보도는 오후 5시 2분 백자리 산38, 경북매일은 오후 4시 10분 현하리로 보도(시각·지점 상이). 현하리 주민에게 길안초·길안중 대피 안전문자 발송.",
+    "numbers": {},
+    "sources": [
+      {
+        "outlet": "뉴시스",
+        "url": "https://mobile.newsis.com/view/NISX20250325_0003112520",
+        "published": "2025-03-25",
+        "quote": "25일 청송군에 따르면 지난 22일 오전 11시 26분께 의성군 안평면 괴산1리에서 성묘객 실화로 시작된 산불이 강풍을 타고 전날 오후 5시 2분께 인근 안동시 길안면 백자리 산38 일원으로 비화됐다."
+      },
+      {
+        "outlet": "경북매일",
+        "url": "https://kbmaeil.com/article/202503240913275",
+        "published": "2025-03-24",
+        "quote": "불길이 바람 방향을 타고 동쪽으로 이동하면서 오후 4시10분쯤 의성군 점곡면 근처에 있는 안동시 길안면 현하리 야산으로 번진 것. 이에 따라 의성군과 산림당국은 현하리 마을 주민에게 길안초등학교·길안중학교로 대피하라는 안전 안내 문자를 발송했다."
+      }
+    ],
+    "official": false
+  },
+  {
+    "id": "e26",
+    "time": "2025-03-24T20:00:00+09:00",
+    "time_precision": "hour",
+    "type": "containment_rate",
+    "place": "의성군",
+    "lat": 36.353,
+    "lon": 128.697,
+    "title": "24일 오후 8시 진화율 60%로 하락",
+    "detail": "강풍으로 불길이 다시 번지며 진화율이 낮 71%에서 오후 8시 60%로 떨어졌다.",
+    "numbers": {
+      "containment_pct": 60
+    },
+    "sources": [
+      {
+        "outlet": "뉴시스",
+        "url": "https://mobile.newsis.com/view/NISX20250325_0003112013",
+        "published": "2025-03-25",
+        "quote": "진화율은 전날 낮 12시 기준 71%까지 올랐지만 강풍을 타고 불길이 확산되면서 오후 8시 기준 60%로 하락했고, 밤새 추가 확산으로 오전 7시 기준 55%까지 떨어졌다."
+      }
+    ],
+    "official": true
+  },
+  {
+    "id": "e27",
+    "time": "2025-03-25T00:00:00+09:00",
+    "time_precision": "day",
+    "type": "weather",
+    "place": "경북 북동부",
+    "lat": null,
+    "lon": null,
+    "title": "25일 오후~밤 초속 25~27m 태풍급 강풍",
+    "detail": "한덕수 권한대행은 26일 중대본 회의에서 초속 25m 강풍이 25일 오후부터 밤까지 지속돼 헬기·드론 동원이 중단됐다고 밝혔다. 산림청은 3월 25일 순간최대풍속 27m/s 이상 돌풍(기상청)을 확산 원인으로 제시. 영덕에서는 최대 25.4m(기고문) 보도.",
+    "numbers": {
+      "sustained_wind_ms": 25,
+      "max_gust_ms": 27,
+      "yeongdeok_max_ms": 25.4
+    },
+    "sources": [
+      {
+        "outlet": "경북매일",
+        "url": "https://kbmaeil.com/article/202503260913468",
+        "published": "2025-03-26",
+        "quote": "여러 악조건 속에서도 산불 진화를 위해 많은 분이 고군분투하고 있지만, 초속 25m의 강풍이 어제 오후부터 밤까지 지속되어 헬기와 드론 동원이 중단되었고,"
+      },
+      {
+        "outlet": "산림청(보도자료 PDF, 정책브리핑 전재)",
+        "url": "https://www.korea.kr/briefing/pressReleaseView.do?newsId=156685003",
+        "published": "2025-04-18",
+        "quote": "*** 순간최대풍속 27m/s이상의 태풍급 돌풍 발생(3.25, 기상청)"
+      },
+      {
+        "outlet": "매일신문(기고)",
+        "url": "https://www.imaeil.com/page/view/2025040417480858303",
+        "published": "2025-04-17",
+        "quote": "통상 최대풍속이 초속 17m이상이면 태풍으로 분류되는데 25일 영덕에는 최대초속 25.4m의 바람이 불었다."
+      }
+    ],
+    "official": true
+  },
+  {
+    "id": "e28",
+    "time": "2025-03-25T07:00:00+09:00",
+    "time_precision": "hour",
+    "type": "containment_rate",
+    "place": "의성군",
+    "lat": 36.353,
+    "lon": 128.697,
+    "title": "25일 오전 7시 진화율 55%, 화선 214㎞",
+    "detail": "산림청 중수본 집계 오전 7시 의성 진화율 55%, 화선 214㎞ 중 118.2㎞ 완료. 같은 날 다른 뉴시스 기사는 화선 164㎞·영향구역 8,490㏊로 보도해 화선 길이가 엇갈림.",
+    "numbers": {
+      "containment_pct": 55,
+      "fireline_km": 214,
+      "impact_area_ha_alt": 8490
+    },
+    "sources": [
+      {
+        "outlet": "뉴시스",
+        "url": "https://mobile.newsis.com/view/NISX20250325_0003112013",
+        "published": "2025-03-25",
+        "quote": "산림청 중앙사고수습본부는 이날 산불 3단계와 국가소방동원령 3호가 발령된 의성 산불 진화율은 전날보다 떨어진 55%로 집계했다."
+      },
+      {
+        "outlet": "뉴시스",
+        "url": "https://mobile.newsis.com/view/NISX20250325_0003112013",
+        "published": "2025-03-25",
+        "quote": "현재 의성 산불은 전체 화선 길이 214㎞ 중 완료 118.2㎞, 잔여 화선은 96.3㎞이다."
+      },
+      {
+        "outlet": "뉴시스",
+        "url": "https://mobile.newsis.com/view/NISX20250325_0003111258",
+        "published": "2025-03-25",
+        "quote": "현재 의성산불은 전체 화선 길이 164㎞, 산불영향구역은 8490㏊로 추정된다."
+      }
+    ],
+    "official": true
+  },
+  {
+    "id": "e29",
+    "time": "2025-03-25T10:00:00+09:00",
+    "time_precision": "hour",
+    "type": "containment_rate",
+    "place": "안동시 길안면",
+    "lat": 36.45,
+    "lon": 128.9,
+    "title": "안동 구간 진화율 45%, 400㏊ 소실",
+    "detail": "안동시 구간은 연무로 헬기 투입이 늦어지며 오전 10시 진화율 45%, 피해 면적은 전날 200㏊에서 400㏊로 늘었다.",
+    "numbers": {
+      "containment_pct": 45,
+      "area_ha": 400
+    },
+    "sources": [
+      {
+        "outlet": "뉴시스",
+        "url": "https://mobile.newsis.com/view/NISX20250325_0003112520",
+        "published": "2025-03-25",
+        "quote": "오전 10시 기준 진화율 45%, 피해 면적은 전날 오후 200㏊에서 400㏊로 2배 늘었다."
+      }
+    ],
+    "official": false
+  },
+  {
+    "id": "e30",
+    "time": "2025-03-25T15:00:00+09:00",
+    "time_precision": "hour",
+    "type": "containment_rate",
+    "place": "의성군",
+    "lat": 36.353,
+    "lon": 128.697,
+    "title": "25일 오후 3시 진화율 62%, 영향구역 1만4,501㏊",
+    "detail": "의성 산불 진화율 오후 3시 62%, 영향구역 1만4,501㏊, 화선 245㎞ 중 152㎞ 완료. 같은 시각 의성군 47개 마을 2,510명이 대피소 32곳으로 이동.",
+    "numbers": {
+      "containment_pct": 62,
+      "impact_area_ha": 14501,
+      "fireline_km": 245,
+      "evacuees_uiseong": 2510
+    },
+    "sources": [
+      {
+        "outlet": "뉴시스",
+        "url": "https://mobile.newsis.com/view/NISX20250325_0003112520",
+        "published": "2025-03-25",
+        "quote": "한편, 의성 산불 진화율은 오후 3시 기준 62%, 산불영향지역은 1만4501㏊이다."
+      },
+      {
+        "outlet": "뉴시스",
+        "url": "https://mobile.newsis.com/view/NISX20250325_0003112561",
+        "published": "2025-03-25",
+        "quote": "이날 오후 3시 기준 지역 내 47개 마을 주민 2510명이 대피소 32곳으로 이동했다."
+      }
+    ],
+    "official": true
+  },
+  {
+    "id": "e31",
+    "time": "2025-03-25T15:00:00+09:00",
+    "time_precision": "minute",
+    "type": "weather",
+    "place": "대구·경북 전역",
+    "lat": null,
+    "lon": null,
+    "title": "대구·경북 전역 강풍주의보, 최대순간풍속 관측값",
+    "detail": "대구지방기상청이 오후 3시 안동·의성·청송 등에 강풍주의보를 확대 발효했다. 오후 3시 기준 최대순간풍속은 구미 20.4㎧, 안동 하회 15.6㎧ 등.",
+    "numbers": {
+      "gust_ms_gumi": 20.4,
+      "gust_ms_andong_hahoe": 15.6,
+      "gust_ms_sangju_eunchuk": 19.0
+    },
+    "sources": [
+      {
+        "outlet": "뉴시스",
+        "url": "https://mobile.newsis.com/view/NISX20250325_0003112463",
+        "published": "2025-03-25",
+        "quote": "대구지방기상청은 25일 오후 3시를 기해 대구와 구미, 영천, 경산, 청도, 고령, 성주, 칠곡, 문경, 예천, 안동, 영주, 의성, 청송, 영양평지, 봉화평지에 강풍주의보를 발효했다."
+      },
+      {
+        "outlet": "뉴시스",
+        "url": "https://mobile.newsis.com/view/NISX20250325_0003112463",
+        "published": "2025-03-25",
+        "quote": "주요 지점 최대 순간풍속 현황은 이날 오후 3시 기준 구미 20.4㎧, 상주 은척 19㎧, 김천 대덕 18.5㎧, 문경 16.8㎧, 군위 16.5㎧, 포항 청하 15.7㎧, 안동 하회 15.6㎧, 칠곡 15.4㎧, 울진 소곡 14.6㎧, 울진 금강송 14.4㎧ 등이다."
+      }
+    ],
+    "official": true
+  },
+  {
+    "id": "e32",
+    "time": "2025-03-25T15:30:00+09:00",
+    "time_precision": "minute",
+    "type": "spread",
+    "place": "안동시 풍천면(하회마을 인근)",
+    "lat": 36.539,
+    "lon": 128.518,
+    "title": "불길, 하회마을 직선 10㎞ 지점까지 접근",
+    "detail": "오후 3시 30분 기준 산불이 하회마을과 직선거리 10㎞가량 떨어진 곳까지 번졌다. 같은 시각 서산영덕선 안동JC~청송IC(JC) 양방향 전면 차단.",
+    "numbers": {
+      "distance_to_hahoe_km": 10
+    },
+    "sources": [
+      {
+        "outlet": "세계일보",
+        "url": "https://www.segye.com/newsView/20250325516986",
+        "published": "2025-03-25",
+        "quote": "이날 오후 3시 30분 기준 산불은 하회마을과 직선거리로 10㎞가량 떨어진 곳까지 번졌다."
+      },
+      {
+        "outlet": "세계일보",
+        "url": "https://www.segye.com/newsView/20250325516986",
+        "published": "2025-03-25",
+        "quote": "한국도로공사는 이날 오후 3시30분부터 고속도로 인근 산불 확산으로 인해 서산영덕선 안동JC~청송IC 양방향을 전면 차단했다."
+      }
+    ],
+    "official": false
+  },
+  {
+    "id": "e33",
+    "time": "2025-03-25T16:00:00+09:00",
+    "time_precision": "minute",
+    "type": "alert",
+    "place": "전국",
+    "lat": null,
+    "lon": null,
+    "title": "산불재난 국가위기경보 전국 '심각' 격상",
+    "detail": "산림청이 25일 오후 4시를 기해 전국 모든 지역에 산불재난 국가위기경보를 '심각'으로 격상했다(22일 12개 시·도 심각 발령에서 확대).",
+    "numbers": {},
+    "sources": [
+      {
+        "outlet": "아주경제",
+        "url": "https://www.ajunews.com/view/20250325172040373",
+        "published": "2025-03-25",
+        "quote": "산림청이 25일 오후 4시를 기해 전국 모든 지역에 산불재난 국가위기경보를 '심각' 단계로 높였다."
+      },
+      {
+        "outlet": "행정안전부(보도자료 PDF)",
+        "url": "https://www.mois.go.kr/frt/bbs/type010/commonSelectBoardArticle.do?bbsId=BBSMSTR_000000000008&nttId=116580",
+        "published": "2025-03-26",
+        "quote": "이에, 산림청은 지난 22일 12개 시·도에 발령한 산불경보 ‘심각’ 단계를 어제 16시부로 전국으로 확대했고, 소방은 국가소방동원령을 추가 발동했다."
+      }
+    ],
+    "official": true
+  },
+  {
+    "id": "e34",
+    "time": "2025-03-25T16:55:00+09:00",
+    "time_precision": "minute",
+    "type": "alert",
+    "place": "안동시 풍천면 하회리",
+    "lat": 36.539,
+    "lon": 128.518,
+    "title": "안동시 재난문자: 하회리 주민 즉시 대피",
+    "detail": "안동시는 오후 4시 55분쯤 재난문자로 강풍에 따른 급속 확산을 알리고 하회리 주민에게 저우리마을로 대피하라고 안내했다.",
+    "numbers": {},
+    "sources": [
+      {
+        "outlet": "세계일보",
+        "url": "https://www.segye.com/newsView/20250325516986",
+        "published": "2025-03-25",
+        "quote": "시는 이날 오후 4시 55분쯤 재난 문자를 통해 “현재 강한 바람으로 산불이 급속도로 확산 중이다\"며 \"하회리 마을 주민들은 즉시 저우리마을(광덕리 133)로 대피 바란다”고 안내했다."
+      }
+    ],
+    "official": false
+  },
+  {
+    "id": "e35",
+    "time": "2025-03-25T17:00:00+09:00",
+    "time_precision": "minute",
+    "type": "alert",
+    "place": "안동시 전역",
+    "lat": 36.568,
+    "lon": 128.729,
+    "title": "안동시 전 시민 대피령 재난문자",
+    "detail": "안동시는 오후 5시와 5시 5분 잇따라 \"전 시민은 안전한 곳으로 대피하라\"는 재난문자를 보냈다. 이후 오후 8시께 옥동·정하동 등 도심이 피란 차량으로 마비.",
+    "numbers": {},
+    "sources": [
+      {
+        "outlet": "아주경제",
+        "url": "https://www.ajunews.com/view/20250325172040373",
+        "published": "2025-03-25",
+        "quote": "안동시는 이날 오후 5시 \"관내 산불이 우리 시 전역으로 확산하고 있으니 전 시민은 안전한 곳으로 대피하라\"고 안내했다."
+      },
+      {
+        "outlet": "한국경제",
+        "url": "https://www.hankyung.com/article/202503258262i",
+        "published": "2025-03-25",
+        "quote": "25일 안동시 등에 따르면 오후 8시께 안동 지역의 주요 도심인 옥동과 정하동을 비롯한 시내 곳곳이 수백여대의 차량이 뒤섞이면서 도시가 마비됐다."
+      }
+    ],
+    "official": false
+  },
+  {
+    "id": "e36",
+    "time": "2025-03-25T17:00:00+09:00",
+    "time_precision": "hour",
+    "type": "spread",
+    "place": "의성군 단촌면 구계리 고운사",
+    "lat": 36.428,
+    "lon": 128.787,
+    "title": "천년고찰 고운사 전소(보물 연수전·가운루)",
+    "detail": "의성 단촌면 고운사가 오후 5시께 산불에 소실됐다. 국가유산청은 전체 30동 중 9동만 양호하고 보물 연수전·가운루 등은 전소됐다고 밝혔다. 석조여래좌상은 사전 이송.",
+    "numbers": {},
+    "sources": [
+      {
+        "outlet": "한국경제",
+        "url": "https://www.hankyung.com/article/2025032579901",
+        "published": "2025-03-25",
+        "quote": "의성군 단촌면 등운산 자락에 있는 대한불교 조계종 제16교구 본사 고운사는 이날 오후 5시께 산불에 완전히 소실됐다."
+      },
+      {
+        "outlet": "서울신문",
+        "url": "https://m.seoul.co.kr/news/2025/03/26/20250326500228",
+        "published": "2025-03-26",
+        "quote": "국가유산청과 국립문화유산연구원은 “의성 고운사는 전체 건물 30동 중 9동만 양호하고 보물인 연수전, 가운루 등 나머지는 전소된 것으로 파악된다”라고 26일 밝혔다."
+      }
+    ],
+    "official": false
+  },
+  {
+    "id": "e37",
+    "time": "2025-03-25T17:00:00+09:00",
+    "time_precision": "hour",
+    "type": "containment_rate",
+    "place": "의성군",
+    "lat": 36.353,
+    "lon": 128.697,
+    "title": "25일 오후 5시 진화율 60% 수준(경북매일)",
+    "detail": "경북매일은 오후 5시 진화율 60% 수준, 영향구역 1만4,501㏊(추정), 화선 245㎞로 보도. 같은 날 다른 매체는 오후 6시 68%(매일신문)로 보도해 수치가 엇갈림.",
+    "numbers": {
+      "containment_pct": 60,
+      "impact_area_ha": 14501
+    },
+    "sources": [
+      {
+        "outlet": "경북매일",
+        "url": "https://kbmaeil.com/article/202503250913431",
+        "published": "2025-03-25",
+        "quote": "이날 오후 5시까지 의성 산불의 진화율은 60% 수준이다. 산불영향구역은 1만4501㏊(추정)이며 총 화선은 245㎞에 이른다."
+      }
+    ],
+    "official": false
+  },
+  {
+    "id": "e38",
+    "time": "2025-03-25T17:30:00+09:00",
+    "time_precision": "minute",
+    "type": "weather",
+    "place": "의성·안동",
+    "lat": 36.353,
+    "lon": 128.697,
+    "title": "순간최대풍속 10~20㎧, 헬기 진화 오후 5시 30분 중단",
+    "detail": "오후 들어 순간최대풍속 초속 10~20m 강풍으로 진화헬기가 안전사고 우려로 오후 5시 30분 진화를 중단했다. 같은 날 오후 6시 진화율 68%, 영향구역 1만5,185㏊(산림청 중수본).",
+    "numbers": {
+      "gust_ms_min": 10,
+      "gust_ms_max": 20,
+      "containment_pct_18h": 68,
+      "impact_area_ha_18h": 15185,
+      "fireline_km": 279
+    },
+    "sources": [
+      {
+        "outlet": "매일신문",
+        "url": "https://www.imaeil.com/page/view/2025032520155173442",
+        "published": "2025-03-25",
+        "quote": "그러나, 오후 들어 순간최대풍속이 초속 10∼20m에 이르는 강풍이 불면서 진화에 큰 어려움을 겪었다. 일몰 전까지 운행하던 산불 진화헬기도 강풍으로 안전 사고를 우려해 이날 오후 5시 30분에 진화 활동을 중단했다."
+      },
+      {
+        "outlet": "매일신문",
+        "url": "https://www.imaeil.com/page/view/2025032520155173442",
+        "published": "2025-03-25",
+        "quote": "산림청 중앙사고수습본부에 따르면 이날 오후 6시 기준 진화율은 68%로 오전 6시 55%보다 13%포인트 높였다. 산불영향구역은 1만5천185㏊이며 총 화선 279㎞ 가운데 진화되지 않은 구간은 87㎞다."
+      }
+    ],
+    "official": true
+  },
+  {
+    "id": "e39",
+    "time": "2025-03-25T17:40:00+09:00",
+    "time_precision": "minute",
+    "type": "spread",
+    "place": "영양군 석보면",
+    "lat": 36.56,
+    "lon": 129.1,
+    "title": "영양 석보면으로 비화",
+    "detail": "산림당국 집계 지역별 발화시각: 영양 석보 오후 5시 40분쯤.",
+    "numbers": {},
+    "sources": [
+      {
+        "outlet": "경북매일",
+        "url": "https://kbmaeil.com/article/202503250913432",
+        "published": "2025-03-25",
+        "quote": "지역별 발화시각은 청송 주왕산 국립공원 오후 6시 20분쯤, 영양 석보 오후 5시40분쯤, 영덕 지품 오후 6시 40분쯤, 봉화 물야면 7시쯤인 것으로 나타났다."
+      }
+    ],
+    "official": true
+  },
+  {
+    "id": "e40",
+    "time": "2025-03-25T17:50:00+09:00",
+    "time_precision": "minute",
+    "type": "weather",
+    "place": "영덕군 삿갓봉(산림청 AWS)",
+    "lat": 36.415,
+    "lon": 129.366,
+    "title": "영덕 삿갓봉 AWS 풍속 급증(15.1m/s), 저녁 20m/s 초과",
+    "detail": "뉴스타파가 확인한 산림청 AWS 자료에서 영덕 삿갓봉은 오후 1시부터 초속 15m 이상 강풍이 측정됐고, 오후 5시 50분 전후 1분 풍속이 4.7~6.7m/s에서 15.1m/s로 거세졌다. 저녁엔 초속 20m를 넘었다. 좌표는 영덕군 대표점(근사).",
+    "numbers": {
+      "wind_ms_1min_before": 6.7,
+      "wind_ms_1min_after": 15.1,
+      "evening_wind_ms_over": 20
+    },
+    "sources": [
+      {
+        "outlet": "뉴스타파",
+        "url": "https://newstapa.org/article/ygrr-",
+        "published": "2025-05-26",
+        "quote": "경북 영덕군 삿갓봉에서 3월 25일 측정된 1분당 최대풍속, 오후 5시 50분 전후로 4.7~6.7m/s였던 바람이 15.1m/s까지 거세졌다."
+      },
+      {
+        "outlet": "뉴스타파",
+        "url": "https://newstapa.org/article/ygrr-",
+        "published": "2025-05-26",
+        "quote": "산불이 한창 번지던 3월 25일 저녁 영덕군 삿갓봉에선 초속 20m가 넘는 강풍이 관측됐다."
+      }
+    ],
+    "official": false
+  },
+  {
+    "id": "e41",
+    "time": "2025-03-25T18:20:00+09:00",
+    "time_precision": "minute",
+    "type": "spread",
+    "place": "청송군 주왕산국립공원",
+    "lat": 36.394,
+    "lon": 129.156,
+    "title": "청송 주왕산국립공원으로 비화",
+    "detail": "강풍에 날린 불씨로 주왕산국립공원에 불이 옮겨붙었다(오후 6시 20분쯤). 앞서 낮에 청송 파천면까지 도달해 경북북부교도소 재소자 2,600여 명 대피.",
+    "numbers": {
+      "inmates_evacuated": 2600
+    },
+    "sources": [
+      {
+        "outlet": "경북매일",
+        "url": "https://kbmaeil.com/article/202503250913432",
+        "published": "2025-03-25",
+        "quote": "안호경 주왕산국립공원 사무소장은 “바람이 너무 세지면서 산불이 지금 청송을 다 덮쳤다”라며 “국립공원에도 불씨가 날아와 불이 옮겨붙었다”고 말했다."
+      },
+      {
+        "outlet": "경북매일",
+        "url": "https://kbmaeil.com/article/202503250913431",
+        "published": "2025-03-25",
+        "quote": "지난 22일 의성군 안평면 괴산리에서 시작된 산불이 나흘 동안 안동시 길안면 일대에 이어 청송군 파천면 일대까지 도달했다. 이에 법무부 교정본부에서는 경북북부교도소(옛 청송교도소)에 있는 재소자 2600여 명을 대피시킨 것으로 확인됐다."
+      }
+    ],
+    "official": true
+  },
+  {
+    "id": "e42",
+    "time": "2025-03-25T18:40:00+09:00",
+    "time_precision": "minute",
+    "type": "spread",
+    "place": "영덕군 지품면",
+    "lat": 36.44,
+    "lon": 129.25,
+    "title": "영덕 지품면으로 비화(발화지서 직선 63㎞)",
+    "detail": "불이 동해안 영덕군 지품면까지 번졌다(오후 6시 40분쯤). 최초 발화지 괴산리에서 직선 63㎞.",
+    "numbers": {
+      "distance_from_origin_km": 63
+    },
+    "sources": [
+      {
+        "outlet": "경북매일",
+        "url": "https://kbmaeil.com/article/202503250913432",
+        "published": "2025-03-25",
+        "quote": "영덕군 지품면은 최초 발화지인 의성군 안평면 괴산리에서 지도상 직선거리로 63㎞ 떨어져 있다."
+      },
+      {
+        "outlet": "경북매일",
+        "url": "https://kbmaeil.com/article/202503250913432",
+        "published": "2025-03-25",
+        "quote": "산림 당국은 25일 의성 산불이 이날 저녁 강한 바람을 타고 청송군 주왕산국립공원과 영양군 석보면, 영덕군 지품면, 봉화 물야면까지 번졌다고 밝혔다."
+      }
+    ],
+    "official": true
+  },
+  {
+    "id": "e43",
+    "time": "2025-03-25T18:47:00+09:00",
+    "time_precision": "minute",
+    "type": "alert",
+    "place": "영양군 석보면",
+    "lat": 36.56,
+    "lon": 129.1,
+    "title": "영양군 석보면 대피명령",
+    "detail": "영양군은 오후 6시 47분께 석보면 주민에게 영양읍 군민회관으로 대피하라는 명령을 발령했다. YTN은 안동·청송 대피명령이 오후 5시 반쯤부터, 한 시간여 만에 영덕 대피명령이 시작됐다고 정리.",
+    "numbers": {},
+    "sources": [
+      {
+        "outlet": "경북매일",
+        "url": "https://kbmaeil.com/article/202503250913432",
+        "published": "2025-03-25",
+        "quote": "영양군은 오후 6시 47분께 석보면 주민에게 영양읍 군민회관으로 대피하라고 대피 명령을 발령했다."
+      },
+      {
+        "outlet": "YTN",
+        "url": "https://www.ytn.co.kr/_ln/0115_202503261041207294",
+        "published": "2025-03-26",
+        "quote": "의성과 비교적 가까운 안동과 청송에 본격적으로 대피명령이 내려진 게 오후 5시 반쯤부터였는데,"
+      }
+    ],
+    "official": false
+  },
+  {
+    "id": "e44",
+    "time": "2025-03-25T19:00:00+09:00",
+    "time_precision": "hour",
+    "type": "casualty",
+    "place": "청송군 청송읍",
+    "lat": 36.435,
+    "lon": 129.057,
+    "title": "첫 주민 사망자: 청송 60대 여성",
+    "detail": "오후 7시께 청송읍 도로 외곽에서 60대 여성이 숨진 채 발견됐다. 경북 산불 첫 주민 사망.",
+    "numbers": {
+      "deaths": 1
+    },
+    "sources": [
+      {
+        "outlet": "한국경제",
+        "url": "https://www.hankyung.com/article/2025032579901",
+        "published": "2025-03-25",
+        "quote": "경찰에 따르면 이날 오후 7시께 경북 청송군 청송읍의 한 도로 외곽에서 60대 여성이 숨진 채 발견됐다."
+      }
+    ],
+    "official": false
+  },
+  {
+    "id": "e45",
+    "time": "2025-03-25T19:09:00+09:00",
+    "time_precision": "minute",
+    "type": "alert",
+    "place": "영덕군 지품면",
+    "lat": 36.44,
+    "lon": 129.25,
+    "title": "영덕군 재난문자: 지방도 911호선 통제, 병원 환자 대피",
+    "detail": "영덕군은 오후 7시 9분께 재난안전문자로 지품면 황장리~석보면 화매리 구간 통제를 알렸고, 영덕아산병원 입원환자 60여 명을 긴급 대피시켰다.",
+    "numbers": {},
+    "sources": [
+      {
+        "outlet": "경북매일",
+        "url": "https://kbmaeil.com/article/202503250913432",
+        "published": "2025-03-25",
+        "quote": "영덕군은 오후 7시 9분께 재난안전문자로 ‘지방도 911호선, 지품면 황장리∼석보면 화매리 구간 교통통제 중’이라며 통행금지를 요청했다. 군은 또 영덕아산병원 입원환자 60여명도 긴급 대피시켰다."
+      }
+    ],
+    "official": false
+  },
+  {
+    "id": "e46",
+    "time": "2025-03-25T21:00:00+09:00",
+    "time_precision": "hour",
+    "type": "casualty",
+    "place": "영덕군 영덕읍 매정리",
+    "lat": 36.43,
+    "lon": 129.33,
+    "title": "영덕 요양원 대피 차량 폭발, 3명 사망",
+    "detail": "오후 9시께 영덕읍 매정리 요양원 직원·입소자가 차량으로 대피하던 중 화염으로 차량이 폭발했다. 오후 9시 6분부터 영덕 전역 정전·통신 두절.",
+    "numbers": {},
+    "sources": [
+      {
+        "outlet": "뉴시스",
+        "url": "https://www.newsis.com/view/NISX20250326_0003113851",
+        "published": "2025-03-26",
+        "quote": "전날 오후 9시께 영덕읍 매정리 한 요양원 직원과 입소자가 차를 타고 산불을 피해 대피하던 중 화염으로 차량이 폭발했다."
+      },
+      {
+        "outlet": "뉴시스",
+        "url": "https://www.newsis.com/view/NISX20250326_0003113851",
+        "published": "2025-03-26",
+        "quote": "이 사고로 차량 탑승자 6명 중 3명이 숨졌다."
+      },
+      {
+        "outlet": "뉴시스",
+        "url": "https://www.newsis.com/view/NISX20250326_0003113851",
+        "published": "2025-03-26",
+        "quote": "전날 오후 9시6분부터 영덕 전 지역에 정전이 발생하면서 영덕정수장의 전기가 끊기기도 했다. 영덕 전 지역 통신도 끊겼다."
+      }
+    ],
+    "official": false
+  },
+  {
+    "id": "e47",
+    "time": "2025-03-25T23:00:00+09:00",
+    "time_precision": "hour",
+    "type": "casualty",
+    "place": "영양군 석보면",
+    "lat": 36.56,
+    "lon": 129.1,
+    "title": "영양 석보면 도로에서 시신 4구 발견",
+    "detail": "오후 11시쯤 영양 석보면 도로 등에서 불에 탄 남녀 시신 4구가 발견됐다. 일부는 일가족으로 차량 대피 중 사고.",
+    "numbers": {
+      "deaths": 4
+    },
+    "sources": [
+      {
+        "outlet": "서울신문",
+        "url": "https://m.seoul.co.kr/news/2025/03/26/20250326500007",
+        "published": "2025-03-26",
+        "quote": "의성군에서 퍼진 불씨가 비화해 산불이 확산하고 있는 영양군 석보면에서는 전날 오후 11시쯤 도로 등에서 일행 등으로 추정되는 불에 탄 남녀 시신 4구가 발견됐다."
+      }
+    ],
+    "official": false
+  },
+  {
+    "id": "e48",
+    "time": "2025-03-26T00:00:00+09:00",
+    "time_precision": "day",
+    "type": "spread",
+    "place": "안동시 풍천면 병산서원 인근",
+    "lat": 36.54,
+    "lon": 128.553,
+    "title": "불길, 병산서원 3~4㎞까지 근접",
+    "detail": "26일 안동 병산서원과 직선 3~4㎞까지 산불이 근접했다.",
+    "numbers": {
+      "distance_km_min": 3,
+      "distance_km_max": 4
+    },
+    "sources": [
+      {
+        "outlet": "경북매일",
+        "url": "https://kbmaeil.com/article/202503300914018",
+        "published": "2025-03-30",
+        "quote": "△ 3월 26일 의성군 산불 진화용 헬기 추락 70대 조종사 사망. 안동 병산서원과 직선거리 3∼4㎞까지 산불 근접."
+      }
+    ],
+    "official": false
+  },
+  {
+    "id": "e49",
+    "time": "2025-03-26T02:00:00+09:00",
+    "time_precision": "hour",
+    "type": "spread",
+    "place": "영덕군 강구항 일대",
+    "lat": 36.415,
+    "lon": 129.366,
+    "title": "위성 분석: 12시간 만에 51㎞ 비화, 시속 8.2㎞",
+    "detail": "산림청 위성(VIIRS) 분석에서 25일 오후 2시 의성에 있던 선단 화선이 12시간 뒤 26일 오전 2시 51㎞ 떨어진 영덕에서 관측됐다. 국가산림위성정보활용센터장은 \"25일 오전 3시부터 약 12시간 이내 51㎞\"라고 설명해 기준 시각이 엇갈림. 확산속도 시간당 8.2㎞(역대 최고).",
+    "numbers": {
+      "distance_km": 51,
+      "spread_kmh": 8.2
+    },
+    "sources": [
+      {
+        "outlet": "뉴시스",
+        "url": "https://www.newsis.com/view/NISX20250327_0003116059",
+        "published": "2025-03-27",
+        "quote": "이미라 산림청 차장은 이날 \"미국 위성 등의 자료를 확인한 결과 지난 25일 오후 2시에 의성에 찍혔던 선단지 내 화선이 12시간 뒤인 이튿날 오전 2시에는 51㎞ 떨어진 영덕에서 찍혔다."
+      },
+      {
+        "outlet": "뉴시스",
+        "url": "https://mobile.newsis.com/view/NISX20250327_0003116110",
+        "published": "2025-03-27",
+        "quote": "원명수 국가산림위성정보활용센터장은 브리핑을 통해 \"지난 24일까지 산불이 의성 근처에 머물러있다가 25일 오전 3시부터 영덕까지 약 12시간 이내에 51㎞를 이동했다\"며"
+      }
+    ],
+    "official": true
+  },
+  {
+    "id": "e50",
+    "time": "2025-03-26T07:00:00+09:00",
+    "time_precision": "hour",
+    "type": "casualty",
+    "place": "경북",
+    "lat": null,
+    "lon": null,
+    "title": "중대본: 경북 사망 14명, 산림 약 1만5,158㏊",
+    "detail": "중대본 5차 회의 자료: 26일 07시 현재 경북 사망 14명(안동2·청송3·영양4·영덕5), 산림 약 15,158㏊·시설 145동 피해, 주민 약 2만3천 명 대피.",
+    "numbers": {
+      "deaths": 14,
+      "forest_ha": 15158,
+      "facilities": 145,
+      "evacuees_approx": 23000
+    },
+    "sources": [
+      {
+        "outlet": "행정안전부(보도자료 PDF)",
+        "url": "https://www.mois.go.kr/frt/bbs/type010/commonSelectBoardArticle.do?bbsId=BBSMSTR_000000000008&nttId=116580",
+        "published": "2025-03-26",
+        "quote": "의성·안동 산불로 인해 3.26일 07시 현재 경북에서 14명의 사망자*가 발생했고 산림 약 15,158ha, 주택 등 145동의 시설 피해를 입었다."
+      },
+      {
+        "outlet": "행정안전부(보도자료 PDF)",
+        "url": "https://www.mois.go.kr/frt/bbs/type010/commonSelectBoardArticle.do?bbsId=BBSMSTR_000000000008&nttId=116580",
+        "published": "2025-03-26",
+        "quote": "* 안동 2, 청송 3, 영양 4, 영덕 5"
+      }
+    ],
+    "official": true
+  },
+  {
+    "id": "e51",
+    "time": "2025-03-26T12:51:00+09:00",
+    "time_precision": "minute",
+    "type": "casualty",
+    "place": "의성군 신평면 교안리 493(추정)",
+    "lat": 36.45,
+    "lon": 128.57,
+    "title": "진화헬기(S-76) 추락, 73세 기장 사망",
+    "detail": "산불을 진화하던 강원 인제군 임차 S-76 헬기가 추락해 기장 1명이 숨졌다. 산림청은 전국 진화헬기 운항을 중지시켰다가 오후 3시 30분쯤 재개.",
+    "numbers": {
+      "deaths": 1
+    },
+    "sources": [
+      {
+        "outlet": "뉴시스",
+        "url": "https://www.newsis.com/view/NISX20250326_0003114077",
+        "published": "2025-03-26",
+        "quote": "26일 산림청 중앙사고수습본부에 따르면 이날 낮 12시 51분께 의성군 신평면 교안리 493(사고 위치는 추정)에서 산불을 진화하던 헬기가 추락했다."
+      },
+      {
+        "outlet": "경북매일",
+        "url": "https://kbmaeil.com/article/202503260913603",
+        "published": "2025-03-26",
+        "quote": "사고로 인해 헬기 운항이 일시 중단됐다가 오후 3시 30분쯤 재개됐다."
+      }
+    ],
+    "official": true
+  },
+  {
+    "id": "e52",
+    "time": "2025-03-26T19:00:00+09:00",
+    "time_precision": "hour",
+    "type": "casualty",
+    "place": "경북 5개 시·군",
+    "lat": null,
+    "lon": null,
+    "title": "사망 22명, 대피 8,753명(산림청 통합지휘본부)",
+    "detail": "산림청 경북 7개 시군 현장통합지휘본부: 주민 사망 21명(안동4·청송3·영양6·영덕8)과 헬기 조종사 1명 등 22명. 대피 8,753명. 청송·영양·영덕 영향구역 1만6,019㏊(추정). 같은 날 경북매일은 대피 2만3,500여 명으로 보도.",
+    "numbers": {
+      "deaths": 22,
+      "evacuees_kfs": 8753,
+      "evacuees_kbmaeil": 23500,
+      "impact_area_ha_cy_yy_yd": 16019
+    },
+    "sources": [
+      {
+        "outlet": "뉴시스",
+        "url": "https://mobile.newsis.com/view/NISX20250326_0003114767",
+        "published": "2025-03-26",
+        "quote": "이에 산불에 따른 사망자는 지역 주민 21명과 헬기 조종사 1명으로 총 22명으로 확인됐다."
+      },
+      {
+        "outlet": "뉴시스",
+        "url": "https://mobile.newsis.com/view/NISX20250326_0003114767",
+        "published": "2025-03-26",
+        "quote": "현재까지 집계된 청송, 영양, 영덕 지역의 산불영향구역은 1만6019㏊로 추정된다."
+      },
+      {
+        "outlet": "경북매일",
+        "url": "https://kbmaeil.com/article/202503260913603",
+        "published": "2025-03-26",
+        "quote": "현재 의성과 안동, 청송, 영양, 영덕 등 5개 시·군에는 안동시민 2975명과 영덕주민 2208명을 포함해 총 2만 3500여명이 실내체육관과 주변 학교 등으로 대피한 상황이다."
+      }
+    ],
+    "official": true
+  },
+  {
+    "id": "e53",
+    "time": "2025-03-27T00:00:00+09:00",
+    "time_precision": "day",
+    "type": "response",
+    "place": "안동시·청송군·영양군·영덕군",
+    "lat": null,
+    "lon": null,
+    "title": "안동·청송·영양·영덕 특별재난지역 선포",
+    "detail": "27일 안동·청송·영양·영덕이 특별재난지역으로 추가 선포됐다.",
+    "numbers": {},
+    "sources": [
+      {
+        "outlet": "경북매일",
+        "url": "https://kbmaeil.com/article/202503290913867",
+        "published": "2025-03-29",
+        "quote": "산불피해와 관련해 24일에는 의성, 27일에는 안동, 청송, 영양, 영덕지역이 특별재난지역으로 선포됐다."
+      }
+    ],
+    "official": true
+  },
+  {
+    "id": "e54",
+    "time": "2025-03-27T09:00:00+09:00",
+    "time_precision": "hour",
+    "type": "official_stat",
+    "place": "경북 북부 5개 시·군",
+    "lat": null,
+    "lon": null,
+    "title": "산림청 정기브리핑: 영향구역 3만3,204㏊, 평균 진화율 44.3%",
+    "detail": "27일 오전 영향구역 3만3,204㏊ 추정(의성 12,685·영덕 7,819·청송 5,000·안동 4,500·영양 3,200). 평균 진화율 44.3%(청송 77·의성 54·안동 52·영양 18·영덕 10%). 당일 최대풍속 초속 20m, 강수 5㎜ 이하 예상.",
+    "numbers": {
+      "impact_area_ha": 33204,
+      "avg_containment_pct": 44.3,
+      "uiseong_pct": 54,
+      "andong_pct": 52,
+      "cheongsong_pct": 77,
+      "yeongyang_pct": 18,
+      "yeongdeok_pct": 10
+    },
+    "sources": [
+      {
+        "outlet": "경북매일",
+        "url": "https://kbmaeil.com/article/202503270913643",
+        "published": "2025-03-27",
+        "quote": "산림청은 27일 오전 정기 브리핑에서 \"경북 북부 산불영향구역이 3만 3204㏊ 로 추정된다”고 전했다."
+      },
+      {
+        "outlet": "경북매일",
+        "url": "https://kbmaeil.com/article/202503270913664",
+        "published": "2025-03-27",
+        "quote": "이번 산불의 영향면적은 지역별로 의성이 1만2685㏊로 가장 넓고, 영덕 7819㏊, 청송 5천㏊, 안동 4500㏊, 영양 3200㏊ 순이다. 이날 오전 기준 평균 진화율은 44.3%."
+      },
+      {
+        "outlet": "경북매일",
+        "url": "https://kbmaeil.com/article/202503270913664",
+        "published": "2025-03-27",
+        "quote": "청송이 77%로 가장 높지만 산불이 처음 발생한 의성은 54%, 유네스코 세계문화유산이 화마의 위협을 받는 안동은 52%에 불과하다. 다수의 사망자가 발생한 영덕의 진화율은 10%, 영양의 진화율은 18%로 추정된다."
+      }
+    ],
+    "official": true
+  },
+  {
+    "id": "e55",
+    "time": "2025-03-27T12:00:00+09:00",
+    "time_precision": "hour",
+    "type": "containment_rate",
+    "place": "의성군",
+    "lat": 36.353,
+    "lon": 128.697,
+    "title": "27일 낮 의성 진화율 55%, 영향구역 1만2,811㏊",
+    "detail": "의성 구간 진화율 55%, 영향구역 1만2,811㏊ 추정, 화선 276㎞ 중 149㎞ 완료(같은 날 오전 브리핑 1만2,685㏊와 차이).",
+    "numbers": {
+      "containment_pct": 55,
+      "impact_area_ha": 12811,
+      "fireline_km": 276
+    },
+    "sources": [
+      {
+        "outlet": "뉴시스",
+        "url": "https://www.newsis.com/view/NISX20250327_0003116059",
+        "published": "2025-03-27",
+        "quote": "의성 산불은 27일 낮 12시 기준 55%의 진화율을 보이고 있다."
+      },
+      {
+        "outlet": "뉴시스",
+        "url": "https://www.newsis.com/view/NISX20250327_0003116059",
+        "published": "2025-03-27",
+        "quote": "산불영향구역은 1만2811㏊로 추정되고 총 화선 276㎞ 중 149㎞에 대한 진화가 완료됐다."
+      }
+    ],
+    "official": true
+  },
+  {
+    "id": "e56",
+    "time": "2025-03-27T17:00:00+09:00",
+    "time_precision": "hour",
+    "type": "containment_rate",
+    "place": "경북 북부 5개 시·군",
+    "lat": null,
+    "lon": null,
+    "title": "27일 오후 5시 진화율 63%",
+    "detail": "27일 오후 5시 기준 진화율은 63%에 머물렀다.",
+    "numbers": {
+      "containment_pct": 63
+    },
+    "sources": [
+      {
+        "outlet": "경북매일",
+        "url": "https://kbmaeil.com/article/202503300914030",
+        "published": "2025-03-30",
+        "quote": "27일 오후 5시 기준 63%에 머물렀던 진화율은 28일 낮 12시 기준 94%까지 상승했다."
+      }
+    ],
+    "official": false
+  },
+  {
+    "id": "e57",
+    "time": "2025-03-27T18:00:00+09:00",
+    "time_precision": "hour",
+    "type": "weather",
+    "place": "의성군(경북 북부 5개 시·군)",
+    "lat": 36.353,
+    "lon": 128.697,
+    "title": "단비(1~3㎜) 시작, 확산세 둔화",
+    "detail": "낮에는 누적강수 0㎜였으나 오후 6시쯤 의성에 비가 내리기 시작했다. 27~28일 5개 시·군 강수량 1~2㎜(의성 1.5·안동 1·청송 2·영양 3·영덕 2㎜). 소량이지만 연무 감소·비화 억제로 진화에 결정적.",
+    "numbers": {
+      "rain_mm_uiseong": 1.5,
+      "rain_mm_andong": 1,
+      "rain_mm_cheongsong": 2,
+      "rain_mm_yeongyang": 3,
+      "rain_mm_yeongdeok": 2
+    },
+    "sources": [
+      {
+        "outlet": "경북매일",
+        "url": "https://kbmaeil.com/article/202503300914025",
+        "published": "2025-03-30",
+        "quote": "지난 27일 오후 6시쯤 경북 의성군 산불 현장에는 기다리고 기다리던 단비가 내리며 박수와 함께 환호성이 터져 나왔다."
+      },
+      {
+        "outlet": "뉴시스",
+        "url": "https://www.newsis.com/view/NISX20250328_0003116991",
+        "published": "2025-03-28",
+        "quote": "경북도내 산불 피해 지역 강수량은 의성 1.5㎜, 안동 1㎜, 청송 2㎜, 영양 3㎜, 영덕 2㎜ 등이다."
+      },
+      {
+        "outlet": "뉴시스",
+        "url": "https://mobile.newsis.com/view/NISX20250327_0003116110",
+        "published": "2025-03-27",
+        "quote": "누적 강수량 또한 0㎜로 나타났다."
+      }
+    ],
+    "official": false
+  },
+  {
+    "id": "e58",
+    "time": "2025-03-28T06:00:00+09:00",
+    "time_precision": "hour",
+    "type": "official_stat",
+    "place": "울산·경북·경남(전국)",
+    "lat": null,
+    "lon": null,
+    "title": "중대본: 산림 4만8,150㏊ 영향, 사망 28명(전국)",
+    "detail": "중대본 28일 오전 6시 기준 인명피해 사망 28·중상 9·경상 28명(65명). 산림 4만8,150㏊(전국 합계). 같은 날 산림청(경북만) 영향구역 4만5,157㏊·사망 24명과 범위·집계 기준이 다름.",
+    "numbers": {
+      "deaths_national": 28,
+      "injured_serious": 9,
+      "injured_minor": 28,
+      "impact_area_ha_national": 48150
+    },
+    "sources": [
+      {
+        "outlet": "파이낸셜뉴스",
+        "url": "https://www.fnnews.com/news/202503281010446220",
+        "published": "2025-03-28",
+        "quote": "이로써 산불 인명피해는 사망 28명, 중상 9명, 경상 28명으로 집계됐다."
+      },
+      {
+        "outlet": "파이낸셜뉴스",
+        "url": "https://www.fnnews.com/news/202503281010446220",
+        "published": "2025-03-28",
+        "quote": "이번 산불로 피해를 본 산림은 4만8150㏊로, 2000년 동해안 산불을 넘어서는 최대 규모다."
+      }
+    ],
+    "official": true
+  },
+  {
+    "id": "e59",
+    "time": "2025-03-28T07:00:00+09:00",
+    "time_precision": "hour",
+    "type": "containment_rate",
+    "place": "경북 북부 5개 시·군",
+    "lat": null,
+    "lon": null,
+    "title": "28일 오전 진화율 85%, 영향구역 4만5,157㏊",
+    "detail": "밤사이 비로 진화율 85%. 시군별 오전 7시: 의성 95·안동 85·청송 89·영양 76·영덕 65%. 영향구역 4만5,157㏊(뉴시스 다른 기사·산림청장 브리핑은 4만5,170㏊). 사망 24명, 주택 2,221동 피해.",
+    "numbers": {
+      "containment_pct": 85,
+      "impact_area_ha": 45157,
+      "uiseong_pct": 95,
+      "andong_pct": 85,
+      "cheongsong_pct": 89,
+      "yeongyang_pct": 76,
+      "yeongdeok_pct": 65
+    },
+    "sources": [
+      {
+        "outlet": "뉴시스",
+        "url": "https://www.newsis.com/view/NISX20250328_0003116991",
+        "published": "2025-03-28",
+        "quote": "지역별 진화율은 이날 오전 7시 기준 ▲의성 전체 화선 277㎞ 중 263㎞ 완료돼 진화율 95%, ▲안동 전체 화선 171㎞ 중 145㎞ 완료돼 진화율 85% ▲청송 전체 화선 187㎞ 중 166㎞ 완료돼 진화율 89% ▲영양 전체 화선 185㎞ 중 141㎞ 완료돼 진화율 76% ▲영덕 전체 화선 108㎞ 중 70㎞ 완료돼 진화율 65% 등이다."
+      },
+      {
+        "outlet": "뉴시스",
+        "url": "https://www.newsis.com/view/NISX20250328_0003116991",
+        "published": "2025-03-28",
+        "quote": "산불영향구역은 사상 최대인 4만5157㏊로 추정됐다. 이는 전날 같은 시간보다 1만ha 이상 증가한 수치다."
+      },
+      {
+        "outlet": "전북일보(연합뉴스 전재)",
+        "url": "https://www.jjan.kr/articleAmp/20250328580029",
+        "published": "2025-03-28",
+        "quote": "진화율은 85％로 전체 화선 929.4㎞ 가운데 786.4㎞ 구간에 진화가 완료됐다."
+      }
+    ],
+    "official": true
+  },
+  {
+    "id": "e60",
+    "time": "2025-03-28T12:00:00+09:00",
+    "time_precision": "hour",
+    "type": "containment_rate",
+    "place": "경북 북부 5개 시·군",
+    "lat": null,
+    "lon": null,
+    "title": "28일 낮 평균 진화율 94%",
+    "detail": "낮 12시 평균 진화율 94%(의성 98·안동 90·청송 91·영양 95·영덕 93%), 화선 928㎞ 중 871㎞ 완료.",
+    "numbers": {
+      "containment_pct": 94
+    },
+    "sources": [
+      {
+        "outlet": "경향신문",
+        "url": "https://www.khan.co.kr/article/202503281407001",
+        "published": "2025-03-28",
+        "quote": "28일 산림청에 따르면 이날 낮 12시 기준 경북 5개 시·군 산불 평균 진화율은 94%다."
+      },
+      {
+        "outlet": "경향신문",
+        "url": "https://www.khan.co.kr/article/202503281407001",
+        "published": "2025-03-28",
+        "quote": "지역별 진화율은 의성 98%, 안동 90%, 청송 91%, 영양 95%, 영덕 93% 등이다."
+      }
+    ],
+    "official": true
+  },
+  {
+    "id": "e61",
+    "time": "2025-03-28T14:30:00+09:00",
+    "time_precision": "minute",
+    "type": "containment_rate",
+    "place": "영덕군",
+    "lat": 36.415,
+    "lon": 129.366,
+    "title": "영덕 주불 진화 완료",
+    "detail": "헬기 26대·차량 70대·인력 1,007명을 투입해 오후 2시 30분쯤 영덕 지역 주불 진화를 완료했다.",
+    "numbers": {
+      "containment_pct": 100
+    },
+    "sources": [
+      {
+        "outlet": "경북매일",
+        "url": "https://kbmaeil.com/article/202503280913844",
+        "published": "2025-03-28",
+        "quote": "산림당국은 영덕 지역에 진화 헬기 26대, 차량 70대, 인력 1007명을 투입해 이날 오후 2시 30분쯤 주불 진화를 완료했다."
+      }
+    ],
+    "official": true
+  },
+  {
+    "id": "e62",
+    "time": "2025-03-28T17:00:00+09:00",
+    "time_precision": "minute",
+    "type": "containment_rate",
+    "place": "의성·안동·청송·영양·영덕",
+    "lat": 36.353,
+    "lon": 128.697,
+    "title": "경북 산불 주불 진화 선언(발생 149시간)",
+    "detail": "임상섭 산림청장: 오후 5시부로 의성·안동·청송·영양 모든 주불 진화. 사망 24명(의성1·안동4·청송4·영양6·영덕9), 시설 2,412개소, 영향구역 4만5,170㏊. 순간최대풍속 초속 27m 강풍이 확산 주원인.",
+    "numbers": {
+      "containment_pct": 100,
+      "impact_area_ha": 45170,
+      "deaths": 24,
+      "facilities": 2412,
+      "max_gust_ms": 27,
+      "duration_h": 149
+    },
+    "sources": [
+      {
+        "outlet": "위키트리(산림청장 브리핑 전문)",
+        "url": "https://www.wikitree.co.kr/articles/1037538",
+        "published": "2025-03-28",
+        "quote": "지난 3월 22일 의성군 안평면에서 발생한 산불이 안동, 청송, 영양, 영덕까지 영향을 미쳤으며 오늘 3월 28일 14시 30분 영덕지역을 시작으로 17시부로 의성, 안동, 청송, 영양 4개 지역의 모든 주불이 진화되었음을 말씀드립니다."
+      },
+      {
+        "outlet": "위키트리(산림청장 브리핑 전문)",
+        "url": "https://www.wikitree.co.kr/articles/1037538",
+        "published": "2025-03-28",
+        "quote": "현재까지 파악된 산불영향구역은 4만 5170헥타르입니다."
+      },
+      {
+        "outlet": "뉴시스",
+        "url": "https://mobile.newsis.com/view/NISX20250328_0003118023",
+        "published": "2025-03-28",
+        "quote": "임 청장은 \"산불 확산이 빨라졌던 것은 산불발생 기간동안 서풍 중심의 강하고 건조한 바람이 불었고 순간 최대풍속이 초속 27m를 기록하는 등 바람의 영향이 가장 컸다\"고 분석했다."
+      },
+      {
+        "outlet": "뉴시스",
+        "url": "https://mobile.newsis.com/view/NISX20250328_0003118023",
+        "published": "2025-03-28",
+        "quote": "인명피해는 총 24명(의성 1명, 안동 4명, 청송 4명, 영양 6명, 영덕 9명)이다. 시설피해는 2412개소에서 발생했다."
+      }
+    ],
+    "official": true
+  },
+  {
+    "id": "e63",
+    "time": "2025-03-29T03:00:00+09:00",
+    "time_precision": "hour",
+    "type": "response",
+    "place": "안동시 남후면 남안동IC 인근·의성 신평면",
+    "lat": 36.5,
+    "lon": 128.66,
+    "title": "잔불 연기 재발(재발화 오인), 헬기 재투입",
+    "detail": "28일 오후 10시께부터 연기 신고가 잇따라 남안동IC 인근에 헬기 6대가 출동했다. 당국은 실제 재발화보다 잔불 정리 과정 연기로 판단. 중앙고속도로 남안동IC~서안동IC 05:00~09:15 통제. 29일 새벽 1시쯤 청송 주왕산 부근 비.",
+    "numbers": {},
+    "sources": [
+      {
+        "outlet": "한국경제",
+        "url": "https://www.hankyung.com/article/202503297106i",
+        "published": "2025-03-29",
+        "quote": "소방당국은 28일 오후 10시께부터 잇단 연기 신고를 접수했으며, 산림당국은 이날 오전 3시께 잔불 정리 과정에서 연기가 발생한 것으로 보고 있다."
+      },
+      {
+        "outlet": "한국경제",
+        "url": "https://www.hankyung.com/article/202503297106i",
+        "published": "2025-03-29",
+        "quote": "한국도로공사는 이날 오전 5시부터 중앙고속도로 남안동IC∼서안동IC 구간을 전면 통제했으나, 잔불로 인한 연기임이 확인되며 오전 9시 15분부터 통행을 재개했다."
+      },
+      {
+        "outlet": "경북매일",
+        "url": "https://kbmaeil.com/article/202503300914025",
+        "published": "2025-03-30",
+        "quote": "이어 29일 새벽 1시쯤 청송군 주왕산 부근에도 고대하던 단비가 내렸다."
+      }
+    ],
+    "official": false
+  },
+  {
+    "id": "e64",
+    "time": "2025-03-29T09:00:00+09:00",
+    "time_precision": "hour",
+    "type": "official_stat",
+    "place": "경북 5개 시·군",
+    "lat": null,
+    "lon": null,
+    "title": "중대본: 경북 진화율 100%, 영향구역 4만5,170㏊, 사망 25명",
+    "detail": "중대본 29일 보고서: 경북 5개 시·군 진화율 100%. 영향구역 4만5,170㏊(의성 12,821·안동 9,896·청송 9,320·영양 5,070·영덕 8,050). 경북 인명피해 54명(사망 25). 시설 4,701개소(주택 전소 2,896). 전국 기준 같은 날 09시 인명피해 70명·사망 30명.",
+    "numbers": {
+      "containment_pct": 100,
+      "impact_area_ha": 45170,
+      "deaths_gyeongbuk": 25,
+      "casualties_gyeongbuk": 54,
+      "facilities": 4701,
+      "houses_destroyed": 2896,
+      "deaths_national": 30
+    },
+    "sources": [
+      {
+        "outlet": "경북매일",
+        "url": "https://kbmaeil.com/article/202503290913867",
+        "published": "2025-03-29",
+        "quote": "보고서에 따르면 경북지역의 산불피해면적(산불영향구역)은 4만5170ha이며 시군별로는 의성 1만2821ha, 안동 9896ha, 청송 9320ha, 영양 5070ha, 영덕 8050ha다."
+      },
+      {
+        "outlet": "경북매일",
+        "url": "https://kbmaeil.com/article/202503290913867",
+        "published": "2025-03-29",
+        "quote": "경북지역의 인명피해는 29일 오전 6시 기준으로 총 54명이며 사망 25명, 중상 5명, 경상 24명이다."
+      },
+      {
+        "outlet": "행정안전부(보도자료 PDF)",
+        "url": "https://www.mois.go.kr/frt/bbs/type010/commonSelectBoardArticle.do?bbsId=BBSMSTR_000000000008&nttId=116695",
+        "published": "2025-03-29",
+        "quote": "3.29. 09시 기준 인명피해는 총 70명으로 집계되었고, 이중 사망자는 30명이다."
+      }
+    ],
+    "official": true
+  },
+  {
+    "id": "e65",
+    "time": "2025-03-30T00:00:00+09:00",
+    "time_precision": "day",
+    "type": "official_stat",
+    "place": "경북 5개 시·군",
+    "lat": null,
+    "lon": null,
+    "title": "경북 사망 26명·대피 3만4,816명(경북매일 집계)",
+    "detail": "중대본 30일 회의 기준 경북 사망 26명, 시설 3,369채, 누적 대피 3만4,816명 중 3,773명 미귀가.",
+    "numbers": {
+      "deaths_gyeongbuk": 26,
+      "buildings": 3369,
+      "evacuated_total": 34816,
+      "not_returned": 3773
+    },
+    "sources": [
+      {
+        "outlet": "경북매일",
+        "url": "https://kbmaeil.com/article/202503300914030",
+        "published": "2025-03-30",
+        "quote": "안동, 영덕 등에서 주민 등 26명이 사망했고, 이날 기준 주택 등 시설 피해는 3369채로 집계됐다. 아직 집으로 돌아가지 못하고 대피소 118곳에 생활하는 이재민이 3773명에 이른다. 이번 산불로 모두 3만4816명이 대피했다가 3만 1043명이 귀가했다."
+      }
+    ],
+    "official": false
+  },
+  {
+    "id": "e66",
+    "time": "2025-03-30T16:00:00+09:00",
+    "time_precision": "minute",
+    "type": "official_stat",
+    "place": "울산·경북·경남(전국)",
+    "lat": null,
+    "lon": null,
+    "title": "중대본 9차 회의: 전 산불 주불 진화, 영향구역 4만8,239㏊, 사망 30명",
+    "detail": "산청 산불 주불 진화(13시)로 정부 관리 11개 산불 모두 진화. 산불영향구역 총 4만8,239㏊, 3.30 12시 기준 인명피해 75명(사망 30·중상 9·경상 36). 경북 단독 수치 아님.",
+    "numbers": {
+      "impact_area_ha_national": 48239,
+      "deaths_national": 30,
+      "casualties_national": 75
+    },
+    "sources": [
+      {
+        "outlet": "행정안전부(보도자료 PDF, 정책브리핑 전재)",
+        "url": "https://www.korea.kr/briefing/pressReleaseView.do?newsId=156681510",
+        "published": "2025-03-30",
+        "quote": "정부가 관리해온 11개 산불 진화가 모두 완료되었다. 산불영향구역은 총 48,239ha이다."
+      },
+      {
+        "outlet": "행정안전부(보도자료 PDF, 정책브리핑 전재)",
+        "url": "https://www.korea.kr/briefing/pressReleaseView.do?newsId=156681510",
+        "published": "2025-03-30",
+        "quote": "3.30. 12시 기준 인명피해는 총 75명으로 집계되었고, 이중 사망자는 30명, 중상 9명, 경상 36명이다."
+      }
+    ],
+    "official": true
+  },
+  {
+    "id": "e67",
+    "time": "2025-04-08T00:00:00+09:00",
+    "time_precision": "day",
+    "type": "casualty",
+    "place": "경북 5개 시·군",
+    "lat": null,
+    "lon": null,
+    "title": "산림청 기고문: 희생자 28명(지역별)",
+    "detail": "산림청 기고문은 희생자 28명(영덕10·영양7·안동5·청송4·의성1, 별도로 헬기 조종사 1명)으로 적시. 28일 브리핑 24명 대비 증가. 기고문의 피해면적은 약 45,000ha.",
+    "numbers": {
+      "deaths": 28,
+      "yeongdeok": 10,
+      "yeongyang": 7,
+      "andong": 5,
+      "cheongsong": 4,
+      "uiseong": 1
+    },
+    "sources": [
+      {
+        "outlet": "산림청(정책브리핑 기고문)",
+        "url": "https://www.korea.kr/briefing/pressReleaseView.do?newsId=156683119",
+        "published": "2025-04-08",
+        "quote": "그러나 무엇보다 마음이 무거운 것은 이로 인해 소중한 생명 28명이 희생되었다는 점입니다. 영덕 10명, 영양 7명, 안동 5명, 청송 4명, 의성에서 1명 그리고 산불진화 중 헬기 추락으로 조종사 한분도 희생되었습니다."
+      }
+    ],
+    "official": true
+  },
+  {
+    "id": "e68",
+    "time": "2025-04-17T00:00:00+09:00",
+    "time_precision": "day",
+    "type": "official_stat",
+    "place": "경북 5개 시·군",
+    "lat": null,
+    "lon": null,
+    "title": "NDMS 입력 산림피해 약 9만4천㏊ — 영향구역의 2배",
+    "detail": "5개 시·군이 재난관리시스템(NDMS)에 입력한 산림 피해면적 합계 약 9만4천㏊(안동 3만4천·의성 2만7천·영덕 1만6천·청송 9,300·영양 6,800). 기존 산불영향구역 4만5,157㏊의 2배 이상.",
+    "numbers": {
+      "forest_damage_ha_approx": 94000
+    },
+    "sources": [
+      {
+        "outlet": "매일신문",
+        "url": "https://www.imaeil.com/page/view/2025041717003005332",
+        "published": "2025-04-17",
+        "quote": "지난 15일까지 산불 피해를 입은 5개 시·군이 재난관리시스템(NDMS)에 자체 입력한 산림 피해면적을 합하면, 약 9만4천여㏊에 달한다."
+      },
+      {
+        "outlet": "한국경제",
+        "url": "https://www.hankyung.com/article/2025041772297",
+        "published": "2025-04-17",
+        "quote": "17일 각 지자체와 당국 등에 따르면 산림청을 포함한 정부 기관 합동 조사 결과 경북 5개 시군을 휩쓴 산불 피해 규모는 9만㏊에 가까운 것으로 전해졌다."
+      }
+    ],
+    "official": false
+  },
+  {
+    "id": "e69",
+    "time": "2025-04-18T10:00:00+09:00",
+    "time_precision": "minute",
+    "type": "official_stat",
+    "place": "경북 5개 시·군",
+    "lat": null,
+    "lon": null,
+    "title": "산림청 공식: 경북 산림피해 9만9,289㏊(잠정)",
+    "detail": "산림청 정밀조사 결과 경북 산림피해면적 99,289ha(의성 28,853·안동 26,709·청송 20,655·영양 6,864·영덕 16,208), 3개 시·도 합계 104천ha. 진화 완료 당시 영향구역(48천ha)과는 산정 방식이 다르며 최종 확정은 중대본.",
+    "numbers": {
+      "forest_damage_ha_gyeongbuk": 99289,
+      "uiseong": 28853,
+      "andong": 26709,
+      "cheongsong": 20655,
+      "yeongyang": 6864,
+      "yeongdeok": 16208,
+      "forest_damage_ha_3provinces": 104000
+    },
+    "sources": [
+      {
+        "outlet": "산림청(보도자료 PDF, 정책브리핑 전재)",
+        "url": "https://www.korea.kr/briefing/pressReleaseView.do?newsId=156685003",
+        "published": "2025-04-18",
+        "quote": "지역별 잠정 산림피해면적은 △경북 99,289ha(의성 28,853ha, 안동 26,709ha, 청송 20,655ha, 영양 6,864ha, 영덕 16,208ha), △경남 3,397ha(산청 2,403ha, 하동 994ha), △울산(울주) 1,190ha이다."
+      },
+      {
+        "outlet": "산림청(보도자료 PDF, 정책브리핑 전재)",
+        "url": "https://www.korea.kr/briefing/pressReleaseView.do?newsId=156685003",
+        "published": "2025-04-18",
+        "quote": "한편 산불진화 완료 당시 산불영향구역*은 48천ha였으나, 이는 산불진화를 위한 것으로 산림복구를 위해 이번 현장조사를 통해 파악된 산불피해면적**과는"
+      }
+    ],
+    "official": true
+  },
+  {
+    "id": "e70",
+    "time": "2025-09-11T00:00:00+09:00",
+    "time_precision": "day",
+    "type": "official_stat",
+    "place": "경북 5개 시·군",
+    "lat": null,
+    "lon": null,
+    "title": "시민사회 위성분석: 피해면적 11만6,333㏊(산림청 발표 초과)",
+    "detail": "불교환경연대 등과 홍석환 교수 연구팀은 위성영상 분석 결과 피해면적이 산림청 공식 9만9,289㏊보다 넓은 11만6,333㏊라고 발표. 비공식 수치.",
+    "numbers": {
+      "forest_damage_ha_ngo": 116333
+    },
+    "sources": [
+      {
+        "outlet": "경북매일",
+        "url": "https://kbmaeil.com/article/20250911500373",
+        "published": "2025-09-11",
+        "quote": "홍석환 교수는 “위성영상 분석 결과 산불 피해 면적은 산림청의 공식 발표인 9만9289ha보다 훨씬 넓은 11만6333ha로 나타났다”고 밝혔다."
+      }
+    ],
+    "official": false
+  }
+]

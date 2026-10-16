@@ -33,11 +33,25 @@ export interface FrontWeather {
   lon: number
 }
 
+export interface Station {
+  id: number
+  name: string
+  lon: number
+  lat: number
+  ws: (number | null)[]
+  wd: (number | null)[]
+  rh: (number | null)[]
+  ta: (number | null)[]
+  rn: (number | null)[]
+  daily_gust: { t: number; v: number; wd: number | null; min_rh: number | null }[]
+}
+
 export interface FireData {
   t0: string
   hotspots: Hotspot[]
   area: AreaPoint[]
   weather: { hours: number[]; grid: GridPoint[]; front: FrontWeather[] }
+  stations: Station[]
   meta: { first_detection: { lon: number; lat: number; t: number }; hotspot_count: number; cell_km2: number }
 }
 
