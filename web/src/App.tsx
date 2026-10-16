@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useRef, useState } from 'react'
-import MapView, { type Layers } from './MapView'
+import MapView, { type Basemap, type Layers } from './MapView'
 import Timeline from './Timeline'
 import type { FireData, FireEvent, NewsData } from './types'
 import { ACTIVE_WINDOW, T_MAX, T_MIN, compass, eventLabel, fmt, hourIndex, toMinutes } from './time'
@@ -16,6 +16,7 @@ export default function App() {
   const [speed, setSpeed] = useState(1)
   const [tab, setTab] = useState<'overview' | 'events' | 'news' | 'sources'>('overview')
   const [selected, setSelected] = useState<string | null>(null)
+  const [basemap, setBasemap] = useState<Basemap>('terrain')
   const [layers, setLayers] = useState<Layers>({ stations: true, burned: true, active: true, wind: true, events: true, terrain: true })
 
   useEffect(() => {
@@ -77,6 +78,10 @@ export default function App() {
     return { peak, peakFrom, gust, minRh, obsGusts, final: data.area[data.area.length - 1] }
   }, [data])
 
+  useEffect(() => {
+    document.documentElement.dataset.theme = basemap === 'night' ? 'dark' : 'light'
+  }, [basemap])
+
   if (!data || !stats) return <div className="loading">데이터 불러오는 중…</div>
 
   const tm = Math.round(t)
@@ -108,7 +113,20 @@ export default function App() {
 
       <main className="body">
         <section className="stage">
-          <MapView data={data} events={events} t={tm} layers={layers} selected={selected} onSelectEvent={selectEvent} />
+          <MapView basemap={basemap} data={data} events={events} t={tm} layers={layers} selected={selected} onSelectEvent={selectEvent} />
+          <div className="basemap-switch" role="radiogroup" aria-label="배경지도">
+            {(
+              [
+                ['terrain', '지형'],
+                ['night', '밤'],
+                ['satellite', '위성'],
+              ] as const
+            ).map(([k, label]) => (
+              <button key={k} className={basemap === k ? 'on' : ''} onClick={() => setBasemap(k)} role="radio" aria-checked={basemap === k}>
+                {label}
+              </button>
+            ))}
+          </div>
           <div className="map-legend">
             <div>
               <i className="sw active" /> 최근 12시간 위성 열점
@@ -327,7 +345,7 @@ export default function App() {
                   <b>기상청 ASOS</b> 종관기상관측 6개 지점(의성·안동·청송·영덕·봉화·포항) 시간자료·일 최대순간풍속 (공공데이터포털)
                 </li>
                 <li>
-                  <b>AWS Terrain Tiles</b> 고도 (3D 지형) · <b>Esri</b> 위성영상
+                  <b>AWS Terrain Tiles</b> 고도 → 3D 지형·음영기복·등고선(브라우저에서 생성, 지형 2배 과장) · <b>Esri</b> 위성영상
                 </li>
                 <li>
                   <b>네이버 뉴스 검색 API</b> {news ? `${news.meta.count.toLocaleString()}건` : ''} (지역×주제 48개 검색어, 관련도순 상위 1,000건씩, 발행 3/22~31). 전수가 아닌 표본입니다.

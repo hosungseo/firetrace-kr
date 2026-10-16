@@ -2,6 +2,7 @@ import { useEffect, useRef } from 'react'
 import * as maplibregl from 'maplibre-gl'
 import type { GeoJSONSource, MapLayerMouseEvent } from 'maplibre-gl'
 import 'maplibre-gl/dist/maplibre-gl.css'
+import mlcontour from 'maplibre-contour'
 import type { FireData, FireEvent } from './types'
 import { ACTIVE_WINDOW, hourIndex } from './time'
 
@@ -14,7 +15,10 @@ export interface Layers {
   terrain: boolean
 }
 
+export type Basemap = 'terrain' | 'night' | 'satellite'
+
 interface Props {
+  basemap: Basemap
   data: FireData
   events: FireEvent[]
   t: number
@@ -25,6 +29,23 @@ interface Props {
 
 const IMAGERY = 'https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}'
 const DEM = 'https://s3.amazonaws.com/elevation-tiles-prod/terrarium/{z}/{x}/{y}.png'
+
+// Shared DEM for terrain, hillshade and client-side contour generation.
+const demSource = new mlcontour.DemSource({ url: DEM, encoding: 'terrarium', maxzoom: 14, worker: true, cacheSize: 200 })
+demSource.setupMaplibre(maplibregl)
+
+// Sun azimuth by local hour: east at dawn, south at noon, west at dusk; flat northern light at night.
+// Quantised to 2-hour steps because changing it means rebuilding the hillshade layer (see ensureHillshade).
+function sunAzimuth(t: number) {
+  const h = Math.floor(((t / 60) % 24) / 2) * 2
+  return h >= 6 && h <= 18 ? 90 + (h - 6) * 15 : 335
+}
+
+const BASE = {
+  terrain: { bg: '#e7dfd0', shadow: '#4a3a28', highlight: '#fffaf0', accent: '#b9a07a', exag: 0.55, contour: '#7a5f41', burned: '#3b0d06', burnedOp: 0.8, arrow: ['#1d4f8f', '#2b7dd6', '#0b5fd0'], halo: 'rgba(255,255,255,0.85)' },
+  night: { bg: '#15141a', shadow: '#000000', highlight: '#5d5a66', accent: '#26242c', exag: 0.75, contour: '#6c6878', burned: '#6e2410', burnedOp: 0.85, arrow: ['#b8c8e0', '#9fd0ff', '#4aa8ff'], halo: 'rgba(0,0,0,0.7)' },
+  satellite: { bg: '#000', shadow: '#2a1a0a', highlight: '#ffffff', accent: '#000000', exag: 0.35, contour: '#ffffff', burned: '#3b0d06', burnedOp: 0.75, arrow: ['#e6f1fb', '#9fd0ff', '#4aa8ff'], halo: 'rgba(10,20,40,0.75)' },
+} as const
 
 function arrowImage(): ImageData {
   const s = 48
@@ -85,13 +106,14 @@ function eventGeoJSON(events: FireEvent[]) {
   }
 }
 
-export default function MapView({ data, events, t, layers, selected, onSelectEvent }: Props) {
+export default function MapView({ basemap, data, events, t, layers, selected, onSelectEvent }: Props) {
   const el = useRef<HTMLDivElement>(null)
   const mapRef = useRef<maplibregl.Map | null>(null)
   const ready = useRef(false)
+  const hillshadeKey = useRef('')
   const stationEls = useRef<HTMLDivElement[]>([])
-  const latest = useRef({ t, layers, events, selected })
-  latest.current = { t, layers, events, selected }
+  const latest = useRef({ t, layers, events, selected, basemap })
+  latest.current = { t, layers, events, selected, basemap }
 
   useEffect(() => {
     const map = new maplibregl.Map({
@@ -100,10 +122,24 @@ export default function MapView({ data, events, t, layers, selected, onSelectEve
         version: 8,
         sources: {
           imagery: { type: 'raster', tiles: [IMAGERY], tileSize: 256, maxzoom: 17, attribution: 'Imagery © Esri' },
+          contours: {
+            type: 'vector',
+            maxzoom: 14,
+            tiles: [
+              demSource.contourProtocolUrl({
+                multiplier: 1,
+                thresholds: { 8: [200, 1000], 10: [100, 500], 12: [50, 250], 14: [20, 100] },
+                elevationKey: 'ele',
+                levelKey: 'level',
+                contourLayer: 'contours',
+              }),
+            ],
+          },
           dem: { type: 'raster-dem', tiles: [DEM], tileSize: 256, encoding: 'terrarium', maxzoom: 14 },
           hillshadeDem: { type: 'raster-dem', tiles: [DEM], tileSize: 256, encoding: 'terrarium', maxzoom: 14 },
         },
         layers: [
+          { id: 'bg', type: 'background', paint: { 'background-color': BASE.terrain.bg } },
           { id: 'imagery', type: 'raster', source: 'imagery', paint: { 'raster-saturation': -0.25, 'raster-brightness-max': 0.92 } },
           { id: 'hillshade', type: 'hillshade', source: 'hillshadeDem', paint: { 'hillshade-exaggeration': 0.35, 'hillshade-shadow-color': '#2a1a0a' } },
         ],
@@ -116,12 +152,24 @@ export default function MapView({ data, events, t, layers, selected, onSelectEve
       attributionControl: { compact: true, customAttribution: 'Fire: NASA FIRMS · Weather: Open-Meteo (ERA5) · DEM: AWS Terrain Tiles' },
     })
     mapRef.current = map
+    if (import.meta.env.DEV) (window as unknown as { __map: maplibregl.Map }).__map = map
     map.addControl(new maplibregl.NavigationControl({ visualizePitch: true }), 'top-left')
     map.addControl(new maplibregl.ScaleControl({ unit: 'metric' }), 'bottom-left')
 
     map.on('load', () => {
       map.setTerrain({ source: 'dem', exaggeration: 1.6 })
       map.addImage('arrow', arrowImage(), { pixelRatio: 2, sdf: true })
+      map.addLayer({
+        id: 'contours',
+        type: 'line',
+        source: 'contours',
+        'source-layer': 'contours',
+        paint: {
+          'line-color': BASE.terrain.contour,
+          'line-opacity': ['case', ['>', ['get', 'level'], 0], 0.7, 0.3],
+          'line-width': ['case', ['>', ['get', 'level'], 0], 1.1, 0.5],
+        },
+      })
 
       map.addSource('hotspots', { type: 'geojson', data: hotspotGeoJSON(data) })
       map.addLayer({
@@ -224,7 +272,17 @@ export default function MapView({ data, events, t, layers, selected, onSelectEve
 
   function apply(map: maplibregl.Map) {
     if (!ready.current) return
-    const { t, layers, events, selected } = latest.current
+    const { t, layers, events, selected, basemap } = latest.current
+    const b = BASE[basemap]
+    const sat = basemap === 'satellite'
+    map.setLayoutProperty('imagery', 'visibility', sat ? 'visible' : 'none')
+    map.setLayoutProperty('contours', 'visibility', sat ? 'none' : 'visible')
+    map.setPaintProperty('contours', 'line-color', b.contour)
+    ensureHillshade(map, basemap, sunAzimuth(t))
+    map.setPaintProperty('burned', 'circle-color', b.burned)
+    map.setPaintProperty('burned', 'circle-opacity', b.burnedOp)
+    map.setPaintProperty('wind', 'icon-color', ['interpolate', ['linear'], ['get', 'ws'], 0, b.arrow[0], 5, b.arrow[1], 10, b.arrow[2]])
+    map.setPaintProperty('wind', 'icon-halo-color', b.halo)
     map.setFilter('burned', ['<=', ['get', 't'], t - ACTIVE_WINDOW])
     const activeF: maplibregl.FilterSpecification = ['all', ['<=', ['get', 't'], t], ['>', ['get', 't'], t - ACTIVE_WINDOW]]
     map.setFilter('active', activeF)
@@ -251,13 +309,41 @@ export default function MapView({ data, events, t, layers, selected, onSelectEve
         `<b>${st.name}</b> ${ws != null ? ws.toFixed(1) : '–'}<small>m/s</small> · ${st.rh[hi] ?? '–'}%`
       el.classList.toggle('strong', (ws ?? 0) >= 6)
     })
-    map.setTerrain(layers.terrain ? { source: 'dem', exaggeration: 1.6 } : null)
+    map.setTerrain(layers.terrain ? { source: 'dem', exaggeration: sat ? 1.6 : 2.0 } : null)
+  }
+
+  // With terrain enabled MapLibre bakes the hillshade into the terrain pass, so paint updates
+  // on the existing layer never show. Rebuild the layer when its look (basemap or sun) changes.
+  function ensureHillshade(map: maplibregl.Map, basemap: Basemap, azimuth: number) {
+    const key = `${basemap}:${azimuth}`
+    if (hillshadeKey.current === key) return
+    hillshadeKey.current = key
+    const b = BASE[basemap]
+    // The background layer is cached by the terrain pass as well, so rebuild it too.
+    if (map.getLayer('bg')) map.removeLayer('bg')
+    map.addLayer({ id: 'bg', type: 'background', paint: { 'background-color': b.bg } }, 'imagery')
+    if (map.getLayer('hillshade')) map.removeLayer('hillshade')
+    map.addLayer(
+      {
+        id: 'hillshade',
+        type: 'hillshade',
+        source: 'hillshadeDem',
+        paint: {
+          'hillshade-exaggeration': b.exag,
+          'hillshade-shadow-color': b.shadow,
+          'hillshade-highlight-color': b.highlight,
+          'hillshade-accent-color': b.accent,
+          'hillshade-illumination-direction': azimuth,
+        },
+      },
+      'contours',
+    )
   }
 
   useEffect(() => {
     if (mapRef.current) apply(mapRef.current)
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [t, layers, events, selected])
+  }, [t, layers, events, selected, basemap])
 
   useEffect(() => {
     const ev = events.find((e) => e.id === selected)

@@ -115,3 +115,31 @@
 .news-list a:hover { text-decoration: underline; }
 .news-meta { font-size: 11px; color: var(--ink-3); margin-top: 2px; display: flex; gap: 4px; align-items: center; flex-wrap: wrap; }
 .chip { background: #efe9df; color: var(--ink-2); border-radius: 3px; padding: 0 4px; font-size: 10.5px; }
+
+/* basemap switch */
+.basemap-switch { position: absolute; left: 12px; top: 112px; display: flex; background: var(--surface); border-radius: 8px; box-shadow: 0 1px 4px rgba(0,0,0,.2); padding: 3px; gap: 2px; }
+.basemap-switch button { border: 0; background: none; border-radius: 6px; padding: 4px 9px; font-size: 12px; color: var(--ink-3); }
+.basemap-switch button.on { background: var(--ink); color: var(--surface); font-weight: 600; }
+
+/* dark theme (night basemap) */
+:root[data-theme='dark'] { color-scheme: dark; --bg: #121116; --surface: #1a191f; --ink: #ecebf0; --ink-2: #b4b1bd; --ink-3: #7f7c8a; --line: #2c2a33; --fire: #ff7a3d; --fire-dark: #ffb08a; --wind: #6fb3ff; --rh: #4fc9bd; --event: #7ea0ff; }
+:root[data-theme='dark'] .controls button, :root[data-theme='dark'] .ev-detail, :root[data-theme='dark'] .jump { background: var(--surface); color: var(--ink); }
+:root[data-theme='dark'] .controls .play { background: var(--ink); color: var(--bg); }
+:root[data-theme='dark'] .ev-list li.sel button { background: #26304a; }
+:root[data-theme='dark'] .jump:hover { background: #2a2320; }
+:root[data-theme='dark'] .chip { background: #2c2a33; }
+:root[data-theme='dark'] .map-legend, :root[data-theme='dark'] .now-card { background: rgba(26,25,31,.92); color: var(--ink-2); }
+:root[data-theme='dark'] .stn { background: rgba(26,25,31,.9); color: var(--ink); }
+:root[data-theme='dark'] .stn-dot { background: var(--surface); border-color: var(--ink); }
+:root[data-theme='dark'] .stn.strong { background: #ecebf0; color: #15141a; }
+:root[data-theme='dark'] .stn.strong .stn-arrow { color: #1d5fa8; }
+:root[data-theme='dark'] .sw.stn-key { background: var(--surface); border-color: var(--ink); }
+:root[data-theme='dark'] .obs-dot { fill: var(--surface); stroke: var(--ink); }
+:root[data-theme='dark'] .obs-dot.strong { fill: var(--ink); }
+:root[data-theme='dark'] .now-line, :root[data-theme='dark'] .now-dot { stroke: var(--ink); fill: var(--ink); }
+:root[data-theme='dark'] .tip-bg { fill: #ecebf0; }
+:root[data-theme='dark'] .tip { fill: #15141a; }
+:root[data-theme='dark'] .news-bar { fill: #9a938a; }
+:root[data-theme='dark'] .ev-tick { fill: #8a8794; }
+:root[data-theme='dark'] .maplibregl-ctrl-group { background: var(--surface); }
+:root[data-theme='dark'] .maplibregl-ctrl-group button { filter: invert(1) hue-rotate(180deg); }
