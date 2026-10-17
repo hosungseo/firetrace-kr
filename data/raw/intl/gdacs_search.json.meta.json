@@ -2,7 +2,7 @@
   "source_url": "https://www.gdacs.org/gdacsapi/api/events/geteventlist/SEARCH?eventlist=WF&fromDate=2025-03-20&toDate=2025-04-05&alertlevel=Green;Orange;Red&country=Korea",
   "final_url": "https://www.gdacs.org/gdacsapi/api/events/geteventlist/SEARCH?eventlist=WF&fromDate=2025-03-20&toDate=2025-04-05&alertlevel=Green;Orange;Red&country=Korea",
   "fetched_at_utc": "2026-10-17T00:41:58.349549+00:00",
-  "licence_or_terms": null,
+  "licence_or_terms": "GDACS Disclaimer and Terms of Use: model estimates supplied as is, without warranty; no separate open-data licence stated on this page.",
   "row_count": 5,
   "caveat": "Research response cache; row_count is null for HTML/JS/binary or unknown. No reuse licence inferred.",
   "http_status": 200,
@@ -10,5 +10,6 @@
   "request_body": null,
   "attempts": [],
   "public_tokens_redacted": false,
-  "sha256": "0465842a34440b6e7fee5453bc9ed01b3b129c4b15fe2ac79a5a859a87f21e25"
+  "sha256": "0465842a34440b6e7fee5453bc9ed01b3b129c4b15fe2ac79a5a859a87f21e25",
+  "terms_source_url": "https://www.gdacs.org/About/termofuse.aspx"
 }

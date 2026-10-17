@@ -5,15 +5,13 @@ Additional discovered endpoints can be archived with: request NAME URL [EXT].
 Files <= 50 MB; failures retain exact response bytes and a blocked note.
 """
 import argparse
-import io
 import json
-import math
 import re
 import time
 import xml.etree.ElementTree as ET
 from datetime import date, timedelta
 from pathlib import Path
-from urllib.parse import urlencode, urljoin
+from urllib.parse import urlencode
 
 from public_data_http import ROOT, fetch, utc_now, write_json
 
@@ -192,9 +190,10 @@ def imagery():
         if time.monotonic() >= deadline:
             break
         request(name, url, ext)
-    request('unosat_korea', 'https://unosat.org/our_products/', body={
-        'region':['Korea (the Republic of)'], 'date_from':'2025-03-01',
-        'date_to':'2025-04-30', 'title':'', 'is_active':False,'is_charter':None})
+    if time.monotonic() < deadline:
+        request('unosat_korea', 'https://unosat.org/our_products/', body={
+            'region':['Korea (the Republic of)'], 'date_from':'2025-03-01',
+            'date_to':'2025-04-30', 'title':'', 'is_active':False,'is_charter':None})
 
 
 def gibs():

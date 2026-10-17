@@ -1,7 +1,8 @@
 import { useEffect, useMemo, useRef, useState } from 'react'
 import MapView, { type Basemap, type Layers } from './MapView'
 import Timeline from './Timeline'
-import type { EmdCollection, FireData, FireEvent, KfsData, NewsData } from './types'
+import Response from './Response'
+import type { EmdCollection, FireData, FireEvent, GdacsData, GwisData, KfsData, NewsData, ResponseData } from './types'
 import { ACTIVE_WINDOW, T_MAX, T_MIN, compass, eventLabel, fmt, hourIndex, toMinutes } from './time'
 import './App.css'
 
@@ -13,13 +14,18 @@ export default function App() {
   const [news, setNews] = useState<NewsData | null>(null)
   const [emd, setEmd] = useState<EmdCollection | null>(null)
   const [kfs, setKfs] = useState<KfsData | null>(null)
+  const [resp, setResp] = useState<ResponseData | null>(null)
+  const [gwis, setGwis] = useState<GwisData | null>(null)
+  const [gdacs, setGdacs] = useState<GdacsData | null>(null)
+  const [intlNews, setIntlNews] = useState<{ gdelt_volume?: { series: [number, number, string][] } } | null>(null)
+  const [focusCode, setFocusCode] = useState<string | null>(null)
   const [t, setT] = useState(T_MIN + 13 * 60)
   const [playing, setPlaying] = useState(false)
   const [speed, setSpeed] = useState(1)
-  const [tab, setTab] = useState<'overview' | 'events' | 'news' | 'sources'>('overview')
+  const [tab, setTab] = useState<'overview' | 'response' | 'events' | 'news' | 'sources'>('overview')
   const [selected, setSelected] = useState<string | null>(null)
   const [basemap, setBasemap] = useState<Basemap>('terrain')
-  const [layers, setLayers] = useState<Layers>({ smoke: false, emd: true, stations: true, burned: true, active: true, wind: true, events: true, terrain: true })
+  const [layers, setLayers] = useState<Layers>({ gwis: true, smoke: false, emd: true, stations: true, burned: true, active: true, wind: true, events: true, terrain: true })
 
   useEffect(() => {
     fetch('data/fire.json')
@@ -57,6 +63,22 @@ export default function App() {
       .then((r) => (r.ok ? r.json() : null))
       .then(setKfs)
       .catch(() => setKfs(null))
+    fetch('data/response.json')
+      .then((r) => (r.ok ? r.json() : null))
+      .then(setResp)
+      .catch(() => setResp(null))
+    fetch('data/intl_burned.json')
+      .then((r) => (r.ok ? r.json() : null))
+      .then(setGwis)
+      .catch(() => setGwis(null))
+    fetch('data/intl_gdacs.json')
+      .then((r) => (r.ok ? r.json() : null))
+      .then(setGdacs)
+      .catch(() => setGdacs(null))
+    fetch('data/intl_news.json')
+      .then((r) => (r.ok ? r.json() : null))
+      .then(setIntlNews)
+      .catch(() => setIntlNews(null))
   }, [])
 
   // playback
@@ -141,7 +163,7 @@ export default function App() {
 
       <main className="body">
         <section className="stage">
-          <MapView basemap={basemap} data={data} events={events} emd={emd} kfs={kfs?.fires ?? []} t={tm} layers={layers} selected={selected} onSelectEvent={selectEvent} />
+          <MapView basemap={basemap} data={data} events={events} emd={emd} kfs={kfs?.fires ?? []} gwis={gwis} focusCode={focusCode} t={tm} layers={layers} selected={selected} onSelectEvent={selectEvent} />
           <div className="basemap-switch" role="radiogroup" aria-label="배경지도">
             {(
               [
@@ -178,6 +200,11 @@ export default function App() {
             {localFires.length > 0 && (
               <div>
                 <i className="sw kfs" /> 산림청 발생 기록 (위치 근사: 읍면 중심)
+              </div>
+            )}
+            {gwis && (
+              <div>
+                <i className="sw gwis" /> JRC GWIS 화재 둘레 추정 (MODIS·VIIRS)
               </div>
             )}
             {emd && (
@@ -232,6 +259,7 @@ export default function App() {
             {(
               [
                 ['overview', '개요'],
+                ['response', '대응 시차'],
                 ['events', `기록 ${events.length ? `(${seen.length}/${events.length})` : ''}`],
                 ['news', `보도 ${news ? `(${recentNews.length})` : ''}`],
                 ['sources', '출처'],
@@ -255,6 +283,7 @@ export default function App() {
                   ['stations', '기상청 관측소'],
                   ['events', '보도·공식 기록·발생 기록'],
                   ['emd', '읍면동 경계·인구'],
+                  ['gwis', 'JRC GWIS 화재 둘레 추정'],
                   ['terrain', '3D 지형'],
                 ] as const
               ).map(([k, label]) => (
@@ -332,12 +361,52 @@ export default function App() {
                   ))}
                 </>
               )}
+              {gdacs && gdacs.episodes.length > 0 && (
+                <>
+                  <h3>국제 기관 기록</h3>
+                  <dl className="facts">
+                    <dt>GDACS 경보</dt>
+                    <dd>
+                      {gdacs.episodes[0].alert_level} (낮음) · 영향 인구 추정 최대{' '}
+                      {Math.max(...gdacs.episodes.map((e) => Number(e.affected_population) || 0)).toLocaleString()}명
+                      <br />
+                      <small>EC JRC 자동 산출. 이 앱의 읍면동 인구 합과 정의가 다름</small>
+                    </dd>
+                    {intlNews?.gdelt_volume && (
+                      <>
+                        <dt>해외 보도 비중</dt>
+                        <dd>
+                          {(() => {
+                            const pk = [...intlNews.gdelt_volume!.series].sort((a, b) => b[1] - a[1])[0]
+                            return `최고 ${pk[2].replace('-', '/')} (${pk[1].toFixed(2)}%)`
+                          })()}
+                          <br />
+                          <small>GDELT 전 세계 모니터링 기사 중 비율, 일 단위. 국내 보도 정점(3/26)과 같은 날</small>
+                        </dd>
+                      </>
+                    )}
+                    {gwis && (
+                      <>
+                        <dt>GWIS 둘레</dt>
+                        <dd>
+                          {gwis.meta.mapped_polygon_count}개 추정 둘레, 최대 {Math.max(...gwis.features.map((f) => f.properties.source_area_ha ?? 0)).toLocaleString()} ha
+                          <br />
+                          <small>열점 기반 자동 둘레, 피해면적 아님</small>
+                        </dd>
+                      </>
+                    )}
+                  </dl>
+                </>
+              )}
               <p className="note">
                 열점 격자 환산 면적은 위성이 지나간 시각(하루 2~4회)에 375m 화소로 잡힌 자리를 세어 14ha씩 더한 값입니다. 가려진 곳은 빠지고 화소 일부만 탄 곳은
                 통째로 들어가므로 실제 연소면적의 상한도 하한도 아닙니다. 신규 격자 증가율은 위성 통과 간격에 좌우되는 사후 지표입니다.
               </p>
             </div>
           )}
+
+          {tab === 'response' && resp && <Response data={resp} t={tm} onSeek={(v) => setT(Math.max(T_MIN, Math.min(T_MAX, v)))} onFocusEmd={setFocusCode} />}
+          {tab === 'response' && !resp && <div className="pane"><p className="note">대응 시차 자료가 없습니다.</p></div>}
 
           {tab === 'events' && (
             <div className="pane">
@@ -431,7 +500,13 @@ export default function App() {
                   <b>네이버 뉴스 검색 API</b> {news ? `${news.meta.count.toLocaleString()}건` : ''} (지역×주제 48개 검색어, 관련도순 상위 1,000건씩, 발행 3/22~31). 전수가 아닌 표본입니다.
                 </li>
                 <li>
-                  <b>언론·정부 발표</b> 원문 링크와 인용문 포함, 공식 기록은 파란 점
+                  <b>언론·정부 발표</b> 원문 링크와 인용문 포함, 공식 기록은 파란 점. 대응 시차 탭은 70건을 179개 주장으로 나눠 수동 검토한 결과
+                </li>
+                <li>
+                  <b>EC JRC GWIS</b> 근실시간 화재 둘레 추정(MODIS 1km·VIIRS 375m 열점 기반, CC BY 4.0) · <b>GDACS</b> 재난 경보·영향 인구 자동 추정
+                </li>
+                <li>
+                  <b>NASA GIBS 가용성</b> 3/22~28 VIIRS SNPP·NOAA-20, MODIS Terra·Aqua 일별 영상 56장 모두 존재 확인
                 </li>
                 <li>
                   <b>산림청 산불발생통계</b> 건별 발생·진화 일시, 지번, 원인, 피해면적 (공공데이터포털). 좌표가 없어 읍면 중심에 표시
@@ -454,6 +529,9 @@ export default function App() {
                 </li>
                 <li>
                   <b>산불위험지수</b>: 공개 API가 2025년 2월까지만 제공.
+                </li>
+                <li>
+                  <b>해외 위성 긴급지도</b>: Maxar Open Data(55개 컬렉션), Copernicus EMS(활성화 1,067건), UNOSAT 모두 이 산불 해당 없음. ReliefWeb API 403/410.
                 </li>
               </ul>
               <h3>주의</h3>

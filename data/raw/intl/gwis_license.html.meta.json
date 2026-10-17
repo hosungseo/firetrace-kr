@@ -2,7 +2,7 @@
   "source_url": "https://gwis.jrc.ec.europa.eu/about-gwis/data-license",
   "final_url": "https://gwis.jrc.ec.europa.eu/about-gwis/data-license",
   "fetched_at_utc": "2026-10-17T00:50:18.544042+00:00",
-  "licence_or_terms": null,
+  "licence_or_terms": "CC BY 4.0 for EU-owned content; credit EU/JRC GWIS and identify modifications. Third-party rights excepted.",
   "row_count": null,
   "caveat": "Research response cache; row_count is null for HTML/JS/binary or unknown. No reuse licence inferred.",
   "http_status": 200,
@@ -10,5 +10,6 @@
   "request_body": null,
   "attempts": [],
   "public_tokens_redacted": false,
-  "sha256": "42efca35bd17e66670c9b3a6e72a80091c0505c4c0e151e1f593525cc754da2b"
+  "sha256": "42efca35bd17e66670c9b3a6e72a80091c0505c4c0e151e1f593525cc754da2b",
+  "terms_source_url": "https://gwis.jrc.ec.europa.eu/about-gwis/data-license"
 }

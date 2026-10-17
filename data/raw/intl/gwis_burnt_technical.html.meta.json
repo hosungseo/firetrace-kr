@@ -2,7 +2,7 @@
   "source_url": "https://gwis.jrc.ec.europa.eu/about-gwis/technical-background/burnt-areas",
   "final_url": "https://gwis.jrc.ec.europa.eu/about-gwis/technical-background/burnt-areas",
   "fetched_at_utc": "2026-10-17T00:50:17.570131+00:00",
-  "licence_or_terms": null,
+  "licence_or_terms": "CC BY 4.0 for EU-owned content; credit EU/JRC GWIS and identify modifications. Third-party rights excepted.",
   "row_count": null,
   "caveat": "Research response cache; row_count is null for HTML/JS/binary or unknown. No reuse licence inferred.",
   "http_status": 200,
@@ -10,5 +10,6 @@
   "request_body": null,
   "attempts": [],
   "public_tokens_redacted": false,
-  "sha256": "d637b2eed92dd8aa10dbe9df70d66d6438d36ad86221a63dc16c5331602ad57c"
+  "sha256": "d637b2eed92dd8aa10dbe9df70d66d6438d36ad86221a63dc16c5331602ad57c",
+  "terms_source_url": "https://gwis.jrc.ec.europa.eu/about-gwis/data-license"
 }

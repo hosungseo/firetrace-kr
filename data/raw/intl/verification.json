@@ -1,0 +1,36 @@
+{
+  "checked_at_utc": "2026-10-17T00:59:17.981818+00:00",
+  "raw_files_with_metadata": 200,
+  "max_download_bytes": 4057881,
+  "gdacs_local_events": 2,
+  "gdacs_local_episodes": 12,
+  "gdacs_context_episodes": 6,
+  "burned_features": 23,
+  "closed_rings": 83,
+  "burned_bytes": 53009,
+  "nasa_articles": 2,
+  "nasa_downloaded_images": 2,
+  "gibs_tests_passed": 56,
+  "gdelt_collected_articles": 0,
+  "gdelt_total_articles": null,
+  "reliefweb_collected_reports": 0,
+  "reliefweb_total_reports": null,
+  "blocked_notes": 17,
+  "imagery_survey_minutes": 11.7,
+  "protected_files_unchanged_by_offline_rerun": true,
+  "observed_concurrent_changes": [
+    "web/src/App.tsx",
+    "web/src/App.css",
+    "web/src/Timeline.tsx",
+    "web/src/types.ts",
+    "web/src/MapView.tsx",
+    "web/public/data/fire.json",
+    "web/public/data/emd.json"
+  ],
+  "concurrent_commit": "fbbd9c2",
+  "caveats": [
+    "Geometry checks cover closed rings and coordinates, not full topological validity.",
+    "JPEG blank detection is the requested size threshold, not a decoded pixel/cloud mask.",
+    "No git commit was executed by this task."
+  ]
+}

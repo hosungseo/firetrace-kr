@@ -2,7 +2,7 @@
   "source_url": "https://www.nasa.gov/nasa-brand-center/images-and-media/",
   "final_url": "https://www.nasa.gov/nasa-brand-center/images-and-media/",
   "fetched_at_utc": "2026-10-17T00:49:09.193825+00:00",
-  "licence_or_terms": null,
+  "licence_or_terms": "NASA Images and Media Usage Guidelines: educational/informational use generally permitted with NASA acknowledgement; third-party copyright and endorsement exceptions apply.",
   "row_count": null,
   "caveat": "Research response cache; row_count is null for HTML/JS/binary or unknown. No reuse licence inferred.",
   "http_status": 200,
@@ -10,5 +10,6 @@
   "request_body": null,
   "attempts": [],
   "public_tokens_redacted": false,
-  "sha256": "58024ec06fc20d45d221d81e6b1a10e9dd94502c4534321bcc747f4b3e52926d"
+  "sha256": "58024ec06fc20d45d221d81e6b1a10e9dd94502c4534321bcc747f4b3e52926d",
+  "terms_source_url": "https://www.nasa.gov/nasa-brand-center/images-and-media/"
 }

@@ -2,13 +2,14 @@
   "source_url": "https://mapping.emergency.copernicus.eu/activations/api/activations/?activationTime=2025-03-01%2C2025-04-06&limit=100&offset=0",
   "final_url": "https://mapping.emergency.copernicus.eu/activations/api/activations/?activationTime=2025-03-01%2C2025-04-06&limit=100&offset=0",
   "fetched_at_utc": "2026-10-17T00:50:11.225349+00:00",
-  "licence_or_terms": null,
-  "row_count": null,
+  "licence_or_terms": "CEMS On-Demand Mapping terms: free access, reproduction, distribution and adaptation subject to citation, restrictions and third-party rights.",
+  "row_count": 100,
   "caveat": "Research response cache; row_count is null for HTML/JS/binary or unknown. No reuse licence inferred.",
   "http_status": 200,
   "content_type": "application/json",
   "request_body": null,
   "attempts": [],
   "public_tokens_redacted": false,
-  "sha256": "a3c8b24f2112b41c2dd254561b0f653801dc6bd95b52d9e77f44f29396deeac1"
+  "sha256": "a3c8b24f2112b41c2dd254561b0f653801dc6bd95b52d9e77f44f29396deeac1",
+  "terms_source_url": "https://mapping.emergency.copernicus.eu/terms-and-conditions/"
 }

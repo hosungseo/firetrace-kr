@@ -3,10 +3,11 @@ import * as maplibregl from 'maplibre-gl'
 import type { GeoJSONSource, MapLayerMouseEvent } from 'maplibre-gl'
 import 'maplibre-gl/dist/maplibre-gl.css'
 import mlcontour from 'maplibre-contour'
-import type { EmdCollection, FireData, FireEvent, KfsFire } from './types'
+import type { EmdCollection, FireData, FireEvent, GwisData, KfsFire } from './types'
 import { ACTIVE_WINDOW, fmt, hourIndex } from './time'
 
 export interface Layers {
+  gwis: boolean
   smoke: boolean
   emd: boolean
   stations: boolean
@@ -25,6 +26,8 @@ interface Props {
   events: FireEvent[]
   emd: EmdCollection | null
   kfs: KfsFire[]
+  gwis: GwisData | null
+  focusCode: string | null
   t: number
   layers: Layers
   selected: string | null
@@ -141,7 +144,7 @@ function eventGeoJSON(events: FireEvent[]) {
   }
 }
 
-export default function MapView({ basemap, data, events, emd, kfs, t, layers, selected, onSelectEvent }: Props) {
+export default function MapView({ basemap, data, events, emd, kfs, gwis, focusCode, t, layers, selected, onSelectEvent }: Props) {
   const el = useRef<HTMLDivElement>(null)
   const mapRef = useRef<maplibregl.Map | null>(null)
   const ready = useRef(false)
@@ -149,8 +152,8 @@ export default function MapView({ basemap, data, events, emd, kfs, t, layers, se
   const dailyKey = useRef('')
   const stationEls = useRef<HTMLDivElement[]>([])
   const popup = useRef<maplibregl.Popup | null>(null)
-  const latest = useRef({ t, layers, events, selected, basemap, emd, kfs })
-  latest.current = { t, layers, events, selected, basemap, emd, kfs }
+  const latest = useRef({ t, layers, events, selected, basemap, emd, kfs, gwis })
+  latest.current = { t, layers, events, selected, basemap, emd, kfs, gwis }
 
   useEffect(() => {
     const map = new maplibregl.Map({
@@ -257,6 +260,22 @@ export default function MapView({ basemap, data, events, emd, kfs, t, layers, se
           .addTo(map)
       })
       map.on('mouseleave', 'emd-fill', () => popup.current?.remove())
+
+      // JRC GWIS near-real-time fire perimeter estimates (MODIS 1 km + VIIRS 375 m) — an independent agency's outline
+      map.addSource('gwis', { type: 'geojson', data: { type: 'FeatureCollection', features: [] } })
+      map.addLayer({
+        id: 'gwis',
+        type: 'line',
+        source: 'gwis',
+        paint: { 'line-color': '#1d9a8c', 'line-width': 1.6, 'line-dasharray': [3, 2], 'line-opacity': 0.9 },
+      })
+      map.addLayer({
+        id: 'emd-focus',
+        type: 'line',
+        source: 'emd',
+        paint: { 'line-color': '#1f4fd1', 'line-width': 3 },
+        filter: ['==', ['get', 'code'], ''],
+      })
 
       map.addSource('hotspots', { type: 'geojson', data: hotspotGeoJSON(data) })
       map.addLayer({
@@ -386,6 +405,9 @@ export default function MapView({ basemap, data, events, emd, kfs, t, layers, se
     const { t, layers, events, selected, basemap, emd, kfs } = latest.current
     const b = BASE[basemap]
     if (emd) (map.getSource('emd') as GeoJSONSource).setData(emd as never)
+    if (gwis) (map.getSource('gwis') as GeoJSONSource).setData(gwis as never)
+    map.setFilter('gwis', ['<=', ['get', 't_start_minutes'], t])
+    map.setLayoutProperty('gwis', 'visibility', layers.gwis ? 'visible' : 'none')
     ;(map.getSource('kfs') as GeoJSONSource).setData(kfsGeoJSON(kfs))
     map.setFilter('emd-hit', ['<=', ['coalesce', ['get', 'first_hit'], 1e9], t])
     map.setFilter('kfs', ['<=', ['get', 't'], t])
@@ -479,8 +501,25 @@ export default function MapView({ basemap, data, events, emd, kfs, t, layers, se
   useEffect(() => {
     if (mapRef.current) apply(mapRef.current)
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [t, layers, events, selected, basemap, emd, kfs])
+  }, [t, layers, events, selected, basemap, emd, kfs, gwis])
 
+
+  // Highlight + fly to a 읍면동 chosen in the response tab
+  useEffect(() => {
+    const map = mapRef.current
+    if (!map || !ready.current) return
+    map.setFilter('emd-focus', ['==', ['get', 'code'], focusCode ?? ''])
+    const f = emd?.features.find((x) => x.properties.code === focusCode)
+    if (f) {
+      const pts: number[][] = []
+      const walk = (c: unknown) => (Array.isArray(c) && typeof c[0] === 'number' ? pts.push(c as number[]) : Array.isArray(c) && c.forEach(walk))
+      walk(f.geometry.coordinates)
+      const lon = pts.reduce((a, p) => a + p[0], 0) / pts.length
+      const lat = pts.reduce((a, p) => a + p[1], 0) / pts.length
+      map.easeTo({ center: [lon, lat], zoom: Math.max(map.getZoom(), 10.2), duration: 900 })
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [focusCode])
 
   useEffect(() => {
     const ev = events.find((e) => e.id === selected)

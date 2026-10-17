@@ -2,7 +2,7 @@
   "source_url": "https://rapidmapping.emergency.copernicus.eu/",
   "final_url": "https://mapping.emergency.copernicus.eu/activations/",
   "fetched_at_utc": "2026-10-17T00:42:30.685849+00:00",
-  "licence_or_terms": null,
+  "licence_or_terms": "CEMS On-Demand Mapping terms: free access, reproduction, distribution and adaptation subject to citation, restrictions and third-party rights.",
   "row_count": null,
   "caveat": "Research response cache; row_count is null for HTML/JS/binary or unknown. No reuse licence inferred.",
   "http_status": 200,
@@ -10,5 +10,6 @@
   "request_body": null,
   "attempts": [],
   "public_tokens_redacted": true,
-  "sha256": "d958b5909576c34a5c66748ab96522dd74caeab27e141d437e639ad51bd0febe"
+  "sha256": "d958b5909576c34a5c66748ab96522dd74caeab27e141d437e639ad51bd0febe",
+  "terms_source_url": "https://mapping.emergency.copernicus.eu/terms-and-conditions/"
 }

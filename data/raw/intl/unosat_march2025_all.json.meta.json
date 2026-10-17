@@ -2,7 +2,7 @@
   "source_url": "https://unosat.org/our_products/",
   "final_url": "https://unosat.org/our_products/",
   "fetched_at_utc": "2026-10-17T00:51:46.135583+00:00",
-  "licence_or_terms": null,
+  "licence_or_terms": "UNITAR Legal Notice: research/private study extracts and educational/non-commercial reuse with acknowledgment and source URL; substantial/commercial reuse requires authorization.",
   "row_count": 36,
   "caveat": "Research response cache; row_count is null for HTML/JS/binary or unknown. No reuse licence inferred.",
   "http_status": 200,
@@ -16,5 +16,6 @@
   },
   "attempts": [],
   "public_tokens_redacted": false,
-  "sha256": "fe7c5b7aa5a1481464fc0ec7e7b2d23019ab9dc516347e3064c326a440f128cc"
+  "sha256": "fe7c5b7aa5a1481464fc0ec7e7b2d23019ab9dc516347e3064c326a440f128cc",
+  "terms_source_url": "https://www.unitar.org/legal"
 }

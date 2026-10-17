@@ -130,3 +130,59 @@ export interface KfsData {
   fires: KfsFire[]
   note: string
 }
+
+export interface SlimClaim {
+  claim_id: string
+  action: string
+  t: number | null
+  precision: string
+  approximate: boolean
+  place?: string | null
+  quote?: string | null
+  url?: string | null
+  source_kind?: string | null
+  published?: string | null
+}
+
+export interface ResponsePair {
+  code: string
+  sigungu: string
+  emd: string
+  total: number | null
+  age70share: number | null
+  spread: SlimClaim | null
+  response: SlimClaim | null
+  role: string | null
+  spatial: string
+  satellite: { t: number | null; viirs: number | null; modis: number | null }
+  gap_response_minus_spread: number | null
+  gap_reason: string | null
+  gap_satellite_minus_spread: number | null
+  gap_satellite_minus_response: number | null
+  approximate: boolean
+}
+
+export interface ResponseData {
+  pairs: ResponsePair[]
+  rows: { code: string; sigungu: string; emd: string; satellite: { t: number | null }; claims: SlimClaim[] }[]
+  no_record: { code: string; sigungu: string; emd: string; first_hit: number }[]
+  wide_scope: SlimClaim[]
+  note: string
+}
+
+export interface GwisFeature {
+  type: 'Feature'
+  properties: { id: string; fire_id: string; initialdate: string; finaldate: string; t_start_minutes: number; t_end_minutes: number; source_area_ha: number | null }
+  geometry: { type: string; coordinates: unknown }
+}
+
+export interface GwisData {
+  type: 'FeatureCollection'
+  features: GwisFeature[]
+  meta: { product: string; layer: string; licence: string; mapped_polygon_count: number }
+}
+
+export interface GdacsData {
+  episodes: { eventid: string; episodeid: string; t_minutes: string | number; alert_level: string; affected_population: string | number; polygon_date: string; severity: string }[]
+  meta: Record<string, unknown>
+}

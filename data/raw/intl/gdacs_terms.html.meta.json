@@ -2,7 +2,7 @@
   "source_url": "https://www.gdacs.org/About/termofuse.aspx",
   "final_url": "https://www.gdacs.org/About/termofuse.aspx",
   "fetched_at_utc": "2026-10-17T00:51:47.079697+00:00",
-  "licence_or_terms": null,
+  "licence_or_terms": "GDACS Disclaimer and Terms of Use: model estimates supplied as is, without warranty; no separate open-data licence stated on this page.",
   "row_count": null,
   "caveat": "Research response cache; row_count is null for HTML/JS/binary or unknown. No reuse licence inferred.",
   "http_status": 200,
@@ -10,5 +10,6 @@
   "request_body": null,
   "attempts": [],
   "public_tokens_redacted": true,
-  "sha256": "e10bee3059dd54bbe7433b81d0e1505b4840cef1c6610fe5de27fc1e1f9680e5"
+  "sha256": "e10bee3059dd54bbe7433b81d0e1505b4840cef1c6610fe5de27fc1e1f9680e5",
+  "terms_source_url": "https://www.gdacs.org/About/termofuse.aspx"
 }

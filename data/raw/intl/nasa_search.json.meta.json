@@ -2,7 +2,7 @@
   "source_url": "https://science.nasa.gov/wp-json/wp/v2/search?search=Korea&per_page=100",
   "final_url": "https://science.nasa.gov/wp-json/wp/v2/search?search=Korea&per_page=100",
   "fetched_at_utc": "2026-10-17T00:49:08.780232+00:00",
-  "licence_or_terms": null,
+  "licence_or_terms": "NASA Images and Media Usage Guidelines: educational/informational use generally permitted with NASA acknowledgement; third-party copyright and endorsement exceptions apply.",
   "row_count": 100,
   "caveat": "Research response cache; row_count is null for HTML/JS/binary or unknown. No reuse licence inferred.",
   "http_status": 200,
@@ -10,5 +10,6 @@
   "request_body": null,
   "attempts": [],
   "public_tokens_redacted": false,
-  "sha256": "bac930507fea589b15716eab0381fc3c0e16ab0fe2c0e19139f0ce08d43b991b"
+  "sha256": "bac930507fea589b15716eab0381fc3c0e16ab0fe2c0e19139f0ce08d43b991b",
+  "terms_source_url": "https://www.nasa.gov/nasa-brand-center/images-and-media/"
 }

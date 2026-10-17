@@ -2,7 +2,7 @@
   "source_url": "https://assets.science.nasa.gov/content/dam/science/esd/eo/images/imagerecords/154000/154142/skoreaburnscar_oli2_20250404_lrg.jpg",
   "final_url": "https://assets.science.nasa.gov/content/dam/science/esd/eo/images/imagerecords/154000/154142/skoreaburnscar_oli2_20250404_lrg.jpg",
   "fetched_at_utc": "2026-10-17T00:51:49.049271+00:00",
-  "licence_or_terms": null,
+  "licence_or_terms": "NASA Images and Media Usage Guidelines: educational/informational use generally permitted with NASA acknowledgement; third-party copyright and endorsement exceptions apply.",
   "row_count": null,
   "caveat": "Research response cache; row_count is null for HTML/JS/binary or unknown. No reuse licence inferred.",
   "http_status": 200,
@@ -10,5 +10,6 @@
   "request_body": null,
   "attempts": [],
   "public_tokens_redacted": false,
-  "sha256": "22ab46e9a90654bf2a124be427333ee3cac879b7e6a139b1cee4e4a6c40e3ccb"
+  "sha256": "22ab46e9a90654bf2a124be427333ee3cac879b7e6a139b1cee4e4a6c40e3ccb",
+  "terms_source_url": "https://www.nasa.gov/nasa-brand-center/images-and-media/"
 }

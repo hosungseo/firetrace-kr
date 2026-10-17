@@ -2,13 +2,14 @@
   "source_url": "https://www.gdacs.org/gdacsapi/api/events/getepisodedata?eventtype=WF&eventid=1023633&episodeid=2",
   "final_url": "https://www.gdacs.org/gdacsapi/api/events/getepisodedata?eventtype=WF&eventid=1023633&episodeid=2",
   "fetched_at_utc": "2026-10-17T00:48:40.514339+00:00",
-  "licence_or_terms": null,
-  "row_count": null,
+  "licence_or_terms": "GDACS Disclaimer and Terms of Use: model estimates supplied as is, without warranty; no separate open-data licence stated on this page.",
+  "row_count": 1,
   "caveat": "Research response cache; row_count is null for HTML/JS/binary or unknown. No reuse licence inferred.",
   "http_status": 200,
   "content_type": "application/json; charset=utf-8",
   "request_body": null,
   "attempts": [],
   "public_tokens_redacted": false,
-  "sha256": "07ad1de27f79d90a44cfed496d91d6e173fb7b2679951d4d3576d5866500a5f8"
+  "sha256": "07ad1de27f79d90a44cfed496d91d6e173fb7b2679951d4d3576d5866500a5f8",
+  "terms_source_url": "https://www.gdacs.org/About/termofuse.aspx"
 }

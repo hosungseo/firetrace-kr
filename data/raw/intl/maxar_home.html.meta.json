@@ -2,7 +2,7 @@
   "source_url": "https://www.maxar.com/open-data",
   "final_url": "https://www.maxar.com/open-data",
   "fetched_at_utc": "2026-10-17T00:47:21.848322+00:00",
-  "licence_or_terms": "CC-BY-NC-4.0 (STAC catalog license field).",
+  "licence_or_terms": "CC-BY-NC-4.0 (STAC root license field); no Korean event tiles were found or downloaded.",
   "row_count": null,
   "caveat": "Research response cache; row_count is null for HTML/JS/binary or unknown. No reuse licence inferred.",
   "http_status": null,
@@ -15,5 +15,6 @@
     }
   ],
   "public_tokens_redacted": false,
-  "sha256": "4706bd2f04d11cdafd660ddb990eb344fdac5e93c1b75edb6ae3bc364307a552"
+  "sha256": "4706bd2f04d11cdafd660ddb990eb344fdac5e93c1b75edb6ae3bc364307a552",
+  "terms_source_url": "https://maxar-opendata.s3.amazonaws.com/events/catalog.json"
 }

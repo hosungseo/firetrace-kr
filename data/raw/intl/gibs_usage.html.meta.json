@@ -2,7 +2,7 @@
   "source_url": "https://nasa-gibs.github.io/gibs-api-docs/access-basics/",
   "final_url": "https://nasa-gibs.github.io/gibs-api-docs/access-basics/",
   "fetched_at_utc": "2026-10-17T00:51:47.369631+00:00",
-  "licence_or_terms": null,
+  "licence_or_terms": "NASA imagery usage guidelines; acknowledge NASA EOSDIS GIBS and the named imagery instrument; no blanket Creative Commons licence inferred.",
   "row_count": null,
   "caveat": "Research response cache; row_count is null for HTML/JS/binary or unknown. No reuse licence inferred.",
   "http_status": 200,
@@ -10,5 +10,6 @@
   "request_body": null,
   "attempts": [],
   "public_tokens_redacted": false,
-  "sha256": "1221a74f1a0ccf696b23b5c9ef9a290e914a1578bfd06a7c7385cd48476a79ff"
+  "sha256": "1221a74f1a0ccf696b23b5c9ef9a290e914a1578bfd06a7c7385cd48476a79ff",
+  "terms_source_url": "https://www.nasa.gov/nasa-brand-center/images-and-media/"
 }

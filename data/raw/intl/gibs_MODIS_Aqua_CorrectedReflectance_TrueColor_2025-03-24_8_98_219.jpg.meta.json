@@ -2,7 +2,7 @@
   "source_url": "https://gibs.earthdata.nasa.gov/wmts/epsg3857/best/MODIS_Aqua_CorrectedReflectance_TrueColor/default/2025-03-24/GoogleMapsCompatible_Level9/8/98/219.jpg",
   "final_url": "https://gibs.earthdata.nasa.gov/wmts/epsg3857/best/MODIS_Aqua_CorrectedReflectance_TrueColor/default/2025-03-24/GoogleMapsCompatible_Level9/8/98/219.jpg",
   "fetched_at_utc": "2026-10-17T00:48:06.171701+00:00",
-  "licence_or_terms": null,
+  "licence_or_terms": "NASA imagery usage guidelines; acknowledge NASA EOSDIS GIBS and the named imagery instrument; no blanket Creative Commons licence inferred.",
   "row_count": null,
   "caveat": "One WMTS tile; availability does not establish cloud-free coverage. See gibs_availability.json.",
   "http_status": 200,
@@ -10,5 +10,6 @@
   "request_body": null,
   "attempts": [],
   "public_tokens_redacted": false,
-  "sha256": "fd267d98d9e65cb5d34a2df95639202d356fd88d63c77f6ecdf63e145cc26f59"
+  "sha256": "fd267d98d9e65cb5d34a2df95639202d356fd88d63c77f6ecdf63e145cc26f59",
+  "terms_source_url": "https://www.nasa.gov/nasa-brand-center/images-and-media/"
 }

@@ -167,3 +167,38 @@
 .ev-tick.retro { fill: none; stroke: var(--event); stroke-width: 1.5; }
 .exposure-note { font-size: 10.5px; color: var(--ink-3); margin-top: 2px; }
 .ev-title .chip { margin-left: 4px; }
+
+/* response-gap tab */
+.sw.gwis { background: none; border: 2px dashed #1d9a8c; border-radius: 50%; }
+.rp-intro { font-size: 12px; line-height: 1.55; color: var(--ink-2); margin: 10px 0 6px; }
+.rp-legend { display: flex; gap: 12px; font-size: 11px; margin-bottom: 8px; }
+.rp-legend .spread { color: #b8530f; } .rp-legend .response { color: var(--event); } .rp-legend .satellite { color: #6b6357; }
+.rp-row { border: 1px solid var(--line); border-radius: 8px; padding: 8px 10px; margin-bottom: 8px; background: var(--surface); }
+.rp-row header { display: flex; justify-content: space-between; align-items: baseline; gap: 8px; }
+.rp-title { background: none; border: 0; padding: 0; font-weight: 700; font-size: 13px; color: var(--ink); cursor: pointer; }
+.rp-title:hover { text-decoration: underline; }
+.rp-pop { font-size: 10.5px; color: var(--ink-3); white-space: nowrap; }
+.rp-axis { display: block; margin: 4px 0 6px; cursor: pointer; overflow: visible; }
+.rp-base { stroke: var(--line); stroke-width: 2; }
+.rp-day { stroke: var(--line); }
+.rp-tick { font-size: 9px; fill: var(--ink-3); }
+.rp-spread { fill: #b8530f; }
+.rp-response { fill: var(--event); }
+.rp-sat { fill: #fff; stroke: #6b6357; stroke-width: 2; }
+.rp-sat.modis { fill: #6b6357; }
+.rp-now { stroke: var(--ink); stroke-width: 1.5; }
+.rp-claim { display: grid; grid-template-columns: 10px 76px 1fr; column-gap: 6px; font-size: 11.5px; padding: 2px 0; align-items: baseline; }
+.rp-claim .rp-meta { grid-column: 3; font-size: 10.5px; color: var(--ink-3); }
+.rp-claim .rp-time { font-variant-numeric: tabular-nums; }
+.rp-sym { display: inline-block; width: 8px; height: 8px; }
+.rp-claim.spread .rp-sym { width: 0; height: 0; border-left: 5px solid transparent; border-right: 5px solid transparent; border-bottom: 9px solid #b8530f; }
+.rp-claim.response .rp-sym { background: var(--event); }
+.rp-claim.satellite .rp-sym { border-radius: 50%; border: 2px solid #6b6357; width: 6px; height: 6px; }
+.rp-gaps { display: flex; flex-wrap: wrap; gap: 6px 12px; font-size: 11.5px; margin-top: 6px; padding-top: 6px; border-top: 1px dashed var(--line); }
+.rp-gaps b { font-variant-numeric: tabular-nums; }
+.rp-approx { color: var(--ink-3); font-size: 10.5px; }
+.rp-note { font-size: 10.5px; color: var(--ink-3); margin-top: 4px; }
+.rp-norecord { display: flex; flex-wrap: wrap; gap: 4px; }
+.chip-btn { background: #efe9df; border: 0; border-radius: 4px; padding: 2px 6px; font-size: 11px; color: var(--ink-2); cursor: pointer; }
+:root[data-theme='dark'] .chip-btn { background: #2c2a33; }
+.response code { font-size: 10.5px; }
