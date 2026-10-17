@@ -3,7 +3,7 @@ import MapView, { type Basemap, type Layers } from './MapView'
 import Timeline from './Timeline'
 import Response from './Response'
 import EmdDetail from './EmdDetail'
-import type { EmdCollection, FfasData, FireData, FireEvent, ForestTypeData, FullMentionsData, GdacsData, GwisData, KfsData, MentionsData, NewsData, OfficialData, ResponseData } from './types'
+import type { EmdCollection, FfasData, FireData, FireEvent, ForestTypeData, SpreadData, FullMentionsData, GdacsData, GwisData, KfsData, MentionsData, NewsData, OfficialData, ResponseData } from './types'
 import { ACTIVE_WINDOW, T_MAX, T_MIN, compass, eventLabel, fmt, fmtDay, hourIndex, setIncident, toMinutes } from './time'
 import './App.css'
 
@@ -50,13 +50,14 @@ export default function App() {
   const [full, setFull] = useState<FullMentionsData | null>(null)
   const [ffas, setFfas] = useState<FfasData | null>(null)
   const [forest, setForest] = useState<ForestTypeData | null>(null)
+  const [spread, setSpread] = useState<SpreadData | null>(null)
   const [t, setT] = useState(T_MIN + 13 * 60)
   const [playing, setPlaying] = useState(false)
   const [speed, setSpeed] = useState(1)
   const [tab, setTab] = useState<'overview' | 'response' | 'emd' | 'events' | 'news' | 'compare' | 'sources'>('overview')
   const [selected, setSelected] = useState<string | null>(null)
   const [basemap, setBasemap] = useState<Basemap>('terrain')
-  const [layers, setLayers] = useState<Layers>({ gwis: true, smoke: false, emd: true, stations: true, burned: true, active: true, wind: true, events: true, terrain: true, situation: true, forest: false })
+  const [layers, setLayers] = useState<Layers>({ gwis: true, smoke: false, emd: true, stations: true, burned: true, active: true, wind: true, events: true, terrain: true, situation: true, forest: false, spread: true })
 
   // Registry → incident (from URL hash) → per-incident data directory
   useEffect(() => {
@@ -82,7 +83,7 @@ export default function App() {
   useEffect(() => {
     if (!incident) return
     setIncident(incident.t0, incident.display_days)
-    setData(null); setEvents([]); setNews(null); setEmd(null); setKfs(null); setResp(null); setGwis(null); setGdacs(null); setIntlNews(null); setOfficial(null); setMentions(null); setFull(null); setFfas(null); setForest(null)
+    setData(null); setEvents([]); setNews(null); setEmd(null); setKfs(null); setResp(null); setGwis(null); setGdacs(null); setIntlNews(null); setOfficial(null); setMentions(null); setFull(null); setFfas(null); setForest(null); setSpread(null)
     setSelected(null); setFocusCode(null); setPlaying(false)
     json<FireData>(base + 'fire.json').then((d) => {
       if (!d) return
@@ -114,6 +115,7 @@ export default function App() {
     json<FullMentionsData>(base + 'mentions.json').then(setFull)
     json<FfasData>(base + 'ffas.json').then(setFfas)
     json<ForestTypeData>(base + 'forest_type.json').then(setForest)
+    json<SpreadData>(base + 'spread.json').then(setSpread)
     json<{ gdelt_volume?: { series: [number, number, string][] } }>(base + 'intl_news.json').then(setIntlNews)
   }, [incident, base])
 
@@ -226,7 +228,7 @@ export default function App() {
 
       <main className="body">
         <section className="stage">
-          <MapView key={incident.id} view={{ center: incident.center, zoom: incident.zoom }} basemap={basemap} data={data} events={events} emd={emd} kfs={kfs?.fires ?? []} gwis={gwis} ffas={ffas} forest={forest} dataBase={base} focusCode={focusCode} onFocusEmd={focusEmd} t={tm} layers={layers} selected={selected} onSelectEvent={selectEvent} />
+          <MapView key={incident.id} view={{ center: incident.center, zoom: incident.zoom }} basemap={basemap} data={data} events={events} emd={emd} kfs={kfs?.fires ?? []} gwis={gwis} ffas={ffas} forest={forest} spread={spread} dataBase={base} focusCode={focusCode} onFocusEmd={focusEmd} t={tm} layers={layers} selected={selected} onSelectEvent={selectEvent} />
           <div className="basemap-switch" role="radiogroup" aria-label="배경지도">
             {(
               [
@@ -268,6 +270,11 @@ export default function App() {
             {gwis && (
               <div>
                 <i className="sw gwis" /> JRC GWIS 화재 둘레 추정 (MODIS·VIIRS)
+              </div>
+            )}
+            {spread && layers.spread && spread.summary.major > 0 && (
+              <div>
+                <i className="sw spread" /> 확산 경로: 칸 색 = 첫 탐지 시각(노랑→진홍), 굵은 화살표 = 통과별 최장 전진
               </div>
             )}
             {ffas && layers.situation && ffas.situation.features.length > 0 && (
@@ -351,6 +358,7 @@ export default function App() {
               <h3>레이어</h3>
               {(
                 [
+                  ['spread', '확산 경로 (도달 시각·전진 화살표)'],
                   ['active', '최근 12시간 탐지 열점'],
                   ['burned', '12시간 이전 탐지 열점'],
                   ['wind', '바람장 (재분석)'],
@@ -369,6 +377,38 @@ export default function App() {
                   {label}
                 </label>
               ))}
+
+              {spread && spread.summary.major > 0 && (
+                <>
+                  <h3>확산 경로</h3>
+                  <p className="spread-lead">
+                    위성 통과마다 가장 멀리 간 전진(머리) {spread.summary.heads}개 중 <b className="hot">{spread.summary.heads_with_wind_45}개</b>가 바람이 불어 간 방향 ±45° 안입니다.
+                    {(() => {
+                      const long = spread.vectors.filter((v) => v.head && v.km >= 10)
+                      return long.length ? ` 10km 넘게 간 ${long.length}번은 ${long.every((v) => v.wind_diff <= 45) ? '모두' : `${long.filter((v) => v.wind_diff <= 45).length}번`} 바람 방향이었습니다.` : ''
+                    })()}
+                  </p>
+                  {spread.vectors
+                    .filter((v) => v.head || v.separate_ignition)
+                    .map((v) => (
+                      <button key={v.t + ':' + v.to.join()} className="stat-row" onClick={() => setT(Math.max(T_MIN, Math.min(T_MAX, v.t)))}>
+                        <span>
+                          {fmt(v.t_prev)} → {fmt(v.t)} · {compass(v.bearing)} <b>{v.km.toFixed(1)} km</b>
+                          <br />
+                          <small>
+                            {v.separate_ignition
+                              ? `확산 아님: 그 사이 별도 발화(${v.separate_ignition.split(' ').slice(1, 4).join(' ')})`
+                              : `최소 평균 ${v.min_kmh?.toFixed(1)} km/h · 바람은 ${compass(v.wind_to)}${compass(v.wind_to).endsWith('서') ? '로' : '으로'} ${v.wind_ms} m/s ${v.wind_diff <= 45 ? '(같은 방향)' : `(${v.wind_diff}° 어긋남)`}`}
+                          </small>
+                        </span>
+                        <small>{v.separate_ignition ? '발화' : v.wind_diff <= 45 ? '바람 ✓' : ''}</small>
+                      </button>
+                    ))}
+                  <p className="note">
+                    색 칸 = 위성이 처음 불을 본 시각(노랑 → 진홍, 375m 칸). 화살표 = 직전 통과 이후 새로 탄 칸(1.5km 안에서 이어진 묶음)에서 이전 불과 가장 먼 칸까지, 굵은 것이 통과별 머리, 회색은 별도 발화. VIIRS 위성 2기가 거의 같은 시각에 지나가 관측이 약 12시간 간격이라, 화살표는 그 사이 어딘가로 불이 갔다는 뜻이지 실제 경로·속도가 아닙니다(속도는 최소값). 3km 넘는 화살표는 중간 경로가 관측되지 않은 구간입니다.
+                  </p>
+                </>
+              )}
 
               <h3>위성이 본 산불</h3>
               <dl className="facts">
@@ -745,6 +785,9 @@ export default function App() {
                 </li>
                 <li>
                   <b>산림청 임상도</b> (map.forest.go.kr 1:5,000 나무지도) 사건 범위를 한 장으로 받아 범례 색으로 숲 종류를 역분류했습니다. 2026-02 갱신 현재판이라 피해지가 이미 미립목지로 바뀐 사건이 있습니다
+                </li>
+                <li>
+                  <b>확산 경로</b> FIRMS VIIRS 375m 칸의 첫 탐지 시각으로 도달 시각을 그리고, 통과 사이 새로 탄 칸의 전진 벡터를 ERA5 바람과 비교했습니다. 관측 간격이 약 12시간이라 경로·속도는 하한 추정입니다
                 </li>
                 <li>
                   <b>NASA GIBS</b> 당일 위성 영상 (VIIRS Suomi-NPP 트루컬러, 오후 1시 30분경 통과, 날짜는 슬라이더를 따름)

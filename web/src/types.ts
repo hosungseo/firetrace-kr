@@ -271,3 +271,31 @@ export interface ForestTypeData {
   whole_bbox: ForestShares
   hotspot_cells: ForestShares | null
 }
+
+export interface SpreadVector {
+  t: number
+  t_prev: number
+  from: [number, number]
+  to: [number, number]
+  km: number
+  bearing: number
+  dt_h: number
+  min_kmh: number | null
+  cells: number
+  major: boolean
+  jump: boolean
+  wind_to: number
+  wind_ms: number
+  wind_diff: number
+  separate_ignition: string | null
+  head: boolean
+}
+
+export interface SpreadData {
+  method: string
+  cell_deg: [number, number]
+  passes: { t: number; new_cells: number }[]
+  vectors: SpreadVector[]
+  cells: [number, number, number][]
+  summary: { heads: number; heads_with_wind_45: number; major: number; vectors_1km: number; with_wind_45: number; km_share_with_wind_45: number | null; longest: SpreadVector | null; fastest: SpreadVector | null }
+}

@@ -5,7 +5,7 @@ import 'maplibre-gl/dist/maplibre-gl.css'
 import mlcontour from 'maplibre-contour'
 // maplibre v6 resolves its worker next to import.meta.url, which the bundle doesn't ship; emit it as an asset.
 import workerUrl from 'maplibre-gl/dist/maplibre-gl-worker.mjs?url'
-import type { EmdCollection, FfasData, FireData, FireEvent, ForestTypeData, GwisData, KfsFire } from './types'
+import type { EmdCollection, FfasData, FireData, FireEvent, ForestTypeData, GwisData, KfsFire, SpreadData } from './types'
 import { ACTIVE_WINDOW, T_MAX, fmt, hourIndex, kstDate, toMinutes } from './time'
 
 export interface Layers {
@@ -20,6 +20,7 @@ export interface Layers {
   terrain: boolean
   situation: boolean
   forest: boolean
+  spread: boolean
 }
 
 export type Basemap = 'terrain' | 'night' | 'satellite' | 'daily'
@@ -34,6 +35,7 @@ interface Props {
   gwis: GwisData | null
   ffas: FfasData | null
   forest: ForestTypeData | null
+  spread: SpreadData | null
   dataBase: string
   focusCode: string | null
   onFocusEmd: (code: string) => void
@@ -156,7 +158,7 @@ function eventGeoJSON(events: FireEvent[]) {
   }
 }
 
-export default function MapView({ view, basemap, data, events, emd, kfs, gwis, ffas, forest, dataBase, focusCode, onFocusEmd, t, layers, selected, onSelectEvent }: Props) {
+export default function MapView({ view, basemap, data, events, emd, kfs, gwis, ffas, forest, spread, dataBase, focusCode, onFocusEmd, t, layers, selected, onSelectEvent }: Props) {
   const el = useRef<HTMLDivElement>(null)
   const mapRef = useRef<maplibregl.Map | null>(null)
   const ready = useRef(false)
@@ -164,8 +166,8 @@ export default function MapView({ view, basemap, data, events, emd, kfs, gwis, f
   const dailyKey = useRef('')
   const stationEls = useRef<HTMLDivElement[]>([])
   const popup = useRef<maplibregl.Popup | null>(null)
-  const latest = useRef({ t, layers, events, selected, basemap, emd, kfs, gwis, ffas, forest })
-  latest.current = { t, layers, events, selected, basemap, emd, kfs, gwis, ffas, forest }
+  const latest = useRef({ t, layers, events, selected, basemap, emd, kfs, gwis, ffas, forest, spread })
+  latest.current = { t, layers, events, selected, basemap, emd, kfs, gwis, ffas, forest, spread }
 
   useEffect(() => {
     const map = new maplibregl.Map({
@@ -300,6 +302,35 @@ export default function MapView({ view, basemap, data, events, emd, kfs, gwis, f
           'line-opacity': 0.95,
         },
       })
+      // Front-advance vectors between satellite passes
+      map.addSource('spread', { type: 'geojson', data: { type: 'FeatureCollection', features: [] } })
+      map.addLayer({
+        id: 'spread-line',
+        type: 'line',
+        source: 'spread',
+        filter: ['==', ['geometry-type'], 'LineString'],
+        layout: { 'line-cap': 'round' },
+        paint: {
+          'line-color': ['case', ['get', 'sep'], '#6b7280', ['get', 'latest'], '#ff2d55', '#7a1630'],
+          'line-width': ['case', ['get', 'head'], 5, 1.6],
+          'line-opacity': ['case', ['get', 'head'], 1, 0.55],
+        },
+      })
+      map.addLayer({
+        id: 'spread-head',
+        type: 'symbol',
+        source: 'spread',
+        filter: ['==', ['geometry-type'], 'Point'],
+        layout: {
+          'icon-image': 'arrow',
+          'icon-rotate': ['get', 'rot'],
+          'icon-rotation-alignment': 'map',
+          'icon-pitch-alignment': 'map',
+          'icon-allow-overlap': true,
+          'icon-size': ['case', ['get', 'head'], 2.8, 1.3],
+        },
+        paint: { 'icon-color': ['case', ['get', 'sep'], '#6b7280', ['get', 'latest'], '#ff2d55', '#7a1630'], 'icon-halo-color': '#fff', 'icon-halo-width': 1, 'icon-opacity': ['case', ['get', 'head'], 1, 0.6] },
+      })
       map.addLayer({
         id: 'emd-focus',
         type: 'line',
@@ -308,6 +339,17 @@ export default function MapView({ view, basemap, data, events, emd, kfs, gwis, f
         filter: ['==', ['get', 'code'], ''],
       })
 
+      // Arrival time: each 375 m cell coloured by when a satellite first saw fire there
+      map.addSource('arrival', { type: 'geojson', data: { type: 'FeatureCollection', features: [] } })
+      map.addLayer({
+        id: 'arrival',
+        type: 'fill',
+        source: 'arrival',
+        paint: {
+          'fill-color': ['interpolate', ['linear'], ['get', 'f'], 0, '#ffd166', 0.35, '#f4842d', 0.7, '#c2261b', 1, '#5c0a28'],
+          'fill-opacity': 0.55,
+        },
+      })
       map.addSource('hotspots', { type: 'geojson', data: hotspotGeoJSON(data) })
       map.addLayer({
         id: 'burned',
@@ -438,6 +480,9 @@ export default function MapView({ view, basemap, data, events, emd, kfs, gwis, f
         return div
       })
 
+      map.moveLayer('arrival', 'active')
+      map.moveLayer('spread-line')
+      map.moveLayer('spread-head')
       ready.current = true
       apply(map)
     })
@@ -447,7 +492,7 @@ export default function MapView({ view, basemap, data, events, emd, kfs, gwis, f
 
   function apply(map: maplibregl.Map) {
     if (!ready.current) return
-    const { t, layers, events, selected, basemap, emd, kfs, ffas, forest } = latest.current
+    const { t, layers, events, selected, basemap, emd, kfs, ffas, forest, spread } = latest.current
     const b = BASE[basemap]
     if (emd) (map.getSource('emd') as GeoJSONSource).setData(emd as never)
     if (gwis) (map.getSource('gwis') as GeoJSONSource).setData(gwis as never)
@@ -458,6 +503,11 @@ export default function MapView({ view, basemap, data, events, emd, kfs, gwis, f
     map.setFilter('situation', ['<=', ['get', 't'], t])
     map.setLayoutProperty('situation', 'visibility', layers.situation ? 'visible' : 'none')
     ensureForest(map, forest)
+    if (spread) {
+      ;(map.getSource('arrival') as GeoJSONSource).setData(arrivalGeoJSON(spread, t))
+      ;(map.getSource('spread') as GeoJSONSource).setData(spreadGeoJSON(spread, t))
+    }
+    for (const id of ['arrival', 'spread-line', 'spread-head']) map.setLayoutProperty(id, 'visibility', layers.spread ? 'visible' : 'none')
     if (map.getLayer('forest')) map.setLayoutProperty('forest', 'visibility', layers.forest ? 'visible' : 'none')
     ;(map.getSource('kfs') as GeoJSONSource).setData(kfsGeoJSON(kfs))
     map.setFilter('emd-hit', ['<=', ['coalesce', ['get', 'first_hit'], 1e9], t])
@@ -560,7 +610,7 @@ export default function MapView({ view, basemap, data, events, emd, kfs, gwis, f
   useEffect(() => {
     if (mapRef.current) apply(mapRef.current)
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [t, layers, events, selected, basemap, emd, kfs, gwis, ffas, forest])
+  }, [t, layers, events, selected, basemap, emd, kfs, gwis, ffas, forest, spread])
 
 
   // Highlight + fly to a 읍면동 chosen in the response tab
@@ -597,4 +647,33 @@ function situationGeoJSON(ffas: FfasData) {
     type: 'FeatureCollection' as const,
     features: ffas.situation.features.map((f) => ({ ...f, properties: { ...f.properties, t: drawn.get((f.properties as { map_id?: string }).map_id ?? '') ?? 1e9 } })),
   } as never
+}
+
+function arrivalGeoJSON(sp: SpreadData, t: number) {
+  const [dx, dy] = sp.cell_deg.map((d) => d / 2)
+  const t0 = sp.cells[0]?.[2] ?? 0
+  const span = Math.max(1, (sp.cells[sp.cells.length - 1]?.[2] ?? 1) - t0)
+  return {
+    type: 'FeatureCollection' as const,
+    features: sp.cells
+      .filter((c) => c[2] <= t)
+      .map(([x, y, tc]) => ({
+        type: 'Feature' as const,
+        properties: { t: tc, f: (tc - t0) / span },
+        geometry: { type: 'Polygon' as const, coordinates: [[[x - dx, y - dy], [x + dx, y - dy], [x + dx, y + dy], [x - dx, y + dy], [x - dx, y - dy]]] },
+      })),
+  } as never
+}
+
+function spreadGeoJSON(sp: SpreadData, t: number) {
+  const shown = sp.vectors.filter((v) => v.major && v.t <= t)
+  const lastT = shown.reduce((m, v) => Math.max(m, v.t), -1)
+  const features = shown.flatMap((v) => {
+    const props = { cells: v.cells, latest: v.t === lastT, rot: v.bearing, km: v.km, head: v.head, sep: !!v.separate_ignition }
+    return [
+      { type: 'Feature' as const, properties: props, geometry: { type: 'LineString' as const, coordinates: [v.from, v.to] } },
+      { type: 'Feature' as const, properties: props, geometry: { type: 'Point' as const, coordinates: v.to } },
+    ]
+  })
+  return { type: 'FeatureCollection' as const, features } as never
 }

@@ -272,3 +272,5 @@
 .forest-track i.all { bottom: 0; height: 4px; background: var(--line); }
 .sw.sttn { border-radius: 0; height: 3px; width: 12px; background: linear-gradient(90deg, #e8361c 50%, #6b7280 50%); vertical-align: 2px; }
 .sw.forest { border-radius: 2px; background: linear-gradient(90deg, #a59168 50%, #c1dc07 50%); }
+.spread-lead { font-size: 12px; line-height: 1.55; margin: 0 0 6px; }
+.sw.spread { border-radius: 2px; background: linear-gradient(90deg, #ffd166, #c2261b 60%, #5c0a28); }
