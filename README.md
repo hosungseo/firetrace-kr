@@ -1,6 +1,8 @@
 # 산불추적기 (firetrace-kr)
 
-2025 경북 산불(의성 발화)을 위성 열점·기상·보도로 재구성하는 타임라인 지도. FireTrace 한국판.
+라이브: https://seohosung.com/firetrace/ · 저장소: https://github.com/hosungseo/firetrace-kr
+
+대형산불을 위성 열점·기상·보도·인구로 시간 순으로 다시 보는 타임라인 지도(FireTrace 한국판). 2023~2026년 100ha 이상 산불 14건, 2025 의성 산불은 보도 검토본.
 
 - `scripts/fetch_firms.py` — NASA FIRMS 아카이브 열점 (키: `~/.openclaw/secrets/firms-map-key`)
 - `scripts/fetch_weather.py` — Open-Meteo ERA5 시간별 기상 격자 (키 불필요)
