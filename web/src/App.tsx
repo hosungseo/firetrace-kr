@@ -50,7 +50,7 @@ export default function App() {
   const [t, setT] = useState(T_MIN + 13 * 60)
   const [playing, setPlaying] = useState(false)
   const [speed, setSpeed] = useState(1)
-  const [tab, setTab] = useState<'overview' | 'response' | 'emd' | 'events' | 'news' | 'sources'>('overview')
+  const [tab, setTab] = useState<'overview' | 'response' | 'emd' | 'events' | 'news' | 'compare' | 'sources'>('overview')
   const [selected, setSelected] = useState<string | null>(null)
   const [basemap, setBasemap] = useState<Basemap>('terrain')
   const [layers, setLayers] = useState<Layers>({ gwis: true, smoke: false, emd: true, stations: true, burned: true, active: true, wind: true, events: true, terrain: true })
@@ -320,6 +320,7 @@ export default function App() {
                 ['emd', focused ? focused.properties.emd : '읍면동'],
                 ['events', `기록 ${events.length ? `(${seen.length}/${events.length})` : ''}`],
                 ['news', `보도 ${news ? `(${recentNews.length})` : ''}`],
+                ...(registry && registry.length > 1 ? ([['compare', '사건 비교']] as const) : []),
                 ['sources', '출처'],
               ] as const
             ).map(([k, label]) => (
@@ -594,6 +595,42 @@ export default function App() {
                 ))}
               </ol>
               {recentNews.length > 80 && <p className="note">외 {recentNews.length - 80}건</p>}
+            </div>
+          )}
+
+          {tab === 'compare' && registry && (
+            <div className="pane">
+              <p className="note top">산림청 산불발생통계 기준 피해면적 100ha 이상 산불(2023~2026). 같은 파이프라인으로 수집한 위성·인구 지표를 나란히 둡니다. 보도 검토본은 의성뿐입니다.</p>
+              <table className="cmp-table cmp-inc">
+                <thead>
+                  <tr>
+                    <th>산불</th>
+                    <th>산림청 ha</th>
+                    <th>열점</th>
+                    <th>격자 ha</th>
+                    <th>읍면동</th>
+                    <th>인구</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {[...registry]
+                    .sort((a, b) => (b.stats?.kfs_area_ha ?? 0) - (a.stats?.kfs_area_ha ?? 0))
+                    .map((i) => (
+                      <tr key={i.id} className={i.id === incident.id ? 'on' : ''} onClick={() => (location.hash = i.id)}>
+                        <td>
+                          {i.short}
+                          {i.reviewed && <span className="dot" style={{ marginLeft: 4 }} />}
+                        </td>
+                        <td>{i.stats?.kfs_area_ha != null ? Math.round(i.stats.kfs_area_ha).toLocaleString() : '–'}</td>
+                        <td>{i.stats?.hotspots?.toLocaleString() ?? '–'}</td>
+                        <td>{i.stats?.grid_area_ha != null ? Math.round(i.stats.grid_area_ha).toLocaleString() : '–'}</td>
+                        <td>{i.stats?.emd_touched ?? '–'}</td>
+                        <td>{i.stats?.population_touched?.toLocaleString() ?? '–'}</td>
+                      </tr>
+                    ))}
+                </tbody>
+              </table>
+              <p className="note">열점·격자·읍면동·인구는 위성 열점 기반(관측 시각·화소 한계 동일). 작은 산불은 위성이 거의 못 볼 수 있어 열점 0~수 개가 정상입니다. 행을 누르면 그 산불로 이동합니다.</p>
             </div>
           )}
 
