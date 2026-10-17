@@ -2,3 +2,5 @@ node_modules
 dist
 .DS_Store
 *.log
+logs/
+scripts/__pycache__/

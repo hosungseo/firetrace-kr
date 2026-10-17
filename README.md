@@ -41,3 +41,9 @@
 
 재생성: `python3 scripts/fetch_admin.py`, `python3 scripts/fetch_disaster_sms.py`,
 `python3 scripts/derive_sms.py`. 저장된 응답이 있으면 HTTP 요청 없이 재사용한다.
+
+### 같은 날 Claude가 추가한 자료
+- **행안부 주민등록 인구(읍면동, 2025-03)**: `data/raw/population_emd.json` → `scripts/derive_population.py` → `web/public/data/population.json`. 의성군 70세 이상 35%.
+- **산림청 산불발생통계(건별)**: data.go.kr 3070842(2026-10-17 승인). `scripts/fetch_kfs_fires.py` → `data/raw/kfs_fires.json` → `scripts/derive_kfs.py` → `web/public/data/kfs_fires.json`. 좌표 없음 → 읍면 중심 배치. 공식 99,289ha = 의성 2건(괴산 46,575 + 안계 52,707)의 합.
+- **읍면동 × 인구 × 열점 결합**: `scripts/derive_emd.py` → `web/public/data/emd.json` (열점 첫 관측 시각 `first_hit`, 70세 이상 비율). 앱의 "불이 닿은 읍면동" 노출 계수기가 이 파일을 쓴다.
+- 코덱스 위임 과제문: `docs/codex-task-publicdata.md`, 실행 로그는 `logs/`(git 제외).
