@@ -15,3 +15,6 @@ data/raw/evidence/
 data/raw/*/http_cache/
 data/raw/*/evidence/
 .omc/
+
+# Large reference PDFs (산불통계연보, re-downloadable from fd.forest.go.kr/ffas/data/<year>_fire_static.pdf)
+data/raw/kfs_docs/
