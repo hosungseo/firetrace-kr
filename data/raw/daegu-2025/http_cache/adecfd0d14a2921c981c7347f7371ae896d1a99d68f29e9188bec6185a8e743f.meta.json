@@ -1,0 +1,6 @@
+{
+  "source": "data_go_kr",
+  "source_url": "https://apis.data.go.kr/1360000/AsosDalyInfoService/getWthrDataList?serviceKey=[REDACTED]&pageNo=1&numOfRows=999&dataType=JSON&dataCd=ASOS&dateCd=DAY&startDt=20250427&endDt=20250503&stnIds=288",
+  "http_status": 200,
+  "fetched_at_utc": "2026-10-17T01:56:11.359022+00:00"
+}

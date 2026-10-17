@@ -1,0 +1,20 @@
+{
+  "source_url": "https://maps.effis.emergency.copernicus.eu/gwis?service=WFS&request=GetCapabilities",
+  "final_url": "https://maps.effis.emergency.copernicus.eu/gwis?service=WFS&request=GetCapabilities",
+  "fetched_at_utc": "2026-10-17T00:47:13.340153+00:00",
+  "licence_or_terms": "CC BY 4.0 for EU-owned content; credit EU/JRC GWIS and identify modifications. Third-party rights excepted.",
+  "row_count": null,
+  "caveat": "HTTP None; see exact response below.",
+  "http_status": null,
+  "content_type": "text/plain",
+  "request_body": null,
+  "attempts": [
+    {
+      "status": null,
+      "error": "The read operation timed out"
+    }
+  ],
+  "public_tokens_redacted": false,
+  "sha256": "1f4d03efe32cd481843de09fa042f2d00c2f34bd19e6803f6a840ebde8a90c7e",
+  "terms_source_url": "https://gwis.jrc.ec.europa.eu/about-gwis/data-license"
+}

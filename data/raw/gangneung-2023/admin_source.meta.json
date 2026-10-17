@@ -1,0 +1,13 @@
+{
+  "source_url": "https://raw.githubusercontent.com/vuski/admdongkor/7360288277dfd12d74e54b959c59bdd66f852e3a/ver20250101/HangJeongDong_ver20250101.geojson",
+  "source_version": "2025-01-01",
+  "licence_or_terms": "CC BY 4.0 (vuski/admdongkor processed data); upstream Statistics Korea SGIS: KOGL Type 1, attribution required.",
+  "attribution": "본 데이터는 통계청 통계지리정보서비스(SGIS, https://sgis.kostat.go.kr)에서 공공누리 제1유형으로 개방한 행정동 경계를 가공한 것이며(가공: vuski/admdongkor, https://github.com/vuski/admdongkor), CC BY 4.0으로 배포됩니다.",
+  "row_count": 21,
+  "sigungu_codes": [
+    "51150"
+  ],
+  "national_source_row_count": 3555,
+  "simplification_tolerance_metres": 50,
+  "caveat": "Pinned January 2025 administrative boundaries also used for 2023/2026 incidents; mergers/changes may leave unmatched historical population codes. Shared edges are simplified independently."
+}

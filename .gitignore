@@ -4,3 +4,10 @@ dist
 *.log
 logs/
 scripts/__pycache__/
+
+# Shared local provider throttle state (no source data)
+data/raw/.rate-*
+
+# Large HTTP caches (regenerable)
+data/raw/public_cache/
+data/raw/article_text/

@@ -1,0 +1,15 @@
+{
+  "source_url": "https://maps.effis.emergency.copernicus.eu/gwis?service=WMS&version=1.1.1&request=GetMap&layers=gwis.globfire.finalperim&styles=&format=image%2Fpng&transparent=TRUE&width=1024&height=768&bbox=128.2%2C35.9%2C129.6%2C36.8&srs=EPSG%3A4326&TIME=2025-03-28",
+  "final_url": "https://maps.effis.emergency.copernicus.eu/gwis?service=WMS&version=1.1.1&request=GetMap&layers=gwis.globfire.finalperim&styles=&format=image%2Fpng&transparent=TRUE&width=1024&height=768&bbox=128.2%2C35.9%2C129.6%2C36.8&srs=EPSG%3A4326&TIME=2025-03-28",
+  "fetched_at_utc": "2026-10-17T00:47:19.287795+00:00",
+  "licence_or_terms": "CC BY 4.0 for EU-owned content; credit EU/JRC GWIS and identify modifications. Third-party rights excepted.",
+  "row_count": null,
+  "caveat": "Research response cache; row_count is null for HTML/JS/binary or unknown. No reuse licence inferred.",
+  "http_status": 200,
+  "content_type": "application/vnd.ogc.se_xml; charset=UTF-8",
+  "request_body": null,
+  "attempts": [],
+  "public_tokens_redacted": false,
+  "sha256": "0e3cad8c109f781ccf19d8df5b07051df5872d84b4f53587c9d50321840b3680",
+  "terms_source_url": "https://gwis.jrc.ec.europa.eu/about-gwis/data-license"
+}

@@ -1,0 +1,1 @@
+{"request":{"stations":[133,238,239,236,226,181],"start":"2023-04-01","end":"2023-04-06"},"complete":true,"station_distances_km":{"133":15.84,"238":18.42,"239":29.75,"236":38.55,"226":44.87,"181":45.67},"note":"Uiseong keeps its six original stations; all others are <=60 km, at most six."}

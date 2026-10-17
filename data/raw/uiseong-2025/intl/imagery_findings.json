@@ -1,0 +1,75 @@
+{
+  "survey_started_utc": "2026-10-17T00:42:22.045855+00:00",
+  "survey_last_fetch_utc": "2026-10-17T00:54:04.256964+00:00",
+  "survey_elapsed_minutes": 11.7,
+  "cap_minutes": 25,
+  "maxar": {
+    "catalog_event_count": 55,
+    "matching_release_found": false,
+    "event_id": null,
+    "dates": null,
+    "tile_count": null,
+    "licence": "CC-BY-NC-4.0"
+  },
+  "ems": {
+    "total": 1067,
+    "collected": 1067,
+    "next": null,
+    "matching_activations": []
+  },
+  "unosat": {
+    "matching_products": [],
+    "caveat": "No match in the official country/date query; this is a search result, not proof of absence from every archive."
+  },
+  "nasa": [
+    {
+      "title": "Outbreak of Fire Across South Korea",
+      "published_at": "2025-03-25T12:00:00-04:00",
+      "url": "https://science.nasa.gov/earth/earth-observatory/outbreak-of-fire-across-south-korea-154083/",
+      "instrument_as_labelled": "Aqua — MODIS",
+      "instrument": "Aqua / MODIS",
+      "acquisition_date": "2025-03-22",
+      "image_urls": [
+        "https://assets.science.nasa.gov/content/dam/science/esd/eo/images/imagerecords/154000/154083/southkoreafires_amo_20250322.jpg",
+        "https://assets.science.nasa.gov/content/dam/science/esd/eo/images/imagerecords/154000/154083/southkoreafires_amo_20250322_lrg.jpg"
+      ],
+      "caption_text": [
+        "Dozens of wildland fires broke out as dry winds swept across South Korea in March 2025. Blazes began igniting on March 21, prompting evacuations as well as the deployment of thousands of personnel and more than 100 helicopters to combat the fires, according to news reports .",
+        "Smoke from some of the larger fires is visible in this image, acquired by the MODIS (Moderate Resolution Imaging Spectroradiometer) on NASA’s Aqua satellite on March 22. One of the plumes billowed from an area burning near Andong in Uiseong County. More than 1,000 people evacuated the area, several sections of highway and a rail line were forced to close, and an ancient temple was destroyed by the flames.",
+        "To the south, another large smoke plume originated from rural Sancheong County. A large, fast-moving fire had burned over 500 hectares (2 square miles) by the evening of March 22, the Associated Press reported, and caused multiple injuries and deaths. Mountainous terrain and strong winds made containment efforts challenging.",
+        "Officials issued strong wind advisories for several counties on March 21 and 22 and discouraged people from burning trash and agricultural products. Dry weather also contributed to the fire risk. March through May is the driest time of year in the region.",
+        "As of March 24, many of the fires had been extinguished, according to officials cited in news reports , and the large blazes in Uiseong and Sancheong counties were each about two-thirds contained. In total, the fires were reported to have burned at least 8,700 hectares (34 square miles). The government declared a state of disaster for several of the affected regions.",
+        "NASA Earth Observatory image by Michala Garrison, using MODIS data from NASA EOSDIS LANCE and GIBS/Worldview. Story by Lindsey Doermann."
+      ],
+      "credit_text": "NASA Earth Observatory image by Michala Garrison, using MODIS data from NASA EOSDIS LANCE and GIBS/Worldview. Story by Lindsey Doermann.",
+      "caveat": "Article publication may fall outside study dates; the image acquisition is within them."
+    },
+    {
+      "title": "South Korea Charred by Fire",
+      "published_at": "2025-04-08T12:00:00-04:00",
+      "url": "https://science.nasa.gov/earth/earth-observatory/south-korea-charred-by-fire-154142/",
+      "instrument_as_labelled": "Landsat 9 — OLI",
+      "instrument": "Landsat 9 / OLI-2",
+      "acquisition_date": "2025-04-04",
+      "image_urls": [
+        "https://assets.science.nasa.gov/content/dam/science/esd/eo/images/imagerecords/154000/154142/skoreaburnscar_oli2_20250404.jpg",
+        "https://science.nasa.gov/wp-content/uploads/2025/10/skoreaburnscarzm_oli2_20250404.jpg",
+        "https://assets.science.nasa.gov/content/dam/science/esd/eo/images/imagerecords/154000/154142/skoreaburnscar_oli2_20250404_lrg.jpg"
+      ],
+      "caption_text": [
+        "A spate of destructive wildland fires tore across parts of South Korea in March 2025. The region’s larger blazes, including burning near Andong in the country’s southeast, were contained by the end of the month, according to news reports , but they left a substantial mark on the landscape.",
+        "A strip of burned area in Gyeongsangbuk-do (North Gyeongsang) province is visible in this image, acquired on April 4, 2025, with the OLI-2 (Operational Land Imager-2) on Landsat 9. The image is false color , showing shortwave infrared, near infrared, and visible light ( bands 6-5-3 ). This band combination makes it easier to distinguish areas of unburned vegetation (green) from the recently burned landscape (brown). A detailed view of the image is shown below.",
+        "Dozens of blazes began to ignite across the country on March 21 amid dry, windy conditions. The next day, a particularly large plume of smoke was visible near Andong. This fire continued to spread, and by March 25, satellite-derived thermal anomalies indicated that the blaze reached all the way to the coast. Light rain moved over the area and helped officials contain the blaze by March 28. Smoke and clouds ultimately cleared, allowing Landsat 9 to observe a burned area stretching more than 80 kilometers (50 miles) from the coastline.",
+        "According to news reports , the deadly fires burned tens of thousands of hectares and destroyed thousands of structures, some of them historic . The incident has been described as being among the country’s worst fire disasters.",
+        "NASA Earth Observatory images by Lauren Dauphin, using Landsat data from the U.S. Geological Survey . Story by Kathryn Hansen."
+      ],
+      "credit_text": "NASA Earth Observatory images by Lauren Dauphin, using Landsat data from the U.S. Geological Survey . Story by Kathryn Hansen.",
+      "caveat": "Article publication may fall outside study dates; the image acquisition is within them."
+    }
+  ],
+  "gibs": {
+    "tested": 56,
+    "available": 56,
+    "study_tile_available": 28
+  }
+}

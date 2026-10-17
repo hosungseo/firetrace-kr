@@ -4,7 +4,7 @@ import Timeline from './Timeline'
 import Response from './Response'
 import EmdDetail from './EmdDetail'
 import type { EmdCollection, FireData, FireEvent, GdacsData, GwisData, KfsData, MentionsData, NewsData, OfficialData, ResponseData } from './types'
-import { ACTIVE_WINDOW, T_MAX, T_MIN, compass, eventLabel, fmt, hourIndex, setIncident, toMinutes } from './time'
+import { ACTIVE_WINDOW, T_MAX, T_MIN, compass, eventLabel, fmt, fmtDay, hourIndex, setIncident, toMinutes } from './time'
 import './App.css'
 
 const SPEEDS = [60, 180, 360] // simulated minutes per second
@@ -359,7 +359,7 @@ export default function App() {
                 <dt>위성 열점</dt>
                 <dd>{data.meta.hotspot_count.toLocaleString()}개 (VIIRS 2기 + MODIS)</dd>
                 <dt>열점 격자 환산</dt>
-                <dd>{stats.final.area_ha.toLocaleString()} ha (375m 격자 × 14ha, 3/28까지)</dd>
+                <dd>{stats.final.area_ha.toLocaleString()} ha (375m 격자 × 14ha, {fmtDay(T_MAX - 1)}까지)</dd>
                 <dt>신규 격자 최대 구간</dt>
                 <dd>
                   {fmt(stats.peakFrom)} → {fmt(stats.peak.t)}

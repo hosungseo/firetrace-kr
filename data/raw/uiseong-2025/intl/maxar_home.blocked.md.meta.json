@@ -1,0 +1,20 @@
+{
+  "source_url": "https://www.maxar.com/open-data",
+  "final_url": "https://www.maxar.com/open-data",
+  "fetched_at_utc": "2026-10-17T00:47:21.848322+00:00",
+  "licence_or_terms": "CC-BY-NC-4.0 (STAC root license field); no Korean event tiles were found or downloaded.",
+  "row_count": null,
+  "caveat": "HTTP None; see exact response below.",
+  "http_status": null,
+  "content_type": "text/plain",
+  "request_body": null,
+  "attempts": [
+    {
+      "status": null,
+      "error": "<urlopen error [SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: certificate has expired (_ssl.c:1144)>"
+    }
+  ],
+  "public_tokens_redacted": false,
+  "sha256": "016a857c99280972ab5bcd0daec63b5ba7a9e2c478ba825197c98817ec2759cf",
+  "terms_source_url": "https://maxar-opendata.s3.amazonaws.com/events/catalog.json"
+}

@@ -1,0 +1,6 @@
+{
+  "source": "firms",
+  "source_url": "https://firms.modaps.eosdis.nasa.gov/api/area/csv/[REDACTED]/MODIS_SP/125.939369,34.500164,127.139369,35.700164/4/2023-04-02",
+  "http_status": 200,
+  "fetched_at_utc": "2026-10-17T01:39:37.126909+00:00"
+}

@@ -1,0 +1,10 @@
+{"Response": {
+    "head": {
+        "pageNo": "1",
+        "resultCode": "11",
+        "totalCount": "0",
+        "numOfRows": "1000",
+        "resultMsg": "NO_MANDATORY_REQUEST_PARAMETERS_ERROR"
+    },
+    "items": ""
+}}

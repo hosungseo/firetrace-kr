@@ -1,26 +1,33 @@
 {
-  "generated_at_utc": "2026-10-17T01:32:07.898560+00:00",
+  "generated_at_utc": "2026-10-17T01:52:21.668374+00:00",
   "time_base": "2025-03-21T00:00:00+09:00",
   "time_unit": "minutes",
+  "admin_source": "web/public/data/uiseong-2025/admin.json",
   "target_articles": 4376,
+  "target_selection": {
+    "emd_name_articles": 3150,
+    "landmark_only_articles": 1226
+  },
   "article_outcomes": {
-    "success": 163,
-    "short_body_paywall_or_js": 17,
-    "not_attempted_time_cap": 4196
+    "success": 1849,
+    "short_body_paywall_or_js": 322,
+    "http_error": 2,
+    "not_attempted_time_cap": 2203
   },
-  "sentence_occurrences_before_dedupe": 43,
-  "sentences_kept": 38,
-  "records": 50,
+  "sentence_occurrences_before_dedupe": 1041,
+  "sentences_kept": 869,
+  "records": 1262,
   "records_per_action": {
-    "spread": 37,
-    "evacuation": 20,
-    "alert": 3,
-    "control": 4,
-    "containment": 1
+    "spread": 698,
+    "evacuation": 560,
+    "alert": 166,
+    "control": 77,
+    "containment": 122,
+    "casualty": 71
   },
-  "emd_covered": 2,
-  "unmapped": 0,
-  "unresolved_time_records": 4,
+  "emd_covered": 39,
+  "unmapped": 79,
+  "unresolved_time_records": 30,
   "dedupe": "Exact whitespace-normalized sentences; earliest publication; copies = distinct original URLs including keeper.",
   "selection": "One record per (sentence, EMD); multiple aliases of one EMD coalesced. Unmapped landmarks retain separate records.",
   "time_selection": "Nearest clock to any occurrence of the record place; tie picks first; all clocks retained in time_mentions.",
@@ -40,6 +47,7 @@
     "first is earliest extracted nominal time, not first actual event or official response.",
     "Unknown landmark locations remain unmapped; no sigungu-to-EMD fanout.",
     "Earliest publication may predate an updated version of the fetched body.",
-    "No body is replaced with title, description, or a Naver copy."
+    "No body is replaced with title, description, or a Naver copy.",
+    "Fetches follow input order; a time cap may underrepresent later publications."
   ]
 }

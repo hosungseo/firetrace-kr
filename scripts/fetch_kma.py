@@ -1,26 +1,73 @@
-"""Fetch KMA ASOS hourly + daily observations for stations around the fire (data.go.kr)."""
-import json, os, time, urllib.parse, urllib.request
+"""Public KMA station catalog and incident ASOS observations (data.go.kr)."""
+import csv
+import io
+import re
+import urllib.parse
+from incident import (RAW, cli, raw_dir, read, compact, api_json, secret, distance,
+                      t0, weather_end, blocked, clear_blocked, SourceError)
+from public_data_http import fetch
 
-KEY = urllib.parse.quote(open(os.path.expanduser("~/.openclaw/secrets/data-go-kr-firetrace-key")).read().strip(), safe="")
-STATIONS = {278: "의성", 136: "안동", 276: "청송군", 277: "영덕", 271: "봉화", 138: "포항"}
-BASE = "https://apis.data.go.kr/1360000"
+CATALOG_URL='https://data.kma.go.kr/tmeta/stn/selectStnListDownload.do'
+CITY_URL='https://www.weather.go.kr/w/obs-climate/land/city-obs.do'
+UISEONG=[278,136,276,277,271,138]
 
-def get(url):
-    for i in range(4):
-        try:
-            res = json.load(urllib.request.urlopen(url, timeout=30))
-            return res["response"]["body"]["items"]["item"]
-        except Exception as e:
-            print("retry", i, e); time.sleep(1 + i)
-    raise RuntimeError(url)
 
-hourly, daily = {}, {}
-for stn, name in STATIONS.items():
-    hourly[stn] = get(f"{BASE}/AsosHourlyInfoService/getWthrDataList?serviceKey={KEY}&pageNo=1&numOfRows=999&dataType=JSON"
-                      f"&dataCd=ASOS&dateCd=HR&startDt=20250321&startHh=00&endDt=20250331&endHh=23&stnIds={stn}")
-    time.sleep(0.4)
-    daily[stn] = get(f"{BASE}/AsosDalyInfoService/getWthrDataList?serviceKey={KEY}&pageNo=1&numOfRows=99&dataType=JSON"
-                     f"&dataCd=ASOS&dateCd=DAY&startDt=20250321&endDt=20250331&stnIds={stn}")
-    time.sleep(0.4)
-    print(stn, name, len(hourly[stn]), len(daily[stn]))
-json.dump({"stations": STATIONS, "hourly": hourly, "daily": daily}, open("data/raw/kma_asos.json", "w"), ensure_ascii=False)
+def catalog():
+    path=RAW/'asos_stations.json'
+    if path.exists():return read(path)
+    city,meta=fetch(CITY_URL)
+    if meta['http_status']!=200:raise SourceError('KMA public ASOS list unavailable')
+    ids=sorted(set(re.findall(r'stn=(\d+)',city.decode('utf-8'))),key=int)
+    url=CATALOG_URL+'?'+urllib.parse.urlencode({'fileType':'csv','pgmNo':123,'stnIds':','.join(ids)})
+    body,meta=fetch(url)
+    if meta['http_status']!=200:raise SourceError('KMA station CSV unavailable')
+    try:text=body.decode('utf-8-sig')
+    except UnicodeError:text=body.decode('cp949')
+    records=[]
+    for r in csv.DictReader(io.StringIO(text.strip())):
+        if not (r.get('위도') and r.get('경도')):continue
+        records.append({'id':int(r['지점']),'name':r['지점명'],'lat':float(r['위도']),'lon':float(r['경도']),
+                        'start':r['시작일'],'end':r['종료일'] or None})
+    current={}
+    for r in sorted(records,key=lambda r:r['start']):
+        if r['end'] is None:current[r['id']]=r
+    value={'source_url':url,'list_source_url':CITY_URL,'fetched_at_utc':meta['fetched_at_utc'],
+           'stations':list(current.values()),'history':records,'note':'Public KMA station table CSV, filtered to ASOS IDs listed in KMA city observations; latest active history per station.'}
+    if len(current)<90:raise SourceError('KMA catalog unexpectedly incomplete')
+    compact(path,value);return value
+
+
+def fetch_observations(inc):
+    cat=catalog();stations={}
+    for r in sorted(cat['history'],key=lambda r:r['start']):
+        if r['start']<=inc['start'] and (r['end'] is None or r['end']>=inc['start']):stations[r['id']]=r
+    selected=([stations[i] for i in UISEONG] if inc['id']=='uiseong-2025' else
+              sorted((s for s in stations.values() if distance(inc['center'],(s['lon'],s['lat']))<=60),
+                     key=lambda s:distance(inc['center'],(s['lon'],s['lat'])))[:6])
+    spec={'stations':[s['id'] for s in selected],'start':str(t0(inc).date()),'end':str(weather_end(inc))}
+    path=raw_dir(inc)/'kma_asos.json';mp=path.with_suffix('.meta.json')
+    if path.exists() and read(mp,{}).get('request')==spec and read(mp,{}).get('complete'):return read(path)
+    key=urllib.parse.unquote(secret('data-go-kr-firetrace-key'))
+    value={'stations':{},'hourly':{},'daily':{},'positions':{str(s['id']):[s['lon'],s['lat']] for s in selected}};failures=[]
+    for stn in selected:
+        sid=str(stn['id']);value['stations'][sid]=stn['name']
+        for kind,service,code in [('hourly','AsosHourlyInfoService','HR'),('daily','AsosDalyInfoService','DAY')]:
+            params={'serviceKey':key,'pageNo':1,'numOfRows':999,'dataType':'JSON','dataCd':'ASOS','dateCd':code,
+                    'startDt':spec['start'].replace('-',''),'endDt':spec['end'].replace('-',''),'stnIds':sid}
+            if kind=='hourly':params.update(startHh='00',endHh='23')
+            url=f'https://apis.data.go.kr/1360000/{service}/getWthrDataList?'+urllib.parse.urlencode(params)
+            try:
+                res=api_json(inc,'data_go_kr',url,secrets=(key,),interval=.4,timeout=40)['response']
+                header=res.get('header',{})
+                if header.get('resultCode')!='00':raise SourceError(f'KMA {sid}: {header.get("resultCode")} {header.get("resultMsg")}')
+                items=(res['body'].get('items') or {}).get('item',[])
+                value[kind][sid]=items if isinstance(items,list) else [items]
+            except (SourceError,KeyError) as exc:failures.append(f'{sid} {kind}: {exc}');value[kind][sid]=[]
+    compact(path,value);compact(mp,{'request':spec,'complete':not failures,'station_distances_km':{str(s['id']):round(distance(inc['center'],(s['lon'],s['lat'])),2) for s in selected},'note':'Uiseong keeps its six original stations; all others are <=60 km, at most six.'})
+    if failures:blocked(inc,'kma','\n'.join(failures))
+    else:clear_blocked(inc,'kma')
+    print(inc['id'],'ASOS',len(selected),'stations',flush=True)
+    return value
+
+
+if __name__=='__main__':fetch_observations(cli(__doc__))

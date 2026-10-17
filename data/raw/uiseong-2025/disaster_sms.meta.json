@@ -1,0 +1,238 @@
+{
+  "source_url": "https://www.safekorea.go.kr/safekorea-kor/ctim/cmsg/calamitySms.do",
+  "fetched_at_utc": "2026-10-17T00:01:04.230719+00:00",
+  "licence_or_terms": "© 2026 Ministry of the Interior and Safety. All rights reserved (page footer). No separate data reuse licence found on this archive page.",
+  "row_count": 0,
+  "complete": false,
+  "period_kst": [
+    "2025-03-22T00:00:00+09:00",
+    "2025-03-30T23:59:59+09:00"
+  ],
+  "receiving_area_scope": [
+    "경상북도 의성군",
+    "경상북도 안동시",
+    "경상북도 청송군",
+    "경상북도 영양군",
+    "경상북도 영덕군",
+    "경상북도 전체",
+    "전국 전체"
+  ],
+  "actual_send_count": null,
+  "coverage_by_day": [
+    {
+      "date_kst": "2025-03-22",
+      "nationwide_search_reported_rows": 0,
+      "collected_count": 0,
+      "actual_send_count": null,
+      "coverage_status": "unavailable_history"
+    },
+    {
+      "date_kst": "2025-03-23",
+      "nationwide_search_reported_rows": 0,
+      "collected_count": 0,
+      "actual_send_count": null,
+      "coverage_status": "unavailable_history"
+    },
+    {
+      "date_kst": "2025-03-24",
+      "nationwide_search_reported_rows": 0,
+      "collected_count": 0,
+      "actual_send_count": null,
+      "coverage_status": "unavailable_history"
+    },
+    {
+      "date_kst": "2025-03-25",
+      "nationwide_search_reported_rows": 0,
+      "collected_count": 0,
+      "actual_send_count": null,
+      "coverage_status": "unavailable_history"
+    },
+    {
+      "date_kst": "2025-03-26",
+      "nationwide_search_reported_rows": 0,
+      "collected_count": 0,
+      "actual_send_count": null,
+      "coverage_status": "unavailable_history"
+    },
+    {
+      "date_kst": "2025-03-27",
+      "nationwide_search_reported_rows": 0,
+      "collected_count": 0,
+      "actual_send_count": null,
+      "coverage_status": "unavailable_history"
+    },
+    {
+      "date_kst": "2025-03-28",
+      "nationwide_search_reported_rows": 0,
+      "collected_count": 0,
+      "actual_send_count": null,
+      "coverage_status": "unavailable_history"
+    },
+    {
+      "date_kst": "2025-03-29",
+      "nationwide_search_reported_rows": 0,
+      "collected_count": 0,
+      "actual_send_count": null,
+      "coverage_status": "unavailable_history"
+    },
+    {
+      "date_kst": "2025-03-30",
+      "nationwide_search_reported_rows": 0,
+      "collected_count": 0,
+      "actual_send_count": null,
+      "coverage_status": "unavailable_history"
+    }
+  ],
+  "count_per_sender_collected": {},
+  "attempts": [
+    {
+      "source_url": "https://www.safekorea.go.kr/idsiSFK/neo/sfk/cs/sfc/dis/disasterMsgList.jsp",
+      "final_url": "https://www.safekorea.go.kr/safekorea-kor/main/main.do",
+      "fetched_at_utc": "2026-10-16T23:54:43.211407+00:00",
+      "http_status": 200,
+      "request_body": null
+    },
+    {
+      "source_url": "https://www.safekorea.go.kr/idsiSFK/neo/js/dis/disasterMsgList.js",
+      "final_url": "https://www.safekorea.go.kr/safekorea-kor/main/main.do",
+      "fetched_at_utc": "2026-10-16T23:55:20.361159+00:00",
+      "http_status": 200,
+      "request_body": null
+    },
+    {
+      "source_url": "https://www.safekorea.go.kr/idsiSFK/neo/sfk/cs/sfc/dis/disasterMsgList.js",
+      "final_url": "https://www.safekorea.go.kr/safekorea-kor/main/main.do",
+      "fetched_at_utc": "2026-10-16T23:57:07.832690+00:00",
+      "http_status": 200,
+      "request_body": null
+    },
+    {
+      "source_url": "https://www.safekorea.go.kr/idsiSFK/bbs/user/disasterMsgList.do",
+      "final_url": "https://www.safekorea.go.kr/safekorea-kor/main/main.do",
+      "fetched_at_utc": "2026-10-16T23:55:43.642290+00:00",
+      "http_status": 200,
+      "request_body": {
+        "searchInfo": {
+          "pageIndex": "1",
+          "pageUnit": "100",
+          "pageSize": "10",
+          "firstIndex": "1",
+          "lastIndex": "1",
+          "searchBgnDe": "20250322",
+          "searchEndDe": "20250330",
+          "searchGb": "1",
+          "searchWrd": "",
+          "rcv_Area_Id": "",
+          "dstr_se_Id": "",
+          "c_ocrc_type": "",
+          "sbLawArea1": "4700000000",
+          "sbLawArea2": "",
+          "sbLawArea3": "",
+          "searchSido": "",
+          "searchSgg": "",
+          "searchEmd": "",
+          "searchInfo": "",
+          "idxArchive": "2025"
+        }
+      }
+    },
+    {
+      "source_url": "https://www.safekorea.go.kr/safekorea-kor/ctim/cmsg/calamitySms.do?menuSn=34&firstYn=Y",
+      "fetched_at_utc": "2026-10-16T23:55:19.525299+00:00",
+      "http_status": 200,
+      "final_url": "https://www.safekorea.go.kr/safekorea-kor/ctim/cmsg/calamitySms.do?menuSn=34&firstYn=Y",
+      "reported_rows": 117,
+      "verbatim_error": null
+    },
+    {
+      "source_url": "https://www.safekorea.go.kr/safekorea-kor/ctim/cmsg/calamitySms.do?menuSn=34&firstYn=N&readYn=Y&currentPage=1&startDate=2025-03-22&endDate=2025-03-22",
+      "fetched_at_utc": "2026-10-17T00:00:58.748673+00:00",
+      "http_status": 200,
+      "final_url": "https://www.safekorea.go.kr/safekorea-kor/ctim/cmsg/calamitySms.do?menuSn=34&firstYn=N&readYn=Y&currentPage=1&startDate=2025-03-22&endDate=2025-03-22",
+      "reported_rows": 0,
+      "verbatim_error": "데이터가 존재하지 않습니다."
+    },
+    {
+      "source_url": "https://www.safekorea.go.kr/safekorea-kor/ctim/cmsg/calamitySms.do?menuSn=34&firstYn=N&readYn=Y&currentPage=1&startDate=2025-03-23&endDate=2025-03-23",
+      "fetched_at_utc": "2026-10-17T00:00:59.372320+00:00",
+      "http_status": 200,
+      "final_url": "https://www.safekorea.go.kr/safekorea-kor/ctim/cmsg/calamitySms.do?menuSn=34&firstYn=N&readYn=Y&currentPage=1&startDate=2025-03-23&endDate=2025-03-23",
+      "reported_rows": 0,
+      "verbatim_error": "데이터가 존재하지 않습니다."
+    },
+    {
+      "source_url": "https://www.safekorea.go.kr/safekorea-kor/ctim/cmsg/calamitySms.do?menuSn=34&firstYn=N&readYn=Y&currentPage=1&startDate=2025-03-24&endDate=2025-03-24",
+      "fetched_at_utc": "2026-10-17T00:00:59.994188+00:00",
+      "http_status": 200,
+      "final_url": "https://www.safekorea.go.kr/safekorea-kor/ctim/cmsg/calamitySms.do?menuSn=34&firstYn=N&readYn=Y&currentPage=1&startDate=2025-03-24&endDate=2025-03-24",
+      "reported_rows": 0,
+      "verbatim_error": "데이터가 존재하지 않습니다."
+    },
+    {
+      "source_url": "https://www.safekorea.go.kr/safekorea-kor/ctim/cmsg/calamitySms.do?menuSn=34&firstYn=N&readYn=Y&currentPage=1&startDate=2025-03-25&endDate=2025-03-25",
+      "fetched_at_utc": "2026-10-17T00:01:00.610525+00:00",
+      "http_status": 200,
+      "final_url": "https://www.safekorea.go.kr/safekorea-kor/ctim/cmsg/calamitySms.do?menuSn=34&firstYn=N&readYn=Y&currentPage=1&startDate=2025-03-25&endDate=2025-03-25",
+      "reported_rows": 0,
+      "verbatim_error": "데이터가 존재하지 않습니다."
+    },
+    {
+      "source_url": "https://www.safekorea.go.kr/safekorea-kor/ctim/cmsg/calamitySms.do?menuSn=34&firstYn=N&readYn=Y&currentPage=1&startDate=2025-03-26&endDate=2025-03-26",
+      "fetched_at_utc": "2026-10-17T00:01:01.201162+00:00",
+      "http_status": 200,
+      "final_url": "https://www.safekorea.go.kr/safekorea-kor/ctim/cmsg/calamitySms.do?menuSn=34&firstYn=N&readYn=Y&currentPage=1&startDate=2025-03-26&endDate=2025-03-26",
+      "reported_rows": 0,
+      "verbatim_error": "데이터가 존재하지 않습니다."
+    },
+    {
+      "source_url": "https://www.safekorea.go.kr/safekorea-kor/ctim/cmsg/calamitySms.do?menuSn=34&firstYn=N&readYn=Y&currentPage=1&startDate=2025-03-27&endDate=2025-03-27",
+      "fetched_at_utc": "2026-10-17T00:01:01.802704+00:00",
+      "http_status": 200,
+      "final_url": "https://www.safekorea.go.kr/safekorea-kor/ctim/cmsg/calamitySms.do?menuSn=34&firstYn=N&readYn=Y&currentPage=1&startDate=2025-03-27&endDate=2025-03-27",
+      "reported_rows": 0,
+      "verbatim_error": "데이터가 존재하지 않습니다."
+    },
+    {
+      "source_url": "https://www.safekorea.go.kr/safekorea-kor/ctim/cmsg/calamitySms.do?menuSn=34&firstYn=N&readYn=Y&currentPage=1&startDate=2025-03-28&endDate=2025-03-28",
+      "fetched_at_utc": "2026-10-17T00:01:02.442724+00:00",
+      "http_status": 200,
+      "final_url": "https://www.safekorea.go.kr/safekorea-kor/ctim/cmsg/calamitySms.do?menuSn=34&firstYn=N&readYn=Y&currentPage=1&startDate=2025-03-28&endDate=2025-03-28",
+      "reported_rows": 0,
+      "verbatim_error": "데이터가 존재하지 않습니다."
+    },
+    {
+      "source_url": "https://www.safekorea.go.kr/safekorea-kor/ctim/cmsg/calamitySms.do?menuSn=34&firstYn=N&readYn=Y&currentPage=1&startDate=2025-03-29&endDate=2025-03-29",
+      "fetched_at_utc": "2026-10-17T00:01:03.021873+00:00",
+      "http_status": 200,
+      "final_url": "https://www.safekorea.go.kr/safekorea-kor/ctim/cmsg/calamitySms.do?menuSn=34&firstYn=N&readYn=Y&currentPage=1&startDate=2025-03-29&endDate=2025-03-29",
+      "reported_rows": 0,
+      "verbatim_error": "데이터가 존재하지 않습니다."
+    },
+    {
+      "source_url": "https://www.safekorea.go.kr/safekorea-kor/ctim/cmsg/calamitySms.do?menuSn=34&firstYn=N&readYn=Y&currentPage=1&startDate=2025-03-30&endDate=2025-03-30",
+      "fetched_at_utc": "2026-10-17T00:01:03.642449+00:00",
+      "http_status": 200,
+      "final_url": "https://www.safekorea.go.kr/safekorea-kor/ctim/cmsg/calamitySms.do?menuSn=34&firstYn=N&readYn=Y&currentPage=1&startDate=2025-03-30&endDate=2025-03-30",
+      "reported_rows": 0,
+      "verbatim_error": "데이터가 존재하지 않습니다."
+    },
+    {
+      "source_url": "https://www.safekorea.go.kr/safekorea-kor/ctim/cmsg/calamitySms.do?menuSn=34&startDate=2025-03-25&endDate=2025-03-25&idxArchive=2025",
+      "fetched_at_utc": "2026-10-17T00:01:04.230719+00:00",
+      "http_status": 200,
+      "final_url": "https://www.safekorea.go.kr/safekorea-kor/ctim/cmsg/calamitySms.do?menuSn=34&startDate=2025-03-25&endDate=2025-03-25&idxArchive=2025",
+      "reported_rows": 0,
+      "verbatim_error": "데이터가 존재하지 않습니다."
+    },
+    {
+      "source_url": "https://www.safekorea.go.kr/safekorea-kor/ctim/cmsg/calamitySms.do?menuSn=34&startDate=2025-03-25&endDate=2025-03-25&idxArchive=202503",
+      "fetched_at_utc": "2026-10-16T23:56:39.864974+00:00",
+      "http_status": 200,
+      "final_url": "https://www.safekorea.go.kr/safekorea-kor/ctim/cmsg/calamitySms.do?menuSn=34&startDate=2025-03-25&endDate=2025-03-25&idxArchive=202503",
+      "reported_rows": 0,
+      "verbatim_error": "데이터가 존재하지 않습니다."
+    }
+  ],
+  "safetydata_key_present": false,
+  "caveat": "Empty retrieval is NOT evidence of zero historical sends. Legacy JSP/JS/JSON routes redirect to new homepage; new archive returns no 2025 rows while recent control works. History completeness cannot be established. No press-reported send is substituted for an official SMS record."
+}

@@ -1,0 +1,1 @@
+{"request":{"month":"202303","sigungu_codes":["48890"]},"complete":true,"period":"2023-03","rows":17,"source":"https://apis.data.go.kr/1741000/admmSexdAgePpltn/selectAdmmSexdAgePpltn","licence":"공공누리 제1유형 (data.go.kr)","caveat":"lv=3, regSeCd=1; Gangwon historical prefix normalized to the 2025 boundary snapshot."}

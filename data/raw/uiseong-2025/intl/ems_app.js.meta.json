@@ -1,0 +1,15 @@
+{
+  "source_url": "https://cems-mapping-website.s3.amazonaws.com/static/datastats/assets/main-B_pdTgP9.js",
+  "final_url": "https://cems-mapping-website.s3.amazonaws.com/static/datastats/assets/main-B_pdTgP9.js",
+  "fetched_at_utc": "2026-10-17T00:48:55.978136+00:00",
+  "licence_or_terms": "CEMS On-Demand Mapping terms: free access, reproduction, distribution and adaptation subject to citation, restrictions and third-party rights.",
+  "row_count": null,
+  "caveat": "Research response cache; row_count is null for HTML/JS/binary or unknown. No reuse licence inferred.",
+  "http_status": 200,
+  "content_type": "text/javascript",
+  "request_body": null,
+  "attempts": [],
+  "public_tokens_redacted": true,
+  "sha256": "9c8f196bb9a51d186b86a5421ddce661faeb40125776ab6e7a7b7cd4fb065cb4",
+  "terms_source_url": "https://mapping.emergency.copernicus.eu/terms-and-conditions/"
+}

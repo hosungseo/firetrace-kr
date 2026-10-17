@@ -1,0 +1,15 @@
+{
+  "source_url": "https://maps.effis.emergency.copernicus.eu/gwis?service=WMS&request=GetCapabilities&version=1.1.1",
+  "final_url": "https://maps.effis.emergency.copernicus.eu/gwis?service=WMS&request=GetCapabilities&version=1.1.1",
+  "fetched_at_utc": "2026-10-17T00:42:21.539059+00:00",
+  "licence_or_terms": "CC BY 4.0 for EU-owned content; credit EU/JRC GWIS and identify modifications. Third-party rights excepted.",
+  "row_count": 85,
+  "caveat": "Research response cache; row_count is null for HTML/JS/binary or unknown. No reuse licence inferred.",
+  "http_status": 200,
+  "content_type": "application/vnd.ogc.wms_xml; charset=UTF-8",
+  "request_body": null,
+  "attempts": [],
+  "public_tokens_redacted": false,
+  "sha256": "0520c7863a43bdff376702fcfca56bfa0bb02cbf4a162abd1d11ec6dba1a0391",
+  "terms_source_url": "https://gwis.jrc.ec.europa.eu/about-gwis/data-license"
+}

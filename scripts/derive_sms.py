@@ -6,6 +6,7 @@ import collections
 import json
 from datetime import datetime, timedelta, timezone
 from pathlib import Path
+from incident import load, out_dir
 
 ROOT = Path(__file__).resolve().parents[1]
 KST = timezone(timedelta(hours=9))
@@ -35,7 +36,7 @@ def main():
         assert r["level"] in (None, "긴급재난", "안전안내", "위급재난")
         compact.append([minute, r["sender"], r["level"], r["text"], r["regions"]])
     compact.sort(key=lambda r: (r[0] is None, r[0] if r[0] is not None else float("inf"), r[1] or ""))
-    target = ROOT / "web/public/data/sms.json"
+    target = out_dir(load()) / "sms.json"
     target.parent.mkdir(parents=True, exist_ok=True)
     target.write_text(json.dumps(compact, ensure_ascii=False, separators=(",", ":")) + "\n")
     per_day = {(datetime(2025, 3, 22) + timedelta(days=i)).date().isoformat():

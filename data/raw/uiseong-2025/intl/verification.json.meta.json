@@ -1,0 +1,97 @@
+{
+  "source_url": [
+    [
+      "https://maxar-opendata.s3.amazonaws.com/events/catalog.json",
+      "https://mapping.emergency.copernicus.eu/activations/api/activations/?limit=2000&offset=0",
+      "https://unosat.org/our_products/",
+      [
+        "https://earthobservatory.nasa.gov/images/154083/outbreak-of-fire-across-south-korea",
+        "https://science.nasa.gov/earth/earth-observatory/south-korea-charred-by-fire-154142/"
+      ],
+      [
+        "https://gibs.earthdata.nasa.gov/wmts/epsg3857/best/VIIRS_SNPP_CorrectedReflectance_TrueColor/default/2025-03-22/GoogleMapsCompatible_Level9/8/98/219.jpg",
+        "https://gibs.earthdata.nasa.gov/wmts/epsg3857/best/VIIRS_SNPP_CorrectedReflectance_TrueColor/default/2025-03-22/GoogleMapsCompatible_Level9/8/100/219.jpg",
+        "https://gibs.earthdata.nasa.gov/wmts/epsg3857/best/VIIRS_SNPP_CorrectedReflectance_TrueColor/default/2025-03-23/GoogleMapsCompatible_Level9/8/98/219.jpg",
+        "https://gibs.earthdata.nasa.gov/wmts/epsg3857/best/VIIRS_SNPP_CorrectedReflectance_TrueColor/default/2025-03-23/GoogleMapsCompatible_Level9/8/100/219.jpg",
+        "https://gibs.earthdata.nasa.gov/wmts/epsg3857/best/VIIRS_SNPP_CorrectedReflectance_TrueColor/default/2025-03-24/GoogleMapsCompatible_Level9/8/98/219.jpg",
+        "https://gibs.earthdata.nasa.gov/wmts/epsg3857/best/VIIRS_SNPP_CorrectedReflectance_TrueColor/default/2025-03-24/GoogleMapsCompatible_Level9/8/100/219.jpg",
+        "https://gibs.earthdata.nasa.gov/wmts/epsg3857/best/VIIRS_SNPP_CorrectedReflectance_TrueColor/default/2025-03-25/GoogleMapsCompatible_Level9/8/98/219.jpg",
+        "https://gibs.earthdata.nasa.gov/wmts/epsg3857/best/VIIRS_SNPP_CorrectedReflectance_TrueColor/default/2025-03-25/GoogleMapsCompatible_Level9/8/100/219.jpg",
+        "https://gibs.earthdata.nasa.gov/wmts/epsg3857/best/VIIRS_SNPP_CorrectedReflectance_TrueColor/default/2025-03-26/GoogleMapsCompatible_Level9/8/98/219.jpg",
+        "https://gibs.earthdata.nasa.gov/wmts/epsg3857/best/VIIRS_SNPP_CorrectedReflectance_TrueColor/default/2025-03-26/GoogleMapsCompatible_Level9/8/100/219.jpg",
+        "https://gibs.earthdata.nasa.gov/wmts/epsg3857/best/VIIRS_SNPP_CorrectedReflectance_TrueColor/default/2025-03-27/GoogleMapsCompatible_Level9/8/98/219.jpg",
+        "https://gibs.earthdata.nasa.gov/wmts/epsg3857/best/VIIRS_SNPP_CorrectedReflectance_TrueColor/default/2025-03-27/GoogleMapsCompatible_Level9/8/100/219.jpg",
+        "https://gibs.earthdata.nasa.gov/wmts/epsg3857/best/VIIRS_SNPP_CorrectedReflectance_TrueColor/default/2025-03-28/GoogleMapsCompatible_Level9/8/98/219.jpg",
+        "https://gibs.earthdata.nasa.gov/wmts/epsg3857/best/VIIRS_SNPP_CorrectedReflectance_TrueColor/default/2025-03-28/GoogleMapsCompatible_Level9/8/100/219.jpg",
+        "https://gibs.earthdata.nasa.gov/wmts/epsg3857/best/VIIRS_NOAA20_CorrectedReflectance_TrueColor/default/2025-03-22/GoogleMapsCompatible_Level9/8/98/219.jpg",
+        "https://gibs.earthdata.nasa.gov/wmts/epsg3857/best/VIIRS_NOAA20_CorrectedReflectance_TrueColor/default/2025-03-22/GoogleMapsCompatible_Level9/8/100/219.jpg",
+        "https://gibs.earthdata.nasa.gov/wmts/epsg3857/best/VIIRS_NOAA20_CorrectedReflectance_TrueColor/default/2025-03-23/GoogleMapsCompatible_Level9/8/98/219.jpg",
+        "https://gibs.earthdata.nasa.gov/wmts/epsg3857/best/VIIRS_NOAA20_CorrectedReflectance_TrueColor/default/2025-03-23/GoogleMapsCompatible_Level9/8/100/219.jpg",
+        "https://gibs.earthdata.nasa.gov/wmts/epsg3857/best/VIIRS_NOAA20_CorrectedReflectance_TrueColor/default/2025-03-24/GoogleMapsCompatible_Level9/8/98/219.jpg",
+        "https://gibs.earthdata.nasa.gov/wmts/epsg3857/best/VIIRS_NOAA20_CorrectedReflectance_TrueColor/default/2025-03-24/GoogleMapsCompatible_Level9/8/100/219.jpg",
+        "https://gibs.earthdata.nasa.gov/wmts/epsg3857/best/VIIRS_NOAA20_CorrectedReflectance_TrueColor/default/2025-03-25/GoogleMapsCompatible_Level9/8/98/219.jpg",
+        "https://gibs.earthdata.nasa.gov/wmts/epsg3857/best/VIIRS_NOAA20_CorrectedReflectance_TrueColor/default/2025-03-25/GoogleMapsCompatible_Level9/8/100/219.jpg",
+        "https://gibs.earthdata.nasa.gov/wmts/epsg3857/best/VIIRS_NOAA20_CorrectedReflectance_TrueColor/default/2025-03-26/GoogleMapsCompatible_Level9/8/98/219.jpg",
+        "https://gibs.earthdata.nasa.gov/wmts/epsg3857/best/VIIRS_NOAA20_CorrectedReflectance_TrueColor/default/2025-03-26/GoogleMapsCompatible_Level9/8/100/219.jpg",
+        "https://gibs.earthdata.nasa.gov/wmts/epsg3857/best/VIIRS_NOAA20_CorrectedReflectance_TrueColor/default/2025-03-27/GoogleMapsCompatible_Level9/8/98/219.jpg",
+        "https://gibs.earthdata.nasa.gov/wmts/epsg3857/best/VIIRS_NOAA20_CorrectedReflectance_TrueColor/default/2025-03-27/GoogleMapsCompatible_Level9/8/100/219.jpg",
+        "https://gibs.earthdata.nasa.gov/wmts/epsg3857/best/VIIRS_NOAA20_CorrectedReflectance_TrueColor/default/2025-03-28/GoogleMapsCompatible_Level9/8/98/219.jpg",
+        "https://gibs.earthdata.nasa.gov/wmts/epsg3857/best/VIIRS_NOAA20_CorrectedReflectance_TrueColor/default/2025-03-28/GoogleMapsCompatible_Level9/8/100/219.jpg",
+        "https://gibs.earthdata.nasa.gov/wmts/epsg3857/best/MODIS_Terra_CorrectedReflectance_TrueColor/default/2025-03-22/GoogleMapsCompatible_Level9/8/98/219.jpg",
+        "https://gibs.earthdata.nasa.gov/wmts/epsg3857/best/MODIS_Terra_CorrectedReflectance_TrueColor/default/2025-03-22/GoogleMapsCompatible_Level9/8/100/219.jpg",
+        "https://gibs.earthdata.nasa.gov/wmts/epsg3857/best/MODIS_Terra_CorrectedReflectance_TrueColor/default/2025-03-23/GoogleMapsCompatible_Level9/8/98/219.jpg",
+        "https://gibs.earthdata.nasa.gov/wmts/epsg3857/best/MODIS_Terra_CorrectedReflectance_TrueColor/default/2025-03-23/GoogleMapsCompatible_Level9/8/100/219.jpg",
+        "https://gibs.earthdata.nasa.gov/wmts/epsg3857/best/MODIS_Terra_CorrectedReflectance_TrueColor/default/2025-03-24/GoogleMapsCompatible_Level9/8/98/219.jpg",
+        "https://gibs.earthdata.nasa.gov/wmts/epsg3857/best/MODIS_Terra_CorrectedReflectance_TrueColor/default/2025-03-24/GoogleMapsCompatible_Level9/8/100/219.jpg",
+        "https://gibs.earthdata.nasa.gov/wmts/epsg3857/best/MODIS_Terra_CorrectedReflectance_TrueColor/default/2025-03-25/GoogleMapsCompatible_Level9/8/98/219.jpg",
+        "https://gibs.earthdata.nasa.gov/wmts/epsg3857/best/MODIS_Terra_CorrectedReflectance_TrueColor/default/2025-03-25/GoogleMapsCompatible_Level9/8/100/219.jpg",
+        "https://gibs.earthdata.nasa.gov/wmts/epsg3857/best/MODIS_Terra_CorrectedReflectance_TrueColor/default/2025-03-26/GoogleMapsCompatible_Level9/8/98/219.jpg",
+        "https://gibs.earthdata.nasa.gov/wmts/epsg3857/best/MODIS_Terra_CorrectedReflectance_TrueColor/default/2025-03-26/GoogleMapsCompatible_Level9/8/100/219.jpg",
+        "https://gibs.earthdata.nasa.gov/wmts/epsg3857/best/MODIS_Terra_CorrectedReflectance_TrueColor/default/2025-03-27/GoogleMapsCompatible_Level9/8/98/219.jpg",
+        "https://gibs.earthdata.nasa.gov/wmts/epsg3857/best/MODIS_Terra_CorrectedReflectance_TrueColor/default/2025-03-27/GoogleMapsCompatible_Level9/8/100/219.jpg",
+        "https://gibs.earthdata.nasa.gov/wmts/epsg3857/best/MODIS_Terra_CorrectedReflectance_TrueColor/default/2025-03-28/GoogleMapsCompatible_Level9/8/98/219.jpg",
+        "https://gibs.earthdata.nasa.gov/wmts/epsg3857/best/MODIS_Terra_CorrectedReflectance_TrueColor/default/2025-03-28/GoogleMapsCompatible_Level9/8/100/219.jpg",
+        "https://gibs.earthdata.nasa.gov/wmts/epsg3857/best/MODIS_Aqua_CorrectedReflectance_TrueColor/default/2025-03-22/GoogleMapsCompatible_Level9/8/98/219.jpg",
+        "https://gibs.earthdata.nasa.gov/wmts/epsg3857/best/MODIS_Aqua_CorrectedReflectance_TrueColor/default/2025-03-22/GoogleMapsCompatible_Level9/8/100/219.jpg",
+        "https://gibs.earthdata.nasa.gov/wmts/epsg3857/best/MODIS_Aqua_CorrectedReflectance_TrueColor/default/2025-03-23/GoogleMapsCompatible_Level9/8/98/219.jpg",
+        "https://gibs.earthdata.nasa.gov/wmts/epsg3857/best/MODIS_Aqua_CorrectedReflectance_TrueColor/default/2025-03-23/GoogleMapsCompatible_Level9/8/100/219.jpg",
+        "https://gibs.earthdata.nasa.gov/wmts/epsg3857/best/MODIS_Aqua_CorrectedReflectance_TrueColor/default/2025-03-24/GoogleMapsCompatible_Level9/8/98/219.jpg",
+        "https://gibs.earthdata.nasa.gov/wmts/epsg3857/best/MODIS_Aqua_CorrectedReflectance_TrueColor/default/2025-03-24/GoogleMapsCompatible_Level9/8/100/219.jpg",
+        "https://gibs.earthdata.nasa.gov/wmts/epsg3857/best/MODIS_Aqua_CorrectedReflectance_TrueColor/default/2025-03-25/GoogleMapsCompatible_Level9/8/98/219.jpg",
+        "https://gibs.earthdata.nasa.gov/wmts/epsg3857/best/MODIS_Aqua_CorrectedReflectance_TrueColor/default/2025-03-25/GoogleMapsCompatible_Level9/8/100/219.jpg",
+        "https://gibs.earthdata.nasa.gov/wmts/epsg3857/best/MODIS_Aqua_CorrectedReflectance_TrueColor/default/2025-03-26/GoogleMapsCompatible_Level9/8/98/219.jpg",
+        "https://gibs.earthdata.nasa.gov/wmts/epsg3857/best/MODIS_Aqua_CorrectedReflectance_TrueColor/default/2025-03-26/GoogleMapsCompatible_Level9/8/100/219.jpg",
+        "https://gibs.earthdata.nasa.gov/wmts/epsg3857/best/MODIS_Aqua_CorrectedReflectance_TrueColor/default/2025-03-27/GoogleMapsCompatible_Level9/8/98/219.jpg",
+        "https://gibs.earthdata.nasa.gov/wmts/epsg3857/best/MODIS_Aqua_CorrectedReflectance_TrueColor/default/2025-03-27/GoogleMapsCompatible_Level9/8/100/219.jpg",
+        "https://gibs.earthdata.nasa.gov/wmts/epsg3857/best/MODIS_Aqua_CorrectedReflectance_TrueColor/default/2025-03-28/GoogleMapsCompatible_Level9/8/98/219.jpg",
+        "https://gibs.earthdata.nasa.gov/wmts/epsg3857/best/MODIS_Aqua_CorrectedReflectance_TrueColor/default/2025-03-28/GoogleMapsCompatible_Level9/8/100/219.jpg"
+      ]
+    ],
+    "https://www.gdacs.org/gdacsapi/api/events/geteventlist/SEARCH?eventlist=WF&fromDate=2025-03-20&toDate=2025-04-05&alertlevel=Green;Orange;Red&country=Korea",
+    "https://maps.effis.emergency.copernicus.eu/gwis?service=WFS&version=1.0.0&request=GetFeature&typeName=nrt.ba.poly&outputFormat=GML2&bbox=128.2%2C35.9%2C129.6%2C36.8&srsName=EPSG%3A4326&maxFeatures=5000"
+  ],
+  "source_files": [
+    "data/raw/intl/imagery_findings.json",
+    "data/raw/intl/gdacs_search.json",
+    "data/raw/intl/gwis_wfs_gml.xml"
+  ],
+  "fetched_at_utc": "2026-10-17T00:54:04.256964+00:00",
+  "generated_at_utc": "2026-10-17T00:59:37.927563+00:00",
+  "row_count": 1,
+  "licence_or_terms": [
+    [
+      "CC-BY-NC-4.0 (STAC root license field); no Korean event tiles were found or downloaded.",
+      "CEMS On-Demand Mapping terms: free access, reproduction, distribution and adaptation subject to citation, restrictions and third-party rights.",
+      "UNITAR Legal Notice: research/private study extracts and educational/non-commercial reuse with acknowledgment and source URL; substantial/commercial reuse requires authorization.",
+      [
+        "NASA Images and Media Usage Guidelines: educational/informational use generally permitted with NASA acknowledgement; third-party copyright and endorsement exceptions apply.",
+        "NASA Images and Media Usage Guidelines: educational/informational use generally permitted with NASA acknowledgement; third-party copyright and endorsement exceptions apply."
+      ],
+      "NASA imagery usage guidelines; acknowledge NASA EOSDIS GIBS and the named imagery instrument; no blanket Creative Commons licence inferred."
+    ],
+    "GDACS Disclaimer and Terms of Use: model estimates supplied as is, without warranty; no separate open-data licence stated on this page.",
+    "CC BY 4.0 for EU-owned content; credit EU/JRC GWIS and identify modifications. Third-party rights excepted."
+  ],
+  "caveat": "Local validation report; protected-file hashes unchanged before/after offline rerun. Concurrent changes not reverted.",
+  "sha256": "66c2c9323ba9bb7d779d3a8c8f019426395bebd71e96ada26a0c03ce7250f386"
+}

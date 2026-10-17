@@ -1,0 +1,7 @@
+{
+  "source_url": "https://www.safekorea.go.kr/safekorea-kor/ctim/cmsg/calamitySms.do",
+  "fetched_at_utc": "2026-10-17T00:01:04.230719+00:00",
+  "licence_or_terms": "© 2026 Ministry of the Interior and Safety. All rights reserved (page footer). No separate data reuse licence found on this archive page.",
+  "row_count": null,
+  "caveat": "Empty retrieval is NOT evidence of zero historical sends. Legacy JSP/JS/JSON routes redirect to new homepage; new archive returns no 2025 rows while recent control works. History completeness cannot be established. No press-reported send is substituted for an official SMS record."
+}

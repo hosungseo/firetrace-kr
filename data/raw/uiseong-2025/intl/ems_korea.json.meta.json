@@ -1,0 +1,15 @@
+{
+  "source_url": "https://mapping.emergency.copernicus.eu/activations/api/activations/?q=Korea&limit=100&offset=0",
+  "final_url": "https://mapping.emergency.copernicus.eu/activations/api/activations/?q=Korea&limit=100&offset=0",
+  "fetched_at_utc": "2026-10-17T00:50:09.407116+00:00",
+  "licence_or_terms": "CEMS On-Demand Mapping terms: free access, reproduction, distribution and adaptation subject to citation, restrictions and third-party rights.",
+  "row_count": 0,
+  "caveat": "Research response cache; row_count is null for HTML/JS/binary or unknown. No reuse licence inferred.",
+  "http_status": 200,
+  "content_type": "application/json",
+  "request_body": null,
+  "attempts": [],
+  "public_tokens_redacted": false,
+  "sha256": "0595424161ea863805d9b92c0e52d7aa1e3c46ec58cd8f0d6933759006a5fb74",
+  "terms_source_url": "https://mapping.emergency.copernicus.eu/terms-and-conditions/"
+}

@@ -1,0 +1,15 @@
+{
+  "source_url": "https://science.nasa.gov/earth/earth-observatory/south-korea-charred-by-fire-154142/",
+  "final_url": "https://science.nasa.gov/earth/earth-observatory/south-korea-charred-by-fire-154142/",
+  "fetched_at_utc": "2026-10-17T00:50:14.905253+00:00",
+  "licence_or_terms": "NASA Images and Media Usage Guidelines: educational/informational use generally permitted with NASA acknowledgement; third-party copyright and endorsement exceptions apply.",
+  "row_count": null,
+  "caveat": "Research response cache; row_count is null for HTML/JS/binary or unknown. No reuse licence inferred.",
+  "http_status": 200,
+  "content_type": "text/html; charset=UTF-8",
+  "request_body": null,
+  "attempts": [],
+  "public_tokens_redacted": false,
+  "sha256": "62fd6d8851cfd528cb57f5c8701bb9c6e2d5fc8fcff5303a55114afc3a6d8092",
+  "terms_source_url": "https://www.nasa.gov/nasa-brand-center/images-and-media/"
+}

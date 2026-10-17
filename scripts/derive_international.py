@@ -13,7 +13,8 @@ from pathlib import Path
 from public_data_http import ROOT, utc_now, write_json
 
 RAW = ROOT / 'data/raw/intl'
-OUT = ROOT / 'web/public/data'
+from incident import load, out_dir
+OUT = out_dir(load())
 KST = timezone(timedelta(hours=9))
 T0 = datetime(2025, 3, 21, tzinfo=KST)
 

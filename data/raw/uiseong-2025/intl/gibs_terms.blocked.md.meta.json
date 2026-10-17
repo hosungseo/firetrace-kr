@@ -1,0 +1,20 @@
+{
+  "source_url": "https://nasa-gibs.github.io/gibs-api-docs/access-usage/",
+  "final_url": "https://nasa-gibs.github.io/gibs-api-docs/access-usage/",
+  "fetched_at_utc": "2026-10-17T00:51:03.046636+00:00",
+  "licence_or_terms": "NASA imagery usage guidelines; acknowledge NASA EOSDIS GIBS and the named imagery instrument; no blanket Creative Commons licence inferred.",
+  "row_count": null,
+  "caveat": "HTTP 404; see exact response below.",
+  "http_status": 404,
+  "content_type": "text/html; charset=utf-8",
+  "request_body": null,
+  "attempts": [
+    {
+      "status": 404,
+      "error": "HTTP Error 404: Not Found"
+    }
+  ],
+  "public_tokens_redacted": false,
+  "sha256": "a954e44e0574a039f2bdf4aca8d440e69ae6b37abe5fce85cc9487bfe8b6562f",
+  "terms_source_url": "https://www.nasa.gov/nasa-brand-center/images-and-media/"
+}

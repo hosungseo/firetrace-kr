@@ -1,5 +1,551 @@
 [
   {
+    "record_index": 1067,
+    "url": "https://www.imaeil.com/page/view/2025032600145140153",
+    "outlet": "www.imaeil.com",
+    "published": "2025-03-26T00:16:00+09:00",
+    "sentence": "지난 25일 오후 경북 영양군 석보면에서 시작된 산불이 26일 자정부터 인근 입암면 일대까지 확산하면서 주택과 주요 시설이 잇따라 불에 타는 등 피해가 커지고 있다.",
+    "emd_codes": [
+      "4776035000"
+    ],
+    "place_text": "석보면",
+    "time_text": "자정",
+    "event_time": "2025-03-26T00:00:00+09:00",
+    "t": 7200,
+    "date_basis": "explicit_day",
+    "time_resolution_note": null,
+    "actions": [
+      "spread"
+    ],
+    "copies": 1,
+    "copy_urls": [
+      "https://www.imaeil.com/page/view/2025032600145140153"
+    ],
+    "time_mentions": [
+      {
+        "time_text": "자정",
+        "event_time": "2025-03-26T00:00:00+09:00",
+        "t": 7200,
+        "date_basis": "explicit_day",
+        "time_resolution_note": null,
+        "offset_start": 35,
+        "offset_end": 37
+      }
+    ],
+    "selected_time_index": 0
+  },
+  {
+    "record_index": 877,
+    "url": "http://www.fnnews.com/news/202503251919364065",
+    "outlet": "www.fnnews.com",
+    "published": "2025-03-25T19:26:00+09:00",
+    "sentence": "25일 산림청 중앙사고수습본부 등에 따르면 의성 산불이 이날 오후 5시께 청송 주왕산 경계 지점 4㎞까지 번진 가운데 오후 6시가 넘어서면서 영양군 석보면 답곡 터널 인근으로까지 불이 번졌다.",
+    "emd_codes": [],
+    "place_text": "주왕산",
+    "time_text": "오후 5시께",
+    "event_time": "2025-03-25T17:00:00+09:00",
+    "t": 6780,
+    "date_basis": "explicit_day",
+    "time_resolution_note": null,
+    "actions": [
+      "spread"
+    ],
+    "copies": 1,
+    "copy_urls": [
+      "http://www.fnnews.com/news/202503251919364065"
+    ],
+    "time_mentions": [
+      {
+        "time_text": "오후 5시께",
+        "event_time": "2025-03-25T17:00:00+09:00",
+        "t": 6780,
+        "date_basis": "explicit_day",
+        "time_resolution_note": null,
+        "offset_start": 34,
+        "offset_end": 40
+      },
+      {
+        "time_text": "오후 6시",
+        "event_time": "2025-03-25T18:00:00+09:00",
+        "t": 6840,
+        "date_basis": "explicit_day",
+        "time_resolution_note": null,
+        "offset_start": 66,
+        "offset_end": 71
+      }
+    ],
+    "selected_time_index": 0
+  },
+  {
+    "record_index": 351,
+    "url": "https://www.idaegu.co.kr/news/articleView.html?idxno=504301",
+    "outlet": "www.idaegu.co.kr",
+    "published": "2025-03-24T17:54:00+09:00",
+    "sentence": "안동시는 24일 오후 4시10분쯤 의성군 점곡면에서 시작된 산불이 인접한 안동시 길안면 현하리의 야산으로 번지자 주민 대피령을 긴급 발령했다.",
+    "emd_codes": [
+      "4773032000"
+    ],
+    "place_text": "점곡면",
+    "time_text": "오후 4시10분쯤",
+    "event_time": "2025-03-24T16:10:00+09:00",
+    "t": 5290,
+    "date_basis": "explicit_day",
+    "time_resolution_note": null,
+    "actions": [
+      "evacuation"
+    ],
+    "copies": 1,
+    "copy_urls": [
+      "https://www.idaegu.co.kr/news/articleView.html?idxno=504301"
+    ],
+    "time_mentions": [
+      {
+        "time_text": "오후 4시10분쯤",
+        "event_time": "2025-03-24T16:10:00+09:00",
+        "t": 5290,
+        "date_basis": "explicit_day",
+        "time_resolution_note": null,
+        "offset_start": 9,
+        "offset_end": 18
+      }
+    ],
+    "selected_time_index": 0
+  },
+  {
+    "record_index": 830,
+    "url": "https://www.newsverse.kr/news/articleView.html?idxno=7316",
+    "outlet": "www.newsverse.kr",
+    "published": "2025-03-25T19:00:00+09:00",
+    "sentence": "오후 3시 55분쯤 하회마을 주민에게 대피 문자가 발송되는 등 불이 번지는 속도를 고려할 때 하회마을과 병산서원 근처까지 산불이 도달하는 데는 긴 시간이 걸리지 않을 가능성이 크다.",
+    "emd_codes": [],
+    "place_text": "하회마을",
+    "time_text": "오후 3시 55분쯤",
+    "event_time": "2025-03-25T15:55:00+09:00",
+    "t": 6715,
+    "date_basis": "article_day",
+    "time_resolution_note": null,
+    "actions": [
+      "spread",
+      "evacuation"
+    ],
+    "copies": 1,
+    "copy_urls": [
+      "https://www.newsverse.kr/news/articleView.html?idxno=7316"
+    ],
+    "time_mentions": [
+      {
+        "time_text": "오후 3시 55분쯤",
+        "event_time": "2025-03-25T15:55:00+09:00",
+        "t": 6715,
+        "date_basis": "article_day",
+        "time_resolution_note": null,
+        "offset_start": 0,
+        "offset_end": 10
+      }
+    ],
+    "selected_time_index": 0
+  },
+  {
+    "record_index": 791,
+    "url": "https://www.dailian.co.kr/news/view/1476937/?sc=Naver",
+    "outlet": "www.dailian.co.kr",
+    "published": "2025-03-25T18:38:00+09:00",
+    "sentence": "25일 연합뉴스에 따르면 이날 오후 4시 50분께 의성군 단촌면 등운산 자락에서 발생한 산불이 확산돼 고운사가 모두 불에 탔다.",
+    "emd_codes": [
+      "4773031000"
+    ],
+    "place_text": "단촌면 · 고운사",
+    "time_text": "오후 4시 50분께",
+    "event_time": "2025-03-25T16:50:00+09:00",
+    "t": 6770,
+    "date_basis": "explicit_day",
+    "time_resolution_note": null,
+    "actions": [
+      "spread"
+    ],
+    "copies": 1,
+    "copy_urls": [
+      "https://www.dailian.co.kr/news/view/1476937/?sc=Naver"
+    ],
+    "time_mentions": [
+      {
+        "time_text": "오후 4시 50분께",
+        "event_time": "2025-03-25T16:50:00+09:00",
+        "t": 6770,
+        "date_basis": "explicit_day",
+        "time_resolution_note": null,
+        "offset_start": 17,
+        "offset_end": 27
+      }
+    ],
+    "selected_time_index": 0
+  },
+  {
+    "record_index": 688,
+    "url": "http://www.segye.com/newsView/20250325517509?OutUrl=naver",
+    "outlet": "www.segye.com",
+    "published": "2025-03-25T17:45:00+09:00",
+    "sentence": "안동시는 오후 3시55분쯤 하회마을 주민들에게 대피 문자를 발송했다.",
+    "emd_codes": [],
+    "place_text": "하회마을",
+    "time_text": "오후 3시55분쯤",
+    "event_time": "2025-03-25T15:55:00+09:00",
+    "t": 6715,
+    "date_basis": "article_day",
+    "time_resolution_note": null,
+    "actions": [
+      "evacuation",
+      "alert"
+    ],
+    "copies": 1,
+    "copy_urls": [
+      "http://www.segye.com/newsView/20250325517509?OutUrl=naver"
+    ],
+    "time_mentions": [
+      {
+        "time_text": "오후 3시55분쯤",
+        "event_time": "2025-03-25T15:55:00+09:00",
+        "t": 6715,
+        "date_basis": "article_day",
+        "time_resolution_note": null,
+        "offset_start": 5,
+        "offset_end": 14
+      }
+    ],
+    "selected_time_index": 0
+  },
+  {
+    "record_index": 829,
+    "url": "https://www.newsverse.kr/news/articleView.html?idxno=7316",
+    "outlet": "www.newsverse.kr",
+    "published": "2025-03-25T19:00:00+09:00",
+    "sentence": "오후 3시 55분쯤 하회마을 주민에게 대피 문자가 발송되는 등 불이 번지는 속도를 고려할 때 하회마을과 병산서원 근처까지 산불이 도달하는 데는 긴 시간이 걸리지 않을 가능성이 크다.",
+    "emd_codes": [],
+    "place_text": "병산서원",
+    "time_text": "오후 3시 55분쯤",
+    "event_time": "2025-03-25T15:55:00+09:00",
+    "t": 6715,
+    "date_basis": "article_day",
+    "time_resolution_note": null,
+    "actions": [
+      "spread",
+      "evacuation"
+    ],
+    "copies": 1,
+    "copy_urls": [
+      "https://www.newsverse.kr/news/articleView.html?idxno=7316"
+    ],
+    "time_mentions": [
+      {
+        "time_text": "오후 3시 55분쯤",
+        "event_time": "2025-03-25T15:55:00+09:00",
+        "t": 6715,
+        "date_basis": "article_day",
+        "time_resolution_note": null,
+        "offset_start": 0,
+        "offset_end": 10
+      }
+    ],
+    "selected_time_index": 0
+  },
+  {
+    "record_index": 896,
+    "url": "http://www.hidomin.com/news/articleView.html?idxno=576010",
+    "outlet": "www.hidomin.com",
+    "published": "2025-03-25T19:36:00+09:00",
+    "sentence": "안동시는 이날 오후 4시 55분쯤 “강한 바람으로 산불이 급속도로 확산중으로 하회리 마을 주민분들께서는 지금 즉시 저우리마을(광덕리 133)로 대피 바란다”는 긴급 재난문자를 발송했다.",
+    "emd_codes": [
+      "4717034000"
+    ],
+    "place_text": "하회리",
+    "time_text": "오후 4시 55분쯤",
+    "event_time": "2025-03-25T16:55:00+09:00",
+    "t": 6775,
+    "date_basis": "article_day",
+    "time_resolution_note": null,
+    "actions": [
+      "spread",
+      "evacuation",
+      "alert"
+    ],
+    "copies": 1,
+    "copy_urls": [
+      "http://www.hidomin.com/news/articleView.html?idxno=576010"
+    ],
+    "time_mentions": [
+      {
+        "time_text": "오후 4시 55분쯤",
+        "event_time": "2025-03-25T16:55:00+09:00",
+        "t": 6775,
+        "date_basis": "article_day",
+        "time_resolution_note": null,
+        "offset_start": 8,
+        "offset_end": 18
+      }
+    ],
+    "selected_time_index": 0
+  },
+  {
+    "record_index": 455,
+    "url": "https://daily.hankooki.com/news/articleView.html?idxno=1195067",
+    "outlet": "daily.hankooki.com",
+    "published": "2025-03-25T10:54:00+09:00",
+    "sentence": "시는 산불은 24일 오후 5시쯤 길안면 백자리 쪽으로 넘어온 것으로 추정되며 25일 오전8시 기준으로 20%의 진화율을 보이고 있다.",
+    "emd_codes": [
+      "4717039000"
+    ],
+    "place_text": "길안면 · 백자리",
+    "time_text": "오후 5시쯤",
+    "event_time": "2025-03-24T17:00:00+09:00",
+    "t": 5340,
+    "date_basis": "explicit_day",
+    "time_resolution_note": null,
+    "actions": [
+      "spread",
+      "containment"
+    ],
+    "copies": 1,
+    "copy_urls": [
+      "https://daily.hankooki.com/news/articleView.html?idxno=1195067"
+    ],
+    "time_mentions": [
+      {
+        "time_text": "오후 5시쯤",
+        "event_time": "2025-03-24T17:00:00+09:00",
+        "t": 5340,
+        "date_basis": "explicit_day",
+        "time_resolution_note": null,
+        "offset_start": 11,
+        "offset_end": 17
+      },
+      {
+        "time_text": "오전8시",
+        "event_time": "2025-03-25T08:00:00+09:00",
+        "t": 6240,
+        "date_basis": "explicit_day",
+        "time_resolution_note": null,
+        "offset_start": 47,
+        "offset_end": 51
+      }
+    ],
+    "selected_time_index": 0
+  },
+  {
+    "record_index": 426,
+    "url": "https://www.pressian.com/pages/articles/2025032417421486481?utm_source=naver&utm_medium=search",
+    "outlet": "www.pressian.com",
+    "published": "2025-03-25T03:34:00+09:00",
+    "sentence": "이에 오후 2시를 전후로 의성군 의성읍과 옥산면, 점곡면, 단촌면 등에 잇따라 주민 대피령이 내려졌고, 불길이 안동으로까지 번져 안동시 길안면과 임하면에도 대피 명령이 발령됐다.",
+    "emd_codes": [
+      "4773031000"
+    ],
+    "place_text": "단촌면",
+    "time_text": "오후 2시",
+    "event_time": "2025-03-25T14:00:00+09:00",
+    "t": 6600,
+    "date_basis": "article_day",
+    "time_resolution_note": null,
+    "actions": [
+      "spread",
+      "evacuation"
+    ],
+    "copies": 1,
+    "copy_urls": [
+      "https://www.pressian.com/pages/articles/2025032417421486481?utm_source=naver&utm_medium=search"
+    ],
+    "time_mentions": [
+      {
+        "time_text": "오후 2시",
+        "event_time": "2025-03-25T14:00:00+09:00",
+        "t": 6600,
+        "date_basis": "article_day",
+        "time_resolution_note": null,
+        "offset_start": 3,
+        "offset_end": 8
+      }
+    ],
+    "selected_time_index": 0
+  },
+  {
+    "record_index": 767,
+    "url": "https://www.sedaily.com/NewsView/2GQDUB5TY6",
+    "outlet": "www.sedaily.com",
+    "published": "2025-03-25T18:23:00+09:00",
+    "sentence": "영덕군은 오후 7시 9분께 재난안전문자로 '지방도 911호선, 지품면 황장리∼석보면 화매리 구간 교통통제 중'이라며 '통행금지하여 달라'고 알렸다.",
+    "emd_codes": [
+      "4777034000"
+    ],
+    "place_text": "지품면",
+    "time_text": "오후 7시 9분께",
+    "event_time": "2025-03-25T19:09:00+09:00",
+    "t": 6909,
+    "date_basis": "article_day",
+    "time_resolution_note": null,
+    "actions": [
+      "alert",
+      "control"
+    ],
+    "copies": 3,
+    "copy_urls": [
+      "http://www.inews24.com/view/1827069",
+      "https://www.busan.com/view/busan/view.php?code=2025032518495540229",
+      "https://www.sedaily.com/NewsView/2GQDUB5TY6"
+    ],
+    "time_mentions": [
+      {
+        "time_text": "오후 7시 9분께",
+        "event_time": "2025-03-25T19:09:00+09:00",
+        "t": 6909,
+        "date_basis": "article_day",
+        "time_resolution_note": null,
+        "offset_start": 5,
+        "offset_end": 14
+      }
+    ],
+    "selected_time_index": 0
+  },
+  {
+    "record_index": 115,
+    "url": "https://www.gukjenews.com/news/articleView.html?idxno=3230772",
+    "outlet": "www.gukjenews.com",
+    "published": "2025-03-23T00:00:00+09:00",
+    "sentence": "이날 오전 11시25분 경상북도 의성군 안평면 괴산리 산61 일원에서 발생한 산불은 10시간이 넘도록 확산하고 있다.",
+    "emd_codes": [
+      "4773046000"
+    ],
+    "place_text": "안평면 · 괴산리",
+    "time_text": "오전 11시25분",
+    "event_time": "2025-03-23T11:25:00+09:00",
+    "t": 3565,
+    "date_basis": "article_day",
+    "time_resolution_note": null,
+    "actions": [
+      "spread"
+    ],
+    "copies": 1,
+    "copy_urls": [
+      "https://www.gukjenews.com/news/articleView.html?idxno=3230772"
+    ],
+    "time_mentions": [
+      {
+        "time_text": "오전 11시25분",
+        "event_time": "2025-03-23T11:25:00+09:00",
+        "t": 3565,
+        "date_basis": "article_day",
+        "time_resolution_note": null,
+        "offset_start": 3,
+        "offset_end": 12
+      }
+    ],
+    "selected_time_index": 0
+  },
+  {
+    "record_index": 872,
+    "url": "https://www.sedaily.com/NewsView/2GQDUH0Y2D",
+    "outlet": "www.sedaily.com",
+    "published": "2025-03-25T19:20:00+09:00",
+    "sentence": "영양군은 오후 6시 47분께 석보면 주민에게 영양읍 군민회관으로 대피하라는 대피 명령을 내렸다.",
+    "emd_codes": [
+      "4776035000"
+    ],
+    "place_text": "석보면",
+    "time_text": "오후 6시 47분께",
+    "event_time": "2025-03-25T18:47:00+09:00",
+    "t": 6887,
+    "date_basis": "article_day",
+    "time_resolution_note": null,
+    "actions": [
+      "evacuation"
+    ],
+    "copies": 1,
+    "copy_urls": [
+      "https://www.sedaily.com/NewsView/2GQDUH0Y2D"
+    ],
+    "time_mentions": [
+      {
+        "time_text": "오후 6시 47분께",
+        "event_time": "2025-03-25T18:47:00+09:00",
+        "t": 6887,
+        "date_basis": "article_day",
+        "time_resolution_note": null,
+        "offset_start": 5,
+        "offset_end": 15
+      }
+    ],
+    "selected_time_index": 0
+  },
+  {
+    "record_index": 1177,
+    "url": "https://biz.chosun.com/topics/topics_social/2025/03/26/MUMQVYFX5ZCAHLCJ67O5UCNNEI/?utm_source=naver&utm_medium=original&utm_campaign=biz",
+    "outlet": "biz.chosun.com",
+    "published": "2025-03-26T07:58:00+09:00",
+    "sentence": "전날 오후 11시11분쯤 석보면 포산리 도로에서 불에 타서 사망한 남성 1명과 여성 2명이 3명이 확인됐다.",
+    "emd_codes": [
+      "4776035000"
+    ],
+    "place_text": "석보면",
+    "time_text": "오후 11시11분쯤",
+    "event_time": "2025-03-25T23:11:00+09:00",
+    "t": 7151,
+    "date_basis": "previous_day",
+    "time_resolution_note": null,
+    "actions": [
+      "casualty"
+    ],
+    "copies": 1,
+    "copy_urls": [
+      "https://biz.chosun.com/topics/topics_social/2025/03/26/MUMQVYFX5ZCAHLCJ67O5UCNNEI/?utm_source=naver&utm_medium=original&utm_campaign=biz"
+    ],
+    "time_mentions": [
+      {
+        "time_text": "오후 11시11분쯤",
+        "event_time": "2025-03-25T23:11:00+09:00",
+        "t": 7151,
+        "date_basis": "previous_day",
+        "time_resolution_note": null,
+        "offset_start": 3,
+        "offset_end": 13
+      }
+    ],
+    "selected_time_index": 0
+  },
+  {
+    "record_index": 1063,
+    "url": "https://www.cbci.co.kr/news/articleView.html?idxno=492715",
+    "outlet": "www.cbci.co.kr",
+    "published": "2025-03-26T00:00:00+09:00",
+    "sentence": "영덕군은 이날 오후 6시부터 차례로 지품면, 달산면, 영해면, 창수면 주민에게 재난문자를 통해 대피를 지시했다.",
+    "emd_codes": [
+      "4777036000"
+    ],
+    "place_text": "영해면",
+    "time_text": "오후 6시",
+    "event_time": "2025-03-26T18:00:00+09:00",
+    "t": 8280,
+    "date_basis": "article_day",
+    "time_resolution_note": null,
+    "actions": [
+      "evacuation",
+      "alert"
+    ],
+    "copies": 1,
+    "copy_urls": [
+      "https://www.cbci.co.kr/news/articleView.html?idxno=492715"
+    ],
+    "time_mentions": [
+      {
+        "time_text": "오후 6시",
+        "event_time": "2025-03-26T18:00:00+09:00",
+        "t": 8280,
+        "date_basis": "article_day",
+        "time_resolution_note": null,
+        "offset_start": 8,
+        "offset_end": 13
+      }
+    ],
+    "selected_time_index": 0
+  },
+  {
     "record_index": 43,
     "url": "https://www.yna.co.kr/view/AKR20250322047100053?input=1195m",
     "outlet": "www.yna.co.kr",
@@ -17,7 +563,13 @@
     "actions": [
       "evacuation"
     ],
-    "copies": 1,
+    "copies": 4,
+    "copy_urls": [
+      "http://www.kookje.co.kr/news2011/asp/newsbody.asp?code=0300&key=20250322.99099006642",
+      "https://www.munhwa.com/news/view.html?no=2025032201039910274017",
+      "https://www.yna.co.kr/view/AKR20250322030853053?input=1195m",
+      "https://www.yna.co.kr/view/AKR20250322047100053?input=1195m"
+    ],
     "time_mentions": [
       {
         "time_text": "오후 6시",
@@ -32,964 +584,496 @@
     "selected_time_index": 0
   },
   {
-    "record_index": 33,
-    "url": "https://www.joongang.co.kr/article/25322606",
-    "outlet": "www.joongang.co.kr",
-    "published": "2025-03-22T18:54:00+09:00",
-    "sentence": "이날 오전 11시 24분쯤 의성군 안평면 괴산리 야산에서 난 불은 초속 5.6m의 강한 바람을 타고 의성읍 방향으로 확산하고 있다.",
-    "emd_codes": [
-      "4773025000"
-    ],
-    "place_text": "의성읍",
-    "time_text": "오전 11시 24분쯤",
-    "event_time": "2025-03-22T11:24:00+09:00",
-    "t": 2124,
-    "date_basis": "article_day",
-    "time_resolution_note": null,
-    "actions": [
-      "spread"
-    ],
-    "copies": 1,
-    "time_mentions": [
-      {
-        "time_text": "오전 11시 24분쯤",
-        "event_time": "2025-03-22T11:24:00+09:00",
-        "t": 2124,
-        "date_basis": "article_day",
-        "time_resolution_note": null,
-        "offset_start": 3,
-        "offset_end": 14
-      }
-    ],
-    "selected_time_index": 0
-  },
-  {
-    "record_index": 27,
-    "url": "http://www.yonhapnewstv.co.kr/AKR20250322174847601",
-    "outlet": "www.yonhapnewstv.co.kr",
-    "published": "2025-03-22T17:49:00+09:00",
-    "sentence": "군 당국은 이날 4시 이후 의성읍 원당리 등의 다른 지역 주민들에게도 추가 대피 명령을 보냈습니다.",
-    "emd_codes": [
-      "4773025000"
-    ],
-    "place_text": "의성읍",
-    "time_text": "4시",
-    "event_time": null,
-    "t": null,
-    "date_basis": "article_day",
-    "time_resolution_note": "ambiguous_meridiem",
-    "actions": [
-      "evacuation"
-    ],
-    "copies": 1,
-    "time_mentions": [
-      {
-        "time_text": "4시",
-        "event_time": null,
-        "t": null,
-        "date_basis": "article_day",
-        "time_resolution_note": "ambiguous_meridiem",
-        "offset_start": 9,
-        "offset_end": 11
-      }
-    ],
-    "selected_time_index": 0
-  },
-  {
-    "record_index": 46,
-    "url": "https://www.kbmaeil.com/news/articleView.html?idxno=1036276",
-    "outlet": "www.kbmaeil.com",
-    "published": "2025-03-22T19:20:00+09:00",
-    "sentence": "이날 오전 11시 24분께 의성군 안평면 괴산리 야산 정상에서 시작된 불은 4.9m/s의 강한 바람을 타고 동쪽으로 8km가량 떨어진 의성읍 방향으로 확산 중이다.",
+    "record_index": 763,
+    "url": "https://www.newspim.com/news/view/20250325001000",
+    "outlet": "www.newspim.com",
+    "published": "2025-03-25T18:22:00+09:00",
+    "sentence": "앞서 지난 22일 안평면 괴산리 야산에서 성묘객의 실화로 추정되는 산불이 발생하고 삽시간에 강풍을 타고 의성읍, 금성면 일원으로 확산되고 발화 3일째인 24일 단촌면, 옥산면 일원으로 확산된 데 이어 이날 오후 5시쯤 급기야 인근 지자체인 안동시 길안면 일원으로 확대됐다.",
     "emd_codes": [
       "4773046000"
     ],
     "place_text": "안평면 · 괴산리",
-    "time_text": "오전 11시 24분께",
-    "event_time": "2025-03-22T11:24:00+09:00",
-    "t": 2124,
-    "date_basis": "article_day",
-    "time_resolution_note": null,
-    "actions": [
-      "spread"
-    ],
-    "copies": 1,
-    "time_mentions": [
-      {
-        "time_text": "오전 11시 24분께",
-        "event_time": "2025-03-22T11:24:00+09:00",
-        "t": 2124,
-        "date_basis": "article_day",
-        "time_resolution_note": null,
-        "offset_start": 3,
-        "offset_end": 14
-      }
-    ],
-    "selected_time_index": 0
-  },
-  {
-    "record_index": 41,
-    "url": "https://www.gokorea.kr/news/articleView.html?idxno=822919",
-    "outlet": "www.gokorea.kr",
-    "published": "2025-03-22T19:16:00+09:00",
-    "sentence": "지난 22일 오전 11시 24분쯤 의성군 안평면 괴산리 야산 정상에서 시작된 불길은 갑작스러운 강풍을 타고 빠르게 확산되어 의성읍 일대까지 번지고 있다.",
-    "emd_codes": [
-      "4773025000"
-    ],
-    "place_text": "의성읍",
-    "time_text": "오전 11시 24분쯤",
-    "event_time": "2025-03-22T11:24:00+09:00",
-    "t": 2124,
+    "time_text": "오후 5시쯤",
+    "event_time": "2025-03-24T17:00:00+09:00",
+    "t": 5340,
     "date_basis": "explicit_day",
     "time_resolution_note": null,
     "actions": [
       "spread"
     ],
     "copies": 1,
+    "copy_urls": [
+      "https://www.newspim.com/news/view/20250325001000"
+    ],
     "time_mentions": [
       {
-        "time_text": "오전 11시 24분쯤",
-        "event_time": "2025-03-22T11:24:00+09:00",
-        "t": 2124,
+        "time_text": "오후 5시쯤",
+        "event_time": "2025-03-24T17:00:00+09:00",
+        "t": 5340,
         "date_basis": "explicit_day",
+        "time_resolution_note": null,
+        "offset_start": 115,
+        "offset_end": 121
+      }
+    ],
+    "selected_time_index": 0
+  },
+  {
+    "record_index": 664,
+    "url": "https://www.imaeil.com/page/view/2025032516570222699",
+    "outlet": "www.imaeil.com",
+    "published": "2025-03-25T17:24:00+09:00",
+    "sentence": "특히, 이날 오후 3시 301분쯤 의성 산불이 안동 풍천면으로 확산중이라는 주민 대피령 문자가 발송되면서 세계문화유산인 하회마을과 병산서원마저 위협받고 있다.",
+    "emd_codes": [],
+    "place_text": "병산서원",
+    "time_text": "오후 3시",
+    "event_time": "2025-03-25T15:00:00+09:00",
+    "t": 6660,
+    "date_basis": "article_day",
+    "time_resolution_note": null,
+    "actions": [
+      "spread",
+      "evacuation"
+    ],
+    "copies": 1,
+    "copy_urls": [
+      "https://www.imaeil.com/page/view/2025032516570222699"
+    ],
+    "time_mentions": [
+      {
+        "time_text": "오후 3시",
+        "event_time": "2025-03-25T15:00:00+09:00",
+        "t": 6660,
+        "date_basis": "article_day",
         "time_resolution_note": null,
         "offset_start": 7,
-        "offset_end": 18
-      }
-    ],
-    "selected_time_index": 0
-  },
-  {
-    "record_index": 10,
-    "url": "https://news.bbsi.co.kr/news/articleView.html?idxno=4022876",
-    "outlet": "news.bbsi.co.kr",
-    "published": "2025-03-22T16:14:00+09:00",
-    "sentence": "오늘(22일) 오전 11시 24분께 경북 의성군 안평면 괴산리 일대 야산에서 발생한 산불이 확산되자 산림당국이 산불 대응 강도를 높이며 진화에 총력을 기울이고 있습니다.",
-    "emd_codes": [
-      "4773046000"
-    ],
-    "place_text": "안평면 · 괴산리",
-    "time_text": "오전 11시 24분께",
-    "event_time": "2025-03-22T11:24:00+09:00",
-    "t": 2124,
-    "date_basis": "explicit_day",
-    "time_resolution_note": null,
-    "actions": [
-      "spread"
-    ],
-    "copies": 1,
-    "time_mentions": [
-      {
-        "time_text": "오전 11시 24분께",
-        "event_time": "2025-03-22T11:24:00+09:00",
-        "t": 2124,
-        "date_basis": "explicit_day",
-        "time_resolution_note": null,
-        "offset_start": 8,
-        "offset_end": 19
-      }
-    ],
-    "selected_time_index": 0
-  },
-  {
-    "record_index": 25,
-    "url": "https://www.sedaily.com/NewsView/2GQCFOXYA6",
-    "outlet": "www.sedaily.com",
-    "published": "2025-03-22T17:39:00+09:00",
-    "sentence": "특히 불이 돌풍을 타고 오후 3시 50분께 의성읍 철파리 마을로 번져 의성군은 주민대피령을 내리고 대응에 안간힘을 쏟고 있다.",
-    "emd_codes": [
-      "4773025000"
-    ],
-    "place_text": "의성읍 · 철파리",
-    "time_text": "오후 3시 50분께",
-    "event_time": "2025-03-22T15:50:00+09:00",
-    "t": 2390,
-    "date_basis": "article_day",
-    "time_resolution_note": null,
-    "actions": [
-      "spread",
-      "evacuation"
-    ],
-    "copies": 1,
-    "time_mentions": [
-      {
-        "time_text": "오후 3시 50분께",
-        "event_time": "2025-03-22T15:50:00+09:00",
-        "t": 2390,
-        "date_basis": "article_day",
-        "time_resolution_note": null,
-        "offset_start": 13,
-        "offset_end": 23
-      }
-    ],
-    "selected_time_index": 0
-  },
-  {
-    "record_index": 24,
-    "url": "https://www.idaegu.co.kr/news/articleView.html?idxno=504085",
-    "outlet": "www.idaegu.co.kr",
-    "published": "2025-03-22T17:34:00+09:00",
-    "sentence": "이어 오후 4시28분께 의성읍 후죽3리, 철파리, 원당2리 방향으로 산불이 확산함에 따라 주민에게 즉시 의성실내체육관으로 대피하라고 통보했다.",
-    "emd_codes": [
-      "4773025000"
-    ],
-    "place_text": "의성읍 · 철파리",
-    "time_text": "오후 4시28분께",
-    "event_time": "2025-03-22T16:28:00+09:00",
-    "t": 2428,
-    "date_basis": "article_day",
-    "time_resolution_note": null,
-    "actions": [
-      "spread",
-      "evacuation"
-    ],
-    "copies": 1,
-    "time_mentions": [
-      {
-        "time_text": "오후 4시28분께",
-        "event_time": "2025-03-22T16:28:00+09:00",
-        "t": 2428,
-        "date_basis": "article_day",
-        "time_resolution_note": null,
-        "offset_start": 3,
         "offset_end": 12
       }
     ],
     "selected_time_index": 0
   },
   {
-    "record_index": 21,
-    "url": "http://www.fnnews.com/news/202503221725148260",
-    "outlet": "www.fnnews.com",
-    "published": "2025-03-22T17:27:00+09:00",
-    "sentence": "산림 당국에 따르면 이날 오전 11시 24분께 괴산리 야산 정상 부근에서 시작된 불은 초속 5.6m의 강풍을 타고 의성읍 방향으로 번졌다.",
+    "record_index": 692,
+    "url": "http://www.sisafocus.co.kr/news/articleView.html?idxno=335915",
+    "outlet": "www.sisafocus.co.kr",
+    "published": "2025-03-25T17:46:00+09:00",
+    "sentence": "예천군도 같은 날 오후 5시 28분 “의성 산불이 안동시 풍천면까지 확산되었습니다.",
     "emd_codes": [
-      "4773046000"
+      "4717034000"
     ],
-    "place_text": "괴산리",
-    "time_text": "오전 11시 24분께",
-    "event_time": "2025-03-22T11:24:00+09:00",
-    "t": 2124,
+    "place_text": "풍천면",
+    "time_text": "오후 5시 28분",
+    "event_time": "2025-03-25T17:28:00+09:00",
+    "t": 6808,
     "date_basis": "article_day",
     "time_resolution_note": null,
     "actions": [
       "spread"
     ],
     "copies": 1,
+    "copy_urls": [
+      "http://www.sisafocus.co.kr/news/articleView.html?idxno=335915"
+    ],
     "time_mentions": [
       {
-        "time_text": "오전 11시 24분께",
-        "event_time": "2025-03-22T11:24:00+09:00",
-        "t": 2124,
+        "time_text": "오후 5시 28분",
+        "event_time": "2025-03-25T17:28:00+09:00",
+        "t": 6808,
         "date_basis": "article_day",
         "time_resolution_note": null,
-        "offset_start": 14,
-        "offset_end": 25
+        "offset_start": 10,
+        "offset_end": 19
       }
     ],
     "selected_time_index": 0
   },
   {
-    "record_index": 49,
-    "url": "http://www.edaily.co.kr/news/newspath.asp?newsid=01869606642105944",
-    "outlet": "www.edaily.co.kr",
-    "published": "2025-03-22T19:34:00+09:00",
-    "sentence": "의성 대형 산불은 이날 오전 11시 24분쯤 의성군 안평면 괴산리 야산에서 시작돼 초속 5.6m의 강한 바람을 타고 의성읍 방향으로 확산하고 있다.",
+    "record_index": 1147,
+    "url": "https://www.munhwa.com/news/view.html?no=2025032601039910274004",
+    "outlet": "www.munhwa.com",
+    "published": "2025-03-26T06:33:00+09:00",
+    "sentence": "이런 까닭에 이날 오후 6시 54분쯤 임하면 한 주택 마당에서는 연기 흡입으로 질식사한 것으로 추정되는 70대 여성이 발견됐으며, 경찰은 정확한 사망원인을 조사하고 있다.",
     "emd_codes": [
-      "4773025000"
+      "4717038000"
     ],
-    "place_text": "의성읍",
-    "time_text": "오전 11시 24분쯤",
-    "event_time": "2025-03-22T11:24:00+09:00",
-    "t": 2124,
+    "place_text": "임하면",
+    "time_text": "오후 6시 54분쯤",
+    "event_time": "2025-03-26T18:54:00+09:00",
+    "t": 8334,
     "date_basis": "article_day",
     "time_resolution_note": null,
     "actions": [
-      "spread"
+      "casualty"
     ],
     "copies": 1,
+    "copy_urls": [
+      "https://www.munhwa.com/news/view.html?no=2025032601039910274004"
+    ],
     "time_mentions": [
       {
-        "time_text": "오전 11시 24분쯤",
-        "event_time": "2025-03-22T11:24:00+09:00",
-        "t": 2124,
+        "time_text": "오후 6시 54분쯤",
+        "event_time": "2025-03-26T18:54:00+09:00",
+        "t": 8334,
         "date_basis": "article_day",
         "time_resolution_note": null,
-        "offset_start": 13,
-        "offset_end": 24
+        "offset_start": 10,
+        "offset_end": 20
       }
     ],
     "selected_time_index": 0
   },
   {
-    "record_index": 28,
-    "url": "https://www.newsis.com/view/NISX20250322_0003108948",
-    "outlet": "www.newsis.com",
-    "published": "2025-03-22T17:51:00+09:00",
-    "sentence": "산림청 중앙산불방지대책본부는 이날 오전 11시25분께 경북 의성군 안평면 괴산리 야산에서 발생한 산불의 확산을 막고 신속한 진화를 위해 오후 1시를 기해 산불 1단계를 발령한 뒤 40분 뒤 2단계에 이어 오후 2시20분에는 산불 3단계로 상향했다고 밝혔다.",
+    "record_index": 479,
+    "url": "https://www.tournews21.com/news/articleView.html?idxno=95679",
+    "outlet": "www.tournews21.com",
+    "published": "2025-03-25T14:30:00+09:00",
+    "sentence": "한편, 이철우 지사는 25일 오후 3시까지 길안면 현장지휘소, 만휴정 일원, 길안면 천지갑산 인근 방호대책 현장, 임하면 임하1리 마을회관 주민대피소 등을 방문했으며, 이후 의성군 단촌면 화재 현장 일원에서 지속적으로 산불 진화와 현장 대응을 지속 할 예정이다.",
     "emd_codes": [
-      "4773046000"
+      "4717038000"
     ],
-    "place_text": "안평면 · 괴산리",
-    "time_text": "오전 11시25분께",
-    "event_time": "2025-03-22T11:25:00+09:00",
-    "t": 2125,
-    "date_basis": "article_day",
-    "time_resolution_note": null,
-    "actions": [
-      "spread"
-    ],
-    "copies": 1,
-    "time_mentions": [
-      {
-        "time_text": "오전 11시25분께",
-        "event_time": "2025-03-22T11:25:00+09:00",
-        "t": 2125,
-        "date_basis": "article_day",
-        "time_resolution_note": null,
-        "offset_start": 19,
-        "offset_end": 29
-      },
-      {
-        "time_text": "오후 1시",
-        "event_time": "2025-03-22T13:00:00+09:00",
-        "t": 2220,
-        "date_basis": "article_day",
-        "time_resolution_note": null,
-        "offset_start": 76,
-        "offset_end": 81
-      },
-      {
-        "time_text": "오후 2시20분",
-        "event_time": "2025-03-22T14:20:00+09:00",
-        "t": 2300,
-        "date_basis": "article_day",
-        "time_resolution_note": null,
-        "offset_start": 114,
-        "offset_end": 122
-      }
-    ],
-    "selected_time_index": 0
-  },
-  {
-    "record_index": 14,
-    "url": "https://www.newspim.com/news/view/20250322000122",
-    "outlet": "www.newspim.com",
-    "published": "2025-03-22T16:57:00+09:00",
-    "sentence": "[의성=뉴스핌] 남효선 기자 = 22일 오전 11시24분쯤 경북 의성군 안평면 괴산리의 한 야산에서 발생한 산불이 강한 바람을 타고 확산되면서 인근 민가와 축사 등을 위협하고 있는 가운데 경북소방 당국이 발화 현장 인근 민가에 방어선을 구축하고 민가 주변의 위험물을 제거하는 등 민가 확산 차단에 안간힘을 쏟고 있다.",
-    "emd_codes": [
-      "4773046000"
-    ],
-    "place_text": "안평면 · 괴산리",
-    "time_text": "오전 11시24분쯤",
-    "event_time": "2025-03-22T11:24:00+09:00",
-    "t": 2124,
+    "place_text": "임하면",
+    "time_text": "오후 3시",
+    "event_time": "2025-03-25T15:00:00+09:00",
+    "t": 6660,
     "date_basis": "explicit_day",
     "time_resolution_note": null,
     "actions": [
-      "spread",
-      "control"
+      "evacuation"
     ],
-    "copies": 1,
+    "copies": 5,
+    "copy_urls": [
+      "http://www.enewstoday.co.kr/news/articleView.html?idxno=2254652",
+      "https://www.dkilbo.com/news/articleView.html?idxno=488925",
+      "https://www.dkilbo.com/news/articleView.html?idxno=488956",
+      "https://www.pointe.co.kr/news/articleView.html?idxno=40793",
+      "https://www.tournews21.com/news/articleView.html?idxno=95679"
+    ],
     "time_mentions": [
       {
-        "time_text": "오전 11시24분쯤",
-        "event_time": "2025-03-22T11:24:00+09:00",
-        "t": 2124,
+        "time_text": "오후 3시",
+        "event_time": "2025-03-25T15:00:00+09:00",
+        "t": 6660,
         "date_basis": "explicit_day",
         "time_resolution_note": null,
-        "offset_start": 22,
-        "offset_end": 32
+        "offset_start": 16,
+        "offset_end": 21
       }
     ],
     "selected_time_index": 0
   },
   {
-    "record_index": 13,
-    "url": "https://www.gukjenews.com/news/articleView.html?idxno=3230657",
-    "outlet": "www.gukjenews.com",
-    "published": "2025-03-22T16:34:00+09:00",
-    "sentence": "22일 의성군은 오후 4시 28분 기준 의성읍 후죽3리, 철파리, 원당2리 방향으로 산불이 확산 중이라고 전했다.",
-    "emd_codes": [
-      "4773025000"
+    "record_index": 1121,
+    "url": "https://www.seoul.co.kr/news/society/accident/2025/03/26/20250326001006?wlog_tag3=naver",
+    "outlet": "www.seoul.co.kr",
+    "published": "2025-03-26T05:02:00+09:00",
+    "sentence": "오후 3시 30분쯤 산불은 하회마을에서 직선으로 10㎞ 떨어진 안동시 풍천면까지 확산됐다.",
+    "emd_codes": [],
+    "place_text": "하회마을",
+    "time_text": "오후 3시 30분쯤",
+    "event_time": "2025-03-26T15:30:00+09:00",
+    "t": 8130,
+    "date_basis": "article_day",
+    "time_resolution_note": null,
+    "actions": [
+      "spread"
     ],
-    "place_text": "의성읍 · 철파리",
-    "time_text": "오후 4시 28분",
-    "event_time": "2025-03-22T16:28:00+09:00",
-    "t": 2428,
+    "copies": 1,
+    "copy_urls": [
+      "https://www.seoul.co.kr/news/society/accident/2025/03/26/20250326001006?wlog_tag3=naver"
+    ],
+    "time_mentions": [
+      {
+        "time_text": "오후 3시 30분쯤",
+        "event_time": "2025-03-26T15:30:00+09:00",
+        "t": 8130,
+        "date_basis": "article_day",
+        "time_resolution_note": null,
+        "offset_start": 0,
+        "offset_end": 10
+      }
+    ],
+    "selected_time_index": 0
+  },
+  {
+    "record_index": 1214,
+    "url": "https://www.moneys.co.kr/article/2025032609134432451",
+    "outlet": "www.moneys.co.kr",
+    "published": "2025-03-26T09:48:00+09:00",
+    "sentence": "26일 국가유산청과 경북도 등에 따르면 전날 오후 4시50분께 산불이 강풍을 타고 의성군 단촌면 등운산 자락에 있는 천년고찰 고운사를 덮쳤다.",
+    "emd_codes": [
+      "4773031000"
+    ],
+    "place_text": "단촌면 · 고운사",
+    "time_text": "오후 4시50분께",
+    "event_time": "2025-03-26T16:50:00+09:00",
+    "t": 8210,
     "date_basis": "explicit_day",
     "time_resolution_note": null,
     "actions": [
       "spread"
     ],
     "copies": 1,
+    "copy_urls": [
+      "https://www.moneys.co.kr/article/2025032609134432451"
+    ],
     "time_mentions": [
       {
-        "time_text": "오후 4시 28분",
-        "event_time": "2025-03-22T16:28:00+09:00",
-        "t": 2428,
+        "time_text": "오후 4시50분께",
+        "event_time": "2025-03-26T16:50:00+09:00",
+        "t": 8210,
         "date_basis": "explicit_day",
         "time_resolution_note": null,
-        "offset_start": 9,
-        "offset_end": 18
+        "offset_start": 25,
+        "offset_end": 34
       }
     ],
     "selected_time_index": 0
   },
   {
-    "record_index": 23,
-    "url": "https://www.idaegu.co.kr/news/articleView.html?idxno=504085",
+    "record_index": 342,
+    "url": "https://news.tf.co.kr/read/national/2190405.htm",
+    "outlet": "news.tf.co.kr",
+    "published": "2025-03-24T17:35:00+09:00",
+    "sentence": "산림당국은 24일 \"산불이 돌풍을 동반한 강풍을 타고 오후 4시 10분쯤 의성군 점곡면에 인접한 안동시 길안면 현하리 야산으로 확산됐다\"고 밝혔다.",
+    "emd_codes": [
+      "4773032000"
+    ],
+    "place_text": "점곡면",
+    "time_text": "오후 4시 10분쯤",
+    "event_time": "2025-03-24T16:10:00+09:00",
+    "t": 5290,
+    "date_basis": "explicit_day",
+    "time_resolution_note": null,
+    "actions": [
+      "spread"
+    ],
+    "copies": 1,
+    "copy_urls": [
+      "https://news.tf.co.kr/read/national/2190405.htm"
+    ],
+    "time_mentions": [
+      {
+        "time_text": "오후 4시 10분쯤",
+        "event_time": "2025-03-24T16:10:00+09:00",
+        "t": 5290,
+        "date_basis": "explicit_day",
+        "time_resolution_note": null,
+        "offset_start": 30,
+        "offset_end": 40
+      }
+    ],
+    "selected_time_index": 0
+  },
+  {
+    "record_index": 1003,
+    "url": "https://www.idaegu.co.kr/news/articleView.html?idxno=504548",
     "outlet": "www.idaegu.co.kr",
-    "published": "2025-03-22T17:34:00+09:00",
-    "sentence": "의성군은 이날 오후 4시10분께 재난 문자를 통해 의성읍 후죽1리, 업1리, 원당리 주민에게 의성실내체육관으로 대피하라고 알렸다.",
+    "published": "2025-03-25T21:34:00+09:00",
+    "sentence": "고운사가 있는 단촌면에는 오후 3시20분께부터 대피 명령이 발령됐다.",
     "emd_codes": [
-      "4773025000"
+      "4773031000"
     ],
-    "place_text": "의성읍",
-    "time_text": "오후 4시10분께",
-    "event_time": "2025-03-22T16:10:00+09:00",
-    "t": 2410,
+    "place_text": "고운사 · 단촌면",
+    "time_text": "오후 3시20분께",
+    "event_time": "2025-03-25T15:20:00+09:00",
+    "t": 6680,
     "date_basis": "article_day",
     "time_resolution_note": null,
     "actions": [
       "evacuation"
     ],
     "copies": 1,
+    "copy_urls": [
+      "https://www.idaegu.co.kr/news/articleView.html?idxno=504548"
+    ],
     "time_mentions": [
       {
-        "time_text": "오후 4시10분께",
-        "event_time": "2025-03-22T16:10:00+09:00",
-        "t": 2410,
+        "time_text": "오후 3시20분께",
+        "event_time": "2025-03-25T15:20:00+09:00",
+        "t": 6680,
         "date_basis": "article_day",
         "time_resolution_note": null,
-        "offset_start": 8,
-        "offset_end": 17
+        "offset_start": 14,
+        "offset_end": 23
       }
     ],
     "selected_time_index": 0
   },
   {
-    "record_index": 3,
-    "url": "https://www.newspim.com/news/view/20250322000089",
-    "outlet": "www.newspim.com",
-    "published": "2025-03-22T14:47:00+09:00",
-    "sentence": "22일 오전 11시24분쯤 경북 의성군 안평면 괴산리의 야산에서 산불이 발생해 산림과 소방 등 진화당국이 '대응2단계'를 발령하고 연소 확대 차단과 조기진화에 총력을 쏟고 있다.",
+    "record_index": 702,
+    "url": "https://www.imaeil.com/page/view/2025032517411736793",
+    "outlet": "www.imaeil.com",
+    "published": "2025-03-25T17:47:00+09:00",
+    "sentence": "영양군은 오후 6시 47분쯤 석보면 주민에게 영양읍 군민회관으로 대피하라고 대피 명령을 발령했다.",
     "emd_codes": [
-      "4773046000"
+      "4776035000"
     ],
-    "place_text": "안평면 · 괴산리",
-    "time_text": "오전 11시24분쯤",
-    "event_time": "2025-03-22T11:24:00+09:00",
-    "t": 2124,
-    "date_basis": "explicit_day",
-    "time_resolution_note": null,
-    "actions": [
-      "control"
-    ],
-    "copies": 1,
-    "time_mentions": [
-      {
-        "time_text": "오전 11시24분쯤",
-        "event_time": "2025-03-22T11:24:00+09:00",
-        "t": 2124,
-        "date_basis": "explicit_day",
-        "time_resolution_note": null,
-        "offset_start": 4,
-        "offset_end": 14
-      }
-    ],
-    "selected_time_index": 0
-  },
-  {
-    "record_index": 47,
-    "url": "https://www.kbmaeil.com/news/articleView.html?idxno=1036276",
-    "outlet": "www.kbmaeil.com",
-    "published": "2025-03-22T19:20:00+09:00",
-    "sentence": "이날 오전 11시 24분께 의성군 안평면 괴산리 야산 정상에서 시작된 불은 4.9m/s의 강한 바람을 타고 동쪽으로 8km가량 떨어진 의성읍 방향으로 확산 중이다.",
-    "emd_codes": [
-      "4773025000"
-    ],
-    "place_text": "의성읍",
-    "time_text": "오전 11시 24분께",
-    "event_time": "2025-03-22T11:24:00+09:00",
-    "t": 2124,
+    "place_text": "석보면",
+    "time_text": "오후 6시 47분쯤",
+    "event_time": "2025-03-25T18:47:00+09:00",
+    "t": 6887,
     "date_basis": "article_day",
     "time_resolution_note": null,
     "actions": [
-      "spread"
+      "evacuation"
     ],
-    "copies": 1,
+    "copies": 5,
+    "copy_urls": [
+      "http://www.kado.net/news/articleView.html?idxno=1301098",
+      "https://biz.chosun.com/topics/topics_social/2025/03/25/3EQ53ZPXEBDF5F5BTNCNLXNJR4/?utm_source=naver&utm_medium=original&utm_campaign=biz",
+      "https://www.imaeil.com/page/view/2025032517411736793",
+      "https://www.kmib.co.kr/article/view.asp?arcid=0027900315&code=61121211&cp=nv",
+      "https://www.seoul.co.kr/news/society/2025/03/25/20250325500255?wlog_tag3=naver"
+    ],
     "time_mentions": [
       {
-        "time_text": "오전 11시 24분께",
-        "event_time": "2025-03-22T11:24:00+09:00",
-        "t": 2124,
+        "time_text": "오후 6시 47분쯤",
+        "event_time": "2025-03-25T18:47:00+09:00",
+        "t": 6887,
         "date_basis": "article_day",
         "time_resolution_note": null,
-        "offset_start": 3,
-        "offset_end": 14
-      }
-    ],
-    "selected_time_index": 0
-  },
-  {
-    "record_index": 48,
-    "url": "http://www.edaily.co.kr/news/newspath.asp?newsid=01869606642105944",
-    "outlet": "www.edaily.co.kr",
-    "published": "2025-03-22T19:34:00+09:00",
-    "sentence": "의성 대형 산불은 이날 오전 11시 24분쯤 의성군 안평면 괴산리 야산에서 시작돼 초속 5.6m의 강한 바람을 타고 의성읍 방향으로 확산하고 있다.",
-    "emd_codes": [
-      "4773046000"
-    ],
-    "place_text": "안평면 · 괴산리",
-    "time_text": "오전 11시 24분쯤",
-    "event_time": "2025-03-22T11:24:00+09:00",
-    "t": 2124,
-    "date_basis": "article_day",
-    "time_resolution_note": null,
-    "actions": [
-      "spread"
-    ],
-    "copies": 1,
-    "time_mentions": [
-      {
-        "time_text": "오전 11시 24분쯤",
-        "event_time": "2025-03-22T11:24:00+09:00",
-        "t": 2124,
-        "date_basis": "article_day",
-        "time_resolution_note": null,
-        "offset_start": 13,
-        "offset_end": 24
-      }
-    ],
-    "selected_time_index": 0
-  },
-  {
-    "record_index": 1,
-    "url": "https://www.dkilbo.com/news/articleView.html?idxno=488375",
-    "outlet": "www.dkilbo.com",
-    "published": "2025-03-22T13:58:00+09:00",
-    "sentence": "불이 확산되자 의성군은 이날 낮 12시 25분과 1시34분쯤 두차례 인근 주민과 등산객은 산동마을회관과 안평면사무소로 대피하라는 대피 명령 발령 문자를 발송했다.",
-    "emd_codes": [
-      "4773046000"
-    ],
-    "place_text": "안평면",
-    "time_text": "1시34분쯤",
-    "event_time": "2025-03-22T13:34:00+09:00",
-    "t": 2254,
-    "date_basis": "article_day",
-    "time_resolution_note": null,
-    "actions": [
-      "spread",
-      "evacuation",
-      "alert"
-    ],
-    "copies": 1,
-    "time_mentions": [
-      {
-        "time_text": "12시 25분",
-        "event_time": "2025-03-22T12:25:00+09:00",
-        "t": 2185,
-        "date_basis": "article_day",
-        "time_resolution_note": null,
-        "offset_start": 18,
-        "offset_end": 25
-      },
-      {
-        "time_text": "1시34분쯤",
-        "event_time": "2025-03-22T13:34:00+09:00",
-        "t": 2254,
-        "date_basis": "article_day",
-        "time_resolution_note": null,
-        "offset_start": 27,
-        "offset_end": 33
-      }
-    ],
-    "selected_time_index": 1
-  },
-  {
-    "record_index": 36,
-    "url": "https://www.news1.kr/local/daegu-gyeongbuk/5727750",
-    "outlet": "www.news1.kr",
-    "published": "2025-03-22T19:11:00+09:00",
-    "sentence": "22일 오전 11시 25분쯤 경북 의성군 안평면 괴산리 야산에서 발생한 산불이 바람을 타고 확산되고 있다.",
-    "emd_codes": [
-      "4773046000"
-    ],
-    "place_text": "안평면 · 괴산리",
-    "time_text": "오전 11시 25분쯤",
-    "event_time": "2025-03-22T11:25:00+09:00",
-    "t": 2125,
-    "date_basis": "explicit_day",
-    "time_resolution_note": null,
-    "actions": [
-      "spread"
-    ],
-    "copies": 1,
-    "time_mentions": [
-      {
-        "time_text": "오전 11시 25분쯤",
-        "event_time": "2025-03-22T11:25:00+09:00",
-        "t": 2125,
-        "date_basis": "explicit_day",
-        "time_resolution_note": null,
-        "offset_start": 4,
+        "offset_start": 5,
         "offset_end": 15
       }
     ],
     "selected_time_index": 0
   },
   {
-    "record_index": 44,
-    "url": "https://www.yna.co.kr/view/AKR20250322047100053?input=1195m",
-    "outlet": "www.yna.co.kr",
-    "published": "2025-03-22T19:19:00+09:00",
-    "sentence": "이번 괴산리 산불은 오전 11시 24분께 정상 부근에서 발생해 의성읍 방면으로 확산했다.",
+    "record_index": 699,
+    "url": "https://www.imaeil.com/page/view/2025032517411736793",
+    "outlet": "www.imaeil.com",
+    "published": "2025-03-25T17:47:00+09:00",
+    "sentence": "25일 오후 5시쯤 파천면 지경리 일대에서 산불이 발생해 결국 청송읍 소재지까지 확산됐다.",
     "emd_codes": [
-      "4773046000"
+      "4775036000"
     ],
-    "place_text": "괴산리",
-    "time_text": "오전 11시 24분께",
-    "event_time": "2025-03-22T11:24:00+09:00",
-    "t": 2124,
-    "date_basis": "article_day",
+    "place_text": "파천면",
+    "time_text": "오후 5시쯤",
+    "event_time": "2025-03-25T17:00:00+09:00",
+    "t": 6780,
+    "date_basis": "explicit_day",
     "time_resolution_note": null,
     "actions": [
       "spread"
     ],
     "copies": 1,
+    "copy_urls": [
+      "https://www.imaeil.com/page/view/2025032517411736793"
+    ],
     "time_mentions": [
       {
-        "time_text": "오전 11시 24분께",
-        "event_time": "2025-03-22T11:24:00+09:00",
-        "t": 2124,
-        "date_basis": "article_day",
+        "time_text": "오후 5시쯤",
+        "event_time": "2025-03-25T17:00:00+09:00",
+        "t": 6780,
+        "date_basis": "explicit_day",
         "time_resolution_note": null,
-        "offset_start": 11,
-        "offset_end": 22
+        "offset_start": 4,
+        "offset_end": 10
       }
     ],
     "selected_time_index": 0
   },
   {
-    "record_index": 30,
-    "url": "https://www.nongmin.com/article/20250322500063",
-    "outlet": "www.nongmin.com",
-    "published": "2025-03-22T18:10:00+09:00",
-    "sentence": "오후 18시 현재 의성읍 철파리 주민 약 100명과 한 요양병원 환자와 관계자 70여명은 의성실내체육관으로 대피했다.",
+    "record_index": 772,
+    "url": "https://www.dkilbo.com/news/articleView.html?idxno=488966",
+    "outlet": "www.dkilbo.com",
+    "published": "2025-03-25T18:26:00+09:00",
+    "sentence": "고운사가 있는 단촌면에는 이날 오후 3시 20분께 대피 명령이 발령됐다.",
     "emd_codes": [
-      "4773025000"
+      "4773031000"
     ],
-    "place_text": "의성읍 · 철파리",
-    "time_text": "오후 18시",
-    "event_time": null,
-    "t": null,
+    "place_text": "고운사 · 단촌면",
+    "time_text": "오후 3시 20분께",
+    "event_time": "2025-03-25T15:20:00+09:00",
+    "t": 6680,
     "date_basis": "article_day",
-    "time_resolution_note": "invalid_clock",
+    "time_resolution_note": null,
     "actions": [
       "evacuation"
     ],
     "copies": 1,
+    "copy_urls": [
+      "https://www.dkilbo.com/news/articleView.html?idxno=488966"
+    ],
     "time_mentions": [
       {
-        "time_text": "오후 18시",
-        "event_time": null,
-        "t": null,
+        "time_text": "오후 3시 20분께",
+        "event_time": "2025-03-25T15:20:00+09:00",
+        "t": 6680,
         "date_basis": "article_day",
-        "time_resolution_note": "invalid_clock",
-        "offset_start": 0,
-        "offset_end": 6
+        "time_resolution_note": null,
+        "offset_start": 17,
+        "offset_end": 27
       }
     ],
     "selected_time_index": 0
   },
   {
-    "record_index": 17,
-    "url": "https://www.yna.co.kr/view/AKR20250322040500053?input=1195m",
-    "outlet": "www.yna.co.kr",
-    "published": "2025-03-22T17:09:00+09:00",
-    "sentence": "안평면 괴산리에서 난 불은 돌풍을 타고 오후 3시 50분께 의성읍 철파리 마을 방향으로 번져 의성군은 주민대피령을 내리고 대응에 안간힘을 쏟고 있다.",
+    "record_index": 948,
+    "url": "https://www.nongmin.com/article/20250325500551",
+    "outlet": "www.nongmin.com",
+    "published": "2025-03-25T20:19:00+09:00",
+    "sentence": "25일 18시 현재 안동시 풍천면과 일직면, 남후면 등지엔 순간 최대 풍속 20ｍ 이상 강풍이 불고 있어 산불이 급속하게 확산하고 있다.",
+    "emd_codes": [
+      "4717034000"
+    ],
+    "place_text": "풍천면",
+    "time_text": "18시",
+    "event_time": "2025-03-25T18:00:00+09:00",
+    "t": 6840,
+    "date_basis": "explicit_day",
+    "time_resolution_note": null,
+    "actions": [
+      "spread"
+    ],
+    "copies": 1,
+    "copy_urls": [
+      "https://www.nongmin.com/article/20250325500551"
+    ],
+    "time_mentions": [
+      {
+        "time_text": "18시",
+        "event_time": "2025-03-25T18:00:00+09:00",
+        "t": 6840,
+        "date_basis": "explicit_day",
+        "time_resolution_note": null,
+        "offset_start": 4,
+        "offset_end": 7
+      }
+    ],
+    "selected_time_index": 0
+  },
+  {
+    "record_index": 168,
+    "url": "https://www.kyeonggi.com/article/20250323580015",
+    "outlet": "www.kyeonggi.com",
+    "published": "2025-03-23T11:04:00+09:00",
+    "sentence": "또 전날 오전 경북 의성군 안평면 괴산리 야산에서 시작한 산불의 진화율은 이날 오전 10시 기준 2%다.",
     "emd_codes": [
       "4773046000"
     ],
     "place_text": "안평면 · 괴산리",
-    "time_text": "오후 3시 50분께",
-    "event_time": "2025-03-22T15:50:00+09:00",
-    "t": 2390,
-    "date_basis": "article_day",
-    "time_resolution_note": null,
-    "actions": [
-      "spread",
-      "evacuation"
-    ],
-    "copies": 1,
-    "time_mentions": [
-      {
-        "time_text": "오후 3시 50분께",
-        "event_time": "2025-03-22T15:50:00+09:00",
-        "t": 2390,
-        "date_basis": "article_day",
-        "time_resolution_note": null,
-        "offset_start": 22,
-        "offset_end": 32
-      }
-    ],
-    "selected_time_index": 0
-  },
-  {
-    "record_index": 7,
-    "url": "https://www.nongmin.com/article/20250322500040",
-    "outlet": "www.nongmin.com",
-    "published": "2025-03-22T16:02:00+09:00",
-    "sentence": "산불 진화를 위한 현장지휘본부가 안평면사무소에 설치된 가운데 산림당국에 따르면 16시 현재 진화율은 30%이다.",
-    "emd_codes": [
-      "4773046000"
-    ],
-    "place_text": "안평면",
-    "time_text": "16시",
-    "event_time": "2025-03-22T16:00:00+09:00",
-    "t": 2400,
+    "time_text": "오전 10시",
+    "event_time": "2025-03-23T10:00:00+09:00",
+    "t": 3480,
     "date_basis": "article_day",
     "time_resolution_note": null,
     "actions": [
       "containment"
     ],
     "copies": 1,
+    "copy_urls": [
+      "https://www.kyeonggi.com/article/20250323580015"
+    ],
     "time_mentions": [
       {
-        "time_text": "16시",
-        "event_time": "2025-03-22T16:00:00+09:00",
-        "t": 2400,
+        "time_text": "오전 10시",
+        "event_time": "2025-03-23T10:00:00+09:00",
+        "t": 3480,
         "date_basis": "article_day",
         "time_resolution_note": null,
         "offset_start": 44,
-        "offset_end": 47
-      }
-    ],
-    "selected_time_index": 0
-  },
-  {
-    "record_index": 20,
-    "url": "https://www.slist.kr/news/articleView.html?idxno=628857",
-    "outlet": "www.slist.kr",
-    "published": "2025-03-22T17:22:00+09:00",
-    "sentence": "안평면 괴산리에서 난 불은 돌풍을 타고 오후 3시 50분께 의성읍 철파리 마을로 번져 의성군은 주민대피령을 내리고 대응에 안간힘을 쏟고 있다.",
-    "emd_codes": [
-      "4773025000"
-    ],
-    "place_text": "의성읍 · 철파리",
-    "time_text": "오후 3시 50분께",
-    "event_time": "2025-03-22T15:50:00+09:00",
-    "t": 2390,
-    "date_basis": "article_day",
-    "time_resolution_note": null,
-    "actions": [
-      "spread",
-      "evacuation"
-    ],
-    "copies": 1,
-    "time_mentions": [
-      {
-        "time_text": "오후 3시 50분께",
-        "event_time": "2025-03-22T15:50:00+09:00",
-        "t": 2390,
-        "date_basis": "article_day",
-        "time_resolution_note": null,
-        "offset_start": 22,
-        "offset_end": 32
-      }
-    ],
-    "selected_time_index": 0
-  },
-  {
-    "record_index": 39,
-    "url": "https://www.idaegu.co.kr/news/articleView.html?idxno=504099",
-    "outlet": "www.idaegu.co.kr",
-    "published": "2025-03-22T19:14:00+09:00",
-    "sentence": "이날 오전 11시24분쯤 의성군 안평면 괴산리 야산에서 난 불은 초속 5.6m의 강한 바람을 타고 의성읍 방향으로 확산하고 있다.",
-    "emd_codes": [
-      "4773025000"
-    ],
-    "place_text": "의성읍",
-    "time_text": "오전 11시24분쯤",
-    "event_time": "2025-03-22T11:24:00+09:00",
-    "t": 2124,
-    "date_basis": "article_day",
-    "time_resolution_note": null,
-    "actions": [
-      "spread"
-    ],
-    "copies": 1,
-    "time_mentions": [
-      {
-        "time_text": "오전 11시24분쯤",
-        "event_time": "2025-03-22T11:24:00+09:00",
-        "t": 2124,
-        "date_basis": "article_day",
-        "time_resolution_note": null,
-        "offset_start": 3,
-        "offset_end": 13
-      }
-    ],
-    "selected_time_index": 0
-  },
-  {
-    "record_index": 42,
-    "url": "https://www.yna.co.kr/view/AKR20250322047100053?input=1195m",
-    "outlet": "www.yna.co.kr",
-    "published": "2025-03-22T19:19:00+09:00",
-    "sentence": "군에 따르면 의성읍 철파리와 안평면 신월리 등에서 주민 484명(오후 6시 기준)이 의성실내체육관 등으로 대피했다.",
-    "emd_codes": [
-      "4773046000"
-    ],
-    "place_text": "안평면",
-    "time_text": "오후 6시",
-    "event_time": "2025-03-22T18:00:00+09:00",
-    "t": 2520,
-    "date_basis": "article_day",
-    "time_resolution_note": null,
-    "actions": [
-      "evacuation"
-    ],
-    "copies": 1,
-    "time_mentions": [
-      {
-        "time_text": "오후 6시",
-        "event_time": "2025-03-22T18:00:00+09:00",
-        "t": 2520,
-        "date_basis": "article_day",
-        "time_resolution_note": null,
-        "offset_start": 36,
-        "offset_end": 41
-      }
-    ],
-    "selected_time_index": 0
-  },
-  {
-    "record_index": 45,
-    "url": "https://www.yna.co.kr/view/AKR20250322047100053?input=1195m",
-    "outlet": "www.yna.co.kr",
-    "published": "2025-03-22T19:19:00+09:00",
-    "sentence": "이번 괴산리 산불은 오전 11시 24분께 정상 부근에서 발생해 의성읍 방면으로 확산했다.",
-    "emd_codes": [
-      "4773025000"
-    ],
-    "place_text": "의성읍",
-    "time_text": "오전 11시 24분께",
-    "event_time": "2025-03-22T11:24:00+09:00",
-    "t": 2124,
-    "date_basis": "article_day",
-    "time_resolution_note": null,
-    "actions": [
-      "spread"
-    ],
-    "copies": 1,
-    "time_mentions": [
-      {
-        "time_text": "오전 11시 24분께",
-        "event_time": "2025-03-22T11:24:00+09:00",
-        "t": 2124,
-        "date_basis": "article_day",
-        "time_resolution_note": null,
-        "offset_start": 11,
-        "offset_end": 22
-      }
-    ],
-    "selected_time_index": 0
-  },
-  {
-    "record_index": 18,
-    "url": "https://www.yna.co.kr/view/AKR20250322040500053?input=1195m",
-    "outlet": "www.yna.co.kr",
-    "published": "2025-03-22T17:09:00+09:00",
-    "sentence": "안평면 괴산리에서 난 불은 돌풍을 타고 오후 3시 50분께 의성읍 철파리 마을 방향으로 번져 의성군은 주민대피령을 내리고 대응에 안간힘을 쏟고 있다.",
-    "emd_codes": [
-      "4773025000"
-    ],
-    "place_text": "의성읍 · 철파리",
-    "time_text": "오후 3시 50분께",
-    "event_time": "2025-03-22T15:50:00+09:00",
-    "t": 2390,
-    "date_basis": "article_day",
-    "time_resolution_note": null,
-    "actions": [
-      "spread",
-      "evacuation"
-    ],
-    "copies": 1,
-    "time_mentions": [
-      {
-        "time_text": "오후 3시 50분께",
-        "event_time": "2025-03-22T15:50:00+09:00",
-        "t": 2390,
-        "date_basis": "article_day",
-        "time_resolution_note": null,
-        "offset_start": 22,
-        "offset_end": 32
-      }
-    ],
-    "selected_time_index": 0
-  },
-  {
-    "record_index": 5,
-    "url": "https://www.hankyung.com/article/2025032213157",
-    "outlet": "www.hankyung.com",
-    "published": "2025-03-22T15:20:00+09:00",
-    "sentence": "22일 오전 11시 24분쯤 발생한 경북 의성군 안평면 괴산리 산불이 강한 바람에 계속 확산하자 산림 당국이 산불대응 3단계를 발령했다.",
-    "emd_codes": [
-      "4773046000"
-    ],
-    "place_text": "안평면 · 괴산리",
-    "time_text": "오전 11시 24분쯤",
-    "event_time": "2025-03-22T11:24:00+09:00",
-    "t": 2124,
-    "date_basis": "explicit_day",
-    "time_resolution_note": null,
-    "actions": [
-      "spread"
-    ],
-    "copies": 2,
-    "time_mentions": [
-      {
-        "time_text": "오전 11시 24분쯤",
-        "event_time": "2025-03-22T11:24:00+09:00",
-        "t": 2124,
-        "date_basis": "explicit_day",
-        "time_resolution_note": null,
-        "offset_start": 4,
-        "offset_end": 15
-      }
-    ],
-    "selected_time_index": 0
-  },
-  {
-    "record_index": 15,
-    "url": "http://www.kado.net/news/articleView.html?idxno=1300284",
-    "outlet": "www.kado.net",
-    "published": "2025-03-22T17:07:00+09:00",
-    "sentence": "의성군은 이날 오후 4시 10분에 재난 문자를 통해 의성읍 후죽1리, 업1리, 원당리 주민에게 의성실내체육관으로 대피하라고 알렸다.",
-    "emd_codes": [
-      "4773025000"
-    ],
-    "place_text": "의성읍",
-    "time_text": "오후 4시 10분",
-    "event_time": "2025-03-22T16:10:00+09:00",
-    "t": 2410,
-    "date_basis": "article_day",
-    "time_resolution_note": null,
-    "actions": [
-      "evacuation"
-    ],
-    "copies": 3,
-    "time_mentions": [
-      {
-        "time_text": "오후 4시 10분",
-        "event_time": "2025-03-22T16:10:00+09:00",
-        "t": 2410,
-        "date_basis": "article_day",
-        "time_resolution_note": null,
-        "offset_start": 8,
-        "offset_end": 17
+        "offset_end": 50
       }
     ],
     "selected_time_index": 0

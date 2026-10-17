@@ -1,0 +1,19 @@
+{
+  "source_url": "https://api.reliefweb.int/v1/reports?appname=firetrace-kr&query%5Bvalue%5D=Korea+wildfire&filter%5Bfield%5D=date.created&filter%5Bvalue%5D%5Bfrom%5D=2025-03-21T00%3A00%3A00%2B00%3A00&filter%5Bvalue%5D%5Bto%5D=2025-04-30T00%3A00%3A00%2B00%3A00&fields%5Binclude%5D%5B%5D=title&fields%5Binclude%5D%5B%5D=date&fields%5Binclude%5D%5B%5D=source&fields%5Binclude%5D%5B%5D=url&limit=50",
+  "final_url": "https://api.reliefweb.int/v1/reports?appname=firetrace-kr&query%5Bvalue%5D=Korea+wildfire&filter%5Bfield%5D=date.created&filter%5Bvalue%5D%5Bfrom%5D=2025-03-21T00%3A00%3A00%2B00%3A00&filter%5Bvalue%5D%5Bto%5D=2025-04-30T00%3A00%3A00%2B00%3A00&fields%5Binclude%5D%5B%5D=title&fields%5Binclude%5D%5B%5D=date&fields%5Binclude%5D%5B%5D=source&fields%5Binclude%5D%5B%5D=url&limit=50",
+  "fetched_at_utc": "2026-10-17T00:47:21.165860+00:00",
+  "licence_or_terms": null,
+  "row_count": null,
+  "caveat": "Research response cache; row_count is null for HTML/JS/binary or unknown. No reuse licence inferred.",
+  "http_status": 410,
+  "content_type": "application/json",
+  "request_body": null,
+  "attempts": [
+    {
+      "status": 410,
+      "error": "HTTP Error 410: Gone"
+    }
+  ],
+  "public_tokens_redacted": false,
+  "sha256": "c0519b7f537347421496a56f9c2680c7fde1919cae7a41dc1237994d2ed32836"
+}

@@ -112,3 +112,58 @@
 - `logs/astra-consult-1.md`(gpt-6-astra 비판 검토) → 채택분: hover가 대표값을 바꾸지 않음, ha/h는 관측 구간별 사후 지표로 재명명, 읍면동 인구 합은 노출 인구가 아님을 명시, 일 단위 사건은 하루 띠, 사후 분석 기사 표시, `models=era5` 명시 재수집, CAMS 기본 꺼짐.
 - `data/raw/claims.json`(179개 주장, astra 2라운드 수동 매핑) + `data/raw/claims_review.md` → `scripts/derive_response.py` → `web/public/data/response.json`. 검토된 쌍 7개만 계산(최소값 자동 선택 금지). 석보면: 진입 보도 17:40 → 대피명령 18:47(+67분) → 위성 첫 탐지 21:25(+158분).
 - 해외: `scripts/fetch_gdelt.py`(7초 간격에도 timelinevol 1건만 통과, 나머지 429) → `intl_news.json.gdelt_volume`. GWIS 둘레 23개·GDACS 12 에피소드는 Codex 수집분(`## 2026-10-17 해외 자료` 참조).
+
+
+## 2026-10-17 다중 사건 파이프라인 (Codex)
+
+`data/incidents.seed.json`의 2023–2026년 대형 산불 14건을 사건별로 수집·파생한다.
+Python 표준 라이브러리만 사용하며, `web/src/` 수정 없이 아래 데이터 계약을 따른다.
+
+```sh
+python3 scripts/build_incidents.py
+python3 scripts/build_all.py --all
+# 한 사건만 재생성 (각 fetch/derive 스크립트도 같은 --incident 옵션 지원)
+python3 scripts/build_all.py --incident hapcheon-2023
+python3 -m unittest discover -s scripts -p 'test_pipeline.py'
+python3 scripts/verify_incidents.py
+```
+
+- 사건 추가: seed의 `incidents` 배열에 `id`, `name`, `short`, `start`, `end`, `sido`,
+  `sigungu`, `ignition_emd`, `kfs`를 추가한다. `kfs` 키 형식은 `YYYY-MM-DD HH:MM 시군구`이며
+  `data/raw/kfs_fires_2023_2026.json`의 실제 기록과 일치해야 한다. `display_days`와 `reviewed`는 선택이다.
+  `python3 scripts/build_incidents.py`로 전국 경계의 시도·시군구 코드와 발화 행정동 면적 중심,
+  대상 시군구 전체 bbox 중심 ±0.6도에서 FIRMS 탐색 군집으로 지도 범위를 계산한 뒤 `build_all.py --incident <id>`를 실행한다.
+  다른 시도에 걸친 사건은 `incident.py`의 시도 대응도 명시한다(금산 사건의 서구는 대전광역시).
+- 출력: `web/public/data/incidents.json`과 `web/public/data/<id>/*.json`.
+  기존 의성 자료(검토된 사건·대응 기록, 해외 자료, 보도 본문 자동 추출·재난문자 결과 포함)는
+  `web/public/data/uiseong-2025/`로 이동했다. 루트 JSON 경로는 더 이상 사용하지 않는다.
+  `files`는 실제 존재하는 JSON 파일 목록, `stats.kfs_area_ha`는 seed KFS 기록만 합산한다.
+- 시각: 사건 시작 전날 00:00 KST가 `t0`이며 의성은 `2025-03-21T00:00:00+09:00`을 유지한다.
+  표시 기간은 기본 `(end − t0 날짜) + 1`, 3–10일 제한(명시한 값 우선)이다.
+  기상 배열은 `t0`부터 `t0 + display_days + 1일`까지 매시 정렬하며, 관측 결측은 null이다.
+  FIRMS는 전체 사건 종료일까지 수집하고 발화 전·종료일 이후 KST 관측을 제외한다.
+  발화 행정동 중심에서 30km 이상 떨어진 군집만 있을 때는 다른 산불·산업 열점을 해당 사건으로 붙이지 않는다.
+- 경계·발화 중심: 2025-01-01 admdongkor 행정동 3,555개를 고정 사용한다.
+  법정동 난곡동·노곡동은 해당 행정동 경포동·관문동을 중심점 대용으로 사용하며
+  법정동 폴리곤 중심으로 오인하지 않도록 `data/raw/<id>/registry_build.json`에 기록한다.
+  2023·2026 행정구역 변경은 경계와 인구의 미연결을 유발할 수 있다. 강릉의 2023년 인구는 당시
+  강원도 42 코드로 조회한 뒤 현재 경계 51 코드로 대응한다.
+- 기상: bbox의 0.1도 요청 격자(최대 120점), Open-Meteo ERA5와 CAMS를 수집한다.
+  요청 격자는 모형의 실제 해상도가 아니다. ASOS 목록은 기상청 공개 지점 CSV에서 생성한
+  `data/raw/asos_stations.json`이며 사건 중심 60km 이내 최대 6개(의성은 기존 6개)를 사용한다.
+  인구는 사건 시작 월의 행안부 `lv=3`, `regSeCd=1` 주민등록 거주자다.
+- 원문·캐시: `data/raw/<id>/`와 그 안의 `http_cache/`; 공통 전국 경계·기상청 지점목록은
+  기존 `public_data_http.py`의 `data/raw/public_cache/`를 재사용한다. 성공·실패 응답 모두 캐시되어
+  같은 입력의 재실행은 HTTP 호출을 하지 않는다. FIRMS는 초당 1회 미만, 네이버는 8회 미만,
+  data.go.kr는 3회 미만으로 순차 실행한다. 비공개 키는 파일에서 메모리로만 읽고
+  캐시 URL·응답에서는 지운다. 변경된 날짜·bbox·질의는 별도 요청으로 캐시한다.
+- 실패: `data/raw/<id>/<source>.blocked.md`에 기록하고 다른 자료의 생성은 계속한다.
+  HTTP 오류의 명시적 재시도는 `build_all.py --incident <id> --retry-blocked`로 할 수 있다.
+  API가 HTTP 200으로 돌려준 오류를 다시 요청하려면 해당 캐시 `.body`·`.meta.json` 쌍을 지운다.
+  비어 있는 수집 배열은 실제 관측·보도·인구가 0이라는 뜻이 아니다.
+- 확인: 실행 끝의 사건별 표와 `data/raw/<id>/verification.json`은 열점 수, 산림청 발화 대비
+  첫 탐지 시차(분), VIIRS 375m 누적 격자 면적(ha), 열점이 들어간 읍면동 수를 제공한다.
+  열점 5개 미만은 관측이 성긴 사건으로 표시한다. 격자 면적은 공식 산림피해 면적과 다르고 실제 소실 면적의 엄밀한 하한은 아니다.
+  의성은 기존 36.4도 기준 격자 정의를 유지하고 다른 사건은 중심 위도를 사용한다. 또한
+  `population_touched`는 해당 읍면동 전체 주민 합계로 실제 피해·대피 인구가 아니다.
+  신규 사건에 수동 검토 기록을 복제하지 않는다. `events.json`·`response.json`은 검토된 사건에만 존재한다.

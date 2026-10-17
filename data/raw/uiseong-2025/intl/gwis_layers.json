@@ -1,0 +1,597 @@
+[
+  {
+    "name": "GWIS",
+    "title": "GWIS",
+    "abstract": "The Global Wildfire Information System (GWIS) supports the services in charge of the protection of forests against fires and provides the European Commission services and the European Parliament with updated and reliable information on wildland fires at the global level.",
+    "time_extent": null,
+    "queryable": "1"
+  },
+  {
+    "name": "ecmwf.fwi",
+    "title": "ecmwf.fwi",
+    "abstract": "Fire Weather Index (FWI) from ECMWF reanalysis data. The FWI is a numerical rating of fire intensity and potential fire behavior, based on weather conditions such as temperature, humidity, wind speed, and precipitation. It is commonly used in wildfire management and forecasting to assess fire risk and guide firefighting efforts.",
+    "time_extent": "2018-01-01/2099-12-31",
+    "queryable": "0"
+  },
+  {
+    "name": "ecmwf.ffmc",
+    "title": "ecmwf.ffmc",
+    "abstract": "Fine Fuel Moisture Code (FFMC) from ECMWF reanalysis data. The FFMC is a numerical rating of the moisture content of fine fuels, such as grass and leaves, which can influence the ignition and spread of wildfires. It is commonly used in wildfire management and forecasting to assess fire risk and guide firefighting efforts.",
+    "time_extent": "2018-01-01/2099-12-31",
+    "queryable": "0"
+  },
+  {
+    "name": "ecmwf.dmc",
+    "title": "ecmwf.dmc",
+    "abstract": "Duff Moisture Code (DMC) from ECMWF reanalysis data. The DMC is a numerical rating of the moisture content of medium-sized fuels, such as shrubs and small branches, which can influence the ignition and spread of wildfires. It is commonly used in wildfire management and forecasting to assess fire risk and guide firefighting efforts.",
+    "time_extent": "2018-01-01/2099-12-31",
+    "queryable": "0"
+  },
+  {
+    "name": "ecmwf.dc",
+    "title": "ecmwf.dc",
+    "abstract": "Drought Code (DC) from ECMWF reanalysis data. The DC is a numerical rating of the moisture content of deep, compacted organic layers, which can influence the ignition and spread of wildfires. It is commonly used in wildfire management and forecasting to assess fire risk and guide firefighting efforts.",
+    "time_extent": "2018-01-01/2099-12-31",
+    "queryable": "0"
+  },
+  {
+    "name": "ecmwf.isi",
+    "title": "ecmwf.isi",
+    "abstract": "Initial Spread Index (ISI) from ECMWF reanalysis data. The ISI is a numerical rating of the expected rate of fire spread immediately after ignition, based on weather conditions such as wind speed and fine fuel moisture content. It is commonly used in wildfire management and forecasting to assess fire risk and guide firefighting efforts.",
+    "time_extent": "2018-01-01/2099-12-31",
+    "queryable": "0"
+  },
+  {
+    "name": "ecmwf.bui",
+    "title": "ecmwf.bui",
+    "abstract": "Buildup Index (BUI) from ECMWF reanalysis data. The BUI is a numerical rating of the total amount of fuel available for combustion, based on weather conditions such as precipitation and temperature. It is commonly used in wildfire management and forecasting to assess fire risk and guide firefighting efforts.",
+    "time_extent": "2018-01-01/2099-12-31",
+    "queryable": "0"
+  },
+  {
+    "name": "ecmwf.ranking",
+    "title": "ecmwf.ranking",
+    "abstract": "Fire Weather Index (FWI) from ECMWF reanalysis data. The FWI is a numerical rating of fire intensity and potential fire behavior, based on weather conditions such as temperature, humidity, wind speed, and precipitation. It is commonly used in wildfire management and forecasting to assess fire risk and guide firefighting efforts.",
+    "time_extent": "2018-01-01/2099-12-31",
+    "queryable": "0"
+  },
+  {
+    "name": "ecmwf.extra.lightning",
+    "title": "ecmwf.extra.lightning",
+    "abstract": "The GWIS ECMWF Lightning layer provides a near-real-time raster of lightning flash density derived from the European Centre for Medium-Range Weather Forecasts (ECMWF) Integrated Forecast System. Updated hourly, the product shows the estimated number of cloud-to-ground flashes per km² for the preceding 24 hours at a spatial resolution of approximately 0.1° (≈10 km). It covers the whole European Union and is intended to support the European Forest Fire Information System (EFFIS) by enhancing fire-danger mapping, early-warning alerts and operational decision-making where lightning-ignited fires are a significant risk.",
+    "time_extent": "2019-11-05/2099-12-31",
+    "queryable": "0"
+  },
+  {
+    "name": "ecmwf.extra.totalprecipitation",
+    "title": "ecmwf.extra.totalprecipitation",
+    "abstract": "The GWIS ECMWF Total Precipitation layer provides a near-real-time forecast raster of accumulated precipitation derived from the European Centre for Medium-Range Weather Forecasts (ECMWF) Integrated Forecast System. Updated sub-daily, the product displays accumulated total precipitation in millimeters (mm) at a spatial resolution of approximately 0.07° (~7 km). It supports the European Forest Fire Information System (EFFIS) and Global Wildfire Information System (GWIS) for fire danger assessment and weather monitoring.",
+    "time_extent": "2019-11-05 00:00:00/2099-12-31 23:00:00",
+    "queryable": "0"
+  },
+  {
+    "name": "ecmwf.extra.windspeed",
+    "title": "ecmwf.extra.windspeed",
+    "abstract": "The GWIS ECMWF 10m Wind Speed layer provides a near-real-time forecast raster of 10-meter wind speed derived from the European Centre for Medium-Range Weather Forecasts (ECMWF) Integrated Forecast System. Updated sub-daily, the product displays 10m wind speed in meters per second (m/s) at a spatial resolution of approximately 0.07° (~7 km). It supports the European Forest Fire Information System (EFFIS) and Global Wildfire Information System (GWIS) for fire danger assessment and weather monitoring.",
+    "time_extent": "2019-11-05 00:00:00/2099-12-31 23:00:00/PT6H",
+    "queryable": "0"
+  },
+  {
+    "name": "gfas.c",
+    "title": "gfas.c",
+    "abstract": "Cams-GFAS Emissions of Burnt Carbon (C)",
+    "time_extent": "2003-01-01/2099-12-31",
+    "queryable": "0"
+  },
+  {
+    "name": "all.hs",
+    "title": "all.hs",
+    "abstract": "Active fires (MODIS + VIIRS)",
+    "time_extent": "2000-01-01/2099-12-31",
+    "queryable": "1"
+  },
+  {
+    "name": "viirs.hs",
+    "title": "viirs.hs",
+    "abstract": "Active fires (VIIRS)",
+    "time_extent": "2000-01-01/2099-12-31",
+    "queryable": "1"
+  },
+  {
+    "name": "viirs.hs.n20",
+    "title": "viirs.hs.n20",
+    "abstract": "Active fires (VIIRS/NOAA-20)",
+    "time_extent": "2000-01-01/2099-12-31",
+    "queryable": "1"
+  },
+  {
+    "name": "viirs.hs.n21",
+    "title": "viirs.hs.n21",
+    "abstract": "Active fires (VIIRS/NOAA-21)",
+    "time_extent": "2000-01-01/2099-12-31",
+    "queryable": "1"
+  },
+  {
+    "name": "viirs.hs.suomi",
+    "title": "viirs.hs.suomi",
+    "abstract": "Active fires (VIIRS/SUOMI)",
+    "time_extent": "2000-01-01/2099-12-31",
+    "queryable": "1"
+  },
+  {
+    "name": "modis.hs",
+    "title": "modis.hs",
+    "abstract": "Active fires (MODIS)",
+    "time_extent": "2000-01-01/2099-12-31",
+    "queryable": "1"
+  },
+  {
+    "name": "s3.hs",
+    "title": "s3.hs",
+    "abstract": "Active fires (Sentinel 3)",
+    "time_extent": "2000-01-01/2099-12-31",
+    "queryable": "1"
+  },
+  {
+    "name": "all.hs.query",
+    "title": "all.hs.query",
+    "abstract": "Active fires (MODIS + VIIRS)",
+    "time_extent": "2000-01-01/2099-12-31",
+    "queryable": "1"
+  },
+  {
+    "name": "viirs.hs.query",
+    "title": "viirs.hs.query",
+    "abstract": "Active fires (VIIRS)",
+    "time_extent": "2000-01-01/2099-12-31",
+    "queryable": "1"
+  },
+  {
+    "name": "viirs.hs.n20.query",
+    "title": "viirs.hs.n20.query",
+    "abstract": "Active fires (VIIRS/NOAA-20)",
+    "time_extent": "2000-01-01/2099-12-31",
+    "queryable": "1"
+  },
+  {
+    "name": "viirs.hs.n21.query",
+    "title": "viirs.hs.n21.query",
+    "abstract": "Active fires (VIIRS/NOAA-21)",
+    "time_extent": "2000-01-01/2099-12-31",
+    "queryable": "1"
+  },
+  {
+    "name": "viirs.hs.suomi.query",
+    "title": "viirs.hs.suomi.query",
+    "abstract": "Active fires (VIIRS/SUOMI)",
+    "time_extent": "2000-01-01/2099-12-31",
+    "queryable": "1"
+  },
+  {
+    "name": "modis.hs.query",
+    "title": "modis.hs.query",
+    "abstract": "Active fires (MODIS)",
+    "time_extent": "2000-01-01/2099-12-31",
+    "queryable": "1"
+  },
+  {
+    "name": "s3.hs.query",
+    "title": "modis.hs.query",
+    "abstract": "Active fires (MODIS)",
+    "time_extent": "2000-01-01/2099-12-31",
+    "queryable": "1"
+  },
+  {
+    "name": "gwis.globfire.finalperim",
+    "title": "gwis.globfire.finalperim",
+    "abstract": "GlobFire Burnt Areas",
+    "time_extent": "2001-01-01/2099-12-31",
+    "queryable": "0"
+  },
+  {
+    "name": "nrt.ba",
+    "title": "nrt.ba",
+    "abstract": "nrt.ba",
+    "time_extent": null,
+    "queryable": "1"
+  },
+  {
+    "name": "nrt.ba.poly",
+    "title": "nrt.ba.poly",
+    "abstract": "GWIS NRT Burnt Areas Estimation",
+    "time_extent": "2001-01-01/2099-12-31",
+    "queryable": "1"
+  },
+  {
+    "name": "nrt.ba.point.near",
+    "title": "nrt.ba.point.near",
+    "abstract": "GWIS NRT Burnt Areas Estimation",
+    "time_extent": "2001-01-01/2099-12-31",
+    "queryable": "1"
+  },
+  {
+    "name": "nrt.ba.point.far",
+    "title": "nrt.ba.point.far",
+    "abstract": "GWIS NRT Burnt Areas Estimation",
+    "time_extent": "2001-01-01/2099-12-31",
+    "queryable": "1"
+  },
+  {
+    "name": "nrt.ba.bbox",
+    "title": "nrt.ba.bbox",
+    "abstract": "Bubbles Burnt Areas",
+    "time_extent": "2001-01-01/2099-12-31",
+    "queryable": "1"
+  },
+  {
+    "name": "query.nrt.ba",
+    "title": "query.nrt.ba",
+    "abstract": "query.nrt.ba",
+    "time_extent": null,
+    "queryable": "1"
+  },
+  {
+    "name": "nrt.ba.query",
+    "title": "nrt.ba.query",
+    "abstract": "Bubbles Burnt Areas",
+    "time_extent": "2001-01-01/2099-12-31",
+    "queryable": "1"
+  },
+  {
+    "name": "all.hs.today",
+    "title": "all.hs.today",
+    "abstract": "Active fires (MODIS + VIIRS)",
+    "time_extent": null,
+    "queryable": "1"
+  },
+  {
+    "name": "viirs.hs.today",
+    "title": "viirs.hs.today",
+    "abstract": "Active fires (VIIRS)",
+    "time_extent": null,
+    "queryable": "1"
+  },
+  {
+    "name": "viirs.hs.n20.today",
+    "title": "viirs.hs.n20.today",
+    "abstract": "Active fires (VIIRS/NOAA-20)",
+    "time_extent": null,
+    "queryable": "1"
+  },
+  {
+    "name": "viirs.hs.n21.today",
+    "title": "viirs.hs.n21.today",
+    "abstract": "Active fires (VIIRS/NOAA-21)",
+    "time_extent": null,
+    "queryable": "1"
+  },
+  {
+    "name": "viirs.hs.suomi.today",
+    "title": "viirs.hs.suomi.today",
+    "abstract": "Active fires (VIIRS/SUOMI)",
+    "time_extent": "2000-01-01/2099-12-31",
+    "queryable": "1"
+  },
+  {
+    "name": "modis.hs.today",
+    "title": "modis.hs.today",
+    "abstract": "Active fires (MODIS)",
+    "time_extent": null,
+    "queryable": "1"
+  },
+  {
+    "name": "s3.hs.today",
+    "title": "s3.hs.today",
+    "abstract": "Active fires (Sentinel 3)",
+    "time_extent": null,
+    "queryable": "1"
+  },
+  {
+    "name": "all.hs.week",
+    "title": "all.hs.week",
+    "abstract": "Active fires (MODIS + VIIRS)",
+    "time_extent": null,
+    "queryable": "1"
+  },
+  {
+    "name": "viirs.hs.week",
+    "title": "viirs.hs.week",
+    "abstract": "Active fires (VIIRS)",
+    "time_extent": null,
+    "queryable": "1"
+  },
+  {
+    "name": "viirs.hs.n20.week",
+    "title": "viirs.hs.n20.week",
+    "abstract": "Active fires (VIIRS/NOAA-20)",
+    "time_extent": null,
+    "queryable": "1"
+  },
+  {
+    "name": "viirs.hs.n21.week",
+    "title": "viirs.hs.n21.week",
+    "abstract": "Active fires (VIIRS/NOAA-21)",
+    "time_extent": null,
+    "queryable": "1"
+  },
+  {
+    "name": "viirs.hs.suomi.week",
+    "title": "viirs.hs.suomi.week",
+    "abstract": "Active fires (VIIRS/SUOMI)",
+    "time_extent": "2000-01-01/2099-12-31",
+    "queryable": "1"
+  },
+  {
+    "name": "modis.hs.week",
+    "title": "modis.hs.week",
+    "abstract": "Active fires (MODIS)",
+    "time_extent": null,
+    "queryable": "1"
+  },
+  {
+    "name": "s3.hs.week",
+    "title": "s3.hs.week",
+    "abstract": "Active fires (Sentinel 3)",
+    "time_extent": null,
+    "queryable": "1"
+  },
+  {
+    "name": "all.hs.month",
+    "title": "all.hs.month",
+    "abstract": "Active fires (MODIS + VIIRS)",
+    "time_extent": null,
+    "queryable": "1"
+  },
+  {
+    "name": "viirs.hs.month",
+    "title": "viirs.hs.month",
+    "abstract": "Active fires (VIIRS)",
+    "time_extent": null,
+    "queryable": "1"
+  },
+  {
+    "name": "viirs.hs.n20.month",
+    "title": "viirs.hs.n20.month",
+    "abstract": "Active fires (VIIRS/NOAA-20)",
+    "time_extent": null,
+    "queryable": "1"
+  },
+  {
+    "name": "viirs.hs.n21.month",
+    "title": "viirs.hs.n21.month",
+    "abstract": "Active fires (VIIRS/NOAA-21)",
+    "time_extent": null,
+    "queryable": "1"
+  },
+  {
+    "name": "viirs.hs.suomi.month",
+    "title": "viirs.hs.suomi.month",
+    "abstract": "Active fires (VIIRS/SUOMI)",
+    "time_extent": "2000-01-01/2099-12-31",
+    "queryable": "1"
+  },
+  {
+    "name": "modis.hs.month",
+    "title": "modis.hs.month",
+    "abstract": "Active fires (MODIS)",
+    "time_extent": null,
+    "queryable": "1"
+  },
+  {
+    "name": "s3.hs.month",
+    "title": "s3.hs.month",
+    "abstract": "Active fires (Sentinel 3)",
+    "time_extent": null,
+    "queryable": "1"
+  },
+  {
+    "name": "all.hs.season",
+    "title": "all.hs.season",
+    "abstract": "Active fires (MODIS + VIIRS)",
+    "time_extent": null,
+    "queryable": "1"
+  },
+  {
+    "name": "viirs.hs.season",
+    "title": "viirs.hs.season",
+    "abstract": "Active fires (VIIRS)",
+    "time_extent": null,
+    "queryable": "1"
+  },
+  {
+    "name": "viirs.hs.n20.season",
+    "title": "viirs.hs.n20.season",
+    "abstract": "Active fires (VIIRS/NOAA-20)",
+    "time_extent": null,
+    "queryable": "1"
+  },
+  {
+    "name": "viirs.hs.n21.season",
+    "title": "viirs.hs.n21.season",
+    "abstract": "Active fires (VIIRS/NOAA-21)",
+    "time_extent": null,
+    "queryable": "1"
+  },
+  {
+    "name": "viirs.hs.suomi.season",
+    "title": "viirs.hs.suomi.season",
+    "abstract": "Active fires (VIIRS/SUOMI)",
+    "time_extent": "2000-01-01/2099-12-31",
+    "queryable": "1"
+  },
+  {
+    "name": "modis.hs.season",
+    "title": "modis.hs.season",
+    "abstract": "Active fires (MODIS)",
+    "time_extent": null,
+    "queryable": "1"
+  },
+  {
+    "name": "s3.hs.season",
+    "title": "s3.hs.season",
+    "abstract": "Active fires (Sentinel 3)",
+    "time_extent": null,
+    "queryable": "1"
+  },
+  {
+    "name": "nrt.ba.today",
+    "title": "nrt.ba.today",
+    "abstract": "nrt.ba.today",
+    "time_extent": null,
+    "queryable": "1"
+  },
+  {
+    "name": "nrt.ba.poly.today",
+    "title": "nrt.ba.poly.today",
+    "abstract": "GWIS NRT Burnt Areas Estimation",
+    "time_extent": null,
+    "queryable": "1"
+  },
+  {
+    "name": "nrt.ba.point.today",
+    "title": "nrt.ba.point.today",
+    "abstract": "GWIS NRT Burnt Areas Estimation",
+    "time_extent": null,
+    "queryable": "1"
+  },
+  {
+    "name": "nrt.ba.bbox.today",
+    "title": "nrt.ba.bbox.today",
+    "abstract": "Bubbles Burnt Areas",
+    "time_extent": null,
+    "queryable": "1"
+  },
+  {
+    "name": "nrt.ba.week",
+    "title": "nrt.ba.week",
+    "abstract": "nrt.ba.week",
+    "time_extent": null,
+    "queryable": "1"
+  },
+  {
+    "name": "nrt.ba.poly.week",
+    "title": "nrt.ba.poly.week",
+    "abstract": "GWIS NRT Burnt Areas Estimation",
+    "time_extent": null,
+    "queryable": "1"
+  },
+  {
+    "name": "nrt.ba.point.week",
+    "title": "nrt.ba.point.week",
+    "abstract": "GWIS NRT Burnt Areas Estimation",
+    "time_extent": null,
+    "queryable": "1"
+  },
+  {
+    "name": "nrt.ba.bbox.week",
+    "title": "nrt.ba.bbox.week",
+    "abstract": "Bubbles Burnt Areas",
+    "time_extent": null,
+    "queryable": "1"
+  },
+  {
+    "name": "nrt.ba.month",
+    "title": "nrt.ba.month",
+    "abstract": "nrt.ba.month",
+    "time_extent": null,
+    "queryable": "1"
+  },
+  {
+    "name": "nrt.ba.poly.month",
+    "title": "nrt.ba.poly.month",
+    "abstract": "GWIS NRT Burnt Areas Estimation",
+    "time_extent": null,
+    "queryable": "1"
+  },
+  {
+    "name": "nrt.ba.point.month",
+    "title": "nrt.ba.point.month",
+    "abstract": "GWIS NRT Burnt Areas Estimation",
+    "time_extent": null,
+    "queryable": "1"
+  },
+  {
+    "name": "nrt.ba.bbox.month",
+    "title": "nrt.ba.bbox.month",
+    "abstract": "Bubbles Burnt Areas",
+    "time_extent": null,
+    "queryable": "1"
+  },
+  {
+    "name": "nrt.ba.season",
+    "title": "nrt.ba.season",
+    "abstract": "nrt.ba.season",
+    "time_extent": null,
+    "queryable": "1"
+  },
+  {
+    "name": "nrt.ba.poly.season",
+    "title": "nrt.ba.poly.season",
+    "abstract": "GWIS NRT Burnt Areas Estimation",
+    "time_extent": null,
+    "queryable": "1"
+  },
+  {
+    "name": "nrt.ba.point.season",
+    "title": "nrt.ba.point.season",
+    "abstract": "GWIS NRT Burnt Areas Estimation",
+    "time_extent": null,
+    "queryable": "1"
+  },
+  {
+    "name": "nrt.ba.bbox.season",
+    "title": "nrt.ba.bbox.season",
+    "abstract": "Bubbles Burnt Areas",
+    "time_extent": null,
+    "queryable": "1"
+  },
+  {
+    "name": "mcd64a1.fire_frequency",
+    "title": "mcd64a1.fire_frequency",
+    "abstract": null,
+    "time_extent": "2002-01-01/2099-12-31",
+    "queryable": "0"
+  },
+  {
+    "name": "mcd64a1.fire_frequency.query",
+    "title": "mcd64a1.fire_frequency.query",
+    "abstract": null,
+    "time_extent": "2002-01-01/2099-12-31",
+    "queryable": "1"
+  },
+  {
+    "name": "wdpa.poly",
+    "title": "wdpa.poly",
+    "abstract": "wdpa.poly",
+    "time_extent": null,
+    "queryable": "1"
+  },
+  {
+    "name": "wdpa.poly_0_3",
+    "title": "wdpa.poly_0_3",
+    "abstract": "WDPA protected Areas",
+    "time_extent": null,
+    "queryable": "1"
+  },
+  {
+    "name": "wdpa.poly_0_03",
+    "title": "wdpa.poly_0_03",
+    "abstract": "WDPA protected Areas",
+    "time_extent": null,
+    "queryable": "1"
+  },
+  {
+    "name": "wdpa.poly_0_003",
+    "title": "wdpa.poly_0_003",
+    "abstract": "WDPA protected Areas",
+    "time_extent": null,
+    "queryable": "1"
+  },
+  {
+    "name": "wdpa.poly_raw",
+    "title": "wdpa.poly_raw",
+    "abstract": "WDPA protected Areas",
+    "time_extent": null,
+    "queryable": "1"
+  }
+]

@@ -1,0 +1,5 @@
+{
+  "data": null,
+  "error": "Expected JSON; source returned a non-JSON response.",
+  "response_file": "gwis_wfs_nrt_ba_poly.response.txt"
+}

@@ -1,0 +1,15 @@
+{
+  "source_url": "https://www.gdacs.org/gdacsapi/api/export/getimpact?id=666170",
+  "final_url": "https://www.gdacs.org/gdacsapi/api/export/getimpact?id=666170",
+  "fetched_at_utc": "2026-10-17T00:53:16.353933+00:00",
+  "licence_or_terms": "GDACS Disclaimer and Terms of Use: model estimates supplied as is, without warranty; no separate open-data licence stated on this page.",
+  "row_count": null,
+  "caveat": "Research response cache; row_count is null for HTML/JS/binary or unknown. No reuse licence inferred.",
+  "http_status": 200,
+  "content_type": "application/json; charset=utf-8",
+  "request_body": null,
+  "attempts": [],
+  "public_tokens_redacted": false,
+  "sha256": "32a85f686e8d1c77e79f922eac2bca1487839fb24fd70c621a303d7662bfd9dc",
+  "terms_source_url": "https://www.gdacs.org/About/termofuse.aspx"
+}

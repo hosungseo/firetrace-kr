@@ -1,0 +1,19 @@
+{
+  "source_url": "https://api.gdeltproject.org/api/v2/doc/doc?startdatetime=20250321000000&enddatetime=20250405000000&format=json&mode=artlist&query=%E9%9F%93%E5%9B%BD+%E5%B1%B1%E7%81%AB%E4%BA%8B&maxrecords=250&sort=datedesc",
+  "final_url": "https://api.gdeltproject.org/api/v2/doc/doc?startdatetime=20250321000000&enddatetime=20250405000000&format=json&mode=artlist&query=%E9%9F%93%E5%9B%BD+%E5%B1%B1%E7%81%AB%E4%BA%8B&maxrecords=250&sort=datedesc",
+  "fetched_at_utc": "2026-10-17T00:45:20.837715+00:00",
+  "licence_or_terms": "GDELT public API; underlying article text/images remain with their publishers. No article reuse licence inferred.",
+  "row_count": null,
+  "caveat": "Research response cache; row_count is null for HTML/JS/binary or unknown. No reuse licence inferred.",
+  "http_status": 429,
+  "content_type": null,
+  "request_body": null,
+  "attempts": [
+    {
+      "status": 429,
+      "error": "HTTP Error 429: Too Many Requests"
+    }
+  ],
+  "public_tokens_redacted": false,
+  "sha256": "ec686821c6e009a1897188ca0e9072416703e94ae87bab1160c061e11bada472"
+}

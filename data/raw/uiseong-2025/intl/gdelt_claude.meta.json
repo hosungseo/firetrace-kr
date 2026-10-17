@@ -1,0 +1,14 @@
+{
+ "source": "GDELT DOC 2.0 API https://api.gdeltproject.org/api/v2/doc/doc",
+ "fetched_utc": "2026-10-17T01:10:00.874006+00:00",
+ "licence": "GDELT: free/open with attribution",
+ "calls": [
+  "volume",
+  "countries",
+  "articles_en",
+  "articles_local",
+  "articles_ja",
+  "articles_zh"
+ ],
+ "caveat": "GDELT monitors a sample of world online news; volume is % of monitored articles, not absolute"
+}

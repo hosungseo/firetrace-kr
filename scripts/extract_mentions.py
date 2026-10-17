@@ -11,8 +11,9 @@ import random
 import re
 from urllib.parse import urlsplit
 
-from fetch_article_text import ROOT, TEXT_DIR, LANDMARKS, targets, text_path
+from fetch_article_text import ROOT, TEXT_DIR, LANDMARKS, targets, text_path, admin_path
 from public_data_http import utc_now, write_json
+from incident import load, out_dir
 
 KST = timezone(timedelta(hours=9))
 BASE = datetime(2025, 3, 21, tzinfo=KST)
@@ -28,8 +29,8 @@ ACTIONS = {
 # municipality for hospitals, prisons, national parks, or nearby landmarks.
 ALIASES = {'괴산리':'안평면','현하리':'길안면','백자리':'길안면','하회리':'풍천면',
            '철파리':'의성읍','고운사':'단촌면','점곡휴게소':'점곡면'}
-CLOCK = re.compile(r'(?<!\d)(?:(오전|오후)\s*)?(\d{1,2})시(?:\s*(\d{1,2})분)?(?:께|쯤|경에|경)?|정오|자정')
-DAY = re.compile(r'(?:(?P<year>\d{4})년\s*)?(?:(?P<month>\d{1,2})월\s*)?(?<!\d)(?P<day>\d{1,2})일(?!\d|간|동안)')
+CLOCK = re.compile(r'(?<!\d)(?:(오전|오후)\s*)?(\d{1,2})시(?!간)(?:\s*(\d{1,2})분)?(?:께|쯤|경에|경)?|정오|자정')
+DAY = re.compile(r'(?:(?P<year>\d{4})년\s*)?(?:(?P<month>\d{1,2})월\s*)?(?<!\d)(?P<day>\d{1,2})일(?!\d|간|째|\s*동안)')
 RELATIVE = re.compile(r'전날|이날|오늘|어제')
 
 
@@ -77,6 +78,8 @@ def date_for(sentence, clock, published):
                 candidates.append(datetime(y,mo,day,tzinfo=KST))
             except ValueError:
                 pass
+        if re.search(r'지난\s*$', sentence[:match.start()]):
+            candidates = [d for d in candidates if d.date() <= published.date()]
         if not candidates:
             return None, 'unknown'
         return min(candidates, key=lambda d:abs((d.date()-published.date()).days)), 'explicit_day'
@@ -107,8 +110,8 @@ def resolve_clock(sentence, match, published):
             hour %= 12
         elif part in {'오후','낮','저녁','밤'} and hour <= 12:
             hour = hour % 12 + 12
-            if part == '밤' and int(match[2]) == 12:
-                hour = 0
+            if part == '밤' and (int(match[2]) == 12 or int(match[2]) <= 5):
+                hour = int(match[2]) % 12
         elif 1 <= hour <= 12 and not part:
             reason = 'ambiguous_meridiem'
     if day is None:
@@ -121,7 +124,7 @@ def resolve_clock(sentence, match, published):
 
 
 def place_index():
-    admin = json.loads((ROOT/'web/public/data/admin.json').read_text())
+    admin = json.loads(admin_path().read_text())
     codes = {f['properties']['emd']:str(f['properties']['code']) for f in admin['features']}
     names = {n:[code] for n,code in codes.items()}
     names.update({alias:[codes[name]] for alias,name in ALIASES.items()})
@@ -200,15 +203,19 @@ def extract():
                       'published':article['pub'],'sentence':sentence,'emd_codes':emd_codes,
                       'place_text':' · '.join(dict.fromkeys(m.group() for m in matches)),
                       **{k:v for k,v in primary.items() if not k.startswith('offset_')},
-                      'actions':actions,'copies':len(entry['urls']),
+                      'actions':actions,'copies':len(entry['urls']),'copy_urls':sorted(entry['urls']),
                       'time_mentions':times,'selected_time_index':selected}
             records.append(record)
     records.sort(key=lambda r:(r['published'],r['sentence'],r['place_text']))
     counts = Counter(a for r in records for a in r['actions'])
     meta = {'generated_at_utc':utc_now(),'time_base':BASE.isoformat(),'time_unit':'minutes',
-            'target_articles':len(articles),'article_outcomes':dict(article_counts),
+            'admin_source':str(admin_path().relative_to(ROOT)),
+            'target_articles':len(articles),
+            'target_selection':{'emd_name_articles':sum(any(n in a['title']+' '+a['desc'] for n in codes) for a in articles),
+                                'landmark_only_articles':sum(not any(n in a['title']+' '+a['desc'] for n in codes) for a in articles)},
+            'article_outcomes':dict(article_counts),
             'sentence_occurrences_before_dedupe':candidate_occurrences,'sentences_kept':len(grouped),
-            'records':len(records),'records_per_action':dict(counts),
+            'records':len(records),'records_per_action':{a:counts[a] for a in ACTIONS},
             'emd_covered':len({c for r in records for c in r['emd_codes']}),
             'unmapped':sum(not r['emd_codes'] for r in records),
             'unresolved_time_records':sum(r['t'] is None for r in records),
@@ -222,7 +229,12 @@ def extract():
                        'first is earliest extracted nominal time, not first actual event or official response.',
                        'Unknown landmark locations remain unmapped; no sigungu-to-EMD fanout.',
                        'Earliest publication may predate an updated version of the fetched body.',
-                       'No body is replaced with title, description, or a Naver copy.']}
+                       'No body is replaced with title, description, or a Naver copy.',
+                       'Fetches follow input order; a time cap may underrepresent later publications.']}
+    manifest_path = TEXT_DIR/'manifest.json'
+    if manifest_path.exists():
+        manifest = json.loads(manifest_path.read_text())
+        meta['fetch_summary'] = {k:manifest[k] for k in ('elapsed_seconds','fetch_cap_seconds','cap_reached','outcomes')}
     write_json(ROOT/'data/raw/mentions_auto.json',records)
     write_json(ROOT/'data/raw/mentions_auto.meta.json',meta)
     by_emd = {}
@@ -243,7 +255,7 @@ def extract():
                         'samples':[{k:(r[k][:220] if k=='sentence' else r[k]) for k in ('t','sentence','url','outlet','actions')} for r in samples[:12]]}
     webmeta = {**meta,'hourly_unit':'t_hour_start in MINUTES since time_base; floor(t/60)*60. n counts deduplicated EMD records, once regardless of action count.',
                'count_unit':'Deduplicated sentence/EMD records per action, including unresolved times.'}
-    write_json(ROOT/'web/public/data/mentions.json',{'by_emd':by_emd,'unmapped':meta['unmapped'],'meta':webmeta})
+    write_json(out_dir(load())/'mentions.json',{'by_emd':by_emd,'unmapped':meta['unmapped'],'meta':webmeta})
     # Stable random inspection queue; judgement is authored after reading bodies.
     rng = random.Random(20250321)
     sample = rng.sample(list(enumerate(records)),min(30,len(records)))

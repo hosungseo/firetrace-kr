@@ -5,10 +5,14 @@ and emd.json (first_hit / first_viirs / first_modis per 읍면동). Emits web/pu
 Gaps are only computed between claims whose time precision is minute/hour; otherwise null with a reason.
 """
 import json
+from incident import cli, raw_dir, out_dir, t0
+INC = cli(__doc__)
+if not INC.get("reviewed"):
+    raise SystemExit("Reviewed records required for this derivation")
 from datetime import datetime, timedelta, timezone
 
 KST = timezone(timedelta(hours=9))
-T0 = datetime(2025, 3, 21, tzinfo=KST)
+T0 = t0(INC)
 ENTRY = {"spread_entry"}
 RESPONSE = {"evacuation_order", "alert_sms", "road_control", "shelter_opened"}
 COMPARABLE = {"minute", "hour"}
@@ -16,8 +20,8 @@ COMPARABLE = {"minute", "hour"}
 def minutes(iso):
     return None if not iso else round((datetime.fromisoformat(iso) - T0).total_seconds() / 60)
 
-claims = json.load(open("data/raw/claims.json"))
-emd = {f["properties"]["code"]: f["properties"] for f in json.load(open("web/public/data/emd.json"))["features"]}
+claims = json.load(open(raw_dir(INC) / "claims.json"))
+emd = {f["properties"]["code"]: f["properties"] for f in json.load(open(out_dir(INC) / "emd.json"))["features"]}
 
 for c in claims:
     c["t"] = minutes(c.get("event_time"))
@@ -89,7 +93,7 @@ no_record = [{"code": k, "sigungu": v["sigungu"], "emd": v["emd"], "first_hit": 
 wide = [c for c in claims if c.get("scope") in ("city", "province", "national") and c["action"] in RESPONSE | ENTRY]
 out = {"pairs": pairs, "rows": rows, "no_record": sorted(no_record, key=lambda r: r["first_hit"]), "wide_scope": [{"claim_id": c["claim_id"], "action": c["action"], "t": c["t"], "precision": c["time_precision"], "sigungu": c.get("sigungu"), "scope": c["scope"], "place": c.get("place_text"), "quote": c.get("quote"), "url": c.get("source_url")} for c in wide],
        "note": "진입·대응 시각은 보도·공식 발표에 적힌 시각이며 실제 발생·수신 시각이 아니다. 위성 시각은 '처음 관측된' 시각이지 도달 시각이 아니다. 시차는 분·시 단위 기록끼리만 계산한다."}
-json.dump(out, open("web/public/data/response.json", "w"), ensure_ascii=False, separators=(",", ":"))
+json.dump(out, open(out_dir(INC) / "response.json", "w"), ensure_ascii=False, separators=(",", ":"))
 print(len(pairs), "reviewed pairs;", len(rows), "읍면동 with claims;", len(no_record), "touched without record;", len(wide), "wide-scope claims")
 for q in pairs:
     print(f'{q["sigungu"]} {q["emd"]}: spread {q["spread"] and q["spread"]["t"]} | response {q["response"] and q["response"]["t"]} ({q["role"]}) | sat {q["satellite"]["t"]} | R−S {q["gap_response_minus_spread"]} ({q["gap_reason"]}) H−S {q["gap_satellite_minus_spread"]} H−R {q["gap_satellite_minus_response"]}')

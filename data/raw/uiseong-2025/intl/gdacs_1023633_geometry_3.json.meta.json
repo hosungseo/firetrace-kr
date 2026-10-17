@@ -1,0 +1,15 @@
+{
+  "source_url": "https://www.gdacs.org/gdacsapi/api/polygons/getgeometry?eventtype=WF&eventid=1023633&episodeid=3",
+  "final_url": "https://www.gdacs.org/gdacsapi/api/polygons/getgeometry?eventtype=WF&eventid=1023633&episodeid=3",
+  "fetched_at_utc": "2026-10-17T00:46:19.461700+00:00",
+  "licence_or_terms": "GDACS Disclaimer and Terms of Use: model estimates supplied as is, without warranty; no separate open-data licence stated on this page.",
+  "row_count": 2,
+  "caveat": "Research response cache; row_count is null for HTML/JS/binary or unknown. No reuse licence inferred.",
+  "http_status": 200,
+  "content_type": "application/json; charset=utf-8",
+  "request_body": null,
+  "attempts": [],
+  "public_tokens_redacted": false,
+  "sha256": "15463b95492c49cbebae86c873e7e2ffc1ed4b852dbac2b7ade0e25bbb1c113b",
+  "terms_source_url": "https://www.gdacs.org/About/termofuse.aspx"
+}

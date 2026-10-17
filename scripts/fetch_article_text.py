@@ -17,8 +17,13 @@ LANDMARKS = ('괴산리', '현하리', '백자리', '하회마을', '고운사',
              '주왕산', '점곡휴게소', '영덕아산병원', '청송교도소')
 
 
+def admin_path():
+    original = ROOT / 'web/public/data/admin.json'
+    return original if original.exists() else ROOT / 'web/public/data/uiseong-2025/admin.json'
+
+
 def targets():
-    admin = json.loads((ROOT / 'web/public/data/admin.json').read_text())
+    admin = json.loads(admin_path().read_text())
     names = {f['properties']['emd'] for f in admin['features']} | set(LANDMARKS)
     articles = json.loads((ROOT / 'data/raw/naver_news.json').read_text())
     return [a for a in articles if any(n in a.get('title', '') + ' ' + a.get('desc', '') for n in names)]
@@ -48,10 +53,14 @@ class BodyParser(HTMLParser):
         skipped = tag in self.SKIP or (self.stack and self.stack[-1]['skip'])
         ident = attrs.get('id', '').lower()
         classes = attrs.get('class', '').lower()
-        candidate = not skipped and (tag in {'p', 'article'} or 'article' in ident or 'article' in classes
+        candidate = not skipped and (tag in {'p', 'article'} or 'article' in attrs.get('itemprop', '').lower() or 'article' in ident or 'article' in classes
                                     or ident in {'newsct_article', 'dic_area', 'news_body', 'newsbody', 'news_content'})
+        semantic = ident + ' ' + classes + ' ' + attrs.get('itemprop', '').lower()
+        body_container = bool(re.search(r'article[ _-]*(?:body|content|text|txt)|(?:body|content)[ _-]*article', semantic))
+        explicit_body = bool(re.search(r'article[ _-]*(?:body|content|text|txt)|(?:body|content)[ _-]*article', ident + ' ' + attrs.get('itemprop', '').lower()))
+        rank = 5 if explicit_body else (4 if body_container else (3 if tag == 'article' else (0 if tag == 'p' else 1)))
         frame = {'tag': tag, 'skip': bool(skipped), 'candidate': candidate,
-                 'parts': [], 'start': self.order, 'rank': 0 if tag == 'p' else 1}
+                 'parts': [], 'start': self.order, 'rank': rank}
         self.order += 1
         self.stack.append(frame)
         if tag in {'p','div','section','article','li','h1','h2','table'}:
@@ -71,7 +80,7 @@ class BodyParser(HTMLParser):
                     if frame['candidate']:
                         text = '\n'.join(' '.join(line.split()) for line in ''.join(frame['parts']).splitlines())
                         text = re.sub(r'\n+', '\n', text).strip()
-                        if text:
+                        if text or frame['rank'] >= 3:
                             self.blocks.append((frame['start'], self.order, frame['rank'], text))
                 if tag in {'p','div','section','article','li','h1','h2','table'}:
                     self.handle_data('\n')
@@ -86,12 +95,14 @@ class BodyParser(HTMLParser):
     def result(self):
         while self.stack:
             self.handle_endtag(self.stack[-1]['tag'])
-        containers = [b for b in self.blocks if b[2] == 1 and len(b[3]) >= 300]
+        containers = [b for b in self.blocks if b[2] >= 3 or (b[2] > 0 and len(b[3]) >= 300)]
         # Prefer a focused substantial container; reject giant navigation wrappers
         # when a smaller nested article container holds most of its useful prose.
         if containers:
+            best_rank = max(b[2] for b in containers)
+            containers = [b for b in containers if b[2] == best_rank]
             largest = max(containers, key=lambda b: len(b[3]))
-            focused = [b for b in containers if len(b[3]) >= max(300, len(largest[3]) * .55)]
+            focused = [b for b in containers if len(b[3]) >= len(largest[3]) * .55]
             return min(focused, key=lambda b: len(b[3]))[3], 'article_container'
         paragraphs = sorted((b for b in self.blocks if b[2] == 0), key=lambda b:b[0])
         seen = set()
@@ -115,6 +126,40 @@ def extract_body(data, content_type=''):
     return parser.result()
 
 
+def reextract_cached_bodies():
+    """Refresh this run's text outputs from raw cache, without HTTP requests."""
+    updated = 0
+    for article in targets():
+        path = text_path(article['url'])
+        mp = path.with_suffix('.meta.json')
+        if not mp.exists():
+            continue
+        meta = json.loads(mp.read_text())
+        if meta.get('http_status') != 200:
+            continue
+        key = hashlib.sha256((article['url'] + '\0').encode()).hexdigest()
+        cp = http.CACHE / (key + '.body')
+        cm = cp.with_suffix('.meta.json')
+        raw_meta = json.loads(cm.read_text())
+        body, method = extract_body(cp.read_bytes(), raw_meta.get('content_type'))
+        meta.update(chars=len(body), extraction_method=method,
+                    outcome='success' if len(body) >= 300 else 'short_body_paywall_or_js')
+        path.write_text(body + ('\n' if body else ''))
+        http.write_json(mp, meta)
+        updated += 1
+    manifest_path = TEXT_DIR / 'manifest.json'
+    if manifest_path.exists():
+        from collections import Counter
+        manifest = json.loads(manifest_path.read_text())
+        manifest['articles'] = [json.loads(text_path(r['url']).with_suffix('.meta.json').read_text())
+                                if text_path(r['url']).with_suffix('.meta.json').exists() else r
+                                for r in manifest['articles']]
+        manifest['outcomes'] = dict(Counter(r['outcome'] for r in manifest['articles']))
+        manifest['body_reextracted_at_utc'] = http.utc_now()
+        http.write_json(manifest_path, manifest)
+    print('Re-extracted cached HTTP 200 bodies:', updated)
+
+
 class FetchDeadline(BaseException):
     pass
 
@@ -122,7 +167,11 @@ class FetchDeadline(BaseException):
 def main():
     ap = argparse.ArgumentParser(description=__doc__)
     ap.add_argument('--minutes', type=float, default=45)
+    ap.add_argument('--reextract', action='store_true', help='Reparse existing raw cache without fetching')
     args = ap.parse_args()
+    if args.reextract:
+        reextract_cached_bodies()
+        return
     if not 0 < args.minutes <= 45:
         ap.error('--minutes must be >0 and <=45')
     TEXT_DIR.mkdir(parents=True, exist_ok=True)

@@ -1,0 +1,1 @@
+{"request":{"bbox":[126.27194,34.93459,126.77194,35.33459],"start":"2023-04-02","end":"2023-04-04","sources":["VIIRS_SNPP_SP","VIIRS_NOAA20_SP","MODIS_SP"]},"complete":true,"rows":10,"reused_from":"firms_probe.json"}

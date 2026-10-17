@@ -1,0 +1,18 @@
+{
+  "source_url": [
+    "https://earthobservatory.nasa.gov/images/154083/outbreak-of-fire-across-south-korea",
+    "https://science.nasa.gov/earth/earth-observatory/south-korea-charred-by-fire-154142/"
+  ],
+  "source_files": [
+    "data/raw/intl/nasa_154083.html",
+    "data/raw/intl/nasa_154142.html"
+  ],
+  "fetched_at_utc": "2026-10-17T00:50:14.905253+00:00",
+  "generated_at_utc": "2026-10-17T00:59:17.879478+00:00",
+  "row_count": 2,
+  "licence_or_terms": [
+    "NASA Images and Media Usage Guidelines: educational/informational use generally permitted with NASA acknowledgement; third-party copyright and endorsement exceptions apply.",
+    "NASA Images and Media Usage Guidelines: educational/informational use generally permitted with NASA acknowledgement; third-party copyright and endorsement exceptions apply."
+  ],
+  "caveat": "Article fields extracted from archived NASA HTML; image captions/credits retained."
+}

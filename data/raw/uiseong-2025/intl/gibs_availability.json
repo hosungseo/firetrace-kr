@@ -1,0 +1,1019 @@
+{
+  "bbox": [
+    128.2,
+    35.9,
+    129.6,
+    36.8
+  ],
+  "tests": [
+    {
+      "layer": "VIIRS_SNPP_CorrectedReflectance_TrueColor",
+      "date": "2025-03-22",
+      "zoom": 8,
+      "row": 98,
+      "col": 219,
+      "url": "https://gibs.earthdata.nasa.gov/wmts/epsg3857/best/VIIRS_SNPP_CorrectedReflectance_TrueColor/default/2025-03-22/GoogleMapsCompatible_Level9/8/98/219.jpg",
+      "http_status": 200,
+      "bytes": 7608,
+      "jpeg": true,
+      "dimensions": [
+        256,
+        256
+      ],
+      "nonblank": true,
+      "available": true,
+      "intersects_study_bbox": false
+    },
+    {
+      "layer": "VIIRS_SNPP_CorrectedReflectance_TrueColor",
+      "date": "2025-03-22",
+      "zoom": 8,
+      "row": 100,
+      "col": 219,
+      "url": "https://gibs.earthdata.nasa.gov/wmts/epsg3857/best/VIIRS_SNPP_CorrectedReflectance_TrueColor/default/2025-03-22/GoogleMapsCompatible_Level9/8/100/219.jpg",
+      "http_status": 200,
+      "bytes": 12884,
+      "jpeg": true,
+      "dimensions": [
+        256,
+        256
+      ],
+      "nonblank": true,
+      "available": true,
+      "intersects_study_bbox": true
+    },
+    {
+      "layer": "VIIRS_SNPP_CorrectedReflectance_TrueColor",
+      "date": "2025-03-23",
+      "zoom": 8,
+      "row": 98,
+      "col": 219,
+      "url": "https://gibs.earthdata.nasa.gov/wmts/epsg3857/best/VIIRS_SNPP_CorrectedReflectance_TrueColor/default/2025-03-23/GoogleMapsCompatible_Level9/8/98/219.jpg",
+      "http_status": 200,
+      "bytes": 6524,
+      "jpeg": true,
+      "dimensions": [
+        256,
+        256
+      ],
+      "nonblank": true,
+      "available": true,
+      "intersects_study_bbox": false
+    },
+    {
+      "layer": "VIIRS_SNPP_CorrectedReflectance_TrueColor",
+      "date": "2025-03-23",
+      "zoom": 8,
+      "row": 100,
+      "col": 219,
+      "url": "https://gibs.earthdata.nasa.gov/wmts/epsg3857/best/VIIRS_SNPP_CorrectedReflectance_TrueColor/default/2025-03-23/GoogleMapsCompatible_Level9/8/100/219.jpg",
+      "http_status": 200,
+      "bytes": 11512,
+      "jpeg": true,
+      "dimensions": [
+        256,
+        256
+      ],
+      "nonblank": true,
+      "available": true,
+      "intersects_study_bbox": true
+    },
+    {
+      "layer": "VIIRS_SNPP_CorrectedReflectance_TrueColor",
+      "date": "2025-03-24",
+      "zoom": 8,
+      "row": 98,
+      "col": 219,
+      "url": "https://gibs.earthdata.nasa.gov/wmts/epsg3857/best/VIIRS_SNPP_CorrectedReflectance_TrueColor/default/2025-03-24/GoogleMapsCompatible_Level9/8/98/219.jpg",
+      "http_status": 200,
+      "bytes": 7108,
+      "jpeg": true,
+      "dimensions": [
+        256,
+        256
+      ],
+      "nonblank": true,
+      "available": true,
+      "intersects_study_bbox": false
+    },
+    {
+      "layer": "VIIRS_SNPP_CorrectedReflectance_TrueColor",
+      "date": "2025-03-24",
+      "zoom": 8,
+      "row": 100,
+      "col": 219,
+      "url": "https://gibs.earthdata.nasa.gov/wmts/epsg3857/best/VIIRS_SNPP_CorrectedReflectance_TrueColor/default/2025-03-24/GoogleMapsCompatible_Level9/8/100/219.jpg",
+      "http_status": 200,
+      "bytes": 9045,
+      "jpeg": true,
+      "dimensions": [
+        256,
+        256
+      ],
+      "nonblank": true,
+      "available": true,
+      "intersects_study_bbox": true
+    },
+    {
+      "layer": "VIIRS_SNPP_CorrectedReflectance_TrueColor",
+      "date": "2025-03-25",
+      "zoom": 8,
+      "row": 98,
+      "col": 219,
+      "url": "https://gibs.earthdata.nasa.gov/wmts/epsg3857/best/VIIRS_SNPP_CorrectedReflectance_TrueColor/default/2025-03-25/GoogleMapsCompatible_Level9/8/98/219.jpg",
+      "http_status": 200,
+      "bytes": 7146,
+      "jpeg": true,
+      "dimensions": [
+        256,
+        256
+      ],
+      "nonblank": true,
+      "available": true,
+      "intersects_study_bbox": false
+    },
+    {
+      "layer": "VIIRS_SNPP_CorrectedReflectance_TrueColor",
+      "date": "2025-03-25",
+      "zoom": 8,
+      "row": 100,
+      "col": 219,
+      "url": "https://gibs.earthdata.nasa.gov/wmts/epsg3857/best/VIIRS_SNPP_CorrectedReflectance_TrueColor/default/2025-03-25/GoogleMapsCompatible_Level9/8/100/219.jpg",
+      "http_status": 200,
+      "bytes": 5435,
+      "jpeg": true,
+      "dimensions": [
+        256,
+        256
+      ],
+      "nonblank": true,
+      "available": true,
+      "intersects_study_bbox": true
+    },
+    {
+      "layer": "VIIRS_SNPP_CorrectedReflectance_TrueColor",
+      "date": "2025-03-26",
+      "zoom": 8,
+      "row": 98,
+      "col": 219,
+      "url": "https://gibs.earthdata.nasa.gov/wmts/epsg3857/best/VIIRS_SNPP_CorrectedReflectance_TrueColor/default/2025-03-26/GoogleMapsCompatible_Level9/8/98/219.jpg",
+      "http_status": 200,
+      "bytes": 9287,
+      "jpeg": true,
+      "dimensions": [
+        256,
+        256
+      ],
+      "nonblank": true,
+      "available": true,
+      "intersects_study_bbox": false
+    },
+    {
+      "layer": "VIIRS_SNPP_CorrectedReflectance_TrueColor",
+      "date": "2025-03-26",
+      "zoom": 8,
+      "row": 100,
+      "col": 219,
+      "url": "https://gibs.earthdata.nasa.gov/wmts/epsg3857/best/VIIRS_SNPP_CorrectedReflectance_TrueColor/default/2025-03-26/GoogleMapsCompatible_Level9/8/100/219.jpg",
+      "http_status": 200,
+      "bytes": 10242,
+      "jpeg": true,
+      "dimensions": [
+        256,
+        256
+      ],
+      "nonblank": true,
+      "available": true,
+      "intersects_study_bbox": true
+    },
+    {
+      "layer": "VIIRS_SNPP_CorrectedReflectance_TrueColor",
+      "date": "2025-03-27",
+      "zoom": 8,
+      "row": 98,
+      "col": 219,
+      "url": "https://gibs.earthdata.nasa.gov/wmts/epsg3857/best/VIIRS_SNPP_CorrectedReflectance_TrueColor/default/2025-03-27/GoogleMapsCompatible_Level9/8/98/219.jpg",
+      "http_status": 200,
+      "bytes": 7900,
+      "jpeg": true,
+      "dimensions": [
+        256,
+        256
+      ],
+      "nonblank": true,
+      "available": true,
+      "intersects_study_bbox": false
+    },
+    {
+      "layer": "VIIRS_SNPP_CorrectedReflectance_TrueColor",
+      "date": "2025-03-27",
+      "zoom": 8,
+      "row": 100,
+      "col": 219,
+      "url": "https://gibs.earthdata.nasa.gov/wmts/epsg3857/best/VIIRS_SNPP_CorrectedReflectance_TrueColor/default/2025-03-27/GoogleMapsCompatible_Level9/8/100/219.jpg",
+      "http_status": 200,
+      "bytes": 6459,
+      "jpeg": true,
+      "dimensions": [
+        256,
+        256
+      ],
+      "nonblank": true,
+      "available": true,
+      "intersects_study_bbox": true
+    },
+    {
+      "layer": "VIIRS_SNPP_CorrectedReflectance_TrueColor",
+      "date": "2025-03-28",
+      "zoom": 8,
+      "row": 98,
+      "col": 219,
+      "url": "https://gibs.earthdata.nasa.gov/wmts/epsg3857/best/VIIRS_SNPP_CorrectedReflectance_TrueColor/default/2025-03-28/GoogleMapsCompatible_Level9/8/98/219.jpg",
+      "http_status": 200,
+      "bytes": 11725,
+      "jpeg": true,
+      "dimensions": [
+        256,
+        256
+      ],
+      "nonblank": true,
+      "available": true,
+      "intersects_study_bbox": false
+    },
+    {
+      "layer": "VIIRS_SNPP_CorrectedReflectance_TrueColor",
+      "date": "2025-03-28",
+      "zoom": 8,
+      "row": 100,
+      "col": 219,
+      "url": "https://gibs.earthdata.nasa.gov/wmts/epsg3857/best/VIIRS_SNPP_CorrectedReflectance_TrueColor/default/2025-03-28/GoogleMapsCompatible_Level9/8/100/219.jpg",
+      "http_status": 200,
+      "bytes": 12568,
+      "jpeg": true,
+      "dimensions": [
+        256,
+        256
+      ],
+      "nonblank": true,
+      "available": true,
+      "intersects_study_bbox": true
+    },
+    {
+      "layer": "VIIRS_NOAA20_CorrectedReflectance_TrueColor",
+      "date": "2025-03-22",
+      "zoom": 8,
+      "row": 98,
+      "col": 219,
+      "url": "https://gibs.earthdata.nasa.gov/wmts/epsg3857/best/VIIRS_NOAA20_CorrectedReflectance_TrueColor/default/2025-03-22/GoogleMapsCompatible_Level9/8/98/219.jpg",
+      "http_status": 200,
+      "bytes": 6780,
+      "jpeg": true,
+      "dimensions": [
+        256,
+        256
+      ],
+      "nonblank": true,
+      "available": true,
+      "intersects_study_bbox": false
+    },
+    {
+      "layer": "VIIRS_NOAA20_CorrectedReflectance_TrueColor",
+      "date": "2025-03-22",
+      "zoom": 8,
+      "row": 100,
+      "col": 219,
+      "url": "https://gibs.earthdata.nasa.gov/wmts/epsg3857/best/VIIRS_NOAA20_CorrectedReflectance_TrueColor/default/2025-03-22/GoogleMapsCompatible_Level9/8/100/219.jpg",
+      "http_status": 200,
+      "bytes": 11814,
+      "jpeg": true,
+      "dimensions": [
+        256,
+        256
+      ],
+      "nonblank": true,
+      "available": true,
+      "intersects_study_bbox": true
+    },
+    {
+      "layer": "VIIRS_NOAA20_CorrectedReflectance_TrueColor",
+      "date": "2025-03-23",
+      "zoom": 8,
+      "row": 98,
+      "col": 219,
+      "url": "https://gibs.earthdata.nasa.gov/wmts/epsg3857/best/VIIRS_NOAA20_CorrectedReflectance_TrueColor/default/2025-03-23/GoogleMapsCompatible_Level9/8/98/219.jpg",
+      "http_status": 200,
+      "bytes": 7114,
+      "jpeg": true,
+      "dimensions": [
+        256,
+        256
+      ],
+      "nonblank": true,
+      "available": true,
+      "intersects_study_bbox": false
+    },
+    {
+      "layer": "VIIRS_NOAA20_CorrectedReflectance_TrueColor",
+      "date": "2025-03-23",
+      "zoom": 8,
+      "row": 100,
+      "col": 219,
+      "url": "https://gibs.earthdata.nasa.gov/wmts/epsg3857/best/VIIRS_NOAA20_CorrectedReflectance_TrueColor/default/2025-03-23/GoogleMapsCompatible_Level9/8/100/219.jpg",
+      "http_status": 200,
+      "bytes": 13002,
+      "jpeg": true,
+      "dimensions": [
+        256,
+        256
+      ],
+      "nonblank": true,
+      "available": true,
+      "intersects_study_bbox": true
+    },
+    {
+      "layer": "VIIRS_NOAA20_CorrectedReflectance_TrueColor",
+      "date": "2025-03-24",
+      "zoom": 8,
+      "row": 98,
+      "col": 219,
+      "url": "https://gibs.earthdata.nasa.gov/wmts/epsg3857/best/VIIRS_NOAA20_CorrectedReflectance_TrueColor/default/2025-03-24/GoogleMapsCompatible_Level9/8/98/219.jpg",
+      "http_status": 200,
+      "bytes": 9909,
+      "jpeg": true,
+      "dimensions": [
+        256,
+        256
+      ],
+      "nonblank": true,
+      "available": true,
+      "intersects_study_bbox": false
+    },
+    {
+      "layer": "VIIRS_NOAA20_CorrectedReflectance_TrueColor",
+      "date": "2025-03-24",
+      "zoom": 8,
+      "row": 100,
+      "col": 219,
+      "url": "https://gibs.earthdata.nasa.gov/wmts/epsg3857/best/VIIRS_NOAA20_CorrectedReflectance_TrueColor/default/2025-03-24/GoogleMapsCompatible_Level9/8/100/219.jpg",
+      "http_status": 200,
+      "bytes": 13370,
+      "jpeg": true,
+      "dimensions": [
+        256,
+        256
+      ],
+      "nonblank": true,
+      "available": true,
+      "intersects_study_bbox": true
+    },
+    {
+      "layer": "VIIRS_NOAA20_CorrectedReflectance_TrueColor",
+      "date": "2025-03-25",
+      "zoom": 8,
+      "row": 98,
+      "col": 219,
+      "url": "https://gibs.earthdata.nasa.gov/wmts/epsg3857/best/VIIRS_NOAA20_CorrectedReflectance_TrueColor/default/2025-03-25/GoogleMapsCompatible_Level9/8/98/219.jpg",
+      "http_status": 200,
+      "bytes": 5720,
+      "jpeg": true,
+      "dimensions": [
+        256,
+        256
+      ],
+      "nonblank": true,
+      "available": true,
+      "intersects_study_bbox": false
+    },
+    {
+      "layer": "VIIRS_NOAA20_CorrectedReflectance_TrueColor",
+      "date": "2025-03-25",
+      "zoom": 8,
+      "row": 100,
+      "col": 219,
+      "url": "https://gibs.earthdata.nasa.gov/wmts/epsg3857/best/VIIRS_NOAA20_CorrectedReflectance_TrueColor/default/2025-03-25/GoogleMapsCompatible_Level9/8/100/219.jpg",
+      "http_status": 200,
+      "bytes": 5623,
+      "jpeg": true,
+      "dimensions": [
+        256,
+        256
+      ],
+      "nonblank": true,
+      "available": true,
+      "intersects_study_bbox": true
+    },
+    {
+      "layer": "VIIRS_NOAA20_CorrectedReflectance_TrueColor",
+      "date": "2025-03-26",
+      "zoom": 8,
+      "row": 98,
+      "col": 219,
+      "url": "https://gibs.earthdata.nasa.gov/wmts/epsg3857/best/VIIRS_NOAA20_CorrectedReflectance_TrueColor/default/2025-03-26/GoogleMapsCompatible_Level9/8/98/219.jpg",
+      "http_status": 200,
+      "bytes": 7091,
+      "jpeg": true,
+      "dimensions": [
+        256,
+        256
+      ],
+      "nonblank": true,
+      "available": true,
+      "intersects_study_bbox": false
+    },
+    {
+      "layer": "VIIRS_NOAA20_CorrectedReflectance_TrueColor",
+      "date": "2025-03-26",
+      "zoom": 8,
+      "row": 100,
+      "col": 219,
+      "url": "https://gibs.earthdata.nasa.gov/wmts/epsg3857/best/VIIRS_NOAA20_CorrectedReflectance_TrueColor/default/2025-03-26/GoogleMapsCompatible_Level9/8/100/219.jpg",
+      "http_status": 200,
+      "bytes": 8624,
+      "jpeg": true,
+      "dimensions": [
+        256,
+        256
+      ],
+      "nonblank": true,
+      "available": true,
+      "intersects_study_bbox": true
+    },
+    {
+      "layer": "VIIRS_NOAA20_CorrectedReflectance_TrueColor",
+      "date": "2025-03-27",
+      "zoom": 8,
+      "row": 98,
+      "col": 219,
+      "url": "https://gibs.earthdata.nasa.gov/wmts/epsg3857/best/VIIRS_NOAA20_CorrectedReflectance_TrueColor/default/2025-03-27/GoogleMapsCompatible_Level9/8/98/219.jpg",
+      "http_status": 200,
+      "bytes": 6945,
+      "jpeg": true,
+      "dimensions": [
+        256,
+        256
+      ],
+      "nonblank": true,
+      "available": true,
+      "intersects_study_bbox": false
+    },
+    {
+      "layer": "VIIRS_NOAA20_CorrectedReflectance_TrueColor",
+      "date": "2025-03-27",
+      "zoom": 8,
+      "row": 100,
+      "col": 219,
+      "url": "https://gibs.earthdata.nasa.gov/wmts/epsg3857/best/VIIRS_NOAA20_CorrectedReflectance_TrueColor/default/2025-03-27/GoogleMapsCompatible_Level9/8/100/219.jpg",
+      "http_status": 200,
+      "bytes": 4762,
+      "jpeg": true,
+      "dimensions": [
+        256,
+        256
+      ],
+      "nonblank": true,
+      "available": true,
+      "intersects_study_bbox": true
+    },
+    {
+      "layer": "VIIRS_NOAA20_CorrectedReflectance_TrueColor",
+      "date": "2025-03-28",
+      "zoom": 8,
+      "row": 98,
+      "col": 219,
+      "url": "https://gibs.earthdata.nasa.gov/wmts/epsg3857/best/VIIRS_NOAA20_CorrectedReflectance_TrueColor/default/2025-03-28/GoogleMapsCompatible_Level9/8/98/219.jpg",
+      "http_status": 200,
+      "bytes": 12987,
+      "jpeg": true,
+      "dimensions": [
+        256,
+        256
+      ],
+      "nonblank": true,
+      "available": true,
+      "intersects_study_bbox": false
+    },
+    {
+      "layer": "VIIRS_NOAA20_CorrectedReflectance_TrueColor",
+      "date": "2025-03-28",
+      "zoom": 8,
+      "row": 100,
+      "col": 219,
+      "url": "https://gibs.earthdata.nasa.gov/wmts/epsg3857/best/VIIRS_NOAA20_CorrectedReflectance_TrueColor/default/2025-03-28/GoogleMapsCompatible_Level9/8/100/219.jpg",
+      "http_status": 200,
+      "bytes": 15544,
+      "jpeg": true,
+      "dimensions": [
+        256,
+        256
+      ],
+      "nonblank": true,
+      "available": true,
+      "intersects_study_bbox": true
+    },
+    {
+      "layer": "MODIS_Terra_CorrectedReflectance_TrueColor",
+      "date": "2025-03-22",
+      "zoom": 8,
+      "row": 98,
+      "col": 219,
+      "url": "https://gibs.earthdata.nasa.gov/wmts/epsg3857/best/MODIS_Terra_CorrectedReflectance_TrueColor/default/2025-03-22/GoogleMapsCompatible_Level9/8/98/219.jpg",
+      "http_status": 200,
+      "bytes": 8326,
+      "jpeg": true,
+      "dimensions": [
+        256,
+        256
+      ],
+      "nonblank": true,
+      "available": true,
+      "intersects_study_bbox": false
+    },
+    {
+      "layer": "MODIS_Terra_CorrectedReflectance_TrueColor",
+      "date": "2025-03-22",
+      "zoom": 8,
+      "row": 100,
+      "col": 219,
+      "url": "https://gibs.earthdata.nasa.gov/wmts/epsg3857/best/MODIS_Terra_CorrectedReflectance_TrueColor/default/2025-03-22/GoogleMapsCompatible_Level9/8/100/219.jpg",
+      "http_status": 200,
+      "bytes": 14791,
+      "jpeg": true,
+      "dimensions": [
+        256,
+        256
+      ],
+      "nonblank": true,
+      "available": true,
+      "intersects_study_bbox": true
+    },
+    {
+      "layer": "MODIS_Terra_CorrectedReflectance_TrueColor",
+      "date": "2025-03-23",
+      "zoom": 8,
+      "row": 98,
+      "col": 219,
+      "url": "https://gibs.earthdata.nasa.gov/wmts/epsg3857/best/MODIS_Terra_CorrectedReflectance_TrueColor/default/2025-03-23/GoogleMapsCompatible_Level9/8/98/219.jpg",
+      "http_status": 200,
+      "bytes": 7336,
+      "jpeg": true,
+      "dimensions": [
+        256,
+        256
+      ],
+      "nonblank": true,
+      "available": true,
+      "intersects_study_bbox": false
+    },
+    {
+      "layer": "MODIS_Terra_CorrectedReflectance_TrueColor",
+      "date": "2025-03-23",
+      "zoom": 8,
+      "row": 100,
+      "col": 219,
+      "url": "https://gibs.earthdata.nasa.gov/wmts/epsg3857/best/MODIS_Terra_CorrectedReflectance_TrueColor/default/2025-03-23/GoogleMapsCompatible_Level9/8/100/219.jpg",
+      "http_status": 200,
+      "bytes": 12516,
+      "jpeg": true,
+      "dimensions": [
+        256,
+        256
+      ],
+      "nonblank": true,
+      "available": true,
+      "intersects_study_bbox": true
+    },
+    {
+      "layer": "MODIS_Terra_CorrectedReflectance_TrueColor",
+      "date": "2025-03-24",
+      "zoom": 8,
+      "row": 98,
+      "col": 219,
+      "url": "https://gibs.earthdata.nasa.gov/wmts/epsg3857/best/MODIS_Terra_CorrectedReflectance_TrueColor/default/2025-03-24/GoogleMapsCompatible_Level9/8/98/219.jpg",
+      "http_status": 200,
+      "bytes": 4389,
+      "jpeg": true,
+      "dimensions": [
+        256,
+        256
+      ],
+      "nonblank": true,
+      "available": true,
+      "intersects_study_bbox": false
+    },
+    {
+      "layer": "MODIS_Terra_CorrectedReflectance_TrueColor",
+      "date": "2025-03-24",
+      "zoom": 8,
+      "row": 100,
+      "col": 219,
+      "url": "https://gibs.earthdata.nasa.gov/wmts/epsg3857/best/MODIS_Terra_CorrectedReflectance_TrueColor/default/2025-03-24/GoogleMapsCompatible_Level9/8/100/219.jpg",
+      "http_status": 200,
+      "bytes": 8324,
+      "jpeg": true,
+      "dimensions": [
+        256,
+        256
+      ],
+      "nonblank": true,
+      "available": true,
+      "intersects_study_bbox": true
+    },
+    {
+      "layer": "MODIS_Terra_CorrectedReflectance_TrueColor",
+      "date": "2025-03-25",
+      "zoom": 8,
+      "row": 98,
+      "col": 219,
+      "url": "https://gibs.earthdata.nasa.gov/wmts/epsg3857/best/MODIS_Terra_CorrectedReflectance_TrueColor/default/2025-03-25/GoogleMapsCompatible_Level9/8/98/219.jpg",
+      "http_status": 200,
+      "bytes": 6823,
+      "jpeg": true,
+      "dimensions": [
+        256,
+        256
+      ],
+      "nonblank": true,
+      "available": true,
+      "intersects_study_bbox": false
+    },
+    {
+      "layer": "MODIS_Terra_CorrectedReflectance_TrueColor",
+      "date": "2025-03-25",
+      "zoom": 8,
+      "row": 100,
+      "col": 219,
+      "url": "https://gibs.earthdata.nasa.gov/wmts/epsg3857/best/MODIS_Terra_CorrectedReflectance_TrueColor/default/2025-03-25/GoogleMapsCompatible_Level9/8/100/219.jpg",
+      "http_status": 200,
+      "bytes": 13885,
+      "jpeg": true,
+      "dimensions": [
+        256,
+        256
+      ],
+      "nonblank": true,
+      "available": true,
+      "intersects_study_bbox": true
+    },
+    {
+      "layer": "MODIS_Terra_CorrectedReflectance_TrueColor",
+      "date": "2025-03-26",
+      "zoom": 8,
+      "row": 98,
+      "col": 219,
+      "url": "https://gibs.earthdata.nasa.gov/wmts/epsg3857/best/MODIS_Terra_CorrectedReflectance_TrueColor/default/2025-03-26/GoogleMapsCompatible_Level9/8/98/219.jpg",
+      "http_status": 200,
+      "bytes": 6412,
+      "jpeg": true,
+      "dimensions": [
+        256,
+        256
+      ],
+      "nonblank": true,
+      "available": true,
+      "intersects_study_bbox": false
+    },
+    {
+      "layer": "MODIS_Terra_CorrectedReflectance_TrueColor",
+      "date": "2025-03-26",
+      "zoom": 8,
+      "row": 100,
+      "col": 219,
+      "url": "https://gibs.earthdata.nasa.gov/wmts/epsg3857/best/MODIS_Terra_CorrectedReflectance_TrueColor/default/2025-03-26/GoogleMapsCompatible_Level9/8/100/219.jpg",
+      "http_status": 200,
+      "bytes": 7147,
+      "jpeg": true,
+      "dimensions": [
+        256,
+        256
+      ],
+      "nonblank": true,
+      "available": true,
+      "intersects_study_bbox": true
+    },
+    {
+      "layer": "MODIS_Terra_CorrectedReflectance_TrueColor",
+      "date": "2025-03-27",
+      "zoom": 8,
+      "row": 98,
+      "col": 219,
+      "url": "https://gibs.earthdata.nasa.gov/wmts/epsg3857/best/MODIS_Terra_CorrectedReflectance_TrueColor/default/2025-03-27/GoogleMapsCompatible_Level9/8/98/219.jpg",
+      "http_status": 200,
+      "bytes": 7894,
+      "jpeg": true,
+      "dimensions": [
+        256,
+        256
+      ],
+      "nonblank": true,
+      "available": true,
+      "intersects_study_bbox": false
+    },
+    {
+      "layer": "MODIS_Terra_CorrectedReflectance_TrueColor",
+      "date": "2025-03-27",
+      "zoom": 8,
+      "row": 100,
+      "col": 219,
+      "url": "https://gibs.earthdata.nasa.gov/wmts/epsg3857/best/MODIS_Terra_CorrectedReflectance_TrueColor/default/2025-03-27/GoogleMapsCompatible_Level9/8/100/219.jpg",
+      "http_status": 200,
+      "bytes": 11120,
+      "jpeg": true,
+      "dimensions": [
+        256,
+        256
+      ],
+      "nonblank": true,
+      "available": true,
+      "intersects_study_bbox": true
+    },
+    {
+      "layer": "MODIS_Terra_CorrectedReflectance_TrueColor",
+      "date": "2025-03-28",
+      "zoom": 8,
+      "row": 98,
+      "col": 219,
+      "url": "https://gibs.earthdata.nasa.gov/wmts/epsg3857/best/MODIS_Terra_CorrectedReflectance_TrueColor/default/2025-03-28/GoogleMapsCompatible_Level9/8/98/219.jpg",
+      "http_status": 200,
+      "bytes": 6656,
+      "jpeg": true,
+      "dimensions": [
+        256,
+        256
+      ],
+      "nonblank": true,
+      "available": true,
+      "intersects_study_bbox": false
+    },
+    {
+      "layer": "MODIS_Terra_CorrectedReflectance_TrueColor",
+      "date": "2025-03-28",
+      "zoom": 8,
+      "row": 100,
+      "col": 219,
+      "url": "https://gibs.earthdata.nasa.gov/wmts/epsg3857/best/MODIS_Terra_CorrectedReflectance_TrueColor/default/2025-03-28/GoogleMapsCompatible_Level9/8/100/219.jpg",
+      "http_status": 200,
+      "bytes": 7155,
+      "jpeg": true,
+      "dimensions": [
+        256,
+        256
+      ],
+      "nonblank": true,
+      "available": true,
+      "intersects_study_bbox": true
+    },
+    {
+      "layer": "MODIS_Aqua_CorrectedReflectance_TrueColor",
+      "date": "2025-03-22",
+      "zoom": 8,
+      "row": 98,
+      "col": 219,
+      "url": "https://gibs.earthdata.nasa.gov/wmts/epsg3857/best/MODIS_Aqua_CorrectedReflectance_TrueColor/default/2025-03-22/GoogleMapsCompatible_Level9/8/98/219.jpg",
+      "http_status": 200,
+      "bytes": 8682,
+      "jpeg": true,
+      "dimensions": [
+        256,
+        256
+      ],
+      "nonblank": true,
+      "available": true,
+      "intersects_study_bbox": false
+    },
+    {
+      "layer": "MODIS_Aqua_CorrectedReflectance_TrueColor",
+      "date": "2025-03-22",
+      "zoom": 8,
+      "row": 100,
+      "col": 219,
+      "url": "https://gibs.earthdata.nasa.gov/wmts/epsg3857/best/MODIS_Aqua_CorrectedReflectance_TrueColor/default/2025-03-22/GoogleMapsCompatible_Level9/8/100/219.jpg",
+      "http_status": 200,
+      "bytes": 14857,
+      "jpeg": true,
+      "dimensions": [
+        256,
+        256
+      ],
+      "nonblank": true,
+      "available": true,
+      "intersects_study_bbox": true
+    },
+    {
+      "layer": "MODIS_Aqua_CorrectedReflectance_TrueColor",
+      "date": "2025-03-23",
+      "zoom": 8,
+      "row": 98,
+      "col": 219,
+      "url": "https://gibs.earthdata.nasa.gov/wmts/epsg3857/best/MODIS_Aqua_CorrectedReflectance_TrueColor/default/2025-03-23/GoogleMapsCompatible_Level9/8/98/219.jpg",
+      "http_status": 200,
+      "bytes": 5758,
+      "jpeg": true,
+      "dimensions": [
+        256,
+        256
+      ],
+      "nonblank": true,
+      "available": true,
+      "intersects_study_bbox": false
+    },
+    {
+      "layer": "MODIS_Aqua_CorrectedReflectance_TrueColor",
+      "date": "2025-03-23",
+      "zoom": 8,
+      "row": 100,
+      "col": 219,
+      "url": "https://gibs.earthdata.nasa.gov/wmts/epsg3857/best/MODIS_Aqua_CorrectedReflectance_TrueColor/default/2025-03-23/GoogleMapsCompatible_Level9/8/100/219.jpg",
+      "http_status": 200,
+      "bytes": 7471,
+      "jpeg": true,
+      "dimensions": [
+        256,
+        256
+      ],
+      "nonblank": true,
+      "available": true,
+      "intersects_study_bbox": true
+    },
+    {
+      "layer": "MODIS_Aqua_CorrectedReflectance_TrueColor",
+      "date": "2025-03-24",
+      "zoom": 8,
+      "row": 98,
+      "col": 219,
+      "url": "https://gibs.earthdata.nasa.gov/wmts/epsg3857/best/MODIS_Aqua_CorrectedReflectance_TrueColor/default/2025-03-24/GoogleMapsCompatible_Level9/8/98/219.jpg",
+      "http_status": 200,
+      "bytes": 10918,
+      "jpeg": true,
+      "dimensions": [
+        256,
+        256
+      ],
+      "nonblank": true,
+      "available": true,
+      "intersects_study_bbox": false
+    },
+    {
+      "layer": "MODIS_Aqua_CorrectedReflectance_TrueColor",
+      "date": "2025-03-24",
+      "zoom": 8,
+      "row": 100,
+      "col": 219,
+      "url": "https://gibs.earthdata.nasa.gov/wmts/epsg3857/best/MODIS_Aqua_CorrectedReflectance_TrueColor/default/2025-03-24/GoogleMapsCompatible_Level9/8/100/219.jpg",
+      "http_status": 200,
+      "bytes": 16108,
+      "jpeg": true,
+      "dimensions": [
+        256,
+        256
+      ],
+      "nonblank": true,
+      "available": true,
+      "intersects_study_bbox": true
+    },
+    {
+      "layer": "MODIS_Aqua_CorrectedReflectance_TrueColor",
+      "date": "2025-03-25",
+      "zoom": 8,
+      "row": 98,
+      "col": 219,
+      "url": "https://gibs.earthdata.nasa.gov/wmts/epsg3857/best/MODIS_Aqua_CorrectedReflectance_TrueColor/default/2025-03-25/GoogleMapsCompatible_Level9/8/98/219.jpg",
+      "http_status": 200,
+      "bytes": 7609,
+      "jpeg": true,
+      "dimensions": [
+        256,
+        256
+      ],
+      "nonblank": true,
+      "available": true,
+      "intersects_study_bbox": false
+    },
+    {
+      "layer": "MODIS_Aqua_CorrectedReflectance_TrueColor",
+      "date": "2025-03-25",
+      "zoom": 8,
+      "row": 100,
+      "col": 219,
+      "url": "https://gibs.earthdata.nasa.gov/wmts/epsg3857/best/MODIS_Aqua_CorrectedReflectance_TrueColor/default/2025-03-25/GoogleMapsCompatible_Level9/8/100/219.jpg",
+      "http_status": 200,
+      "bytes": 7509,
+      "jpeg": true,
+      "dimensions": [
+        256,
+        256
+      ],
+      "nonblank": true,
+      "available": true,
+      "intersects_study_bbox": true
+    },
+    {
+      "layer": "MODIS_Aqua_CorrectedReflectance_TrueColor",
+      "date": "2025-03-26",
+      "zoom": 8,
+      "row": 98,
+      "col": 219,
+      "url": "https://gibs.earthdata.nasa.gov/wmts/epsg3857/best/MODIS_Aqua_CorrectedReflectance_TrueColor/default/2025-03-26/GoogleMapsCompatible_Level9/8/98/219.jpg",
+      "http_status": 200,
+      "bytes": 8676,
+      "jpeg": true,
+      "dimensions": [
+        256,
+        256
+      ],
+      "nonblank": true,
+      "available": true,
+      "intersects_study_bbox": false
+    },
+    {
+      "layer": "MODIS_Aqua_CorrectedReflectance_TrueColor",
+      "date": "2025-03-26",
+      "zoom": 8,
+      "row": 100,
+      "col": 219,
+      "url": "https://gibs.earthdata.nasa.gov/wmts/epsg3857/best/MODIS_Aqua_CorrectedReflectance_TrueColor/default/2025-03-26/GoogleMapsCompatible_Level9/8/100/219.jpg",
+      "http_status": 200,
+      "bytes": 8291,
+      "jpeg": true,
+      "dimensions": [
+        256,
+        256
+      ],
+      "nonblank": true,
+      "available": true,
+      "intersects_study_bbox": true
+    },
+    {
+      "layer": "MODIS_Aqua_CorrectedReflectance_TrueColor",
+      "date": "2025-03-27",
+      "zoom": 8,
+      "row": 98,
+      "col": 219,
+      "url": "https://gibs.earthdata.nasa.gov/wmts/epsg3857/best/MODIS_Aqua_CorrectedReflectance_TrueColor/default/2025-03-27/GoogleMapsCompatible_Level9/8/98/219.jpg",
+      "http_status": 200,
+      "bytes": 9901,
+      "jpeg": true,
+      "dimensions": [
+        256,
+        256
+      ],
+      "nonblank": true,
+      "available": true,
+      "intersects_study_bbox": false
+    },
+    {
+      "layer": "MODIS_Aqua_CorrectedReflectance_TrueColor",
+      "date": "2025-03-27",
+      "zoom": 8,
+      "row": 100,
+      "col": 219,
+      "url": "https://gibs.earthdata.nasa.gov/wmts/epsg3857/best/MODIS_Aqua_CorrectedReflectance_TrueColor/default/2025-03-27/GoogleMapsCompatible_Level9/8/100/219.jpg",
+      "http_status": 200,
+      "bytes": 5696,
+      "jpeg": true,
+      "dimensions": [
+        256,
+        256
+      ],
+      "nonblank": true,
+      "available": true,
+      "intersects_study_bbox": true
+    },
+    {
+      "layer": "MODIS_Aqua_CorrectedReflectance_TrueColor",
+      "date": "2025-03-28",
+      "zoom": 8,
+      "row": 98,
+      "col": 219,
+      "url": "https://gibs.earthdata.nasa.gov/wmts/epsg3857/best/MODIS_Aqua_CorrectedReflectance_TrueColor/default/2025-03-28/GoogleMapsCompatible_Level9/8/98/219.jpg",
+      "http_status": 200,
+      "bytes": 9721,
+      "jpeg": true,
+      "dimensions": [
+        256,
+        256
+      ],
+      "nonblank": true,
+      "available": true,
+      "intersects_study_bbox": false
+    },
+    {
+      "layer": "MODIS_Aqua_CorrectedReflectance_TrueColor",
+      "date": "2025-03-28",
+      "zoom": 8,
+      "row": 100,
+      "col": 219,
+      "url": "https://gibs.earthdata.nasa.gov/wmts/epsg3857/best/MODIS_Aqua_CorrectedReflectance_TrueColor/default/2025-03-28/GoogleMapsCompatible_Level9/8/100/219.jpg",
+      "http_status": 200,
+      "bytes": 8673,
+      "jpeg": true,
+      "dimensions": [
+        256,
+        256
+      ],
+      "nonblank": true,
+      "available": true,
+      "intersects_study_bbox": true
+    }
+  ],
+  "caveat": "Requested tile row 98 covers 37.71859–38.82259 N, outside study bbox. Added row 100 (35.46067–36.59789 N). Tiles sample part of bbox, not full coverage; nonblank uses the requested JPEG > 2 KiB proxy plus SOF dimensions, not a decoded pixel/cloud mask."
+}

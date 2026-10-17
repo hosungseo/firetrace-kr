@@ -1,0 +1,6 @@
+{
+  "source": "data_go_kr",
+  "source_url": "https://apis.data.go.kr/1360000/AsosHourlyInfoService/getWthrDataList?serviceKey=[REDACTED]&pageNo=1&numOfRows=999&dataType=JSON&dataCd=ASOS&dateCd=HR&startDt=20230307&endDt=20230313&stnIds=285&startHh=00&endHh=23",
+  "http_status": 200,
+  "fetched_at_utc": "2026-10-17T01:45:14.239907+00:00"
+}

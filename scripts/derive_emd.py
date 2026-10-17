@@ -1,15 +1,19 @@
 """Join 읍면동 boundaries (Codex admin.json) with resident population and the first time a satellite hotspot fell inside each polygon."""
 import json
+from incident import cli, raw_dir, out_dir, t0
+INC = cli(__doc__)
+RAW = raw_dir(INC)
+OUT = out_dir(INC)
 
-admin = json.load(open("web/public/data/admin.json"))          # simplified, for display
-source = json.load(open("data/raw/admin_source.geojson"))      # unsimplified, for point-in-polygon
+admin = json.load(open(OUT / "admin.json"))          # simplified, for display
+source = json.load(open(RAW / "admin_source.geojson"))      # unsimplified, for point-in-polygon
 src_by_code = {}
 for f in source["features"]:
     pr = f["properties"]
     code = str(pr.get("code") or pr.get("adm_cd2") or "")
     src_by_code[code] = f["geometry"]
-pop = {r["code"]: r for r in json.load(open("web/public/data/population.json"))["rows"]}
-fire = json.load(open("web/public/data/fire.json"))
+pop = {r["code"]: r for r in json.load(open(OUT / "population.json"))["rows"]}
+fire = json.load(open(OUT / "fire.json"))
 
 def rings(geom):
     if geom["type"] == "Polygon": return [geom["coordinates"]]
@@ -31,7 +35,7 @@ for f in admin["features"]:
     pr = pop.get(p["code"])
     if pr is None: unmatched += 1
     p.update({"total": pr["total"] if pr else None, "age70plus": pr["age70plus"] if pr else None,
-              "age70share": round(pr["age70plus"] / pr["total"], 3) if pr and pr["total"] else None})
+              "age70share": round(pr["age70plus"] / pr["total"], 3) if pr and pr["total"] and pr["age70plus"] is not None else None})
     xs = [c[0] for poly in rings(f["geometry"]) for c in poly[0]]; ys = [c[1] for poly in rings(f["geometry"]) for c in poly[0]]
     bbox = (min(xs), min(ys), max(xs), max(ys))
     geom = src_by_code.get(p["code"], f["geometry"])
@@ -53,9 +57,7 @@ for f in admin["features"]:
     p["hotspots"] = count
     p["daily"] = [[d * 1440, n] for d, n in sorted(daily.items())]   # hotspot detections per KST day
     p["decades"] = pr["decades"] if pr else None                       # residents by age decade (0s..100s)
-json.dump(admin, open("web/public/data/emd.json", "w"), ensure_ascii=False, separators=(",", ":"))
+json.dump(admin, open(OUT / "emd.json", "w"), ensure_ascii=False, separators=(",", ":"))
 hit = [f["properties"] for f in admin["features"] if f["properties"]["first_hit"] is not None]
 print(len(admin["features"]), "emd;", unmatched, "without population;", len(hit), "touched by hotspots")
 print("touched residents", sum(p["total"] or 0 for p in hit), "70+", sum(p["age70plus"] or 0 for p in hit))
-for p in sorted(hit, key=lambda p: p["first_hit"])[:40]:
-    print(f'{p["first_hit"]//1440+21}일 {p["first_hit"]%1440//60:02d}:{p["first_hit"]%60:02d} {p["sigungu"]} {p["emd"]} pop {p["total"]} 70+ {p["age70share"]} hotspots {p["hotspots"]}')
