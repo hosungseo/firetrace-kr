@@ -3,8 +3,8 @@ import * as maplibregl from 'maplibre-gl'
 import type { GeoJSONSource, MapLayerMouseEvent } from 'maplibre-gl'
 import 'maplibre-gl/dist/maplibre-gl.css'
 import mlcontour from 'maplibre-contour'
-import type { EmdCollection, FireData, FireEvent, GwisData, KfsFire } from './types'
-import { ACTIVE_WINDOW, fmt, hourIndex, kstDate } from './time'
+import type { EmdCollection, FfasData, FireData, FireEvent, ForestTypeData, GwisData, KfsFire } from './types'
+import { ACTIVE_WINDOW, T_MAX, fmt, hourIndex, kstDate, toMinutes } from './time'
 
 export interface Layers {
   gwis: boolean
@@ -16,6 +16,8 @@ export interface Layers {
   wind: boolean
   events: boolean
   terrain: boolean
+  situation: boolean
+  forest: boolean
 }
 
 export type Basemap = 'terrain' | 'night' | 'satellite' | 'daily'
@@ -28,6 +30,9 @@ interface Props {
   emd: EmdCollection | null
   kfs: KfsFire[]
   gwis: GwisData | null
+  ffas: FfasData | null
+  forest: ForestTypeData | null
+  dataBase: string
   focusCode: string | null
   onFocusEmd: (code: string) => void
   t: number
@@ -147,7 +152,7 @@ function eventGeoJSON(events: FireEvent[]) {
   }
 }
 
-export default function MapView({ view, basemap, data, events, emd, kfs, gwis, focusCode, onFocusEmd, t, layers, selected, onSelectEvent }: Props) {
+export default function MapView({ view, basemap, data, events, emd, kfs, gwis, ffas, forest, dataBase, focusCode, onFocusEmd, t, layers, selected, onSelectEvent }: Props) {
   const el = useRef<HTMLDivElement>(null)
   const mapRef = useRef<maplibregl.Map | null>(null)
   const ready = useRef(false)
@@ -155,8 +160,8 @@ export default function MapView({ view, basemap, data, events, emd, kfs, gwis, f
   const dailyKey = useRef('')
   const stationEls = useRef<HTMLDivElement[]>([])
   const popup = useRef<maplibregl.Popup | null>(null)
-  const latest = useRef({ t, layers, events, selected, basemap, emd, kfs, gwis })
-  latest.current = { t, layers, events, selected, basemap, emd, kfs, gwis }
+  const latest = useRef({ t, layers, events, selected, basemap, emd, kfs, gwis, ffas, forest })
+  latest.current = { t, layers, events, selected, basemap, emd, kfs, gwis, ffas, forest }
 
   useEffect(() => {
     const map = new maplibregl.Map({
@@ -278,6 +283,18 @@ export default function MapView({ view, basemap, data, events, emd, kfs, gwis, f
         type: 'line',
         source: 'gwis',
         paint: { 'line-color': '#1d9a8c', 'line-width': 1.6, 'line-dasharray': [3, 2], 'line-opacity': 0.9 },
+      })
+      // 산림청 상황도: the last public situation map per fire (fire line = still burning, extinguished line = out)
+      map.addSource('situation', { type: 'geojson', data: { type: 'FeatureCollection', features: [] } })
+      map.addLayer({
+        id: 'situation',
+        type: 'line',
+        source: 'situation',
+        paint: {
+          'line-color': ['match', ['get', 'kind'], 'fire_line', '#e8361c', '#6b7280'],
+          'line-width': ['match', ['get', 'kind'], 'fire_line', 2.6, 1.6],
+          'line-opacity': 0.95,
+        },
       })
       map.addLayer({
         id: 'emd-focus',
@@ -426,12 +443,18 @@ export default function MapView({ view, basemap, data, events, emd, kfs, gwis, f
 
   function apply(map: maplibregl.Map) {
     if (!ready.current) return
-    const { t, layers, events, selected, basemap, emd, kfs } = latest.current
+    const { t, layers, events, selected, basemap, emd, kfs, ffas, forest } = latest.current
     const b = BASE[basemap]
     if (emd) (map.getSource('emd') as GeoJSONSource).setData(emd as never)
     if (gwis) (map.getSource('gwis') as GeoJSONSource).setData(gwis as never)
     map.setFilter('gwis', ['<=', ['get', 't_start_minutes'], t])
     map.setLayoutProperty('gwis', 'visibility', layers.gwis ? 'visible' : 'none')
+    if (ffas) (map.getSource('situation') as GeoJSONSource).setData(situationGeoJSON(ffas))
+    // A situation map is a snapshot: show it only from the moment it was drawn
+    map.setFilter('situation', ['<=', ['get', 't'], t])
+    map.setLayoutProperty('situation', 'visibility', layers.situation ? 'visible' : 'none')
+    ensureForest(map, forest)
+    if (map.getLayer('forest')) map.setLayoutProperty('forest', 'visibility', layers.forest ? 'visible' : 'none')
     ;(map.getSource('kfs') as GeoJSONSource).setData(kfsGeoJSON(kfs))
     map.setFilter('emd-hit', ['<=', ['coalesce', ['get', 'first_hit'], 1e9], t])
     map.setFilter('kfs', ['<=', ['get', 't'], t])
@@ -522,10 +545,18 @@ export default function MapView({ view, basemap, data, events, emd, kfs, gwis, f
     )
   }
 
+  // 임상도 overlay: one georeferenced PNG per incident, draped under the vector layers
+  function ensureForest(map: maplibregl.Map, f: ForestTypeData | null) {
+    if (!f || map.getSource('forest')) return
+    const [w, s, e, n] = f.bounds
+    map.addSource('forest', { type: 'image', url: dataBase + f.image, coordinates: [[w, n], [e, n], [e, s], [w, s]] })
+    map.addLayer({ id: 'forest', type: 'raster', source: 'forest', paint: { 'raster-opacity': 0.72, 'raster-fade-duration': 0 } }, 'emd-fill')
+  }
+
   useEffect(() => {
     if (mapRef.current) apply(mapRef.current)
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [t, layers, events, selected, basemap, emd, kfs, gwis])
+  }, [t, layers, events, selected, basemap, emd, kfs, gwis, ffas, forest])
 
 
   // Highlight + fly to a 읍면동 chosen in the response tab
@@ -553,4 +584,13 @@ export default function MapView({ view, basemap, data, events, emd, kfs, gwis, f
   }, [selected, events])
 
   return <div ref={el} className="map" />
+}
+
+function situationGeoJSON(ffas: FfasData) {
+  const drawn = new Map<string, number>()
+  for (const m of ffas.members) for (const sm of m.situation_maps ?? []) if (sm.drawn_at) drawn.set(sm.map_id, Math.min(toMinutes(sm.drawn_at), T_MAX - 1))  // drawn after the window → show at its end
+  return {
+    type: 'FeatureCollection' as const,
+    features: ffas.situation.features.map((f) => ({ ...f, properties: { ...f.properties, t: drawn.get((f.properties as { map_id?: string }).map_id ?? '') ?? 1e9 } })),
+  } as never
 }

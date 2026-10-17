@@ -3,7 +3,7 @@ import MapView, { type Basemap, type Layers } from './MapView'
 import Timeline from './Timeline'
 import Response from './Response'
 import EmdDetail from './EmdDetail'
-import type { EmdCollection, FireData, FireEvent, FullMentionsData, GdacsData, GwisData, KfsData, MentionsData, NewsData, OfficialData, ResponseData } from './types'
+import type { EmdCollection, FfasData, FireData, FireEvent, ForestTypeData, FullMentionsData, GdacsData, GwisData, KfsData, MentionsData, NewsData, OfficialData, ResponseData } from './types'
 import { ACTIVE_WINDOW, T_MAX, T_MIN, compass, eventLabel, fmt, fmtDay, hourIndex, setIncident, toMinutes } from './time'
 import './App.css'
 
@@ -48,13 +48,15 @@ export default function App() {
   const [official, setOfficial] = useState<OfficialData | null>(null)
   const [mentions, setMentions] = useState<MentionsData | null>(null)
   const [full, setFull] = useState<FullMentionsData | null>(null)
+  const [ffas, setFfas] = useState<FfasData | null>(null)
+  const [forest, setForest] = useState<ForestTypeData | null>(null)
   const [t, setT] = useState(T_MIN + 13 * 60)
   const [playing, setPlaying] = useState(false)
   const [speed, setSpeed] = useState(1)
   const [tab, setTab] = useState<'overview' | 'response' | 'emd' | 'events' | 'news' | 'compare' | 'sources'>('overview')
   const [selected, setSelected] = useState<string | null>(null)
   const [basemap, setBasemap] = useState<Basemap>('terrain')
-  const [layers, setLayers] = useState<Layers>({ gwis: true, smoke: false, emd: true, stations: true, burned: true, active: true, wind: true, events: true, terrain: true })
+  const [layers, setLayers] = useState<Layers>({ gwis: true, smoke: false, emd: true, stations: true, burned: true, active: true, wind: true, events: true, terrain: true, situation: true, forest: false })
 
   // Registry → incident (from URL hash) → per-incident data directory
   useEffect(() => {
@@ -80,7 +82,7 @@ export default function App() {
   useEffect(() => {
     if (!incident) return
     setIncident(incident.t0, incident.display_days)
-    setData(null); setEvents([]); setNews(null); setEmd(null); setKfs(null); setResp(null); setGwis(null); setGdacs(null); setIntlNews(null); setOfficial(null); setMentions(null); setFull(null)
+    setData(null); setEvents([]); setNews(null); setEmd(null); setKfs(null); setResp(null); setGwis(null); setGdacs(null); setIntlNews(null); setOfficial(null); setMentions(null); setFull(null); setFfas(null); setForest(null)
     setSelected(null); setFocusCode(null); setPlaying(false)
     json<FireData>(base + 'fire.json').then((d) => {
       if (!d) return
@@ -110,6 +112,8 @@ export default function App() {
     json<OfficialData>(base + 'official.json').then(setOfficial)
     json<MentionsData>(base + 'mentions_snippets.json').then(setMentions)
     json<FullMentionsData>(base + 'mentions.json').then(setFull)
+    json<FfasData>(base + 'ffas.json').then(setFfas)
+    json<ForestTypeData>(base + 'forest_type.json').then(setForest)
     json<{ gdelt_volume?: { series: [number, number, string][] } }>(base + 'intl_news.json').then(setIntlNews)
   }, [incident, base])
 
@@ -222,7 +226,7 @@ export default function App() {
 
       <main className="body">
         <section className="stage">
-          <MapView key={incident.id} view={{ center: incident.center, zoom: incident.zoom }} basemap={basemap} data={data} events={events} emd={emd} kfs={kfs?.fires ?? []} gwis={gwis} focusCode={focusCode} onFocusEmd={focusEmd} t={tm} layers={layers} selected={selected} onSelectEvent={selectEvent} />
+          <MapView key={incident.id} view={{ center: incident.center, zoom: incident.zoom }} basemap={basemap} data={data} events={events} emd={emd} kfs={kfs?.fires ?? []} gwis={gwis} ffas={ffas} forest={forest} dataBase={base} focusCode={focusCode} onFocusEmd={focusEmd} t={tm} layers={layers} selected={selected} onSelectEvent={selectEvent} />
           <div className="basemap-switch" role="radiogroup" aria-label="배경지도">
             {(
               [
@@ -264,6 +268,16 @@ export default function App() {
             {gwis && (
               <div>
                 <i className="sw gwis" /> JRC GWIS 화재 둘레 추정 (MODIS·VIIRS)
+              </div>
+            )}
+            {ffas && layers.situation && ffas.situation.features.length > 0 && (
+              <div>
+                <i className="sw sttn" /> 산림청 상황도 화선(빨강)·진화완료선(회색), 작성 시각부터 표시
+              </div>
+            )}
+            {forest && layers.forest && (
+              <div>
+                <i className="sw forest" /> 임상도: 갈색 계열 = 침엽수림, 노랑·초록 계열 = 활엽수림
               </div>
             )}
             {emd && (
@@ -345,6 +359,8 @@ export default function App() {
                   ['events', '보도·공식 기록·발생 기록'],
                   ['emd', '읍면동 경계·인구'],
                   ['gwis', 'JRC GWIS 화재 둘레 추정'],
+                  ['situation', '산림청 상황도 (마지막 공개본)'],
+                  ['forest', '숲 종류 (임상도, 현재판)'],
                   ['terrain', '3D 지형'],
                 ] as const
               ).map(([k, label]) => (
@@ -410,6 +426,79 @@ export default function App() {
                     두 건의 합은 99,282.5ha로, 4/18 발표 잠정 피해면적 99,289ha와 6.5ha 차이가 납니다(집계 기준 미확인).
                   </p>
                   )}
+                </>
+              )}
+
+              {ffas && ffas.members.some((m) => m.matched) && (
+                <>
+                  <h3>산림청 산불정보시스템</h3>
+                  {ffas.members.filter((m) => m.matched).map((m) => (
+                    <div key={m.fire_id} className="ffas-fire">
+                      <div className="ffas-head">
+                        <span>{m.address}</span>
+                        <b className={m.final_level === '초기대응' ? '' : 'hot'}>{m.final_level}</b>
+                      </div>
+                      <div className="ffas-steps">
+                        {([['신고', m.reported], ['접수', m.received], ['확인', m.confirmed], ['진화', m.extinguished]] as const).map(([k, v]) =>
+                          v ? (
+                            <button key={k} className="link-row" onClick={() => setT(Math.max(T_MIN, Math.min(T_MAX, toMinutes(v))))}>
+                              {k} {fmt(toMinutes(v))}{k !== '진화' && v.slice(17, 19) !== '00' ? `:${v.slice(17, 19)}` : ''}
+                            </button>
+                          ) : null,
+                        )}
+                      </div>
+                      {m.resources && (m.resources.helicopters > 0 || m.resources.crew > 0) && (
+                        <small className="ffas-res">
+                          누적 투입 헬기 {m.resources.helicopters.toLocaleString()}대 · 인력 {m.resources.crew.toLocaleString()}명 · 장비 {m.resources.equipment.toLocaleString()}대
+                        </small>
+                      )}
+                      {m.situation_maps?.map((sm) => (
+                        <small key={sm.map_id} className="ffas-res">
+                          상황도 「{sm.name}」 {sm.drawn_at ? fmt(toMinutes(sm.drawn_at)) : ''} 작성
+                        </small>
+                      ))}
+                    </div>
+                  ))}
+                  <p className="note">
+                    출처: 산림청 국가산불정보시스템 공개 화면. 투입 자원은 사건 전체 누적(연인원·연대수)입니다. 지도의 빨간 선은 마지막 상황도의 화선, 회색 선은 진화 완료선이며 면적 경계가 아닙니다. 상황도는 산불 1단계(10ha) 이상만 공개되고 마지막 한 장만 남아 있습니다.
+                  </p>
+                </>
+              )}
+
+              {forest && (
+                <>
+                  <h3>숲 종류 (임상도)</h3>
+                  <div className="forest-bars">
+                    {['침엽수림', '활엽수림', '혼효림', '기타 산림'].map((g) => {
+                      const all = forest.whole_bbox.groups[g] ?? 0
+                      const hot = forest.hotspot_cells?.groups[g]
+                      return (
+                        <div key={g} className="forest-row">
+                          <span>{g}</span>
+                          <div className="forest-track">
+                            <i style={{ width: `${all * 100}%` }} className="all" />
+                            {hot != null && <i style={{ width: `${hot * 100}%` }} className="hot" />}
+                          </div>
+                          <small>
+                            {hot != null ? `${Math.round(hot * 100)}%` : '–'} <em>/ {Math.round(all * 100)}%</em>
+                          </small>
+                        </div>
+                      )
+                    })}
+                  </div>
+                  <small className="ffas-res">위 막대 = 열점 칸 안, 아래 옅은 막대 = 지도 범위 전체 (산림 화소 기준)</small>
+                  {(() => {
+                    const hot = forest.hotspot_cells?.classes['미립목지'] ?? 0
+                    const all = forest.whole_bbox.classes['미립목지'] ?? 0
+                    return hot > 0.1 && hot > all * 3 ? (
+                      <p className="note top">
+                        열점 칸의 <b>{Math.round(hot * 100)}%</b>가 지금 임상도에서 미립목지(나무 없는 산림)로 바뀌어 있습니다(전체 {Math.round(all * 100)}%). 현재판이 이미 피해를 반영했기 때문에, 이 사건은 불나기 전 숲 종류를 이 지도로 알 수 없습니다.
+                      </p>
+                    ) : null
+                  })()}
+                  <p className="note">
+                    출처: 산림청 산림공간정보서비스 1:5,000 임상도. {forest.edition_note}. 375m 열점 칸 기준이라 실제 피해 경계보다 넓습니다.
+                  </p>
                 </>
               )}
 

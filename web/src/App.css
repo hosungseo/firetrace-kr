@@ -257,3 +257,18 @@
 .rp-auto { font-size: 11px; color: var(--ink-2); margin-top: 4px; }
 .link-row.inline { display: inline; padding: 0 6px 0 0; font-size: 11px; color: var(--ink-2); text-decoration: underline dotted; }
 .rp-cand td { font-size: 10.5px; }
+.ffas-fire { border-bottom: 1px solid var(--line); padding: 6px 0; font-size: 12px; }
+.ffas-head { display: flex; justify-content: space-between; gap: 8px; }
+.ffas-steps { display: flex; flex-wrap: wrap; gap: 2px 10px; margin-top: 3px; }
+.ffas-steps .link-row { width: auto; }
+.ffas-res { display: block; color: var(--ink-3); font-size: 11px; margin-top: 2px; }
+.forest-bars { display: grid; gap: 5px; font-size: 12px; }
+.forest-row { display: grid; grid-template-columns: 64px 1fr 74px; align-items: center; gap: 8px; }
+.forest-row small { text-align: right; font-variant-numeric: tabular-nums; }
+.forest-row small em { color: var(--ink-3); font-style: normal; }
+.forest-track { position: relative; height: 12px; }
+.forest-track i { position: absolute; left: 0; border-radius: 2px; }
+.forest-track i.hot { top: 0; height: 7px; background: #8a5a2b; }
+.forest-track i.all { bottom: 0; height: 4px; background: var(--line); }
+.sw.sttn { border-radius: 0; height: 3px; width: 12px; background: linear-gradient(90deg, #e8361c 50%, #6b7280 50%); vertical-align: 2px; }
+.sw.forest { border-radius: 2px; background: linear-gradient(90deg, #a59168 50%, #c1dc07 50%); }

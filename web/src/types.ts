@@ -230,3 +230,44 @@ export interface FullMentionsData {
   unmapped: number
   meta: Record<string, unknown>
 }
+
+export interface FfasMember {
+  kfs_key: string
+  matched: boolean
+  fire_id?: string
+  address?: string
+  lonlat?: [number, number]
+  ignition?: string | null
+  reported?: string | null
+  received?: string | null
+  confirmed?: string | null
+  extinguished?: string | null
+  report_channel?: string | null
+  office?: string | null
+  final_level?: string
+  resources?: { helicopters: number; crew: number; equipment: number; level_label: string; record_place: string } | null
+  situation_maps?: { map_id: string; name: string; drawn_at: string | null; wind_ms?: number; agency?: string }[]
+}
+
+export interface FfasData {
+  source: string
+  caveat: string
+  members: FfasMember[]
+  situation: { type: 'FeatureCollection'; features: { type: 'Feature'; geometry: unknown; properties: { kind: string; label: string } }[] }
+}
+
+export interface ForestShares {
+  pixels: number
+  groups: Record<string, number>
+  classes: Record<string, number>
+}
+
+export interface ForestTypeData {
+  source: string
+  edition_note: string
+  bounds: [number, number, number, number]
+  image: string
+  legend: { name: string; color: string; group: string }[]
+  whole_bbox: ForestShares
+  hotspot_cells: ForestShares | null
+}
