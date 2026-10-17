@@ -297,6 +297,7 @@ export interface SpreadData {
   passes: { t: number; new_cells: number }[]
   vectors: SpreadVector[]
   cells: [number, number, number][]
+  perimeters: { t: number; cells: number; coordinates: number[][][][] }[]
   summary: { heads: number; heads_with_wind_45: number; major: number; vectors_1km: number; with_wind_45: number; km_share_with_wind_45: number | null; longest: SpreadVector | null; fastest: SpreadVector | null }
 }
 

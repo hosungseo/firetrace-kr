@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useRef, useState } from 'react'
-import MapView, { type Basemap, type Layers } from './MapView'
+import MapView, { type Basemap, type FlyTarget, type Layers } from './MapView'
 import Timeline from './Timeline'
 import Response from './Response'
 import EmdDetail from './EmdDetail'
@@ -52,6 +52,9 @@ export default function App() {
   const [forest, setForest] = useState<ForestTypeData | null>(null)
   const [spread, setSpread] = useState<SpreadData | null>(null)
   const [gk2a, setGk2a] = useState<Gk2aData | null>(null)
+  const [flyTarget, setFlyTarget] = useState<FlyTarget | null>(null)
+  const [chase, setChase] = useState(false)
+  const [legendOpen, setLegendOpen] = useState(false)
   const [t, setT] = useState(T_MIN + 13 * 60)
   const [playing, setPlaying] = useState(false)
   const [speed, setSpeed] = useState(1)
@@ -84,7 +87,7 @@ export default function App() {
   useEffect(() => {
     if (!incident) return
     setIncident(incident.t0, incident.display_days)
-    setData(null); setEvents([]); setNews(null); setEmd(null); setKfs(null); setResp(null); setGwis(null); setGdacs(null); setIntlNews(null); setOfficial(null); setMentions(null); setFull(null); setFfas(null); setForest(null); setSpread(null); setGk2a(null)
+    setData(null); setEvents([]); setNews(null); setEmd(null); setKfs(null); setResp(null); setGwis(null); setGdacs(null); setIntlNews(null); setOfficial(null); setMentions(null); setFull(null); setFfas(null); setForest(null); setSpread(null); setGk2a(null); setChase(false); setFlyTarget(null)
     setSelected(null); setFocusCode(null); setPlaying(false)
     json<FireData>(base + 'fire.json').then((d) => {
       if (!d) return
@@ -168,6 +171,52 @@ export default function App() {
     document.documentElement.dataset.theme = basemap === 'night' || basemap === 'daily' ? 'dark' : 'light'
   }, [basemap])
 
+  // Key scenes: each one sets the clock and flies the camera (FireTrace-style)
+  const scenes = useMemo(() => {
+    if (!data) return []
+    const out: { label: string; sub: string; t: number; center: [number, number]; zoom: number; pitch: number; bearing?: number }[] = []
+    const main = ffas?.members.find((m) => m.matched)
+    const ign: [number, number] = main?.lonlat ?? [data.meta.first_detection.lon, data.meta.first_detection.lat]
+    if (main?.reported) out.push({ label: '발화·신고', sub: main.address?.split(' ').slice(1, 4).join(' ') ?? '', t: toMinutes(main.reported), center: ign, zoom: 12.5, pitch: 62 })
+    if (gk2a?.pixels.length) {
+      const first = gk2a.pixels.reduce((a, b) => (b[2] < a[2] ? b : a))
+      out.push({ label: '천리안 첫 탐지', sub: '정지궤도 위성, 10분 간격', t: first[2], center: [first[0], first[1]], zoom: 11.5, pitch: 55 })
+    }
+    out.push({ label: '극궤도 위성 첫 탐지', sub: 'VIIRS 375m', t: data.meta.first_detection.t, center: [data.meta.first_detection.lon, data.meta.first_detection.lat], zoom: 11.5, pitch: 55 })
+    const f = gk2a?.fastest_hour
+    if (f && gk2a) {
+      const a = gk2a.head.find((h) => h[0] >= f.t_from)
+      const b = gk2a.head.find((h) => h[0] >= f.t_to)
+      if (a && b) {
+        const br = (Math.atan2((b[1] - a[1]) * Math.cos((a[2] * Math.PI) / 180), b[2] - a[2]) * 180) / Math.PI
+        out.push({ label: '가장 빨랐던 1시간', sub: `선두 ${f.kmh.toFixed(1)} km/h`, t: f.t_from, center: [(a[1] + b[1]) / 2, (a[2] + b[2]) / 2], zoom: 10.3, pitch: 65, bearing: br })
+      }
+    }
+    const longest = spread?.vectors.filter((v) => v.head).sort((x, y) => y.km - x.km)[0]
+    if (longest && longest.km >= 3) out.push({ label: '위성 통과 사이 최장 전진', sub: `${longest.km.toFixed(1)} km`, t: longest.t, center: [(longest.from[0] + longest.to[0]) / 2, (longest.from[1] + longest.to[1]) / 2], zoom: 9.6, pitch: 55, bearing: longest.bearing })
+    const g = stats?.obsGusts[0]
+    const st = g && data.stations.find((x) => x.name === g.name)
+    if (g && st) out.push({ label: '관측 최대순간풍속', sub: `${g.name} ${g.v.toFixed(1)} m/s`, t: g.t, center: [st.lon, st.lat], zoom: 10.5, pitch: 55 })
+    if (main?.extinguished) out.push({ label: '주불 진화', sub: '산림청 기록', t: toMinutes(main.extinguished), center: incident ? incident.center : ign, zoom: incident ? incident.zoom : 9.5, pitch: 45, bearing: -8 })
+    return out.filter((x) => x.t >= T_MIN - 1440 && x.t <= T_MAX + 1440).sort((x, y) => x.t - y.t)
+  }, [data, ffas, gk2a, spread, stats, incident])
+  const goScene = (sc: (typeof scenes)[number]) => {
+    setPlaying(false); setChase(false)
+    setT(Math.max(T_MIN, Math.min(T_MAX, sc.t)))
+    setFlyTarget({ key: Date.now(), center: sc.center, zoom: sc.zoom, pitch: sc.pitch, bearing: sc.bearing })
+  }
+  // GK2A fire head at the current minute, plus the last-hour advance and ERA5 wind at its position
+  const head = useMemo(() => {
+    if (!gk2a || !data) return null
+    const h = [...gk2a.head].reverse().find((x) => x[0] <= t)
+    if (!h || t - h[0] > 180) return null
+    const prev = [...gk2a.reach].reverse().find((r) => r[0] <= h[0] - 60)
+    const nowReach = [...gk2a.reach].reverse().find((r) => r[0] <= h[0])
+    const g = data.weather.grid.reduce((a, b) => ((b.lon - h[1]) ** 2 + (b.lat - h[2]) ** 2 < (a.lon - h[1]) ** 2 + (a.lat - h[2]) ** 2 ? b : a))
+    const i = Math.max(0, Math.min(g.ws.length - 1, data.weather.hours.findIndex((x) => x > t) - 1))
+    return { t: h[0], lon: h[1], lat: h[2], km: h[3], reach: nowReach?.[1] ?? h[3], kmh: prev && nowReach ? Math.max(0, nowReach[1] - prev[1]) : null, ws: g.ws[i], wd: g.wd[i], rh: g.rh[i] }
+  }, [gk2a, data, t])
+
   if (!incident || !data || !stats) return <div className="loading">데이터 불러오는 중…</div>
 
   const tm = Math.round(t)
@@ -176,6 +225,7 @@ export default function App() {
   const curArea = [...data.area].reverse().find((a) => a.t <= tm)
   const sel = events.find((e) => e.id === selected)
   const officialStats = events.filter((e) => e.type === 'official_stat')
+
   const seen = events.filter((e) => (e.tv ?? e.t ?? 0) <= tm)
   const recentNews = news ? news.articles.filter((a) => a[0] <= tm && a[0] > tm - 60).reverse() : []
   const hitEmd = emd ? emd.features.map((f) => f.properties).filter((p) => p.first_hit != null && p.first_hit <= tm) : []
@@ -230,7 +280,7 @@ export default function App() {
 
       <main className="body">
         <section className="stage">
-          <MapView key={incident.id} view={{ center: incident.center, zoom: incident.zoom }} basemap={basemap} data={data} events={events} emd={emd} kfs={kfs?.fires ?? []} gwis={gwis} ffas={ffas} forest={forest} spread={spread} gk2a={gk2a} dataBase={base} focusCode={focusCode} onFocusEmd={focusEmd} t={tm} layers={layers} selected={selected} onSelectEvent={selectEvent} />
+          <MapView key={incident.id} view={{ center: incident.center, zoom: incident.zoom }} basemap={basemap} data={data} events={events} emd={emd} kfs={kfs?.fires ?? []} gwis={gwis} ffas={ffas} forest={forest} spread={spread} gk2a={gk2a} dataBase={base} flyTarget={flyTarget} chase={chase} focusCode={focusCode} onFocusEmd={focusEmd} t={tm} layers={layers} selected={selected} onSelectEvent={selectEvent} />
           <div className="basemap-switch" role="radiogroup" aria-label="배경지도">
             {(
               [
@@ -245,7 +295,8 @@ export default function App() {
               </button>
             ))}
           </div>
-          <div className="map-legend">
+          <button className="legend-btn" onClick={() => setLegendOpen((o) => !o)}>{legendOpen ? '범례 닫기' : '범례'}</button>
+          <div className="map-legend" hidden={!legendOpen}>
             <div>
               <i className="sw active" /> 최근 12시간 탐지 열점
             </div>
@@ -279,6 +330,11 @@ export default function App() {
                 <i className="sw gk2a" /> 천리안 2A 산불탐지(2km, 최근 30분) · 하늘색 선 = 발화점에서 가장 멀리 간 불의 경로
               </div>
             )}
+            {spread && layers.spread && spread.perimeters.length > 0 && (
+              <div>
+                <i className="sw perim" /> 피해 범위(위성 열점 375m 칸을 이어 그린 추정 경계, 통과 시각 기준)
+              </div>
+            )}
             {spread && layers.spread && spread.summary.major > 0 && (
               <div>
                 <i className="sw spread" /> 확산 경로: 칸 색 = 첫 탐지 시각(노랑→진홍), 굵은 화살표 = 통과별 최장 전진
@@ -305,6 +361,36 @@ export default function App() {
               </div>
             )}
           </div>
+          {head && layers.gk2a && (
+            <div className="head-card">
+              <div className="hc-top">
+                <b>불의 선두</b>
+                <span className="hc-src">천리안 2A · {fmt(head.t)}</span>
+              </div>
+              <div className="hc-grid">
+                <div>
+                  <span>발화점에서</span>
+                  <b>{head.km.toFixed(1)}<small> km</small></b>
+                </div>
+                <div>
+                  <span>최근 1시간 전진</span>
+                  <b>{head.kmh != null ? head.kmh.toFixed(1) : '–'}<small> km</small></b>
+                </div>
+                <div>
+                  <span>선두 바람(재분석)</span>
+                  <b>{head.ws.toFixed(1)}<small> m/s {compass((head.wd + 180) % 360)}향</small></b>
+                </div>
+                <div>
+                  <span>습도</span>
+                  <b>{Math.round(head.rh)}<small> %</small></b>
+                </div>
+              </div>
+              <div className="hc-actions">
+                <button className={chase ? 'on' : ''} onClick={() => setChase((c) => !c)}>{chase ? '따라가는 중' : '따라가기'}</button>
+                <button className="ghost" onClick={() => setFlyTarget({ key: Date.now(), center: [head.lon, head.lat], zoom: 11.5, pitch: 62 })}>선두로 이동</button>
+              </div>
+            </div>
+          )}
           <div className="now-card">
             <div className="now-time">{fmt(tm)}</div>
             <div className="now-grid">
@@ -362,6 +448,22 @@ export default function App() {
 
           {tab === 'overview' && (
             <div className="pane">
+              {scenes.length > 0 && (
+                <>
+                  <h3>주요 장면</h3>
+                  <ol className="scenes">
+                    {scenes.map((sc) => (
+                      <li key={sc.label}>
+                        <button className={Math.abs(tm - Math.max(T_MIN, Math.min(T_MAX, sc.t))) < 1 ? 'on' : ''} onClick={() => goScene(sc)}>
+                          <span className="sc-t">{fmt(sc.t)}</span>
+                          <span className="sc-l">{sc.label}</span>
+                          <small>{sc.sub}</small>
+                        </button>
+                      </li>
+                    ))}
+                  </ol>
+                </>
+              )}
               <h3>레이어</h3>
               {(
                 [

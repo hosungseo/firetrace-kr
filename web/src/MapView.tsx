@@ -24,6 +24,14 @@ export interface Layers {
   gk2a: boolean
 }
 
+export interface FlyTarget {
+  key: number
+  center: [number, number]
+  zoom: number
+  pitch?: number
+  bearing?: number
+}
+
 export type Basemap = 'terrain' | 'night' | 'satellite' | 'daily'
 
 interface Props {
@@ -39,6 +47,8 @@ interface Props {
   spread: SpreadData | null
   gk2a: Gk2aData | null
   dataBase: string
+  flyTarget: FlyTarget | null
+  chase: boolean
   focusCode: string | null
   onFocusEmd: (code: string) => void
   t: number
@@ -160,7 +170,7 @@ function eventGeoJSON(events: FireEvent[]) {
   }
 }
 
-export default function MapView({ view, basemap, data, events, emd, kfs, gwis, ffas, forest, spread, gk2a, dataBase, focusCode, onFocusEmd, t, layers, selected, onSelectEvent }: Props) {
+export default function MapView({ view, basemap, data, events, emd, kfs, gwis, ffas, forest, spread, gk2a, dataBase, flyTarget, chase, focusCode, onFocusEmd, t, layers, selected, onSelectEvent }: Props) {
   const el = useRef<HTMLDivElement>(null)
   const mapRef = useRef<maplibregl.Map | null>(null)
   const ready = useRef(false)
@@ -176,6 +186,7 @@ export default function MapView({ view, basemap, data, events, emd, kfs, gwis, f
       container: el.current!,
       style: {
         version: 8,
+        transition: { duration: 300, delay: 0 },
         sources: {
           imagery: { type: 'raster', tiles: [IMAGERY], tileSize: 256, maxzoom: 17, attribution: 'Imagery © Esri' },
           contours: {
@@ -328,18 +339,33 @@ export default function MapView({ view, basemap, data, events, emd, kfs, gwis, f
         },
       })
       // Front-advance vectors between satellite passes
-      map.addSource('spread', { type: 'geojson', data: { type: 'FeatureCollection', features: [] } })
+      map.addSource('spread', { type: 'geojson', lineMetrics: true, data: { type: 'FeatureCollection', features: [] } })
+      map.addLayer({
+        id: 'spread-glow',
+        type: 'line',
+        source: 'spread',
+        filter: ['all', ['==', ['geometry-type'], 'LineString'], ['!', ['get', 'sep']], ['get', 'head']],
+        layout: { 'line-cap': 'round' },
+        paint: { 'line-color': '#FF6B00', 'line-width': 14, 'line-blur': 10, 'line-opacity': ['case', ['get', 'latest'], 0.75, 0.35] },
+      })
       map.addLayer({
         id: 'spread-line',
         type: 'line',
         source: 'spread',
-        filter: ['==', ['geometry-type'], 'LineString'],
+        filter: ['all', ['==', ['geometry-type'], 'LineString'], ['!', ['get', 'sep']]],
         layout: { 'line-cap': 'round' },
         paint: {
-          'line-color': ['case', ['get', 'sep'], '#6b7280', ['get', 'latest'], '#ff2d55', '#7a1630'],
+          'line-gradient': ['interpolate', ['linear'], ['line-progress'], 0, '#FFD700', 1, '#FF6B00'],
           'line-width': ['case', ['get', 'head'], 5, 1.6],
           'line-opacity': ['case', ['get', 'head'], 1, 0.55],
         },
+      })
+      map.addLayer({
+        id: 'spread-sep',
+        type: 'line',
+        source: 'spread',
+        filter: ['all', ['==', ['geometry-type'], 'LineString'], ['get', 'sep']],
+        paint: { 'line-color': '#6b7280', 'line-width': 2, 'line-dasharray': [2, 2] },
       })
       map.addLayer({
         id: 'spread-head',
@@ -354,7 +380,7 @@ export default function MapView({ view, basemap, data, events, emd, kfs, gwis, f
           'icon-allow-overlap': true,
           'icon-size': ['case', ['get', 'head'], 2.8, 1.3],
         },
-        paint: { 'icon-color': ['case', ['get', 'sep'], '#6b7280', ['get', 'latest'], '#ff2d55', '#7a1630'], 'icon-halo-color': '#fff', 'icon-halo-width': 1, 'icon-opacity': ['case', ['get', 'head'], 1, 0.6] },
+        paint: { 'icon-color': ['case', ['get', 'sep'], '#6b7280', '#FF6B00'], 'icon-halo-color': '#fff', 'icon-halo-width': 1, 'icon-opacity': ['case', ['get', 'head'], 1, 0.6] },
       })
       map.addLayer({
         id: 'emd-focus',
@@ -364,6 +390,10 @@ export default function MapView({ view, basemap, data, events, emd, kfs, gwis, f
         filter: ['==', ['get', 'code'], ''],
       })
 
+      // Burned-area outline traced from cumulative 375 m cells at each satellite pass
+      map.addSource('perimeter', { type: 'geojson', data: { type: 'FeatureCollection', features: [] } })
+      map.addLayer({ id: 'perimeter-fill', type: 'fill', source: 'perimeter', paint: { 'fill-color': 'rgba(139,43,34,0.45)' } })
+      map.addLayer({ id: 'perimeter-line', type: 'line', source: 'perimeter', paint: { 'line-color': '#D84C2E', 'line-width': 2 } })
       // Arrival time: each 375 m cell coloured by when a satellite first saw fire there
       map.addSource('arrival', { type: 'geojson', data: { type: 'FeatureCollection', features: [] } })
       map.addLayer({
@@ -505,10 +535,14 @@ export default function MapView({ view, basemap, data, events, emd, kfs, gwis, f
         return div
       })
 
+      map.moveLayer('perimeter-fill', 'burned')
+      map.moveLayer('perimeter-line', 'burned')
       map.moveLayer('arrival', 'active')
       map.moveLayer('gk2a-px')
       map.moveLayer('gk2a-track')
+      map.moveLayer('spread-glow')
       map.moveLayer('spread-line')
+      map.moveLayer('spread-sep')
       map.moveLayer('spread-head')
       ready.current = true
       apply(map)
@@ -534,7 +568,8 @@ export default function MapView({ view, basemap, data, events, emd, kfs, gwis, f
       ;(map.getSource('arrival') as GeoJSONSource).setData(arrivalGeoJSON(spread, t))
       ;(map.getSource('spread') as GeoJSONSource).setData(spreadGeoJSON(spread, t))
     }
-    for (const id of ['arrival', 'spread-line', 'spread-head']) map.setLayoutProperty(id, 'visibility', layers.spread ? 'visible' : 'none')
+    if (spread) (map.getSource('perimeter') as GeoJSONSource).setData(perimeterGeoJSON(spread, t))
+    for (const id of ['perimeter-fill', 'perimeter-line', 'arrival', 'spread-glow', 'spread-line', 'spread-sep', 'spread-head']) map.setLayoutProperty(id, 'visibility', layers.spread ? 'visible' : 'none')
     if (gk2a) (map.getSource('gk2a') as GeoJSONSource).setData(gk2aGeoJSON(gk2a, t))
     for (const id of ['gk2a-track', 'gk2a-px']) map.setLayoutProperty(id, 'visibility', layers.gk2a ? 'visible' : 'none')
     if (map.getLayer('forest')) map.setLayoutProperty('forest', 'visibility', layers.forest ? 'visible' : 'none')
@@ -642,6 +677,21 @@ export default function MapView({ view, basemap, data, events, emd, kfs, gwis, f
   }, [t, layers, events, selected, basemap, emd, kfs, gwis, ffas, forest, spread, gk2a])
 
 
+  // Cinematic scene jumps: centre, zoom, pitch and bearing interpolate together
+  useEffect(() => {
+    const map = mapRef.current
+    if (!map || !flyTarget) return
+    map.flyTo({ center: flyTarget.center, zoom: flyTarget.zoom, pitch: flyTarget.pitch ?? map.getPitch(), bearing: flyTarget.bearing ?? map.getBearing(), duration: 2500, essential: true, padding: { top: 120, bottom: 200, left: 0, right: 0 } })
+  }, [flyTarget])
+
+  // Chase: keep the GK2A fire head in view while time moves
+  useEffect(() => {
+    const map = mapRef.current
+    if (!map || !chase || !gk2a) return
+    const h = [...gk2a.head].reverse().find((x) => x[0] <= t)
+    if (h) map.easeTo({ center: [h[1], h[2]], duration: 400 })
+  }, [chase, t, gk2a])
+
   // Highlight + fly to a 읍면동 chosen in the response tab
   useEffect(() => {
     const map = mapRef.current
@@ -727,4 +777,9 @@ function gk2aGeoJSON(g: Gk2aData, t: number) {
   }
   const line = track.length > 1 ? [{ type: 'Feature' as const, properties: {}, geometry: { type: 'LineString' as const, coordinates: track } }] : []
   return { type: 'FeatureCollection' as const, features: [...line, ...pts] } as never
+}
+
+function perimeterGeoJSON(sp: SpreadData, t: number) {
+  const p = [...sp.perimeters].reverse().find((x) => x.t <= t)
+  return { type: 'FeatureCollection' as const, features: p ? [{ type: 'Feature' as const, properties: {}, geometry: { type: 'MultiPolygon' as const, coordinates: p.coordinates } }] : [] } as never
 }
