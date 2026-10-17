@@ -318,7 +318,7 @@ export default function App() {
             {(
               [
                 ['overview', '개요'],
-                ['response', '대응 시차'],
+                ['response', '기록 대조'],
                 ['emd', focused ? focused.properties.emd : '읍면동'],
                 ['events', `기록 ${events.length ? `(${seen.length}/${events.length})` : ''}`],
                 ['news', `보도 ${news ? `(${recentNews.length})` : ''}`],
@@ -534,7 +534,7 @@ export default function App() {
               </p>
             </div>
           )}
-          {tab === 'response' && !resp && <div className="pane"><p className="note">대응 시차 자료가 없습니다.</p></div>}
+          {tab === 'response' && !resp && <div className="pane"><p className="note">기록 대조 자료가 없습니다.</p></div>}
 
           {tab === 'events' && (
             <div className="pane">
@@ -664,7 +664,7 @@ export default function App() {
                   <b>네이버 뉴스 검색 API</b> {news ? `${news.meta.count.toLocaleString()}건` : ''} (지역×주제 48개 검색어, 관련도순 상위 1,000건씩, 발행 3/22~31). 전수가 아닌 표본입니다.
                 </li>
                 <li>
-                  <b>언론·정부 발표</b> 원문 링크와 인용문 포함, 공식 기록은 파란 점. 대응 시차 탭은 70건을 179개 주장으로 나눠 수동 검토한 결과
+                  <b>언론·정부 발표</b> 원문 링크와 인용문 포함, 공식 기록은 파란 점. 기록 대조 탭은 70건을 179개 주장으로 나눠 수동 검토한 결과
                 </li>
                 <li>
                   <b>기사 본문 문장 추출</b> 2,940개 기사 본문에서 시각·읍면동·행위어가 한 문장에 있는 1,760건(44개 읍면동). 30건 표본 검토 정밀도 66.7%. 후보이지 확정 기록이 아님

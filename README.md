@@ -110,7 +110,7 @@
 83개 링의 폐합·좌표 범위, 분 단위 정렬, 인구 추정과 null 처리, HTTP 6초 간격 재시도·캐시를 확인했다.
 파생 스크립트 재실행 전후 보호 파일의 해시가 동일함도 확인했다.
 
-### 대응 시차 탭 · astra 검토 반영 (2026-10-17)
+### 기록 대조 탭(구 대응 시차) · astra 검토 반영 (2026-10-17)
 - `logs/astra-consult-1.md`(gpt-6-astra 비판 검토) → 채택분: hover가 대표값을 바꾸지 않음, ha/h는 관측 구간별 사후 지표로 재명명, 읍면동 인구 합은 노출 인구가 아님을 명시, 일 단위 사건은 하루 띠, 사후 분석 기사 표시, `models=era5` 명시 재수집, CAMS 기본 꺼짐.
 - `data/raw/claims.json`(179개 주장, astra 2라운드 수동 매핑) + `data/raw/claims_review.md` → `scripts/derive_response.py` → `web/public/data/response.json`. 검토된 쌍 7개만 계산(최소값 자동 선택 금지). 석보면: 진입 보도 17:40 → 대피명령 18:47(+67분) → 위성 첫 탐지 21:25(+158분).
 - 해외: `scripts/fetch_gdelt.py`(7초 간격에도 timelinevol 1건만 통과, 나머지 429) → `intl_news.json.gdelt_volume`. GWIS 둘레 23개·GDACS 12 에피소드는 Codex 수집분(`## 2026-10-17 해외 자료` 참조).

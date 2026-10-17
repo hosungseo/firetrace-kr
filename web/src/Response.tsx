@@ -78,7 +78,7 @@ function Pair({ q, t, auto, onSeek, onFocusEmd }: { q: ResponsePair; t: number; 
         {t >= W0 && t <= W1 && <line x1={px(t)} x2={px(t)} y1={2} y2={24} className="rp-now" />}
       </svg>
       <ClaimLine label="진입 기록" c={q.spread} cls="spread" />
-      <ClaimLine label={q.role === 'order_issued' ? '대피명령 기록' : q.role === 'sms_sent' ? '재난문자 기록' : '대응 기록'} c={q.response} cls="response" />
+      <ClaimLine label={q.role === 'order_issued' ? '대피명령 기록' : q.role === 'sms_sent' ? '재난문자 기록' : '행정 기록'} c={q.response} cls="response" />
       <div className="rp-claim satellite">
         <span className="rp-sym" />
         <span className="rp-label">위성 첫 탐지</span>
@@ -87,19 +87,19 @@ function Pair({ q, t, auto, onSeek, onFocusEmd }: { q: ResponsePair; t: number; 
       </div>
       <div className="rp-gaps">
         <span>
-          대응−진입 <b>{signed(q.gap_response_minus_spread) ?? `불가(${q.gap_reason})`}</b>
+          진입 보도→행정 기록 <b>{signed(q.gap_response_minus_spread) ?? `불가(${q.gap_reason})`}</b>
         </span>
         <span>
-          위성−진입 <b>{signed(q.gap_satellite_minus_spread) ?? '불가'}</b>
+          진입 보도→위성 <b>{signed(q.gap_satellite_minus_spread) ?? '불가'}</b>
         </span>
         <span>
-          위성−대응 <b>{signed(q.gap_satellite_minus_response) ?? '불가'}</b>
+          행정 기록→위성 <b>{signed(q.gap_satellite_minus_response) ?? '불가'}</b>
         </span>
         {q.approximate && <span className="rp-approx">‘께·쯤’ 근사 시각 포함</span>}
       </div>
       {auto && (
         <div className="rp-auto">
-          본문 자동 추출 최초:{' '}
+          본문 자동 추출 후보 최초:{' '}
           {(['spread', 'evacuation', 'alert', 'control'] as const)
             .filter((k) => auto.first[k] != null)
             .map((k) => (
@@ -126,12 +126,13 @@ export default function Response({ data, full, emdNames, t, onSeek, onFocusEmd }
   return (
     <div className="pane response">
       <p className="rp-intro">
-        같은 읍면동에서 <b>산불 진입이 보도된 시각</b>, <b>대응이 기록된 시각</b>, <b>위성이 처음 열점을 본 시각</b>을 나란히 놓습니다. 세 시각은 모두 ‘기록된’ 시각이지
-        실제 발생·수신 시각이 아닙니다. 위성만 보면 대응이 불보다 먼저 온 것처럼 보이는 곳이 생깁니다.
+        같은 읍면동에 대해 <b>산불 진입이 보도된 시각</b>, <b>대피명령·재난문자가 기록된 시각</b>, <b>위성이 처음 열점을 본 시각</b>을 나란히 놓습니다. 세 시각은 모두
+        출처가 다른 ‘기록’의 시각이며 실제 발생·발령·수신 시각과 다를 수 있습니다. <b>이 간격은 대응이 빨랐는지 늦었는지를 판단하는 지표가 아닙니다.</b> 어떤 기록을
+        기준으로 삼느냐에 따라 순서가 달라진다는 것을 보여 주기 위한 대조입니다.
       </p>
       <div className="rp-legend">
         <span className="spread">▲ 진입 기록</span>
-        <span className="response">■ 대응 기록</span>
+        <span className="response">■ 행정 기록(대피명령·재난문자)</span>
         <span className="satellite">● 위성 첫 탐지</span>
       </div>
       {data.pairs.map((q, i) => (
@@ -140,7 +141,7 @@ export default function Response({ data, full, emdNames, t, onSeek, onFocusEmd }
       {full && (
         <>
           <h3>자동 추출 후보 (검토 전, {Object.keys(full.by_emd).length}개 읍면동)</h3>
-          <p className="note">기사 본문 문장에서 기계로 뽑은 가장 이른 시각입니다. 표본 정밀도 약 67%. 위성 첫 탐지와 함께 두어 확인 순서를 정하는 용도이며, 시차를 발표하면 안 됩니다.</p>
+          <p className="note">기사 본문 문장에서 기계로 뽑은 가장 이른 시각입니다. 표본 정밀도 약 67%. 위성 첫 탐지와 함께 두어 어느 기록부터 확인할지 정하는 용도이며, 이 시각 차이를 수치로 인용하면 안 됩니다.</p>
           <table className="cmp-table rp-cand">
             <thead>
               <tr>
@@ -178,7 +179,7 @@ export default function Response({ data, full, emdNames, t, onSeek, onFocusEmd }
         ))}
       </p>
       <p className="note">
-        여기에 없다고 대응이 없었다는 뜻이 아닙니다. 수집한 보도 70건에 읍면 단위 시각이 적힌 사례만 비교했습니다. 재난문자 발송 원장·기상특보 이력이 확보되면 이 표를
+        여기에 없다고 대피명령·재난문자가 없었다는 뜻이 아닙니다. 수집한 보도 70건에 읍면 단위 시각이 적힌 사례만 비교했습니다. 재난문자 발송 원장·기상특보 이력이 확보되면 이 표를
         다시 계산합니다. 매핑 검토 전문: <code>data/raw/claims_review.md</code>
       </p>
     </div>
