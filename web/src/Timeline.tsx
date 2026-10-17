@@ -7,6 +7,7 @@ interface Props {
   news: NewsData | null
   events: FireEvent[]
   fires: KfsFire[]
+  showSmoke: boolean
   t: number
   onSeek: (t: number) => void
   onSelectEvent: (id: string) => void
@@ -27,7 +28,7 @@ function useWidth<T extends HTMLElement>() {
   return [ref, w] as const
 }
 
-export default function Timeline({ data, news, events, fires, t, onSeek, onSelectEvent }: Props) {
+export default function Timeline({ data, news, events, fires, showSmoke, t, onSeek, onSelectEvent }: Props) {
   const [ref, width] = useWidth<HTMLDivElement>()
   const [hover, setHover] = useState<number | null>(null)
   const dragging = useRef(false)
@@ -71,17 +72,19 @@ export default function Timeline({ data, news, events, fires, t, onSeek, onSelec
       ws: line('ws', maxWind),
       gust: line('gust', maxWind),
       rh: line('rh', 100),
-      pm: front.map((f, i) => `${i ? 'L' : 'M'}${x(f.t).toFixed(1)},${y(f.pm25 ?? 0, maxPm).toFixed(1)}`).join(' '),
+      pm: front.map((f, i) => (f.pm25 == null ? '' : `${i === 0 || front[i - 1].pm25 == null ? 'M' : 'L'}${x(f.t).toFixed(1)},${y(f.pm25, maxPm).toFixed(1)}`)).join(' '),
       y,
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [plotW, data])
 
   const days = Array.from({ length: 8 }, (_, i) => T_MIN + i * 1440)
-  const hv = hover ?? t
-  const fw = data.weather.front[hourIndex(hv)]
-  const curArea = [...area].reverse().find((a) => a.t <= hv)
-  const curRate = area.find((a, i) => i > 0 && area[i - 1].t < hv && a.t >= hv)
+  // Row values always describe the selected time t; hovering only moves the crosshair/tooltip.
+  const fw = data.weather.front[hourIndex(t)]
+  const curArea = [...area].reverse().find((a) => a.t <= t)
+  // Only windows that have fully elapsed at t are reported (the rate is a post-hoc per-window figure).
+  const lastDone = [...area].reverse().find((a, i, arr) => a.t <= t && i < arr.length - 1)
+  const hoverFw = hover != null ? data.weather.front[hourIndex(hover)] : null
 
   const handle = (e: React.PointerEvent<SVGSVGElement>) => {
     const r = e.currentTarget.getBoundingClientRect()
@@ -90,8 +93,9 @@ export default function Timeline({ data, news, events, fires, t, onSeek, onSelec
 
   const newsHourly = news?.hourly.filter(([m]) => m >= T_MIN && m < T_MAX) ?? []
   const maxNews = Math.max(1, ...newsHourly.map(([, n]) => n))
-  const curNews = newsHourly.find(([m]) => m <= hv && hv < m + 60)?.[1] ?? 0
-  const totalH = 26 + ROW_H * 6 + 22
+  const curNews = newsHourly.find(([m]) => m <= t && t < m + 60)?.[1] ?? 0
+  const nRows = showSmoke ? 6 : 5
+  const totalH = 26 + ROW_H * nRows + 22
   const rowY = (i: number) => 26 + i * ROW_H
 
   return (
@@ -130,12 +134,12 @@ export default function Timeline({ data, news, events, fires, t, onSeek, onSelec
           e.t != null && e.t >= T_MIN && e.t <= T_MAX ? (
             <rect
               key={e.id}
-              x={x(e.t) - 2}
-              y={6}
-              width={4}
-              height={14}
+              x={e.time_precision === 'day' ? x(e.t) + 1 : x(e.t) - 2}
+              y={e.time_precision === 'day' ? 9 : 6}
+              width={e.time_precision === 'day' ? x(e.t + 1440) - x(e.t) - 2 : 4}
+              height={e.time_precision === 'day' ? 8 : 14}
               rx={2}
-              className={`ev-tick ${e.official ? 'official' : ''}`}
+              className={`ev-tick ${e.official ? 'official' : ''} ${e.time_precision === 'day' ? 'day' : ''} ${e.retro ? 'retro' : ''}`}
               onPointerDown={(ev) => {
                 ev.stopPropagation()
                 onSelectEvent(e.id)
@@ -167,7 +171,7 @@ export default function Timeline({ data, news, events, fires, t, onSeek, onSelec
         {/* row 1: cumulative area */}
         <g transform={`translate(0,${rowY(0)})`}>
           <text x={8} y={18} className="row-label">
-            열점 누적 면적
+            열점 격자 환산 면적
           </text>
           <text x={8} y={36} className="row-value">
             {curArea ? `${curArea.area_ha.toLocaleString()} ha` : '–'}
@@ -179,15 +183,15 @@ export default function Timeline({ data, news, events, fires, t, onSeek, onSelec
         {/* row 2: spread rate */}
         <g transform={`translate(0,${rowY(1)})`}>
           <text x={8} y={18} className="row-label">
-            확산 속도
+            신규 탐지 격자 <tspan className="muted">(관측 구간·사후)</tspan>
           </text>
           <text x={8} y={36} className="row-value">
-            {curRate?.rate_ha_h != null ? `${Math.round(curRate.rate_ha_h).toLocaleString()} ha/h` : '–'}
+            {lastDone?.rate_ha_h != null ? `${Math.round(lastDone.rate_ha_h).toLocaleString()} ha/h` : '–'}
           </text>
           {rows.bars.map((b) => (
             <rect key={b.a.t} x={b.x0} width={Math.max(1, b.x1 - b.x0)} y={ROW_H - 8 - b.h} height={b.h} rx={2} className="rate-bar">
               <title>
-                {fmt(b.a.t)}까지 {Math.round(b.a.rate_ha_h ?? 0).toLocaleString()} ha/h
+                {fmt(b.a.t_start)}~{fmt(b.a.t)} 관측 구간: 신규 격자 {Math.round(b.a.rate_ha_h ?? 0).toLocaleString()} ha/h (위성 통과 간격에 좌우됨)
               </title>
             </rect>
           ))}
@@ -230,25 +234,27 @@ export default function Timeline({ data, news, events, fires, t, onSeek, onSelec
           <path d={rows.rh} className="rh-line" />
         </g>
 
-        {/* row 5: smoke PM2.5 at the fire front */}
+        {/* row 5 (optional): CAMS PM2.5 near the detection centroid */}
+        {showSmoke && (
         <g transform={`translate(0,${rowY(4)})`}>
           <text x={8} y={18} className="row-label">
-            연기 PM2.5 (CAMS)
+            PM2.5 (CAMS 모델, 약 40km)
           </text>
           <text x={8} y={36} className="row-value">
             {fw?.pm25 != null ? `${Math.round(fw.pm25)} µg/m³` : '–'}
           </text>
           <line x1={LABEL_W} x2={LABEL_W + plotW} y1={rows.y(75, maxPm)} y2={rows.y(75, maxPm)} className="threshold" />
           <text x={LABEL_W + plotW - 2} y={rows.y(75, maxPm) - 3} className="axis" textAnchor="end">
-            매우나쁨 75
+            75 µg/m³
           </text>
           <path d={rows.pm} className="pm-line" />
         </g>
+        )}
 
-        {/* row 6: press volume */}
-        <g transform={`translate(0,${rowY(5)})`}>
+        {/* last row: collected-article count */}
+        <g transform={`translate(0,${rowY(nRows - 1)})`}>
           <text x={8} y={18} className="row-label">
-            보도량 (시간당)
+            수집 기사 수 <tspan className="muted">(표본·시간당)</tspan>
           </text>
           <text x={8} y={36} className="row-value">
             {news ? `${curNews}건` : '–'}
@@ -265,10 +271,10 @@ export default function Timeline({ data, news, events, fires, t, onSeek, onSelec
         <line x1={x(t)} x2={x(t)} y1={4} y2={totalH - 18} className="now-line" />
         <circle cx={x(t)} cy={4} r={4} className="now-dot" />
         {hover != null && (
-          <g transform={`translate(${Math.min(x(hover) + 8, width - 150)}, ${totalH - 40})`}>
-            <rect width={140} height={20} rx={4} className="tip-bg" />
+          <g transform={`translate(${Math.min(x(hover) + 8, width - 260)}, ${totalH - 40})`}>
+            <rect width={250} height={20} rx={4} className="tip-bg" />
             <text x={8} y={14} className="tip">
-              {fmt(hover)}
+              {fmt(hover)}{hoverFw ? ` · ${hoverFw.ws.toFixed(1)}/${hoverFw.gust.toFixed(0)} m/s · 습도 ${Math.round(hoverFw.rh)}%` : ''}
             </text>
           </g>
         )}

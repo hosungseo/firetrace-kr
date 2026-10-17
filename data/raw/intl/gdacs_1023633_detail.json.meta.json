@@ -1,0 +1,14 @@
+{
+  "source_url": "https://www.gdacs.org/gdacsapi/api/events/geteventdata?eventtype=WF&eventid=1023633",
+  "final_url": "https://www.gdacs.org/gdacsapi/api/events/geteventdata?eventtype=WF&eventid=1023633",
+  "fetched_at_utc": "2026-10-17T00:46:13.570814+00:00",
+  "licence_or_terms": null,
+  "row_count": null,
+  "caveat": "Research response cache; row_count is null for HTML/JS/binary or unknown. No reuse licence inferred.",
+  "http_status": 200,
+  "content_type": "application/json; charset=utf-8",
+  "request_body": null,
+  "attempts": [],
+  "public_tokens_redacted": false,
+  "sha256": "87db64c55d70fe9475137d4be1391ba46f98dbbab9e9d4b96c9da0f759abcdb9"
+}

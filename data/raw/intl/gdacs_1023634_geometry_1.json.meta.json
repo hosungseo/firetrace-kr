@@ -1,0 +1,14 @@
+{
+  "source_url": "https://www.gdacs.org/gdacsapi/api/polygons/getgeometry?eventtype=WF&eventid=1023634&episodeid=1",
+  "final_url": "https://www.gdacs.org/gdacsapi/api/polygons/getgeometry?eventtype=WF&eventid=1023634&episodeid=1",
+  "fetched_at_utc": "2026-10-17T00:46:28.221962+00:00",
+  "licence_or_terms": null,
+  "row_count": 2,
+  "caveat": "Research response cache; row_count is null for HTML/JS/binary or unknown. No reuse licence inferred.",
+  "http_status": 200,
+  "content_type": "application/json; charset=utf-8",
+  "request_body": null,
+  "attempts": [],
+  "public_tokens_redacted": false,
+  "sha256": "20dd3b90cfbb1cfdd6e33293b73377697fc9d1c35117f43604124c4c77be2d3f"
+}

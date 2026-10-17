@@ -1,0 +1,14 @@
+{
+  "source_url": "https://www.unitar.org/legal",
+  "final_url": "https://unitar.org/legal",
+  "fetched_at_utc": "2026-10-17T00:51:02.738457+00:00",
+  "licence_or_terms": null,
+  "row_count": null,
+  "caveat": "Research response cache; row_count is null for HTML/JS/binary or unknown. No reuse licence inferred.",
+  "http_status": 200,
+  "content_type": "text/html; charset=UTF-8",
+  "request_body": null,
+  "attempts": [],
+  "public_tokens_redacted": true,
+  "sha256": "b048fc7c8ac3868bce4dd83aa680b496b5081882cf973b22074d563c53cfa275"
+}

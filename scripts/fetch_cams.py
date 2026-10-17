@@ -17,6 +17,6 @@ for k in range(0, len(pts), 30):
         out.append({"lat": la, "lon": lo, "hourly": r["hourly"]})
     print(k, len(res))
 json.dump(out, open("data/raw/cams_grid.json", "w"))
-json.dump({"source": "Open-Meteo Air Quality API (CAMS global atmospheric composition, ECMWF), https://open-meteo.com/en/docs/air-quality-api", "fetched_utc": datetime.datetime.now(datetime.UTC).isoformat(), "period": "2025-03-21~31 hourly KST", "points": len(out), "licence": "CC BY 4.0 (Open-Meteo); CAMS data © ECMWF, Copernicus licence", "caveat": "CAMS global ~40 km (0.4°) resolution resampled to 0.1° grid; smoke magnitude is model-based, not measured"}, open("data/raw/cams_grid.meta.json", "w"), indent=1)
+json.dump({"source": "Open-Meteo Air Quality API (CAMS global atmospheric composition forecast, ECMWF), https://open-meteo.com/en/docs/air-quality-api", "fetched_utc": datetime.datetime.now(datetime.UTC).isoformat(), "period": "2025-03-21~31 hourly KST", "points": len(out), "licence": "CC BY 4.0 (Open-Meteo); CAMS data © ECMWF, Copernicus licence", "caveat": "CAMS global forecast/analysis product (~40 km, 3-hourly, interpolated by Open-Meteo to hourly and to a 0.1° request grid); PM2.5 includes all sources, not wildfire smoke only; model-based, not measured"}, open("data/raw/cams_grid.meta.json", "w"), indent=1)
 mx = max((v, p["lat"], p["lon"], p["hourly"]["time"][i]) for p in out for i, v in enumerate(p["hourly"]["pm2_5"]) if v is not None)
 print("max pm2.5", mx)

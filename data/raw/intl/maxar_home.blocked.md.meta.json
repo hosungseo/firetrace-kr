@@ -1,0 +1,19 @@
+{
+  "source_url": "https://www.maxar.com/open-data",
+  "final_url": "https://www.maxar.com/open-data",
+  "fetched_at_utc": "2026-10-17T00:47:21.848322+00:00",
+  "licence_or_terms": "CC-BY-NC-4.0 (STAC catalog license field).",
+  "row_count": null,
+  "caveat": "HTTP None; see exact response below.",
+  "http_status": null,
+  "content_type": "text/plain",
+  "request_body": null,
+  "attempts": [
+    {
+      "status": null,
+      "error": "<urlopen error [SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: certificate has expired (_ssl.c:1144)>"
+    }
+  ],
+  "public_tokens_redacted": false,
+  "sha256": "4706bd2f04d11cdafd660ddb990eb344fdac5e93c1b75edb6ae3bc364307a552"
+}

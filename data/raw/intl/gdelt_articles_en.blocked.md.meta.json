@@ -1,0 +1,19 @@
+{
+  "source_url": "https://api.gdeltproject.org/api/v2/doc/doc?startdatetime=20250321000000&enddatetime=20250405000000&format=json&mode=artlist&query=%22South+Korea%22+wildfire&maxrecords=250&sort=datedesc",
+  "final_url": "https://api.gdeltproject.org/api/v2/doc/doc?startdatetime=20250321000000&enddatetime=20250405000000&format=json&mode=artlist&query=%22South+Korea%22+wildfire&maxrecords=250&sort=datedesc",
+  "fetched_at_utc": "2026-10-17T00:44:45.087184+00:00",
+  "licence_or_terms": "GDELT public API; underlying article text/images remain with their publishers. No article reuse licence inferred.",
+  "row_count": null,
+  "caveat": "HTTP 429; see exact response below.",
+  "http_status": 429,
+  "content_type": null,
+  "request_body": null,
+  "attempts": [
+    {
+      "status": 429,
+      "error": "HTTP Error 429: Too Many Requests"
+    }
+  ],
+  "public_tokens_redacted": false,
+  "sha256": "44c03f8dd984184218c90dc7e64aed9e6e2d8b17426feb5aa7933b3c44df64c6"
+}

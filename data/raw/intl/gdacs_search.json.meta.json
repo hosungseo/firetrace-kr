@@ -3,7 +3,7 @@
   "final_url": "https://www.gdacs.org/gdacsapi/api/events/geteventlist/SEARCH?eventlist=WF&fromDate=2025-03-20&toDate=2025-04-05&alertlevel=Green;Orange;Red&country=Korea",
   "fetched_at_utc": "2026-10-17T00:41:58.349549+00:00",
   "licence_or_terms": null,
-  "row_count": null,
+  "row_count": 5,
   "caveat": "Research response cache; row_count is null for HTML/JS/binary or unknown. No reuse licence inferred.",
   "http_status": 200,
   "content_type": "application/json; charset=utf-8",

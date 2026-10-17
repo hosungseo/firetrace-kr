@@ -1,0 +1,19 @@
+{
+  "source_url": "https://nasa-gibs.github.io/gibs-api-docs/access-usage/",
+  "final_url": "https://nasa-gibs.github.io/gibs-api-docs/access-usage/",
+  "fetched_at_utc": "2026-10-17T00:51:03.046636+00:00",
+  "licence_or_terms": null,
+  "row_count": null,
+  "caveat": "HTTP 404; see exact response below.",
+  "http_status": 404,
+  "content_type": "text/html; charset=utf-8",
+  "request_body": null,
+  "attempts": [
+    {
+      "status": 404,
+      "error": "HTTP Error 404: Not Found"
+    }
+  ],
+  "public_tokens_redacted": false,
+  "sha256": "b7798bc6031a594489a62cd62f2d8c1c2e58e2d92845818f6f96ba459604c64e"
+}

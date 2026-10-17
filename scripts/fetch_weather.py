@@ -1,4 +1,4 @@
-"""Fetch hourly ERA5-based weather from Open-Meteo for a wind-field grid over the fire area."""
+"""Fetch hourly ERA5 (0.25°, models=era5 explicitly) from Open-Meteo for a wind-field grid over the fire area."""
 import json, urllib.request
 
 LATS = [round(36.15 + 0.1 * i, 2) for i in range(7)]    # 36.15 ~ 36.75
@@ -11,7 +11,7 @@ for k in range(0, len(pts), 40):
     chunk = pts[k:k + 40]
     url = ("https://archive-api.open-meteo.com/v1/archive?"
            f"latitude={','.join(str(p[0]) for p in chunk)}&longitude={','.join(str(p[1]) for p in chunk)}"
-           f"&start_date=2025-03-21&end_date=2025-03-31&hourly={VARS}&wind_speed_unit=ms&timezone=Asia%2FSeoul")
+           f"&start_date=2025-03-21&end_date=2025-03-31&hourly={VARS}&wind_speed_unit=ms&models=era5&timezone=Asia%2FSeoul")
     res = json.load(urllib.request.urlopen(url, timeout=120))
     res = res if isinstance(res, list) else [res]
     for (la, lo), r in zip(chunk, res):

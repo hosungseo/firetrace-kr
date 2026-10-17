@@ -1,7 +1,13 @@
 """Join 읍면동 boundaries (Codex admin.json) with resident population and the first time a satellite hotspot fell inside each polygon."""
 import json
 
-admin = json.load(open("web/public/data/admin.json"))
+admin = json.load(open("web/public/data/admin.json"))          # simplified, for display
+source = json.load(open("data/raw/admin_source.geojson"))      # unsimplified, for point-in-polygon
+src_by_code = {}
+for f in source["features"]:
+    pr = f["properties"]
+    code = str(pr.get("code") or pr.get("adm_cd2") or "")
+    src_by_code[code] = f["geometry"]
 pop = {r["code"]: r for r in json.load(open("web/public/data/population.json"))["rows"]}
 fire = json.load(open("web/public/data/fire.json"))
 
@@ -28,13 +34,21 @@ for f in admin["features"]:
               "age70share": round(pr["age70plus"] / pr["total"], 3) if pr and pr["total"] else None})
     xs = [c[0] for poly in rings(f["geometry"]) for c in poly[0]]; ys = [c[1] for poly in rings(f["geometry"]) for c in poly[0]]
     bbox = (min(xs), min(ys), max(xs), max(ys))
-    first, count = None, 0
+    geom = src_by_code.get(p["code"], f["geometry"])
+    xs = [c[0] for poly in rings(geom) for c in poly[0]]; ys = [c[1] for poly in rings(geom) for c in poly[0]]
+    bbox = (min(xs), min(ys), max(xs), max(ys))
+    first, first_v, first_m, count = None, None, None, 0
     for lon, lat, t, frp, sat in fire["hotspots"]:
         if not (bbox[0] <= lon <= bbox[2] and bbox[1] <= lat <= bbox[3]): continue
-        if any(inside((lon, lat), poly) for poly in rings(f["geometry"])):
+        if any(inside((lon, lat), poly) for poly in rings(geom)):
             count += 1
             if first is None or t < first: first = t
-    p["first_hit"] = first
+            if sat == "MODIS":
+                if first_m is None or t < first_m: first_m = t
+            elif first_v is None or t < first_v: first_v = t
+    p["first_hit"] = first          # earliest detection by any sensor (observation time, not arrival time)
+    p["first_viirs"] = first_v      # VIIRS 375 m
+    p["first_modis"] = first_m      # MODIS ~1 km
     p["hotspots"] = count
 json.dump(admin, open("web/public/data/emd.json", "w"), ensure_ascii=False, separators=(",", ":"))
 hit = [f["properties"] for f in admin["features"] if f["properties"]["first_hit"] is not None]

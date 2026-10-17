@@ -1,0 +1,14 @@
+{
+  "source_url": "https://gibs.earthdata.nasa.gov/wmts/epsg3857/best/VIIRS_SNPP_CorrectedReflectance_TrueColor/default/2025-03-26/GoogleMapsCompatible_Level9/8/100/219.jpg",
+  "final_url": "https://gibs.earthdata.nasa.gov/wmts/epsg3857/best/VIIRS_SNPP_CorrectedReflectance_TrueColor/default/2025-03-26/GoogleMapsCompatible_Level9/8/100/219.jpg",
+  "fetched_at_utc": "2026-10-17T00:47:32.084778+00:00",
+  "licence_or_terms": null,
+  "row_count": null,
+  "caveat": "One WMTS tile; availability does not establish cloud-free coverage. See gibs_availability.json.",
+  "http_status": 200,
+  "content_type": "image/jpeg",
+  "request_body": null,
+  "attempts": [],
+  "public_tokens_redacted": false,
+  "sha256": "7c84fcfe1fe943397162a71b8e3023756abe96a6f1231805a6b6c7df825bf84c"
+}

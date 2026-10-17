@@ -1,0 +1,37 @@
+{
+  "source_files": [
+    "data/raw/intl/gwis_wfs_gml.xml",
+    "data/raw/intl/gwis_capabilities.xml",
+    "data/raw/intl/gwis_burnt_technical.html",
+    "data/raw/intl/gwis_license.html"
+  ],
+  "source_url": [
+    "https://maps.effis.emergency.copernicus.eu/gwis?service=WFS&version=1.0.0&request=GetFeature&typeName=nrt.ba.poly&outputFormat=GML2&bbox=128.2%2C35.9%2C129.6%2C36.8&srsName=EPSG%3A4326&maxFeatures=5000",
+    "https://maps.effis.emergency.copernicus.eu/gwis?service=WMS&request=GetCapabilities&version=1.1.1",
+    "https://gwis.jrc.ec.europa.eu/about-gwis/technical-background/burnt-areas",
+    "https://gwis.jrc.ec.europa.eu/about-gwis/data-license"
+  ],
+  "fetched_at_utc": [
+    "2026-10-17T00:49:14.849998+00:00",
+    "2026-10-17T00:42:21.539059+00:00",
+    "2026-10-17T00:50:17.570131+00:00",
+    "2026-10-17T00:50:18.544042+00:00"
+  ],
+  "derived_at_utc": "2026-10-17T00:54:04.360946+00:00",
+  "t0": "2025-03-21T00:00:00+09:00",
+  "licence_or_terms": [
+    null,
+    null,
+    null,
+    null
+  ],
+  "row_count": 23,
+  "caveats": [
+    "GML2 WFS works; application/json is not an allowed WFS output format.",
+    "These are estimated perimeters from MODIS 1 km + VIIRS 375 m thermal anomalies, not MODIS 250 m burn-scar classification or Sentinel-2 mapping.",
+    "All bbox-intersecting areas overlapping 2025-03-21 through April 5 KST are retained, including smaller nearby fires; not assigned to a single ignition.",
+    "Source dates lack timezone; UTC assumed. Source dates may be uncertain by days.",
+    "Source area is not recalculated after simplification; overlapping features must not be summed as a unique burned total.",
+    "Independent ring simplification does not guarantee inter-feature topology. WFS maxFeatures=5000; response has 44 historical areas, filtered locally."
+  ]
+}

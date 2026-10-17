@@ -1,0 +1,2258 @@
+
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head><title>
+	GDACS - Global Disaster Awareness and Coordination System
+</title>
+    <script type="text/javascript" src="Scripts/jquery-3.6.4.min.js"></script>
+    <link href="/Content/bootstrap.min.css" rel="stylesheet" /><link href="/Styles/gdacs_2.0.css" rel="stylesheet" /><meta name="viewport" content="width=device-width, initial-scale=1.0" /><link rel="stylesheet" media="(min-width: 768px) and (max-width: 991px)" href="Styles/gdacs_device_2.0.css" /><link rel="stylesheet" media="(max-width: 768px)" href="Styles/gdacs_minidevice_2.0.css" />
+    <script src="https://webtools.europa.eu/load.js" defer="defer"></script>
+    <script type="application/json">
+    {
+        "utility":"analytics",
+        "siteID":"[REDACTED_PUBLIC_TOKEN]",
+        "sitePath":["www.gdacs.org"],
+        "instance":"ec",
+        "mode":"manual"
+    }
+    </script>
+    <script type="application/json">
+	{
+		"utility" : "cck",
+		"url": {
+			"en": "https://commission.europa.eu/cookies-policy_en",
+			"de": "https://commission.europa.eu/cookies-policy_de"
+		}
+	}
+    </script>
+    <script type="text/javascript" src="Scripts/bootstrap.bundle.min.js"></script>
+    
+    
+    <link rel="stylesheet" href="scripts/openlayers/3.20.1/ol.css" type="text/css" />
+    <link rel="stylesheet" href="scripts/openlayers/layerswitcher/ol3-layerswitcher.css" />
+    <link rel="stylesheet" href="Styles/gdacs_mapstyle.css" />
+    <link rel="stylesheet" href="../Content/all.css" />
+    <link href="Content/Slick/slick.css" rel="stylesheet" />
+    <link href="Content/Slick/slick-theme.css" rel="stylesheet" />
+    <script type="text/javascript" src="scripts/openlayers/3.20.1/ol.js"></script>
+    <script type="text/javascript" src="scripts/openlayers/layerswitcher/ol3-layerswitcher.js"></script>
+    <script type="text/javascript" src="Scripts/Slick/slick.min.js"></script>
+
+
+
+    <style type="text/css">
+        .navbar-header {
+            color: #9bc1ce;
+            background-color: #69A7C3;
+        }
+
+        .navbar-light .navbar-nav .nav-link:focus, .navbar-light .navbar-nav .nav-link:hover {
+            color: #ffffff;
+            text-decoration: underline;
+        }
+
+        .navbar-light .navbar-nav .nav-link {
+            color: #c5d5d8
+        }
+
+            .navbar-light .navbar-nav .show > .nav-link, .navbar-light .navbar-nav .active > .nav-link, .navbar-light .navbar-nav .nav-link.show, .navbar-light .navbar-nav .nav-link.active {
+                background-color: transparent;
+                text-decoration: underline;
+                color: white;
+            }
+
+        .navbar-footer {
+            color: #9bc1ce;
+            background-color: transparent;
+            border: none;
+            border-bottom: none;
+            border-color: transparent;
+        }
+
+        .admin-style {
+            background-color: #990000
+        }
+
+        .admin-item-style {
+            color: #6d9baf;
+            font-size: 16px;
+            font-weight: 600;
+            margin: 0px 20px 0 15px
+        }
+
+        .navbar-light .navbar-nav .show > .nav-link, .navbar-light .navbar-nav .activereport > .nav-link, .navbar-light .navbar-nav .nav-link.show, .navbar-light .navbar-nav .nav-link.activereport {
+            color: #125172;
+            font-size: 16px;
+            font-weight: 600;
+            margin: 0px 20px 0 15px;
+            text-decoration: underline;
+        }
+
+
+        #footer_home {
+            background-color: #125172;
+        }
+        /*Style for Banner*/
+        .gdacs-survey-banner {
+            background-color: #F29527;
+            background-image: url(data:image/png;base64,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);
+            /* background-image: url(path/to/image/gdacs_banner_survey_2colors.png) */
+            background-repeat: no-repeat;
+            overflow: hidden;
+        }
+
+            .gdacs-survey-banner > .row {
+                height: 120px;
+            }
+
+            .gdacs-survey-banner .gdacs-survey-banner__text {
+                padding-left: 3rem;
+                font-size: 2rem;
+                color: #e1ebee;
+                line-height: normal;
+            }
+
+                .gdacs-survey-banner .gdacs-survey-banner__text a {
+                    color: white;
+                    display: inline-block;
+                }
+
+        @media only screen and (max-width: 720px) {
+            .gdacs-survey-banner {
+                background-position-x: 60%;
+            }
+
+                .gdacs-survey-banner .gdacs-survey-banner__text {
+                    font-size: 1.5rem;
+                    color: #2c5787;
+                    padding-left: 1.25rem;
+                }
+        }
+    </style>
+    
+
+    <!--
+    <script type="text/javascript">
+        if ($wt.analytics.isTrackable()) {
+            $wt.trackPageView();
+        }
+    </script>
+
+    
+   <script type="text/javascript">
+       
+       if ($wt.cookie.consent.is.choiceMade() && $wt.cookie.consent.is.allAccepted()) {
+           var _paq = _paq || [];
+               /* tracker methods like "setCustomDimension" should be called before "trackPageView" */
+                  _paq.push(['trackPageView']);
+                  _paq.push(['enableLinkTracking']);
+                  (function() {
+                  var u="//stats.jrc.ec.europa.eu/";
+                  _paq.push(['setTrackerUrl', u+'piwik.php']);
+                  _paq.push(['setSiteId', '319']);
+                  var d=document, g=d.createElement('script'), s=d.getElementsByTagName('script')[0];
+                  g.type='text/javascript'; g.async=true; g.defer=true; g.src=u+'piwik.js'; s.parentNode.insertBefore(g,s);
+                  })();
+      }
+   </script>
+ End Piwik Code -->
+    <link href="/Styles/gdacs_2.0_bootstrap4to5.css" rel="stylesheet" /></head>
+
+<body>
+    <div id="wrapper_anniversary">
+        
+            <div id="header" class="container-fluid">
+                <div id="top_menu">
+                    <div class="container">
+                        <div class="float-end gdacs_top_menu_content"><a href="admin" target="_blank">admin</a></div>
+                        <div class="float-end gdacs_top_menu_content"><a href="gdacsregister" target="_blank">register/login</a></div>
+                        <div class="float-end gdacs_top_menu_content"><a href="About/contactus.aspx">contact us</a></div>
+                        <div class="float-end gdacs_top_menu_content"><a href="About/termofuse.aspx">term of use</a></div>
+
+                    </div>
+                </div>
+                <div id="heading" class="container">
+                    <div id="rowhead" class="row">
+                        <div id="gd_logo" class="col-lg-3 gdacs_logo">
+                            <img id="gdacs_logo_image" src="images/gdacs_logo_ecs_medium3.png" />
+                        </div>
+                        <div id="gd_statement" class="d-none d-lg-block col-md-6 gdacs_statement">GDACS is a cooperation framework between the United Nations, the European Commission and disaster managers worldwide to improve awareness, information exchange and coordination in the first phase after major sudden-onset disasters.</div>
+                        <div id="gd_uneu" class="d-none d-lg-block col-md-3 gdacs_uneu">
+                            <img src="images/un_eu.png" />
+                        </div>
+                    </div>
+                </div>
+                
+            </div>
+            <div id="nopadding" class="container">
+                
+                <div id="topmenu">
+                    <nav class="navbar navbar-expand-lg navbar-light navbar-header navbar-fixed-top">
+                        
+                        <button class="navbar-toggler" style="font-size: 18px; color: white; font-weight: bold" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+                            <span class="navbar-toggler-icon" style="color: white;"></span>
+                            MENU
+                        </button>
+                        <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+                            <div class="navbar-nav">
+                                <a class="nav-item nav-link active" href="../default.aspx">HOME</a>
+                                <a class="nav-item nav-link" href="Alerts/default.aspx">GDACS EVENTS</a>
+                                <a class="nav-item nav-link" href="http://vosocc.unocha.org">VIRTUAL OSOCC</a>
+                                <a class="nav-item nav-link" href="https://smcs.unosat.org/home" target="_blank">MAPS & SATELLITE IMAGERY</a>
+                                <a class="nav-item nav-link" href="Knowledge/overview.aspx">KNOWLEDGE</a>
+                                <a class="nav-item nav-link" href="About/overview.aspx">ABOUT</a>
+
+                            </div>
+                        </div>
+                            <a class="nav-item nav-link" href="https://new.gdacs.org" target="_blank">
+                                <img src="../images/2025_GDACS_logo_plain_resize48_CLICK2.png" alt="Gdacs New Website" />
+                            </a>
+                    </nav>
+                </div>
+
+
+
+                
+                <!--<div class="row">
+                <div id="videomeeting" class="col-lg-12 " style="padding-top:20px;text-align:center;">
+                    <p class="p_summary" style="font-size:large">
+                        <img src="/images/new_red.png" height="24px"> Introduction to GDACS:  <a href="https://www.youtube.com/watch?v=zSSfZhKqT3c" target="_blank">Video</a> (format MPG, 02:41) 
+
+                    </p>
+                </div>
+            </div>-->
+                <div class="row">
+                    <div id="sliding_news" class="col-lg-12 ">
+                        <div id="arrow_sliding_news" class="d-none d-lg-block">
+                            Latest news
+                        </div>
+
+                        <div style="width: 80%; float: left;">
+                            <marquee onmouseover="this.stop();" onmouseout="this.start();"><div id="guid_1" class="top_new_item" xmlns:geo="http://www.w3.org/2003/01/geo/wgs84_pos#" xmlns:asgard="http://asgard.jrc.it" xmlns:gdacs="http://www.gdacs.org" xmlns:glide="http://glidenumber.net" xmlns:georss="http://www.georss.org/georss" xmlns:atom="http://www.w3.org/2005/Atom"><a href="https://rapidmapping.emergency.copernicus.eu/EMSR934/download" target="_blank">M7.7 in Panama - Copernicus EMS activation</a></div>
+<div class="top_new_item" style="width:100px;" xmlns:geo="http://www.w3.org/2003/01/geo/wgs84_pos#" xmlns:asgard="http://asgard.jrc.it" xmlns:gdacs="http://www.gdacs.org" xmlns:glide="http://glidenumber.net" xmlns:georss="http://www.georss.org/georss" xmlns:atom="http://www.w3.org/2005/Atom">
+                       
+      </div>
+<div id="guid_2" class="top_new_item" xmlns:geo="http://www.w3.org/2003/01/geo/wgs84_pos#" xmlns:asgard="http://asgard.jrc.it" xmlns:gdacs="http://www.gdacs.org" xmlns:glide="http://glidenumber.net" xmlns:georss="http://www.georss.org/georss" xmlns:atom="http://www.w3.org/2005/Atom"><a href="https://erccportal.jrc.ec.europa.eu/ECHOProducts//Maps#/maps/5818" target="_blank">POLO-26 - EC/ECHO daily map</a></div>
+<div class="top_new_item" style="width:100px;" xmlns:geo="http://www.w3.org/2003/01/geo/wgs84_pos#" xmlns:asgard="http://asgard.jrc.it" xmlns:gdacs="http://www.gdacs.org" xmlns:glide="http://glidenumber.net" xmlns:georss="http://www.georss.org/georss" xmlns:atom="http://www.w3.org/2005/Atom">
+                       
+      </div><div class="top_new_item" ><a href="https://www.gdacs.org/gdacsregister" target="_blank">Register to GDACS alerts</a></div><div class="top_new_item" style="width:50px;">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;</div></marquee>
+                        </div>
+
+                    </div>
+                </div>
+                
+    <div id="main_content" class="container">
+        <div class="row">
+
+            <div id="container-map" class="col-lg-12">
+                <div id="map" class="main_home_map" style="max-width: 100%;">
+
+                </div>
+                <div id="popup" class="ol-popup">
+                    <a href="#" id="popup-closer" class="ol-popup-closer"></a>
+                    <div id="popup-content"></div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+			<div class="col-lg-12">
+				<p class="p_summary">
+				<i><span style="color:#bb0f0f">Due to maintenance, some features may be temporarily unavailable. The notification system and the update of events will not be affected.</span></i></p>
+			</div>
+
+        </div >
+		
+        <div class="row">
+            <div class="col-lg-12">
+                <div id="map_caption">
+                    Map of disaster alerts in the past 4 days. European Union, 2026. Map produced by EC-JRC.The designations employed and the presentation of material on the map do not imply the expression of any opinion whatsoever on the part of the European Union concerning the legal status of any country, territory or area or of its authorities, or concerning the delimitation of its frontiers or boundaries.
+                    <br />
+                    The blurred events in the list below are the past events before <b>last 4 days</b>. 
+                    <br />
+                    For drought alerts, all the events listed in the homepage are ongoing events. In bold: i) new events; ii) events where a significant worsening has been detected (+ 0.5 GDACS score or increase in the Alert Level); iii) events where new information products are available (Global Drought Observatory Report).
+                    <br />
+                    For Forest Fires alerts , the events are all the ongoing events of class Orange or Red plus the Green alerts with burned area exceeding 10k ha and population within 5 km exceeding 10k.
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-12">
+                    <div id="containerAlertList" class="row" style="margin-left: 0px; margin-right: 0px; padding-left: 0px; padding-right: 0px;">
+                        <div id="mainListEq" class="col-2 main_alert_box_3">
+                            <div class="alert_box_title">
+                                Earthquakes
+                            </div>
+                            <!--<div id="EQdisaster"></div>-->
+                            <span id="ctl00_CPH_eqDisaster"><div id="gdacs_eventtype_EQ" xmlns:geo="http://www.w3.org/2003/01/geo/wgs84_pos#" xmlns:asgard="http://asgard.jrc.it" xmlns:gdacs="http://www.gdacs.org" xmlns:glide="http://glidenumber.net" xmlns:georss="http://www.georss.org/georss" xmlns:atom="http://www.w3.org/2005/Atom">
+  <div id="gdacs_toc_EQ_1571917_1740457" class="alert_item"><a href="http://www.gdacs.org/report.aspx?eventid=1571917&amp;episodeid=1740457&amp;eventtype=EQ"><div class="alert_EQ_Green">
+        <div class="alert_icon"></div>
+        <div class="alert_item_name">Russia</div>
+        <div class="alert_item_attribute"><span class="magnitude">
+                    (M 6.9) 
+                  </span><span class="alert_date">
+                  -  16 Oct
+         03:35</span></div>
+      </div></a></div>
+  <div id="gdacs_toc_EQ_1571732_1740258" class="alert_item"><a href="http://www.gdacs.org/report.aspx?eventid=1571732&amp;episodeid=1740258&amp;eventtype=EQ"><div class="alert_EQ_Green">
+        <div class="alert_icon"></div>
+        <div class="alert_item_name">United States</div>
+        <div class="alert_item_attribute"><span class="magnitude">
+                    (M 5.6) 
+                  </span><span class="alert_date">
+                  -  15 Oct
+         11:07</span></div>
+      </div></a></div>
+  <div id="gdacs_toc_EQ_1571524_1740031" class="alert_item"><a href="http://www.gdacs.org/report.aspx?eventid=1571524&amp;episodeid=1740031&amp;eventtype=EQ"><div class="alert_EQ_Green">
+        <div class="alert_icon"></div>
+        <div class="alert_item_name">Fiji</div>
+        <div class="alert_item_attribute"><span class="magnitude">
+                    (M 5.9) 
+                  </span><span class="alert_date">
+                  -  14 Oct
+         10:49</span></div>
+      </div></a></div>
+  <div id="gdacs_toc_EQ_1571367_1739856" class="alert_item"><a href="http://www.gdacs.org/report.aspx?eventid=1571367&amp;episodeid=1739856&amp;eventtype=EQ"><div class="alert_EQ_Green">
+        <div class="alert_icon"></div>
+        <div class="alert_item_name">Papua New Guinea</div>
+        <div class="alert_item_attribute"><span class="magnitude">
+                    (M 6.0) 
+                  </span><span class="alert_date">
+                  -  13 Oct
+         18:45</span></div>
+      </div></a></div>
+  <div id="gdacs_toc_EQ_1571305_1739816" class="alert_item"><a href="http://www.gdacs.org/report.aspx?eventid=1571305&amp;episodeid=1739816&amp;eventtype=EQ"><div class="alert_EQ_Green">
+        <div class="alert_icon"></div>
+        <div class="alert_item_name">Central Mid-Atlantic Ridge</div>
+        <div class="alert_item_attribute"><span class="magnitude">
+                    (M 6.8) 
+                  </span><span class="alert_date">
+                  -  13 Oct
+         12:23</span></div>
+      </div></a></div>
+  <div id="gdacs_toc_EQ_1571248_1739722" class="alert_item"><a href="http://www.gdacs.org/report.aspx?eventid=1571248&amp;episodeid=1739722&amp;eventtype=EQ"><div class="alert_EQ_Green">
+        <div class="alert_icon"></div>
+        <div class="alert_item_name">Central Mid-Atlantic Ridge</div>
+        <div class="alert_item_attribute"><span class="magnitude">
+                    (M 6.7) 
+                  </span><span class="alert_date">
+                  -  13 Oct
+         05:44</span></div>
+      </div></a></div>
+  <div id="gdacs_toc_EQ_1571161_1739629" class="alert_item"><a href="http://www.gdacs.org/report.aspx?eventid=1571161&amp;episodeid=1739629&amp;eventtype=EQ"><div class="alert_EQ_PAST_Green">
+        <div class="alert_icon"></div>
+        <div class="alert_item_name_past">Panama</div>
+        <div class="alert_item_attribute_past"><span class="magnitude_past">
+                    (M 6.1) 
+                  </span><span class="alert_date_past">
+                  -  12 Oct 2026</span></div>
+      </div></a></div>
+  <div id="gdacs_toc_EQ_1570970_1739418" class="alert_item"><a href="http://www.gdacs.org/report.aspx?eventid=1570970&amp;episodeid=1739418&amp;eventtype=EQ"><div class="alert_EQ_PAST_Green">
+        <div class="alert_icon"></div>
+        <div class="alert_item_name_past">Tonga</div>
+        <div class="alert_item_attribute_past"><span class="magnitude_past">
+                    (M 5.5) 
+                  </span><span class="alert_date_past">
+                  -  12 Oct 2026</span></div>
+      </div></a></div>
+  <div id="gdacs_toc_EQ_1570810_1739237" class="alert_item"><a href="http://www.gdacs.org/report.aspx?eventid=1570810&amp;episodeid=1739237&amp;eventtype=EQ"><div class="alert_EQ_PAST_Green">
+        <div class="alert_icon"></div>
+        <div class="alert_item_name_past">Papua New Guinea</div>
+        <div class="alert_item_attribute_past"><span class="magnitude_past">
+                    (M 6.2) 
+                  </span><span class="alert_date_past">
+                  -  11 Oct 2026</span></div>
+      </div></a></div>
+  <div id="gdacs_toc_EQ_1570467_1738851" class="alert_item"><a href="http://www.gdacs.org/report.aspx?eventid=1570467&amp;episodeid=1738851&amp;eventtype=EQ"><div class="alert_EQ_PAST_Green">
+        <div class="alert_icon"></div>
+        <div class="alert_item_name_past">Panama</div>
+        <div class="alert_item_attribute_past"><span class="magnitude_past">
+                    (M 6.0) 
+                  </span><span class="alert_date_past">
+                  -  10 Oct 2026</span></div>
+      </div></a></div>
+  <div id="gdacs_toc_EQ_1570370_1740154" class="alert_item"><a href="http://www.gdacs.org/report.aspx?eventid=1570370&amp;episodeid=1740154&amp;eventtype=EQ"><div class="alert_EQ_PAST_Green">
+        <div class="alert_icon"></div>
+        <div class="alert_item_name_past">Panama</div>
+        <div class="alert_item_attribute_past"><span class="magnitude_past">
+                    (M 6.6) 
+                  </span><span class="alert_date_past">
+                  -  09 Oct 2026</span></div>
+      </div></a></div>
+  <div id="gdacs_toc_EQ_1570350_1738692" class="alert_item"><a href="http://www.gdacs.org/report.aspx?eventid=1570350&amp;episodeid=1738692&amp;eventtype=EQ"><div class="alert_EQ_PAST_Green">
+        <div class="alert_icon"></div>
+        <div class="alert_item_name_past">Panama</div>
+        <div class="alert_item_attribute_past"><span class="magnitude_past">
+                    (M 5.8) 
+                  </span><span class="alert_date_past">
+                  -  09 Oct 2026</span></div>
+      </div></a></div>
+</div></span>
+                        </div>
+                        <div id="mainListTc" class="col-2 main_alert_box_3">
+                            <div class="alert_box_title">
+                                Tropical cyclones
+                            </div>
+                            <!--<div id="TCdisaster"></div>-->
+                            <span id="ctl00_CPH_tcDisaster"><div id="gdacs_eventtype_TC" xmlns:geo="http://www.w3.org/2003/01/geo/wgs84_pos#" xmlns:asgard="http://asgard.jrc.it" xmlns:gdacs="http://www.gdacs.org" xmlns:glide="http://glidenumber.net" xmlns:georss="http://www.georss.org/georss" xmlns:atom="http://www.w3.org/2005/Atom">
+  <div id="gdacs_toc_TC_1001335_38" class="alert_item"><a href="http://www.gdacs.org/report.aspx?eventid=1001335&amp;episodeid=38&amp;eventtype=TC"><div class="alert_TC_Orange">
+        <div class="alert_icon"></div>
+        <div class="alert_item_name">SIMON-26</div>
+        <div class="alert_item_attribute"><span class="magnitude">
+                    (250 
+                     km/h) 
+                  </span><span class="alert_date">
+                  -  16 Oct
+         21:00</span></div>
+      </div></a></div>
+  <div id="gdacs_toc_TC_1001337_14" class="alert_item"><a href="http://www.gdacs.org/report.aspx?eventid=1001337&amp;episodeid=14&amp;eventtype=TC"><div class="alert_TC_Green">
+        <div class="alert_icon"></div>
+        <div class="alert_item_name">TRUDY-26</div>
+        <div class="alert_item_attribute"><span class="magnitude">
+                    (194 
+                     km/h) 
+                  </span><span class="alert_date">
+                  -  16 Oct
+         21:00</span></div>
+      </div></a></div>
+  <div id="gdacs_toc_TC_1001339_2" class="alert_item"><a href="http://www.gdacs.org/report.aspx?eventid=1001339&amp;episodeid=2&amp;eventtype=TC"><div class="alert_TC_Orange">
+        <div class="alert_icon"></div>
+        <div class="alert_item_name">ONE-26</div>
+        <div class="alert_item_attribute"><span class="magnitude">
+                    (120 
+                     km/h) 
+                  </span><span class="alert_date">
+                  -  16 Oct
+         18:00</span></div>
+      </div></a></div>
+  <div id="gdacs_toc_TC_1001338_10" class="alert_item"><a href="http://www.gdacs.org/report.aspx?eventid=1001338&amp;episodeid=10&amp;eventtype=TC"><div class="alert_TC_Red">
+        <div class="alert_icon"></div>
+        <div class="alert_item_name">CHAMPI-26</div>
+        <div class="alert_item_attribute"><span class="magnitude">
+                    (250 
+                     km/h) 
+                  </span><span class="alert_date">
+                  -  16 Oct
+         18:00</span></div>
+      </div></a></div>
+  <div id="gdacs_toc_TC_1001336_14" class="alert_item"><a href="http://www.gdacs.org/report.aspx?eventid=1001336&amp;episodeid=14&amp;eventtype=TC"><div class="alert_TC_Green">
+        <div class="alert_icon"></div>
+        <div class="alert_item_name">TWENTYEIGHT-26</div>
+        <div class="alert_item_attribute"><span class="magnitude">
+                    (56 
+                     km/h) 
+                  </span><span class="alert_date">
+                  -  15 Oct
+         06:00</span></div>
+      </div></a></div>
+  <div id="gdacs_toc_TC_1001333_36" class="alert_item"><a href="http://www.gdacs.org/report.aspx?eventid=1001333&amp;episodeid=36&amp;eventtype=TC"><div class="alert_TC_Green">
+        <div class="alert_icon"></div>
+        <div class="alert_item_name">KOGUMA-26</div>
+        <div class="alert_item_attribute"><span class="magnitude">
+                    (222 
+                     km/h) 
+                  </span><span class="alert_date">
+                  -  13 Oct
+         18:00</span></div>
+      </div></a></div>
+  <div id="gdacs_toc_TC_1001329_58" class="alert_item"><a href="http://www.gdacs.org/report.aspx?eventid=1001329&amp;episodeid=58&amp;eventtype=TC"><div class="alert_TC_PAST_Green">
+        <div class="alert_icon"></div>
+        <div class="alert_item_name_past">RACHEL-26</div>
+        <div class="alert_item_attribute_past"><span class="magnitude_past">
+                    (194 
+                     km/h) 
+                  </span><span class="alert_date_past">
+                  -  11 Oct 2026</span></div>
+      </div></a></div>
+  <div id="gdacs_toc_TC_1001334_20" class="alert_item"><a href="http://www.gdacs.org/report.aspx?eventid=1001334&amp;episodeid=20&amp;eventtype=TC"><div class="alert_TC_PAST_Orange">
+        <div class="alert_icon"></div>
+        <div class="alert_item_name_past">ISAIAS-26</div>
+        <div class="alert_item_attribute_past"><span class="magnitude_past">
+                    (194 
+                     km/h) 
+                  </span><span class="alert_date_past">
+                  -  11 Oct 2026</span></div>
+      </div></a></div>
+  <div id="gdacs_toc_TC_1001332_28" class="alert_item"><a href="http://www.gdacs.org/report.aspx?eventid=1001332&amp;episodeid=28&amp;eventtype=TC"><div class="alert_TC_PAST_Green">
+        <div class="alert_icon"></div>
+        <div class="alert_item_name_past">CHOI-WAN-26</div>
+        <div class="alert_item_attribute_past"><span class="magnitude_past">
+                    (250 
+                     km/h) 
+                  </span><span class="alert_date_past">
+                  -  06 Oct 2026</span></div>
+      </div></a></div>
+  <div id="gdacs_toc_TC_1001321_57" class="alert_item"><a href="http://www.gdacs.org/report.aspx?eventid=1001321&amp;episodeid=57&amp;eventtype=TC"><div class="alert_TC_PAST_Green">
+        <div class="alert_icon"></div>
+        <div class="alert_item_name_past">NOLO-26</div>
+        <div class="alert_item_attribute_past"><span class="magnitude_past">
+                    (250 
+                     km/h) 
+                  </span><span class="alert_date_past">
+                  -  04 Oct 2026</span></div>
+      </div></a></div>
+  <div id="gdacs_toc_TC_1001331_10" class="alert_item"><a href="http://www.gdacs.org/report.aspx?eventid=1001331&amp;episodeid=10&amp;eventtype=TC"><div class="alert_TC_PAST_Green">
+        <div class="alert_icon"></div>
+        <div class="alert_item_name_past">NINETEEN-E-26</div>
+        <div class="alert_item_attribute_past"><span class="magnitude_past">
+                    (56 
+                     km/h) 
+                  </span><span class="alert_date_past">
+                  -  01 Oct 2026</span></div>
+      </div></a></div>
+  <div id="gdacs_toc_TC_1001330_9" class="alert_item"><a href="http://www.gdacs.org/report.aspx?eventid=1001330&amp;episodeid=9&amp;eventtype=TC"><div class="alert_TC_PAST_Green">
+        <div class="alert_icon"></div>
+        <div class="alert_item_name_past">HANNA-26</div>
+        <div class="alert_item_attribute_past"><span class="magnitude_past">
+                    (74 
+                     km/h) 
+                  </span><span class="alert_date_past">
+                  -  30 Sep 2026</span></div>
+      </div></a></div>
+</div></span>
+                        </div>
+                        <div id="mainListFl" class="col-2 main_alert_box_3">
+                            <div class="alert_box_title">
+                                Floods
+                            </div>
+                            <!--<div id="FLdisaster"></div>-->
+                            <span id="ctl00_CPH_flDisaster"><div id="gdacs_eventtype_FL" xmlns:geo="http://www.w3.org/2003/01/geo/wgs84_pos#" xmlns:asgard="http://asgard.jrc.it" xmlns:gdacs="http://www.gdacs.org" xmlns:glide="http://glidenumber.net" xmlns:georss="http://www.georss.org/georss" xmlns:atom="http://www.w3.org/2005/Atom">
+  <div id="gdacs_toc_FL_1104200_9" class="alert_item"><a href="http://www.gdacs.org/report.aspx?eventid=1104200&amp;episodeid=9&amp;eventtype=FL"><div class="alert_FL_Green">
+        <div class="alert_icon"></div>
+        <div class="alert_item_name">Colombia</div>
+        <div class="alert_item_attribute"><span class="magnitude"></span><span class="alert_date">
+                  -  16 Oct 2026</span></div>
+      </div></a></div>
+  <div id="gdacs_toc_FL_1104230_2" class="alert_item"><a href="http://www.gdacs.org/report.aspx?eventid=1104230&amp;episodeid=2&amp;eventtype=FL"><div class="alert_FL_Green">
+        <div class="alert_icon"></div>
+        <div class="alert_item_name">Türkiye</div>
+        <div class="alert_item_attribute"><span class="magnitude"></span><span class="alert_date">
+                  -  16 Oct 2026</span></div>
+      </div></a></div>
+  <div id="gdacs_toc_FL_1103888_111" class="alert_item"><a href="http://www.gdacs.org/report.aspx?eventid=1103888&amp;episodeid=111&amp;eventtype=FL"><div class="alert_FL_Green">
+        <div class="alert_icon"></div>
+        <div class="alert_item_name">United States</div>
+        <div class="alert_item_attribute"><span class="magnitude"></span><span class="alert_date">
+                  -  16 Oct 2026</span></div>
+      </div></a></div>
+  <div id="gdacs_toc_FL_1104217_3" class="alert_item"><a href="http://www.gdacs.org/report.aspx?eventid=1104217&amp;episodeid=3&amp;eventtype=FL"><div class="alert_FL_Green">
+        <div class="alert_icon"></div>
+        <div class="alert_item_name">Chile</div>
+        <div class="alert_item_attribute"><span class="magnitude"></span><span class="alert_date">
+                  -  15 Oct 2026</span></div>
+      </div></a></div>
+  <div id="gdacs_toc_FL_1104231_1" class="alert_item"><a href="http://www.gdacs.org/report.aspx?eventid=1104231&amp;episodeid=1&amp;eventtype=FL"><div class="alert_FL_Green">
+        <div class="alert_icon"></div>
+        <div class="alert_item_name">Libya</div>
+        <div class="alert_item_attribute"><span class="magnitude"></span><span class="alert_date">
+                  -  15 Oct 2026</span></div>
+      </div></a></div>
+  <div id="gdacs_toc_FL_1104167_7" class="alert_item"><a href="http://www.gdacs.org/report.aspx?eventid=1104167&amp;episodeid=7&amp;eventtype=FL"><div class="alert_FL_Green">
+        <div class="alert_icon"></div>
+        <div class="alert_item_name">Ecuador</div>
+        <div class="alert_item_attribute"><span class="magnitude"></span><span class="alert_date">
+                  -  14 Oct 2026</span></div>
+      </div></a></div>
+  <div id="gdacs_toc_FL_1104224_7" class="alert_item"><a href="http://www.gdacs.org/report.aspx?eventid=1104224&amp;episodeid=7&amp;eventtype=FL"><div class="alert_FL_Green">
+        <div class="alert_icon"></div>
+        <div class="alert_item_name">Indonesia</div>
+        <div class="alert_item_attribute"><span class="magnitude"></span><span class="alert_date">
+                  -  14 Oct 2026</span></div>
+      </div></a></div>
+  <div id="gdacs_toc_FL_1104233_1" class="alert_item"><a href="http://www.gdacs.org/report.aspx?eventid=1104233&amp;episodeid=1&amp;eventtype=FL"><div class="alert_FL_Green">
+        <div class="alert_icon"></div>
+        <div class="alert_item_name">Syria</div>
+        <div class="alert_item_attribute"><span class="magnitude"></span><span class="alert_date">
+                  -  14 Oct 2026</span></div>
+      </div></a></div>
+  <div id="gdacs_toc_FL_1104232_1" class="alert_item"><a href="http://www.gdacs.org/report.aspx?eventid=1104232&amp;episodeid=1&amp;eventtype=FL"><div class="alert_FL_PAST_Green">
+        <div class="alert_icon"></div>
+        <div class="alert_item_name_past">Jordan</div>
+        <div class="alert_item_attribute_past"><span class="magnitude_past"></span><span class="alert_date_past">
+                  -  12 Oct 2026</span></div>
+      </div></a></div>
+  <div id="gdacs_toc_FL_1104099_26" class="alert_item"><a href="http://www.gdacs.org/report.aspx?eventid=1104099&amp;episodeid=26&amp;eventtype=FL"><div class="alert_FL_PAST_Green">
+        <div class="alert_icon"></div>
+        <div class="alert_item_name_past">Mexico</div>
+        <div class="alert_item_attribute_past"><span class="magnitude_past"></span><span class="alert_date_past">
+                  -  12 Oct 2026</span></div>
+      </div></a></div>
+  <div id="gdacs_toc_FL_1104223_1" class="alert_item"><a href="http://www.gdacs.org/report.aspx?eventid=1104223&amp;episodeid=1&amp;eventtype=FL"><div class="alert_FL_PAST_Green">
+        <div class="alert_icon"></div>
+        <div class="alert_item_name_past">China</div>
+        <div class="alert_item_attribute_past"><span class="magnitude_past"></span><span class="alert_date_past">
+                  -  10 Oct 2026</span></div>
+      </div></a></div>
+  <div id="gdacs_toc_FL_1104209_2" class="alert_item"><a href="http://www.gdacs.org/report.aspx?eventid=1104209&amp;episodeid=2&amp;eventtype=FL"><div class="alert_FL_PAST_Green">
+        <div class="alert_icon"></div>
+        <div class="alert_item_name_past">Honduras</div>
+        <div class="alert_item_attribute_past"><span class="magnitude_past"></span><span class="alert_date_past">
+                  -  10 Oct 2026</span></div>
+      </div></a></div>
+</div></span>
+                        </div>
+                        <div id="mainListVo" class="col-2 main_alert_box_3">
+                            <div class="alert_box_title">
+                                Volcanoes
+                            </div>
+                            <!--<div id="VOdisaster"></div>-->
+                            <span id="ctl00_CPH_voDisaster"><div id="gdacs_eventtype_VO" xmlns:geo="http://www.w3.org/2003/01/geo/wgs84_pos#" xmlns:asgard="http://asgard.jrc.it" xmlns:gdacs="http://www.gdacs.org" xmlns:glide="http://glidenumber.net" xmlns:georss="http://www.georss.org/georss" xmlns:atom="http://www.w3.org/2005/Atom">
+  <div id="gdacs_toc_VO_1000152_1" class="alert_item"><a href="http://www.gdacs.org/report.aspx?eventid=1000152&amp;episodeid=1&amp;eventtype=VO"><div class="alert_VO_PAST_Orange">
+        <div class="alert_icon"></div>
+        <div class="alert_item_name_past">Kanlaon (Philippines)
+                </div>
+        <div class="alert_item_attribute_past"><span class="magnitude_past"></span><span class="alert_date_past">
+                  -  10 Oct 2026</span></div>
+      </div></a></div>
+  <div id="gdacs_toc_VO_1000151_1" class="alert_item"><a href="http://www.gdacs.org/report.aspx?eventid=1000151&amp;episodeid=1&amp;eventtype=VO"><div class="alert_VO_PAST_Orange">
+        <div class="alert_icon"></div>
+        <div class="alert_item_name_past">Taal (Philippines)
+                </div>
+        <div class="alert_item_attribute_past"><span class="magnitude_past"></span><span class="alert_date_past">
+                  -  08 Oct 2026</span></div>
+      </div></a></div>
+  <div id="gdacs_toc_VO_1000150_1" class="alert_item"><a href="http://www.gdacs.org/report.aspx?eventid=1000150&amp;episodeid=1&amp;eventtype=VO"><div class="alert_VO_PAST_Green">
+        <div class="alert_icon"></div>
+        <div class="alert_item_name_past">Etna (Italy)
+                </div>
+        <div class="alert_item_attribute_past"><span class="magnitude_past"></span><span class="alert_date_past">
+                  -  27 Sep 2026</span></div>
+      </div></a></div>
+  <div id="gdacs_toc_VO_1000149_1" class="alert_item"><a href="http://www.gdacs.org/report.aspx?eventid=1000149&amp;episodeid=1&amp;eventtype=VO"><div class="alert_VO_PAST_Green">
+        <div class="alert_icon"></div>
+        <div class="alert_item_name_past">Chikurachki (Russia)
+                </div>
+        <div class="alert_item_attribute_past"><span class="magnitude_past"></span><span class="alert_date_past">
+                  -  21 Sep 2026</span></div>
+      </div></a></div>
+  <div id="gdacs_toc_VO_1000148_2" class="alert_item"><a href="http://www.gdacs.org/report.aspx?eventid=1000148&amp;episodeid=2&amp;eventtype=VO"><div class="alert_VO_PAST_Orange">
+        <div class="alert_icon"></div>
+        <div class="alert_item_name_past">Krakatau (Indonesia)
+                </div>
+        <div class="alert_item_attribute_past"><span class="magnitude_past"></span><span class="alert_date_past">
+                  -  04 Sep 2026</span></div>
+      </div></a></div>
+  <div id="gdacs_toc_VO_1000147_1" class="alert_item"><a href="http://www.gdacs.org/report.aspx?eventid=1000147&amp;episodeid=1&amp;eventtype=VO"><div class="alert_VO_PAST_Green">
+        <div class="alert_icon"></div>
+        <div class="alert_item_name_past">Sinabung (Indonesia)
+                </div>
+        <div class="alert_item_attribute_past"><span class="magnitude_past"></span><span class="alert_date_past">
+                  -  02 Sep 2026</span></div>
+      </div></a></div>
+  <div id="gdacs_toc_VO_1000142_2" class="alert_item"><a href="http://www.gdacs.org/report.aspx?eventid=1000142&amp;episodeid=2&amp;eventtype=VO"><div class="alert_VO_PAST_Green">
+        <div class="alert_icon"></div>
+        <div class="alert_item_name_past">Etna (Italy)
+                </div>
+        <div class="alert_item_attribute_past"><span class="magnitude_past"></span><span class="alert_date_past">
+                  -  11 Aug 2026</span></div>
+      </div></a></div>
+  <div id="gdacs_toc_VO_1000145_1" class="alert_item"><a href="http://www.gdacs.org/report.aspx?eventid=1000145&amp;episodeid=1&amp;eventtype=VO"><div class="alert_VO_PAST_Green">
+        <div class="alert_icon"></div>
+        <div class="alert_item_name_past">Fuego (Guatemala)
+                </div>
+        <div class="alert_item_attribute_past"><span class="magnitude_past"></span><span class="alert_date_past">
+                  -  05 Aug 2026</span></div>
+      </div></a></div>
+  <div id="gdacs_toc_VO_1000144_1" class="alert_item"><a href="http://www.gdacs.org/report.aspx?eventid=1000144&amp;episodeid=1&amp;eventtype=VO"><div class="alert_VO_PAST_Orange">
+        <div class="alert_icon"></div>
+        <div class="alert_item_name_past">Mayon (Philippines)
+                </div>
+        <div class="alert_item_attribute_past"><span class="magnitude_past"></span><span class="alert_date_past">
+                  -  16 Jul 2026</span></div>
+      </div></a></div>
+  <div id="gdacs_toc_VO_1000143_1" class="alert_item"><a href="http://www.gdacs.org/report.aspx?eventid=1000143&amp;episodeid=1&amp;eventtype=VO"><div class="alert_VO_PAST_Green">
+        <div class="alert_icon"></div>
+        <div class="alert_item_name_past">Kanlaon (Philippines)
+                </div>
+        <div class="alert_item_attribute_past"><span class="magnitude_past"></span><span class="alert_date_past">
+                  -  10 Jul 2026</span></div>
+      </div></a></div>
+  <div id="gdacs_toc_VO_1000141_1" class="alert_item"><a href="http://www.gdacs.org/report.aspx?eventid=1000141&amp;episodeid=1&amp;eventtype=VO"><div class="alert_VO_PAST_Green">
+        <div class="alert_icon"></div>
+        <div class="alert_item_name_past">Ibu (Indonesia)
+                </div>
+        <div class="alert_item_attribute_past"><span class="magnitude_past"></span><span class="alert_date_past">
+                  -  10 May 2026</span></div>
+      </div></a></div>
+  <div id="gdacs_toc_VO_1000140_1" class="alert_item"><a href="http://www.gdacs.org/report.aspx?eventid=1000140&amp;episodeid=1&amp;eventtype=VO"><div class="alert_VO_PAST_Orange">
+        <div class="alert_icon"></div>
+        <div class="alert_item_name_past">Dukono (Indonesia)
+                </div>
+        <div class="alert_item_attribute_past"><span class="magnitude_past"></span><span class="alert_date_past">
+                  -  08 May 2026</span></div>
+      </div></a></div>
+</div></span>
+                        </div>
+                        <div id="mainListDr" class="col-2 main_alert_box_3">
+                            <div class="alert_box_title">
+                                Droughts
+                            </div>
+                            <!--<div id="DRdisaster"></div>-->
+                            <span id="ctl00_CPH_drDisaster"><div id="gdacs_eventtype_DR" xmlns:geo="http://www.w3.org/2003/01/geo/wgs84_pos#" xmlns:asgard="http://asgard.jrc.it" xmlns:gdacs="http://www.gdacs.org" xmlns:glide="http://glidenumber.net" xmlns:georss="http://www.georss.org/georss" xmlns:atom="http://www.w3.org/2005/Atom">
+  <div id="gdacs_toc_DR_1018332_24" class="alert_item"><a href="http://www.gdacs.org/report.aspx?eventid=1018332&amp;episodeid=24&amp;eventtype=DR"><div class="alert_DR_Orange">
+        <div class="alert_icon"></div>
+        <div class="alert_item_name">Europe-2026</div>
+        <div class="alert_item_attribute"><span class="magnitude"></span><span class="alert_date">
+                  - 42 Weeks
+                </span></div>
+      </div></a></div>
+  <div id="gdacs_toc_DR_1018344_25" class="alert_item"><a href="http://www.gdacs.org/report.aspx?eventid=1018344&amp;episodeid=25&amp;eventtype=DR"><div class="alert_DR_PAST_Green">
+        <div class="alert_icon"></div>
+        <div class="alert_item_name_past">Gabon, Congo-2026</div>
+        <div class="alert_item_attribute_past"><span class="magnitude_past"></span><span class="alert_date_past">
+                  - 42 Weeks
+                </span></div>
+      </div></a></div>
+  <div id="gdacs_toc_DR_1015915_3" class="alert_item"><a href="http://www.gdacs.org/report.aspx?eventid=1015915&amp;episodeid=3&amp;eventtype=DR"><div class="alert_DR_PAST_Green">
+        <div class="alert_icon"></div>
+        <div class="alert_item_name_past">Brazil-2025</div>
+        <div class="alert_item_attribute_past"><span class="magnitude_past"></span><span class="alert_date_past">
+                  - 212 Weeks
+                </span></div>
+      </div></a></div>
+  <div id="gdacs_toc_DR_1018545_17" class="alert_item"><a href="http://www.gdacs.org/report.aspx?eventid=1018545&amp;episodeid=17&amp;eventtype=DR"><div class="alert_DR_PAST_Green">
+        <div class="alert_icon"></div>
+        <div class="alert_item_name_past">South-East Asia-2026</div>
+        <div class="alert_item_attribute_past"><span class="magnitude_past"></span><span class="alert_date_past">
+                  - 30 Weeks
+                </span></div>
+      </div></a></div>
+  <div id="gdacs_toc_DR_1027491_10" class="alert_item"><a href="http://www.gdacs.org/report.aspx?eventid=1027491&amp;episodeid=10&amp;eventtype=DR"><div class="alert_DR_PAST_Green">
+        <div class="alert_icon"></div>
+        <div class="alert_item_name_past">Central Asia-2026</div>
+        <div class="alert_item_attribute_past"><span class="magnitude_past"></span><span class="alert_date_past">
+                  - 16 Weeks
+                </span></div>
+      </div></a></div>
+  <div id="gdacs_toc_DR_1027450_11" class="alert_item"><a href="http://www.gdacs.org/report.aspx?eventid=1027450&amp;episodeid=11&amp;eventtype=DR"><div class="alert_DR_PAST_Orange">
+        <div class="alert_icon"></div>
+        <div class="alert_item_name_past">East Africa, Central Sahel-2026</div>
+        <div class="alert_item_attribute_past"><span class="magnitude_past"></span><span class="alert_date_past">
+                  - 16 Weeks
+                </span></div>
+      </div></a></div>
+  <div id="gdacs_toc_DR_1027465_8" class="alert_item"><a href="http://www.gdacs.org/report.aspx?eventid=1027465&amp;episodeid=8&amp;eventtype=DR"><div class="alert_DR_PAST_Orange">
+        <div class="alert_icon"></div>
+        <div class="alert_item_name_past">Uganda, Kenya, Tanzania-2026</div>
+        <div class="alert_item_attribute_past"><span class="magnitude_past"></span><span class="alert_date_past">
+                  - 21 Weeks
+                </span></div>
+      </div></a></div>
+  <div id="gdacs_toc_DR_1018431_17" class="alert_item"><a href="http://www.gdacs.org/report.aspx?eventid=1018431&amp;episodeid=17&amp;eventtype=DR"><div class="alert_DR_PAST_Green">
+        <div class="alert_icon"></div>
+        <div class="alert_item_name_past">Madagascar-2026</div>
+        <div class="alert_item_attribute_past"><span class="magnitude_past"></span><span class="alert_date_past">
+                  - 47 Weeks
+                </span></div>
+      </div></a></div>
+  <div id="gdacs_toc_DR_1018546_17" class="alert_item"><a href="http://www.gdacs.org/report.aspx?eventid=1018546&amp;episodeid=17&amp;eventtype=DR"><div class="alert_DR_PAST_Green">
+        <div class="alert_icon"></div>
+        <div class="alert_item_name_past">Central-Western USA, Northern Mexico-2026</div>
+        <div class="alert_item_attribute_past"><span class="magnitude_past"></span><span class="alert_date_past">
+                  - 34 Weeks
+                </span></div>
+      </div></a></div>
+  <div id="gdacs_toc_DR_1027575_5" class="alert_item"><a href="http://www.gdacs.org/report.aspx?eventid=1027575&amp;episodeid=5&amp;eventtype=DR"><div class="alert_DR_PAST_Green">
+        <div class="alert_icon"></div>
+        <div class="alert_item_name_past">India-2026</div>
+        <div class="alert_item_attribute_past"><span class="magnitude_past"></span><span class="alert_date_past">
+                  - 38 Weeks
+                </span></div>
+      </div></a></div>
+  <div id="gdacs_toc_DR_1027449_11" class="alert_item"><a href="http://www.gdacs.org/report.aspx?eventid=1027449&amp;episodeid=11&amp;eventtype=DR"><div class="alert_DR_PAST_Orange">
+        <div class="alert_icon"></div>
+        <div class="alert_item_name_past">Central America-2026</div>
+        <div class="alert_item_attribute_past"><span class="magnitude_past"></span><span class="alert_date_past">
+                  - 25 Weeks
+                </span></div>
+      </div></a></div>
+  <div id="gdacs_toc_DR_1023877_11" class="alert_item"><a href="http://www.gdacs.org/report.aspx?eventid=1023877&amp;episodeid=11&amp;eventtype=DR"><div class="alert_DR_PAST_Green">
+        <div class="alert_icon"></div>
+        <div class="alert_item_name_past">Northern South America, Panama Isthmus-2026</div>
+        <div class="alert_item_attribute_past"><span class="magnitude_past"></span><span class="alert_date_past">
+                  - 34 Weeks
+                </span></div>
+      </div></a></div>
+</div></span>
+                        </div>
+                        <div id="mainListWF" class="col-2 main_alert_box_3">
+                            <div class="alert_box_title">
+                                Forest Fires
+                            </div>
+                            <!--<div id="WFdisaster"></div>-->
+                            <span id="ctl00_CPH_wfDisaster"><div id="gdacs_eventtype_WF" xmlns:geo="http://www.w3.org/2003/01/geo/wgs84_pos#" xmlns:asgard="http://asgard.jrc.it" xmlns:gdacs="http://www.gdacs.org" xmlns:glide="http://glidenumber.net" xmlns:georss="http://www.georss.org/georss" xmlns:atom="http://www.w3.org/2005/Atom">
+  <div id="gdacs_toc_WF_1032672_12" class="alert_item"><a href="http://www.gdacs.org/report.aspx?eventid=1032672&amp;episodeid=12&amp;eventtype=WF"><div class="alert_WF_Green">
+        <div class="alert_icon"></div>
+        <div class="alert_item_name">Mozambique</div>
+        <div class="alert_item_attribute"><span class="magnitude">
+                    (35292 ha) 
+                  </span><span class="alert_date">
+                  -  16 Oct 2026</span></div>
+      </div></a></div>
+  <div id="gdacs_toc_WF_1032677_12" class="alert_item"><a href="http://www.gdacs.org/report.aspx?eventid=1032677&amp;episodeid=12&amp;eventtype=WF"><div class="alert_WF_Green">
+        <div class="alert_icon"></div>
+        <div class="alert_item_name">Mozambique</div>
+        <div class="alert_item_attribute"><span class="magnitude">
+                    (45676 ha) 
+                  </span><span class="alert_date">
+                  -  16 Oct 2026</span></div>
+      </div></a></div>
+  <div id="gdacs_toc_WF_1032819_6" class="alert_item"><a href="http://www.gdacs.org/report.aspx?eventid=1032819&amp;episodeid=6&amp;eventtype=WF"><div class="alert_WF_Green">
+        <div class="alert_icon"></div>
+        <div class="alert_item_name">Nigeria</div>
+        <div class="alert_item_attribute"><span class="magnitude">
+                    (12495 ha) 
+                  </span><span class="alert_date">
+                  -  16 Oct 2026</span></div>
+      </div></a></div>
+  <div id="gdacs_toc_WF_1032552_9" class="alert_item"><a href="http://www.gdacs.org/report.aspx?eventid=1032552&amp;episodeid=9&amp;eventtype=WF"><div class="alert_WF_PAST_Green">
+        <div class="alert_icon"></div>
+        <div class="alert_item_name_past">The Democratic Republic of Congo</div>
+        <div class="alert_item_attribute_past"><span class="magnitude_past">
+                    (13755 ha) 
+                  </span><span class="alert_date_past">
+                  -  11 Oct 2026</span></div>
+      </div></a></div>
+  <div id="gdacs_toc_WF_1032612_6" class="alert_item"><a href="http://www.gdacs.org/report.aspx?eventid=1032612&amp;episodeid=6&amp;eventtype=WF"><div class="alert_WF_PAST_Green">
+        <div class="alert_icon"></div>
+        <div class="alert_item_name_past">Indonesia</div>
+        <div class="alert_item_attribute_past"><span class="magnitude_past">
+                    (11331 ha) 
+                  </span><span class="alert_date_past">
+                  -  09 Oct 2026</span></div>
+      </div></a></div>
+  <div id="gdacs_toc_WF_1032481_17" class="alert_item"><a href="http://www.gdacs.org/report.aspx?eventid=1032481&amp;episodeid=17&amp;eventtype=WF"><div class="alert_WF_PAST_Green">
+        <div class="alert_icon"></div>
+        <div class="alert_item_name_past">Indonesia</div>
+        <div class="alert_item_attribute_past"><span class="magnitude_past">
+                    (10733 ha) 
+                  </span><span class="alert_date_past">
+                  -  08 Oct 2026</span></div>
+      </div></a></div>
+  <div id="gdacs_toc_WF_1032441_6" class="alert_item"><a href="http://www.gdacs.org/report.aspx?eventid=1032441&amp;episodeid=6&amp;eventtype=WF"><div class="alert_WF_PAST_Green">
+        <div class="alert_icon"></div>
+        <div class="alert_item_name_past">Mozambique</div>
+        <div class="alert_item_attribute_past"><span class="magnitude_past">
+                    (12074 ha) 
+                  </span><span class="alert_date_past">
+                  -  01 Oct 2026</span></div>
+      </div></a></div>
+  <div id="gdacs_toc_WF_1032440_4" class="alert_item"><a href="http://www.gdacs.org/report.aspx?eventid=1032440&amp;episodeid=4&amp;eventtype=WF"><div class="alert_WF_PAST_Green">
+        <div class="alert_icon"></div>
+        <div class="alert_item_name_past">Zambia</div>
+        <div class="alert_item_attribute_past"><span class="magnitude_past">
+                    (20194 ha) 
+                  </span><span class="alert_date_past">
+                  -  30 Sep 2026</span></div>
+      </div></a></div>
+  <div id="gdacs_toc_WF_1032052_15" class="alert_item"><a href="http://www.gdacs.org/report.aspx?eventid=1032052&amp;episodeid=15&amp;eventtype=WF"><div class="alert_WF_PAST_Green">
+        <div class="alert_icon"></div>
+        <div class="alert_item_name_past">Mozambique</div>
+        <div class="alert_item_attribute_past"><span class="magnitude_past">
+                    (14174 ha) 
+                  </span><span class="alert_date_past">
+                  -  28 Sep 2026</span></div>
+      </div></a></div>
+  <div id="gdacs_toc_WF_1032378_5" class="alert_item"><a href="http://www.gdacs.org/report.aspx?eventid=1032378&amp;episodeid=5&amp;eventtype=WF"><div class="alert_WF_PAST_Green">
+        <div class="alert_icon"></div>
+        <div class="alert_item_name_past">Angola</div>
+        <div class="alert_item_attribute_past"><span class="magnitude_past">
+                    (16350 ha) 
+                  </span><span class="alert_date_past">
+                  -  27 Sep 2026</span></div>
+      </div></a></div>
+  <div id="gdacs_toc_WF_1032396_3" class="alert_item"><a href="http://www.gdacs.org/report.aspx?eventid=1032396&amp;episodeid=3&amp;eventtype=WF"><div class="alert_WF_PAST_Green">
+        <div class="alert_icon"></div>
+        <div class="alert_item_name_past">Angola</div>
+        <div class="alert_item_attribute_past"><span class="magnitude_past">
+                    (17832 ha) 
+                  </span><span class="alert_date_past">
+                  -  27 Sep 2026</span></div>
+      </div></a></div>
+  <div id="gdacs_toc_WF_1032051_21" class="alert_item"><a href="http://www.gdacs.org/report.aspx?eventid=1032051&amp;episodeid=21&amp;eventtype=WF"><div class="alert_WF_PAST_Green">
+        <div class="alert_icon"></div>
+        <div class="alert_item_name_past">Mozambique</div>
+        <div class="alert_item_attribute_past"><span class="magnitude_past">
+                    (42870 ha) 
+                  </span><span class="alert_date_past">
+                  -  27 Sep 2026</span></div>
+      </div></a></div>
+</div></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-lg-4">
+            <div id="virtual_osocc">
+                <div id="virtual_osocc_title_bar">
+                    Virtual OSOCC
+                </div>
+                <div id="virtual_osocc_cont" class="col-lg-12">
+                    <div class="vosocc_slider col-lg-12" style="padding-left: 0px; padding-right: 0px;">
+                        
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-8">
+            <div id="satellite_maps">
+                <div id="satellite_title_bar">Maps and satellite imagery</div>
+                <div id="containerMapsItem">
+                    <div class="maps_slider">
+                        <div xmlns:geo="http://www.w3.org/2003/01/geo/wgs84_pos#" xmlns:asgard="http://asgard.jrc.it" xmlns:gdacs="http://www.gdacs.org" xmlns:media="http://search.yahoo.com/mrss/" xmlns:glide="http://glidenumber.net" xmlns:georss="http://www.georss.org/georss" xmlns:atom="http://www.w3.org/2005/Atom">
+  <div class="satellite_maps_box">
+    <div class="maps_img"><img src="https://www.gdacs.org/contentdata/maps/copernicus/EQ/1570339/EMSR934_AOI06_GRA_PRODUCT_v1.jpg" height="120"></div><span class="satellite_map_item_title"><a href="https://rapidmapping.emergency.copernicus.eu/EMSR934/download" target="_blank">M7.7 in Panama - Copernicus EMS map (EMSR934)</a></span></div>
+</div>
+<div xmlns:geo="http://www.w3.org/2003/01/geo/wgs84_pos#" xmlns:asgard="http://asgard.jrc.it" xmlns:gdacs="http://www.gdacs.org" xmlns:media="http://search.yahoo.com/mrss/" xmlns:glide="http://glidenumber.net" xmlns:georss="http://www.georss.org/georss" xmlns:atom="http://www.w3.org/2005/Atom">
+  <div class="satellite_maps_box">
+    <div class="maps_img"><img src="https://www.gdacs.org/contentdata/maps/daily/TC/1001325/ECDM_20261016_Mexico_TCs.png" height="120"></div><span class="satellite_map_item_title"><a href="https://erccportal.jrc.ec.europa.eu/ECHOProducts//Maps#/maps/5818" target="_blank">POLO-26 - EC/ECHO daily map </a></span></div>
+</div>
+<div xmlns:geo="http://www.w3.org/2003/01/geo/wgs84_pos#" xmlns:asgard="http://asgard.jrc.it" xmlns:gdacs="http://www.gdacs.org" xmlns:media="http://search.yahoo.com/mrss/" xmlns:glide="http://glidenumber.net" xmlns:georss="http://www.georss.org/georss" xmlns:atom="http://www.w3.org/2005/Atom">
+  <div class="satellite_maps_box">
+    <div class="maps_img"><img src="https://www.gdacs.org/contentdata/maps/daily/EQ/1570339/ECDM_202601012_Panama_EQ.png" height="120"></div><span class="satellite_map_item_title"><a href="https://erccportal.jrc.ec.europa.eu/ECHOProducts//Maps#/maps/5811" target="_blank">M7.7 in Panama - EC/ECHO daily map</a></span></div>
+</div>
+<div xmlns:geo="http://www.w3.org/2003/01/geo/wgs84_pos#" xmlns:asgard="http://asgard.jrc.it" xmlns:gdacs="http://www.gdacs.org" xmlns:media="http://search.yahoo.com/mrss/" xmlns:glide="http://glidenumber.net" xmlns:georss="http://www.georss.org/georss" xmlns:atom="http://www.w3.org/2005/Atom">
+  <div class="satellite_maps_box">
+    <div class="maps_img"><img src="https://www.gdacs.org/contentdata/maps/copernicus/EQ/1570339/EMSR934_AOI03_GRA_PRODUCT_v1.jpg" height="120"></div><span class="satellite_map_item_title"><a href="https://rapidmapping.emergency.copernicus.eu/EMSR934/download" target="_blank">M7.7 in Panama - Copernicus EMS map (EMSR934)</a></span></div>
+</div>
+<div xmlns:geo="http://www.w3.org/2003/01/geo/wgs84_pos#" xmlns:asgard="http://asgard.jrc.it" xmlns:gdacs="http://www.gdacs.org" xmlns:media="http://search.yahoo.com/mrss/" xmlns:glide="http://glidenumber.net" xmlns:georss="http://www.georss.org/georss" xmlns:atom="http://www.w3.org/2005/Atom">
+  <div class="satellite_maps_box">
+    <div class="maps_img"><img src="https://www.gdacs.org/contentdata/maps/daily/TC/1001329/ECDM_20261009_Mexico_TCs.png" height="120"></div><span class="satellite_map_item_title"><a href="https://erccportal.jrc.ec.europa.eu/ECHOProducts//Maps#/maps/5810" target="_blank">RACHEL-26 - EC/ECHO daily map </a></span></div>
+</div>
+<div xmlns:geo="http://www.w3.org/2003/01/geo/wgs84_pos#" xmlns:asgard="http://asgard.jrc.it" xmlns:gdacs="http://www.gdacs.org" xmlns:media="http://search.yahoo.com/mrss/" xmlns:glide="http://glidenumber.net" xmlns:georss="http://www.georss.org/georss" xmlns:atom="http://www.w3.org/2005/Atom">
+  <div class="satellite_maps_box">
+    <div class="maps_img"><img src="https://www.gdacs.org/contentdata/maps/unosat/FL/1104203/Screenshot_2026-10-09_202344.png" height="120"></div><span class="satellite_map_item_title"><a href="http://unosat.org/products/4262" target="_blank">Flood in Senegal - UNITAR-UNOSAT - Potentially Damaged</a></span></div>
+</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-lg-12">
+            <div id="news_title_bar">
+                <a name="NEWS"></a>
+                GDACS News
+            </div>
+            <div id="news_main">
+                <div class="news_slider">
+                    <div xmlns:geo="http://www.w3.org/2003/01/geo/wgs84_pos#" xmlns:asgard="http://asgard.jrc.it" xmlns:gdacs="http://www.gdacs.org" xmlns:glide="http://glidenumber.net" xmlns:georss="http://www.georss.org/georss" xmlns:atom="http://www.w3.org/2005/Atom">
+  <div id="home_guid_1" class="news_box"><span class="news_title"><a href="https://rapidmapping.emergency.copernicus.eu/EMSR934/download">M7.7 in Panama - Copernicus EMS activation</a></span><span class="news_text"><div style="display: inline-flex"> 16 Oct 2026
+         20:15 UTC.<img src="http://www.gdacs.org/images/new_red.png" height="16px"></div><br><br><div class="more_news" style="display:inline" data-ref="home_guid_1"> ...(more)</div></span></div>
+  <div id="home_guid_1_hidden" class="news_box_hidden" style="display:none"><span class="news_title_hidden"><a href="https://rapidmapping.emergency.copernicus.eu/EMSR934/download">M7.7 in Panama - Copernicus EMS activation</a></span><span class="news_text"><div style="display: inline-flex"> 16 Oct 2026
+         20:15 UTC.<img src="http://www.gdacs.org/images/new_red.png" height="16px"></div><br><br>[EMSR934] Earthquake in Los Santos, Panama<br><div class="less_news" data-ref="home_guid_1">(hide)</div></span></div>
+</div>
+<div xmlns:geo="http://www.w3.org/2003/01/geo/wgs84_pos#" xmlns:asgard="http://asgard.jrc.it" xmlns:gdacs="http://www.gdacs.org" xmlns:glide="http://glidenumber.net" xmlns:georss="http://www.georss.org/georss" xmlns:atom="http://www.w3.org/2005/Atom">
+  <div id="home_guid_2" class="news_box"><span class="news_title"><a href="https://erccportal.jrc.ec.europa.eu/ECHOProducts//Maps#/maps/5818">POLO-26 - EC/ECHO daily map</a></span><span class="news_text"><div style="display: inline-flex"> 16 Oct 2026
+         18:00 UTC.<img src="http://www.gdacs.org/images/new_red.png" height="16px"></div><br><br><div class="more_news" style="display:inline" data-ref="home_guid_2"> ...(more)</div></span></div>
+  <div id="home_guid_2_hidden" class="news_box_hidden" style="display:none"><span class="news_title_hidden"><a href="https://erccportal.jrc.ec.europa.eu/ECHOProducts//Maps#/maps/5818">POLO-26 - EC/ECHO daily map</a></span><span class="news_text"><div style="display: inline-flex"> 16 Oct 2026
+         18:00 UTC.<img src="http://www.gdacs.org/images/new_red.png" height="16px"></div><br><br>A new EC/ECHO daily map is now available<br><div class="less_news" data-ref="home_guid_2">(hide)</div></span></div>
+</div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="apps_rss_social_main" class="row">
+		<!--
+        <div class="col-lg-3">
+            <div id="gdacs_apps">
+                <div class="div_title">GDACS related Apps</div>
+                <div class="icons_afs">
+                    <img src="images/icons_apps_rss_social/android_app.png" width="42" height="42" alt="" />
+					<!- -<a href="https://www.gdacs.org/redistributable/gdacs-setup/gdacs.apk"><img src="images/icons_apps_rss_social/android_app.png" width="42" height="42"  alt=""/></a>- ->
+                </div>
+                <div class="icons_afs">
+                    <img src="images/icons_apps_rss_social/ios_app.png" width="42" height="42" alt="" />
+					<!- -<a href="itms-services://?action=download-manifest&url=https://www.gdacs.org/redistributable/gdacs-setup/mang.plist"><img src="images/icons_apps_rss_social/ios_app.png" width="42" height="42"  alt=""/></a>- ->
+                </div>
+            </div>
+        </div>-->
+        <div class="col-lg-12">
+            <div id="gdacs_feeds" class="flex-container">
+                <div class="div_title">Disaster event feeds</div>
+                <div class="icons_afs">
+                    <a href="xml/rss.xml" target="_blank">
+                        <img src="images/icons_apps_rss_social/rss.png" width="42" height="42" alt="" /></a>
+                </div>
+                <div class="icons_afs">
+                    <a href="xml/gdacs.kml" target="_blank">
+                        <img src="images/icons_apps_rss_social/kml.png" width="42" height="42" alt="" /></a>
+                </div>
+                <!--<div class="icons_afs"><img src="images/icons_apps_rss_social/gmaps.png" width="42" height="42"  alt=""/></div>
+                <div class="icons_afs"><img src="images/icons_apps_rss_social/jrc_maps.png" width="42" height="42"  alt=""/></div>-->
+                <div class="icons_afs">
+                    <a href="feed_reference.aspx">
+                        <img src="images/icons_apps_rss_social/commonfeed.png" width="42" height="42" alt="" /></a>
+                </div>
+                <div class="icons_afs">
+                    <a href="xml/gdacs_cap.xml" target="_blank">
+                        <img src="images/icons_apps_rss_social/cap.png" width="42" height="42" alt="" /></a>
+                </div>
+            </div>
+        </div>
+		<!--
+        <div class="col-lg-3">
+            <div id="gdacs_social" class="flex-container">
+                <div class="div_title">Community</div>
+                <div class="icons_afs">
+                    <a href="https://www.facebook.com/gdacs" target="_blank">
+                        <img src="images/icons_apps_rss_social/facebook.png" width="42" height="42" alt="" /></a>
+                </div>
+                <div class="icons_afs">
+                    <a href="https://twitter.com/gdacs" target="_blank">
+                        <img src="images/icons_apps_rss_social/twitter.png" width="42" height="42" alt="" /></a>
+                </div>
+            </div>
+        </div>
+		-->
+    </div>
+
+
+    <script type="text/javascript">
+        var stepIndex = 4;
+
+        //refresh page automatically each 1 minute
+        //function autoRefreshPage()
+        //{
+        //    window.location = window.location.href;
+        //}
+        //setInterval('autoRefreshPage()', 60000);
+
+
+        function countRows(idSection) {
+            var vis = $(idSection + ' .alert_item').last().index();
+            return vis;
+        }
+
+        function showRows(idSection) {
+            var vis = $(idSection + ' .alert_item:hidden').last().index();
+            $(idSection + ' .alert_item:hidden').slice(0, stepIndex).slideDown();
+        }
+
+        function hideRows(idSection) {
+            var vis = $(idSection + ' .alert_item:hidden').first().index();
+            if (vis < 0)
+                vis = $(idSection + ' .alert_item').last().index();
+            if ((vis - stepIndex) > 6)
+                $(idSection + ' .alert_item').slice(vis - stepIndex, vis + 1).slideUp();
+            else
+                $(idSection + ' .alert_item').slice(stepIndex + 1, vis + 1).slideUp();
+        }
+
+        function assignStyleLines(idSection) {
+            var rowCount = $(idSection + ' .alert_item').length;
+            $(idSection + ' .alert_item').each(function (index) {
+                if (index > 0)
+                    $(this).css("display", "none");
+            });
+            $(idSection + ' .alert_item').slice(0, stepIndex + 1).slideDown();
+
+        }
+        function CreateHazardTable() {
+            urlData = "https://www.gdacs.org/gdacsapi/api/events/geteventlist/homepagetable";
+
+            var hazards = ["EQ", "TC", "FL", "VO", "DR", "WF"];
+            $.each(hazards, function (h, hazard) {
+                $("#" + hazard + "disaster").html("<div align=\"center\" style=\"padding:5px\"><img src=\"/images/loader.gif\"></div>");//
+            });
+            $.ajax({
+                type: "GET",
+                dataType: "json",
+                url: urlData,
+                success: function (response) {
+                    var list = "";
+                    if (response && response.length > 0) {
+                        $.each(hazards, function (h, hazard) {
+                            var content = "";
+                            content += "<div id=\"gdacs_eventtype_" + hazard + "\">";
+                            $.each(response.filter(x => x.eventtype == hazard), function (i, item) {
+                                content += "	<div id=\"gdacs_toc_" + item.eventtype + "_" + item.eventid + "_" + item.episodeid + "\" class=\"alert_item\">";
+                                content += "		<a href=\"" + item.link + "\">";
+                                var pastsuffix = "";
+                                if (item.istemporary)
+                                    content += "			<div class=\"alert_" + item.eventtype + "_TEMP_" + item.alertlevel + "\">";
+                                else if (item.ispast) {
+                                    content += "			<div class=\"alert_" + item.eventtype + "_PAST_" + item.alertlevel + "\">";
+                                    pastsuffix = "_past";
+                                }
+                                else
+                                    content += "			<div class=\"alert_" + item.eventtype + "_" + item.alertlevel + "\">";
+                                content += "       		<div class=\"alert_icon\"></div>";
+                                content += "				<div class=\"alert_item_name" + pastsuffix + "\">";
+                                content += "					" + item.title;
+                                content += "				</div>";
+                                content += "				<div class=\"alert_item_attribute" + pastsuffix + "\">";
+                                content += "					<span class=\"magnitude" + pastsuffix + "\">";
+                                content += "   	                 " + item.subtitle;
+                                content += "					</span>";
+                                content += "					<span class=\"alert_date" + pastsuffix + "\">";
+                                content += "						-  " + item.datestring;
+                                content += "					</span>";
+                                content += "				</div>";
+                                content += "			</div>";
+                                content += "		</a>";
+                            });
+                            content += "	</div>";
+                            $("#" + hazard + "disaster").html(content);
+                        });
+                    }
+                    else {
+                        $.each(hazards, function (h, hazard) {
+                            $("#" + hazard + "disaster").html("");
+                        });
+                    }
+                },
+                error: function (response) {
+                    $.each(hazards, function (h, hazard) {
+                        $("#" + hazard + "disaster").html("");
+                    });
+                }
+            });
+        }
+
+        $(function () {
+
+            //CreateHazardTable();
+
+            var neq = countRows("#mainListEq");
+            var ntc = countRows("#mainListTc");
+            var nfl = countRows("#mainListFl");
+            var nvo = countRows("#mainListVo");
+            var ndr = countRows("#mainListDr");
+            var nwf = countRows("#mainListWF");
+
+            var w = window.innerWidth;
+
+            if (w < 991) {
+                $(".vosocc_slider").slick({
+                    dots: true,
+                    infinite: true,
+                    vertical: true,
+                    verticalSwiping: true,
+                    slidesToShow: 3,
+                    slidesToScroll: 1,
+                    autoplay: true,
+                    adaptiveHeight: false,
+                    autoplaySpeed: 3000,
+                });
+                $(".alert_item_vosocc").css({ "height": "65px" });
+            }
+            else {
+                $(".vosocc_slider").slick({
+                    dots: true,
+                    infinite: true,
+                    vertical: true,
+                    verticalSwiping: true,
+                    slidesToShow: 4,
+                    slidesToScroll: 1,
+                    autoplay: true,
+                    adaptiveHeight: false,
+                    autoplaySpeed: 3000
+                });
+                $(".alert_item_vosocc").css({ "height": "50px" });
+            }
+
+            $(".news_slider").slick({
+                dots: true,
+                infinite: true,
+                centerMode: false,
+                slidesToShow: 4,
+                slidesToScroll: 1,
+                autoplay: true,
+                autoplaySpeed: 3000,
+                responsive: [
+                    {
+                        breakpoint: 1024,
+                        settings: {
+                            slidesToShow: 3,
+                            slidesToScroll: 3,
+                            infinite: true,
+                            dots: true
+                        }
+                    },
+                    {
+                        breakpoint: 786,
+                        settings: {
+                            slidesToShow: 2,
+                            slidesToScroll: 2
+                        }
+                    },
+                    {
+                        breakpoint: 480,
+                        settings: {
+                            slidesToShow: 1,
+                            slidesToScroll: 1
+                        }
+                    }
+                    // You can unslick at a given breakpoint now by adding:
+                    // settings: "unslick"
+                    // instead of a settings object
+                ]
+            });
+            $(".maps_slider").slick({
+                dots: true,
+                infinite: true,
+                centerMode: false,
+                slidesToShow: 3,
+                slidesToScroll: 1,
+                autoplay: true,
+                autoplaySpeed: 3000,
+                adaptiveHeight: true,
+                responsive: [
+                    {
+                        breakpoint: 1024,
+                        settings: {
+                            slidesToShow: 3,
+                            slidesToScroll: 3,
+                            infinite: true,
+                            dots: true,
+                            innerHeight: 120
+                        }
+                    },
+                    {
+                        breakpoint: 786,
+                        settings: {
+                            slidesToShow: 2,
+                            slidesToScroll: 2,
+                            adaptiveHeight: 50,
+                            innerHeight: 150
+                        }
+                    },
+                    {
+                        breakpoint: 480,
+                        settings: {
+                            slidesToShow: 1,
+                            slidesToScroll: 1,
+                            innerHeight: 180
+                        }
+                    }
+                    // You can unslick at a given breakpoint now by adding:
+                    // settings: "unslick"
+                    // instead of a settings object
+                ]
+
+            });
+            $(".slick-prev").hide();
+            $(".slick-next").hide();
+            $(".more_news").click(function () {
+                var idNews = $(this).data("ref");
+                $('#' + idNews).css("display", "none");
+                $('#' + idNews + '_hidden').css("display", "block");
+            });
+            $(".less_news").click(function () {
+                var idNews = $(this).data("ref");
+                $('#' + idNews + '_hidden').css("display", "none");
+                $('#' + idNews).css("display", "block");
+            });
+
+            //$("#card-open").hide();
+            //$("#arrowMap").show();
+
+        });
+
+
+
+        //Color for Style
+        var polygonColor = {
+            'Poly_Red': [255, 0, 0, 0.3],
+            'Poly_Orange': [255, 162, 0, 0.3],
+            'Poly_Green': [68, 255, 0, 0.3],
+            'Poly_White': [68, 255, 0, 0.2],
+            'Poly_SMPInt_0': [102, 255, 102, 0.2],
+            'Poly_SMPInt_0.5': [102, 255, 102, 0.2],
+            'Poly_SMPInt_1': [102, 255, 102, 0.2],
+            'Poly_SMPInt_1.5': [102, 255, 102, 0.2],
+            'Poly_SMPInt_2': [102, 255, 102, 0.2],
+            'Poly_SMPInt_2.5': [102, 255, 102, 0.2],
+            'Poly_SMPInt_3': [204, 255, 255, 0.2],
+            'Poly_SMPInt_3.5': [204, 255, 255, 0.2],
+            'Poly_SMPInt_4': [153, 255, 204, 0.2],
+            'Poly_SMPInt_4.5': [153, 255, 204, 0.2],
+            'Poly_SMPInt_5': [204, 255, 102, 0.2],
+            'Poly_SMPInt_5.5': [204, 255, 102, 0.2],
+            'Poly_SMPInt_6': [255, 214, 102, 0.2],
+            'Poly_SMPInt_6.5': [255, 214, 102, 0.2],
+            'Poly_SMPInt_7': [255, 133, 51, 0.2],
+            'Poly_SMPInt_7.5': [255, 133, 51, 0.2],
+            'Poly_SMPInt_8': [255, 0, 0, 0.2],
+            'Poly_SMPInt_8.5': [255, 0, 0, 0.2],
+            'Poly_SMPInt_9': [153, 0, 0, 0.2],
+            'Poly_SMPInt_9.5': [153, 0, 0, 0.2],
+            'Poly_SMPInt_10': [91, 0, 0, 0.2],
+            'Poly_SMPInt_10.5': [91, 0, 0, 0.2],
+            'Poly_Circle': [253, 253, 253, 0.1],
+            'Poly_Intensity': [253, 253, 253, 0.1],
+            'Poly_Affected': [47, 183, 234, 0.5],
+            'Poly_Global': [47, 183, 234, 0.5],
+            'Poly_area': [191, 121, 52, 0.5],
+            'Poly_Cones': [253, 253, 253, 0.1],
+            'Poly_Cones_0': [78, 107, 124, 0.5],
+            'Poly_Cones_6': [115, 157, 181, 0.4],
+            'Poly_Cones_12': [141, 200, 233, 0.3],
+            'Poly_Cones_18': [179, 226, 153, 0.2],
+            'Poly_Epi_100': [158, 250, 253, 0.1],
+            'Poly_Epi_150': [103, 182, 210, 0.1],
+            'Poly_Epi_200': [51, 103, 181, 0.1],
+            'Poly_Sum_100': [239, 217, 106, 0.1],
+            'Poly_Sum_200': [239, 177, 106, 0.1],
+            'Poly_Sum_300': [239, 111, 106, 0.1],
+            'Poly_Sum_400': [239, 106, 186, 0.1],
+            'Poly_Sum_500': [190, 106, 239, 0.1],
+            'Line_SMPInt_0': [102, 255, 102, 0.8],
+            'Line_SMPInt_1': [102, 255, 102, 0.8],
+            'Line_SMPInt_2': [102, 255, 102, 0.8],
+            'Line_SMPInt_3': [204, 255, 255, 0.8],
+            'Line_SMPInt_3.5': [204, 255, 255, 0.8],
+            'Line_SMPInt_4': [153, 255, 204, 0.8],
+            'Line_SMPInt_4.5': [153, 255, 204, 0.8],
+            'Line_SMPInt_5': [204, 255, 102, 0.8],
+            'Line_SMPInt_5.5': [204, 255, 102, 0.8],
+            'Line_SMPInt_6': [255, 214, 102, 0.8],
+            'Line_SMPInt_6.5': [255, 214, 102, 0.8],
+            'Line_SMPInt_7': [255, 133, 51, 0.8],
+            'Line_SMPInt_7.5': [255, 133, 51, 0.8],
+            'Line_SMPInt_8': [255, 0, 0, 0.8],
+            'Line_SMPInt_8.5': [255, 0, 0, 0.8],
+            'Line_SMPInt_9': [153, 0, 0, 0.8],
+            'Line_SMPInt_9.5': [153, 0, 0, 0.8],
+            'Line_SMPInt_10': [91, 0, 0, 0.8],
+            'Line_SMPInt_10.5': [91, 0, 0, 0.8],
+            'Line_Red': [209, 0, 0, 0.5],
+            'Line_Orange': [209, 132, 0, 0.5],
+            'Line_Green': [57, 213, 0, 0.5],
+            'Line_White': [57, 213, 0, 0.5],
+            'Line_Cones': [253, 253, 253, 0.3],
+            'Line_Cones_0': [78, 107, 124, 0.8],
+            'Line_Cones_6': [115, 157, 181, 0.8],
+            'Line_Cones_12': [141, 200, 233, 0.8],
+            'Line_Cones_18': [179, 226, 153, 0.8],
+            'Line_Affected': [47, 183, 234, 1],
+            'Line_Global': [47, 183, 234, 1],
+            'Line_Track': [221, 245, 12, 1],
+            'Point_Past': [155, 104, 1, 0.5],
+            'Point_For': [199, 176, 27, 0.5],
+            'Text_Fill': [255, 255, 255, 1],
+            'Text_Out': [118, 118, 118, 1]
+        };
+        var zoomLevel = 0;
+        var styleCache = {};
+        var layerList = [];
+
+        /**
+        * Elements that make up the popup.
+        */
+        var container = document.getElementById('popup');
+        var content = document.getElementById('popup-content');
+        var closer = document.getElementById('popup-closer');
+
+        /**
+        * Create an overlay to anchor the popup to the map.
+        */
+        var overlay = new ol.Overlay(/** @type {olx.OverlayOptions} */({
+            element: container,
+            autoPan: true,
+            autoPanAnimation: {
+                duration: 250
+            }
+        })
+        );
+
+        //$("#card-close").click(function () {
+        //                document.getElementById("card-anniversary").remove();
+        //    $("#card-anniversary").hide();
+        //    $("#card-open").show();
+        //    document.getElementById("container-map").classList.replace('col-lg-9', 'col-lg-12');
+        //    document.getElementById("arrowMap").style.setProperty('display', 'block', 'important');
+        //    $("arrowMap").show();
+        //    map.getView().setZoom(2.2);
+        //});
+
+        //$("#arrowMap").click(function () {
+        //    $("#card-anniversary").show();
+        //    document.getElementById("container-map").classList.replace('col-lg-12', 'col-lg-9');
+
+        //    map.getView().setZoom(1.8);
+        //                map.getView().setPosition([0, 0]);
+        //    $("#card-open").hide();
+        //    document.getElementById("arrowMap").style.setProperty('display', 'none', 'important');
+
+        //});
+
+        /**
+        * Variable to set animation MODIS
+        */
+        var animationId = null;
+        var frameRate = 0.5; // frames per second
+        /**
+        * Variable to set the mask url for the historical static images
+        */
+        var maskCloudUrl = 'https://arcgis-maps.jrc.ec.europa.eu/federated_server/rest/services/ecml/daily_cloud/MapServer';
+        var maskRainUrl = 'https://arcgis-maps.jrc.ec.europa.eu/federated_server/rest/services/ecml/daily_rain/MapServer';
+
+        /**
+        * Add a click handler to hide the popup.
+        * @return {boolean} Don't follow the href.
+        */
+        closer.onclick = function () {
+            overlay.setPosition(undefined);
+            closer.blur();
+            return false;
+        };
+
+        var defaultStyle = new ol.style.Style({
+            fill: new ol.style.Fill({
+                color: [250, 250, 250, 0.5]
+            }),
+            stroke: new ol.style.Stroke({
+                color: [220, 220, 220, 1],
+                width: 1
+            })
+        });
+
+        /**
+        * Function to create a text file on a polygon 
+        */
+        var createTextStyle = function (feature) {
+            var objectType = feature.get('Class');
+            var textValue = '';
+            var offsetXValue, offsetYValue;
+            offsetXValue = offsetYValue = 10;
+            if (feature.get('polygonlabel') == 'Centroid' &&
+                (feature.get('eventtype') == 'TC' || feature.get('eventtype') == 'VO')) {
+                textValue = feature.get('eventname');
+                offsetXValue = offsetYValue = 5;
+
+            }
+            else if (objectType.startsWith('Point_Polygon_Point')) {
+                textValue = feature.get('polygonlabel');
+                if (textValue.startsWith('previous')) {
+                    textValue = '';
+                }
+                if (zoomLevel < 6)
+                    textValue = '';
+
+            }
+
+            /*
+        else if (objectType.startsWith('Poly_Cones')) {
+            textValue = feature.get('eventname');
+            if (zoomLevel < 4)
+                textValue = '';
+
+            offsetXValue = offsetYValue = 40;
+        }*/
+
+            return new ol.style.Text({
+                textAlign: 'Center',
+                textBaseline: 'Middle',
+                font: 'Bold 12px Verdana',
+                text: textValue,
+                scale: 1,
+                fill: new ol.style.Fill({ color: polygonColor['Text_Fill'] }),
+                stroke: new ol.style.Stroke({ color: polygonColor['Text_Out'], width: 2 }),
+                offsetX: offsetXValue,
+                offsetY: offsetYValue
+            });
+        };
+
+        /**
+        * Function to create a Style at the polygon
+        */
+        function styleFunction(feature, resolution) {
+            // get the incomeLevel from the feature properties
+            var classProperty = feature.get('Class');
+            var alertLevel = feature.get('alertlevel');
+            var eventtype = feature.get('eventtype');
+            var label = feature.get('polygonlabel');
+            var iconLink = feature.get('iconeventlink');
+            if (iconLink == null || iconLink == '')
+                iconLink = feature.get('icon');
+
+            var textValue = '';
+            var keyStyle = '';
+            if (eventtype == 'TC' || eventtype == 'VO')
+                textValue = feature.get('eventname');
+
+            // if there is no level or its one we don't recognize,
+            // return the default style (in an array!)
+            if (!classProperty) {
+                return [defaultStyle];
+            }
+            if (classProperty == 'Poly_Red' || classProperty == 'Poly_Orange' || classProperty == 'Poly_Green' || classProperty == 'Poly_White' || classProperty == 'Poly_Affected' || classProperty == 'Poly_area' || classProperty == 'Poly_Circle' || classProperty.startsWith('Poly_SMP') || classProperty == 'Poly_Intensity') {
+                keyStyle = classProperty;
+                if (!styleCache[keyStyle]) {
+                    styleCache[keyStyle] = new ol.style.Style({
+                        fill: new ol.style.Fill({
+                            color: polygonColor[classProperty]
+                        }),
+                        stroke: new ol.style.Stroke({
+                            color: polygonColor[classProperty.replace('Poly_', 'Line_')],
+                            width: 1
+                        })
+                    });
+                }
+            }
+            else if (classProperty == 'Point_Point') {
+                keyStyle = classProperty;
+                if (!styleCache[keyStyle]) {
+                    styleCache[keyStyle] = new ol.style.Style({
+                        image: new ol.style.Icon({
+                            anchor: [0, 0],
+                            anchorXUnits: 'fraction',
+                            anchorYUnits: 'pixels',
+                            src: "https://www.gdacs.org/img/dot.png"
+                        })
+                    });
+                }
+            }
+            else if (classProperty.startsWith('Poly_Epi') || classProperty.startsWith('Poly_Sum')) {
+                keyStyle = classProperty;
+                if (!styleCache[keyStyle]) {
+                    styleCache[keyStyle] = new ol.style.Style({
+                        fill: new ol.style.Fill({
+                            color: polygonColor[classProperty]
+                        })
+                    });
+                }
+            }
+            else if (classProperty == 'Poly_Intensity') {
+                keyStyle = classProperty + '_' + alertLevel;
+                if (!styleCache[keyStyle]) {
+                    styleCache[keyStyle] = new ol.style.Style({
+                        fill: new ol.style.Fill({
+                            color: polygonColor['Poly_' + alertLevel]
+                        }),
+                        stroke: new ol.style.Stroke({
+                            color: polygonColor['Line_' + alertLevel],
+                            width: 1
+                        })
+                    });
+                }
+            }
+            else if (classProperty == 'Poly_Circle') {
+                keyStyle = classProperty + '_' + alertLevel;
+                if (!styleCache[keyStyle]) {
+                    styleCache[keyStyle] = new ol.style.Style({
+                        stroke: new ol.style.Stroke({
+                            color: polygonColor['Line_' + alertLevel],
+                            width: 1
+                        })
+                    });
+                }
+            }
+            else if (classProperty.startsWith('Point_Polygon_Point')) {
+                if (label.startsWith('previous')) {
+                    keyStyle = 'Point_Past';
+                }
+                else {
+                    keyStyle = 'Point_For';
+                }
+                //if (!styleCache[keyStyle]) {
+                styleCache[keyStyle] = new ol.style.Style({
+                    fill: new ol.style.Fill({
+                        color: polygonColor[keyStyle]
+                    }),
+                    text: createTextStyle(feature)
+                });
+                //}	
+
+            }
+            else if (classProperty.startsWith('Poly_Cones')) {
+                styleCache[keyStyle] = new ol.style.Style({
+                    fill: new ol.style.Fill({
+                        color: polygonColor[classProperty]
+                    }),
+                    stroke: new ol.style.Stroke({
+                        color: polygonColor[classProperty.replace('Poly_', 'Line_')],
+                        width: 4
+                    }),
+                    text: createTextStyle(feature)
+                });
+
+            }
+            else if (classProperty.startsWith('Line')) {
+                keyStyle = 'Line';
+                if (!styleCache[keyStyle]) {
+                    styleCache[keyStyle] = new ol.style.Style({
+                        stroke: new ol.style.Stroke({
+                            color: polygonColor['Line_Track'],
+                            width: 1
+                        })
+                    });
+                }
+
+            }
+            else if (classProperty == 'Point_Centroid') {
+                keyStyle = 'Point_Centroid_' + alertLevel + '_' + eventtype;
+                styleCache[keyStyle] = new ol.style.Style({
+                    image: new ol.style.Icon({
+                        anchor: [0.5, 35],
+                        anchorXUnits: 'fraction',
+                        anchorYUnits: 'pixels',
+                        src: iconLink
+                    }),
+                    text: new ol.style.Text({
+                        textAlign: 'Center',
+                        textBaseline: 'Middle',
+                        font: 'Bold 12px Verdana',
+                        text: textValue,
+                        scale: 1,
+                        fill: new ol.style.Fill({ color: polygonColor['Text_Fill'] }),
+                        stroke: new ol.style.Stroke({ color: polygonColor['Text_Out'], width: 2 }),
+                        offsetX: -30,
+                        offsetY: -50
+                    })
+                });
+
+            }
+            else
+                return [defaultStyle];
+
+            return [styleCache[keyStyle]];
+        }
+
+        /**
+        * Layer to add at hte map dinamically based on layerToShow variable
+        */
+        var clouds_WMS = new ol.layer.Tile({
+            title: 'Clouds',
+            type: 'WMS',
+            visible: false,
+            source: new ol.source.TileArcGISRest({
+                url: maskCloudUrl
+            })
+        });
+        var rain_WMS = new ol.layer.Tile({
+            title: 'Rain',
+            type: 'WMS',
+            visible: true,
+            source: new ol.source.TileArcGISRest({
+                url: maskRainUrl
+            })
+        });
+        var eq_Buffer = new ol.layer.Vector({
+            title: 'Earthquakes',
+            source: new ol.source.Vector({
+                url: 'xml/gdacsEQ.geojson',//url: 'https://www.gdacs.org/gdacsapi/api/events/geteventlist/MAP?eventtypes=EQ',//url: 'xml/gdacsEQ.geojson',
+                format: new ol.format.GeoJSON()
+            }),
+            style: styleFunction
+        });
+        var tc_Buffer = new ol.layer.Vector({
+            title: 'Tropical Cyclones',
+            source: new ol.source.Vector({
+                url: 'xml/gdacsTC.geojson',//url: 'https://www.gdacs.org/gdacsapi/api/events/geteventlist/MAP?eventtypes=TC',//url: 'xml/gdacsTC.geojson',
+                format: new ol.format.GeoJSON()
+            }),
+            style: styleFunction
+        });
+        var fl_Buffer = new ol.layer.Vector({
+            title: 'Floods',
+            source: new ol.source.Vector({
+                url: 'xml/gdacsFL.geojson',//url:  'https://www.gdacs.org/gdacsapi/api/events/geteventlist/MAP?eventtypes=FL',//url: 'xml/gdacsFL.geojson',
+                format: new ol.format.GeoJSON()
+            }),
+            style: styleFunction
+        });
+        var vo_Buffer = new ol.layer.Vector({
+            title: 'Volcanoes',
+            source: new ol.source.Vector({
+                url: 'xml/gdacsVO.geojson',//url: 'https://www.gdacs.org/gdacsapi/api/events/geteventlist/MAP?eventtypes=VO',//url: 'xml/gdacsVO.geojson',
+                format: new ol.format.GeoJSON()
+            }),
+            style: styleFunction
+        });
+        var dr_Buffer = new ol.layer.Vector({
+            title: 'Droughts',
+            source: new ol.source.Vector({
+                url: 'xml/gdacsDR.geojson',//url: 'https://www.gdacs.org/gdacsapi/api/events/geteventlist/MAP?eventtypes=DR',//url: 'xml/gdacsDR.geojson',
+                format: new ol.format.GeoJSON()
+            }),
+            style: styleFunction
+        });
+        var wf_Buffer = new ol.layer.Vector({
+            title: 'Wild Fires',
+            source: new ol.source.Vector({
+                url: 'xml/gdacsWF.geojson',//url: 'https://www.gdacs.org/gdacsapi/api/events/geteventlist/MAP?eventtypes=WF',//url: 'xml/gdacsDR.geojson',
+                format: new ol.format.GeoJSON()
+            }),
+            style: styleFunction
+        });
+        var vosocc_Buffer = new ol.layer.Vector({
+            title: 'Vosocc',
+            source: new ol.source.Vector({
+                url: 'https://www.gdacs.org/Utility/vosoccjson.aspx',//'https://www.gdacs.org/xml/vo_content.geojson',//url: 'xml/gdacsDR.geojson',
+                format: new ol.format.GeoJSON()
+            }),
+            style: styleFunction
+        });
+
+        function setSourceModis() {
+            var finalUrl = maskModisUrl;
+            while (finalUrl.indexOf("[yyyy]") >= 0 || finalUrl.indexOf("[mm]") >= 0 || finalUrl.indexOf("[dd]") >= 0) {
+                finalUrl = finalUrl.replace("[yyyy]", stepDate.getFullYear().toString()).
+                    replace("[mm]", (stepDate.getMonth() + 101).toString().substr(1, 2)).
+                    replace("[dd]", (stepDate.getDate() + 100).toString().substr(1, 2));
+            }
+            return new ol.source.Vector({
+                url: finalUrl.replace("[yyyy]", stepDate.getFullYear().toString()).
+                    replace("[mm]", (stepDate.getMonth() + 101).toString().substr(1, 2)).
+                    replace("[dd]", (stepDate.getDate() + 100).toString().substr(1, 2)),
+                format: new ol.format.KML()
+            });
+        }
+
+        function setSourceClouds() {
+            var finalUrl = maskCloudUrl;
+            while (finalUrl.indexOf("[yyyy]") >= 0 || finalUrl.indexOf("[mm]") >= 0 || finalUrl.indexOf("[dd]") >= 0) {
+                finalUrl = finalUrl.replace("[yyyy]", stepDate.getFullYear().toString()).
+                    replace("[mm]", (stepDate.getMonth() + 101).toString().substr(1, 2)).
+                    replace("[dd]", (stepDate.getDate() + 100).toString().substr(1, 2));
+            }
+            return new ol.source.ImageStatic({
+                url: finalUrl.replace("[yyyy]", stepDate.getFullYear().toString()).
+                    replace("[mm]", (stepDate.getMonth() + 101).toString().substr(1, 2)).
+                    replace("[dd]", (stepDate.getDate() + 100).toString().substr(1, 2)),
+                projection: 'EPSG:4326',
+                imageExtent: [-180, -90, 180, 90]
+            })
+        }
+
+        function setSourceRain() {
+            var finalUrl = maskRainUrl;
+            while (finalUrl.indexOf("[yyyy]") >= 0 || finalUrl.indexOf("[mm]") >= 0 || finalUrl.indexOf("[dd]") >= 0) {
+                finalUrl = finalUrl.replace("[yyyy]", stepDate.getFullYear().toString()).
+                    replace("[mm]", (stepDate.getMonth() + 101).toString().substr(1, 2)).
+                    replace("[dd]", (stepDate.getDate() + 100).toString().substr(1, 2));
+            }
+            return new ol.source.ImageStatic({
+                url: finalUrl.replace("[yyyy]", stepDate.getFullYear().toString()).
+                    replace("[mm]", (stepDate.getMonth() + 101).toString().substr(1, 2)).
+                    replace("[dd]", (stepDate.getDate() + 100).toString().substr(1, 2)),
+                projection: 'EPSG:4326',
+                imageExtent: [-180, -90, 180, 90]
+            })
+        }
+
+        function setSourceGfds() {
+            var finalUrl = maskGfdsUrl;
+            while (finalUrl.indexOf("[yyyy]") >= 0 || finalUrl.indexOf("[mm]") >= 0 || finalUrl.indexOf("[dd]") >= 0) {
+                finalUrl = finalUrl.replace("[yyyy]", stepDate.getFullYear().toString()).
+                    replace("[mm]", (stepDate.getMonth() + 101).toString().substr(1, 2)).
+                    replace("[dd]", (stepDate.getDate() + 100).toString().substr(1, 2));
+            }
+            return new ol.source.ImageStatic({
+                url: finalUrl,
+                projection: 'EPSG:4326',
+                imageExtent: [-180, -90, 180, 90]
+            })
+        }
+
+        function getVectorModis() {
+            return new ol.layer.Vector({
+                id: 'Modis',
+                title: 'Modis',
+                source: setSourceModis()
+            });
+        }
+
+        function chooseLayer() {
+            //layerList.push(clouds_WMS);
+            layerList.push(rain_WMS);
+            layerList.push(dr_Buffer);
+            layerList.push(vo_Buffer);
+            layerList.push(fl_Buffer);
+            layerList.push(wf_Buffer);
+            layerList.push(tc_Buffer);
+            layerList.push(eq_Buffer);
+            layerList.push(vosocc_Buffer);
+            return layerList;
+        }
+
+        var rainLegend = "<div id='infoAttribute' style='width:250px'><div id='textAttribute' style='font-family:Verdana, Geneva, sans-serif;font-size:10px;'><a href='http://openstreetmap.org/'>OpenStreetMap</a><br/>The boundaries and the names shown on this map do not imply official endorsement or acceptance by the European Union.</div>";
+        var rainLegend1 = "<div id='infoAttribute' style='width:250px'><img src='https://www.gdacs.org/images/rainfall_legend.png' width=96px; height=173px; /></div><br/><div id='textAttribute' style='font-family:Verdana, Geneva, sans-serif;font-size:10px;'><a href='http://openstreetmap.org/'>OpenStreetMap</a><br/>The boundaries and the names shown on this map do not imply official endorsement or acceptance by the European Union.</div>";
+        var scaleLineControl = new ol.control.ScaleLine();
+        scaleLineControl.setUnits('metric');
+
+        function buildMap() {
+            return new ol.Map({
+                controls: ol.control.defaults().extend([
+                    scaleLineControl
+                ]),
+                target: 'map',
+                overlays: [overlay],
+                layers: [
+                    new ol.layer.Group({
+                        id: 'Base',
+                        title: 'Base maps',
+                        layers: [
+
+                            new ol.layer.Tile({
+                                title: 'JRC - OSM',
+                                id: 'osmec',
+                                last: false,
+                                type: 'base',
+                                visible: false,
+                                source: new ol.source.XYZ({
+                                    projection: 'EPSG:3857',
+                                    //projection: 'EPSG:900913',
+                                    //url: "https://europa.eu/webtools/maps/tiles/osm-ec/{z}/{x}/{y}.png",
+                                    url: "https://gisco-services.ec.europa.eu/maps/tiles/OSMCartoComposite/EPSG3857/{z}/{x}/{y}.png",
+                                    attributions: [new ol.Attribution({ html: "<a href='http://openstreetmap.org/'>OpenStreetMap</a><br/>The boundaries and the names shown on this map do not imply official endorsement or acceptance by the European Union." })],
+                                    maxZoom: 18,
+                                })
+                            }),
+                            new ol.layer.Tile({
+                                title: 'JRC - Hypso',
+                                id: 'hypsoec',
+                                type: 'base',
+                                last: false,
+                                visible: true,
+                                source: new ol.source.XYZ({
+
+                                    //url: "https://europa.eu/webtools/maps/tiles/hypso/{z}/{x}/{y}",
+                                    projection: 'EPSG:3857',
+                                    url: "https://gisco-services.ec.europa.eu/maps/tiles/Hypsometric/EPSG3857/{z}/{x}/{y}.png",
+                                    maxZoom: 6
+                                })
+                            }),
+                            new ol.layer.Tile({
+                                title: 'JRC - Natural',
+                                id: 'naturalec',
+                                type: 'base',
+                                last: false,
+                                visible: false,
+                                source: new ol.source.XYZ({
+
+                                    //url: "https://europa.eu/webtools/maps/tiles/natural/{z}/{x}/{y}",
+                                    projection: 'EPSG:3857',
+                                    url: "https://gisco-services.ec.europa.eu/maps/tiles/NaturalEarth/EPSG3857/{z}/{x}/{y}.png",
+                                    maxZoom: 6
+                                })
+                            }),
+                            new ol.layer.Tile({
+                                title: 'JRC - Bmarble',
+                                id: 'bmarbleec',
+                                type: 'base',
+                                last: false,
+                                visible: false,
+                                source: new ol.source.XYZ({
+
+                                    //url: "https://europa.eu/webtools/maps/tiles/bmarble/{z}/{x}/{y}",
+                                    projection: 'EPSG:3857',
+                                    url: "https://gisco-services.ec.europa.eu/maps/tiles/BlueMarble/EPSG3857/{z}/{x}/{y}.png",
+                                    maxZoom: 9
+                                })
+                            })
+
+                        ]
+                    }),
+                    new ol.layer.Group({
+                        id: 'Layers',
+                        title: 'Layers',
+                        layers: chooseLayer()
+                    })
+                ],
+                view: new ol.View({
+                    center: [30, 0],
+                    zoom: 1.8,
+                    projection: 'EPSG:4326',
+                    minZoom: 1,
+                    maxZoom: 11
+                })
+            });
+        }
+
+        function onMoveEnd(evt) {
+            var map = evt.map;
+            zoomLevel = map.getView().getZoom();
+
+            var all_layer_groups = map.getLayers();
+            var layer_group;
+            var layer_item;
+            var all_layer_gdacs;
+            for (i = 0, n = all_layer_groups.getLength(); i < n; i++) {
+                layer_group = all_layer_groups.item(i);
+                if (layer_group.get('id') == 'Base') {
+                    all_layer_gdacs = layer_group.getLayers();
+                    var idxOsm = -1;
+                    for (j = 0, k = all_layer_gdacs.getLength(); j < k; j++) {
+                        layer_item = all_layer_gdacs.item(j);
+
+                        if (zoomLevel >= 7) {
+                            if (layer_item.get('id') == 'osmec') {
+                                idxOsm = j;
+                            }
+                            layer_item.set('visible', false);
+
+                        }
+                        else {
+                            if (layer_item.get('choosed') == true) {
+                                idxOsm = j;
+                            }
+                            layer_item.set('visible', false);
+                        }
+                    }
+                    if (idxOsm > -1) {
+                        layer_item = all_layer_gdacs.item(idxOsm);
+                        layer_item.set('visible', true);
+                    }
+                }//if
+            }//for
+            map.updateSize();
+            map.render();
+
+
+        }
+
+        function onSingleClick(evt) {
+            var coordinate = evt.coordinate;
+            var pixel = evt.pixel;
+            var _found = false;
+            evt.map.forEachFeatureAtPixel(pixel, function (feature, layer) {
+                // check the layer property, if it is not set then it means we
+                // are over an OverlayFeature and we can ignore this feature
+                if (!layer || _found) {
+                    return;
+                }
+                // test the feature's geometry type and compute a reasonable point
+                // at which to display the text.
+                var geometry = feature.getGeometry();
+                var point;
+                switch (geometry.getType()) {
+                    case 'MultiPolygon':
+                        var poly = geometry.getPolygons().reduce(function (left, right) {
+                            return left.getArea() > right.getArea() ? left : right;
+                        });
+                        point = poly.getInteriorPoint().getCoordinates();
+                        break;
+                    case 'Polygon':
+                        point = geometry.getInteriorPoint().getCoordinates();
+                        break;
+                    default:
+                        point = geometry.getClosestPoint(coordinate);
+                }
+                // create a new feature to display the text
+                /*textFeature = new ol.Feature({
+                geometry: new ol.geom.Point(point),
+                text: feature.get('name'),
+                isoCode: feature.get('iso_a2').toLowerCase()
+                });*/
+                // and add it to the featureOverlay.  Also add the feature itself
+                // so the country gets outlined
+                if (feature.get('Class') == 'Point_Centroid') {
+                    var reportLink = feature.get('link');
+                    var magnitudeReference = '';
+                    if (reportLink == null)
+                        reportLink = feature.get('url').report;
+                    if (feature.get('eventtype') == 'EQ') {
+                        if (feature.get('severity') != null)
+                            magnitudeReference = ' M ' + feature.get('severity') + ' ';
+                        else
+                            magnitudeReference = ' M ' + feature.get('severitydata').severity + ' ';
+                    }
+
+                    if (reportLink != null && reportLink != '') {
+                        //content.innerHTML = '<code class="map_item_popup"><div class="map_item_popup_content">' + feature.get('htmldescription') + '<br/>see full report <a href="' + feature.get('link') + '" target="_blank">here</a></div></code>';
+                        content.innerHTML = '<div>' +
+                            '<p class="p_map_baloon_text_bold">' + feature.get('alertlevel') + magnitudeReference + ' ' + feature.get('description') + ' </p>' +
+                            '<p class="p_map_baloon_text">' + feature.get('todate') + '</p>' +
+                            '<p class="p_map_baloon_text">Full report <a href="' + reportLink + '">here</a></p>' +
+                            '</div>';
+                    }
+                    else {
+                        content.innerHTML = '<div>' +
+                            '<p class="p_map_baloon_text_bold">' + feature.get('alertlevel') + magnitudeReference + ' ' + feature.get('description') + ' </p>' +
+                            '<p class="p_map_baloon_text">' + feature.get('todate') + '</p>' +
+                            '</div>';
+                    }
+                    overlay.setPosition(coordinate);
+                    _found = true;
+                }
+            });
+        }
+
+        function buildLayerSwitcher() {
+            return new ol.control.LayerSwitcher({
+                tipLabel: 'Layers' // Optional label for button
+            });
+        }
+
+        function buildLayerLegend() {
+            return new ol.control.LayerLegend({
+                tipLabel: 'Legend' // Optional label for button
+            },
+                'https://www.gdacs.org/images/rainfall_legend.png');
+        }
+
+        var layerSwitcher = buildLayerSwitcher()
+        var layerLegend = buildLayerLegend()
+
+        var map = buildMap();
+
+        function addMapController() {
+            map.addControl(layerSwitcher);
+            map.addControl(layerLegend);
+            map.on('singleclick', onSingleClick);
+            map.on('moveend', onMoveEnd);
+            return true;
+        }
+
+        addMapController();
+
+        var setTime = function () {
+            //stepDate.setDate(stepDate.getDate() + 1);
+            if (stepDate > endDate)
+                stepDate = new Date(startDate);
+
+            //map = buildMap();
+            //addMapController();
+
+            var all_layer_groups = map.getLayers();
+            var layer_group;
+            var layer_item;
+            var all_layer_gdacs;
+            for (i = 0, n = all_layer_groups.getLength(); i < n; i++) {
+                layer_group = all_layer_groups.item(i);
+                if (layer_group.get('id') == 'Layers') {
+                    all_layer_gdacs = layer_group.getLayers();
+                    for (j = 0, k = all_layer_gdacs.getLength(); j < k; j++) {
+                        layer_item = all_layer_gdacs.item(j);
+                        if (layer_item.get('id') == 'Modis') {
+                            layer_item.setSource(setSourceModis());
+                        }
+                        else if (layer_item.get('id') == 'Clouds') {
+                            layer_item.setSource(setSourceClouds());
+                        }//if
+                        else if (layer_item.get('id') == 'Rain') {
+                            layer_item.setSource(setSourceRain());
+                        }//if
+                        else if (layer_item.get('id') == 'Gfds') {
+                            layer_item.setSource(setSourceGfds());
+                        }//if
+                    }
+                }//if
+            }//for
+            map.updateSize();
+            map.render();
+            //updateInfo();
+        };
+
+        var changeOpacity = function (newValue) {
+            var all_layer_groups = map.getLayers();
+            var layer_group;
+            var layer_item;
+            var all_layer_gdacs;
+            for (i = 0, n = all_layer_groups.getLength(); i < n; i++) {
+                layer_group = all_layer_groups.item(i);
+                if (layer_group.get('id') == 'Layers') {
+                    all_layer_gdacs = layer_group.getLayers();
+                    for (j = 0, k = all_layer_gdacs.getLength(); j < k; j++) {
+                        layer_item = all_layer_gdacs.item(j);
+                        if (layer_item.get('id') == 'Clouds' || layer_item.get('id') == 'Rain' || layer_item.get('id') == 'Gfds') {
+                            layer_item.setOpacity(newValue);
+                        }//if
+                    }
+                }//if
+            }//for
+            map.updateSize();
+            map.render();
+            //updateInfo();
+        };
+
+        var play = function () {
+            stop();
+            animationId = window.setInterval(setTime, 1000 / frameRate);
+        };
+
+        var stop = function () {
+            if (animationId !== null) {
+                window.clearInterval(animationId);
+                animationId = null;
+            }
+        };
+
+        $(window).resize(function () {
+            var view = map.getView();
+            if (window.innerWidth < 768) {
+                view.setZoom(1);
+            } else {
+                view.setZoom(2);
+            }
+
+        });
+
+    </script>
+
+
+                
+
+                <div id="footer_home">
+                    <nav class="navbar navbar-expand-lg navbar-light navbar-footer col-12">
+                        <button class="navbar-toggler" style="font-size: 18px; color: white; font-weight: bold" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkupFooter" aria-controls="navbarNavAltMarkupFooter" aria-expanded="false" aria-label="Toggle navigation">
+                            <span class="navbar-toggler-icon" style="color: white;"></span>
+                            MENU
+                        </button>
+                        <div class="collapse navbar-collapse" id="navbarNavAltMarkupFooter">
+                            <div class="navbar-nav">
+                                <a class="nav-item nav-link active" href="default.aspx">HOME</a>
+                                <a class="nav-item nav-link" href="Alerts/default.aspx">GDACS EVENTS</a>
+                                <a class="nav-item nav-link" href="http://vosocc.unocha.org">VIRTUAL OSOCC</a>
+                                <a class="nav-item nav-link" href="https://smcs.unosat.org/home" target="_blank">MAPS & SATELLITE IMAGERY</a>
+                                <a class="nav-item nav-link" href="Knowledge/overview.aspx">KNOWLEDGE</a>
+                                <a class="nav-item nav-link" href="About/overview.aspx">ABOUT</a>
+                            </div>
+                        </div>
+                    </nav>
+                    <div id="footer_disclaimer" class="col-12">
+                        <!--<div class="float-left gdacs_top_menu_content" ><a href="https://ec.europa.eu/info/brexit-content-disclaimer">Brexit content disclaimer</a></div>-->
+                        <div class="float-end gdacs_top_menu_content"><a href="About/cookies.aspx" target="_blank">cookies</a></div>
+                    <p><b><span class="gdacs_bottom_menu_content" ><a href="https://ec.europa.eu/info/legal-notice_en" target="_blank" >Disclaimer</a></span></b>   -   <b><span class="gdacs_bottom_menu_content" ><a href="https://commission.europa.eu/legal-notice_en#copyright-notice" target="_blank" >Copyright</a></span></b><br />
+                            The JRC is not responsible for any damage or loss resulting from the use of the information presented on this website.
+                    <br />
+                            The designations employed and the presentation of material on the map do not imply the expression of any opinion whatsoever on the part of the European Union concerning the legal status of any country, territory or area or of its authorities, or concerning the delimitation of its frontiers or boundaries.
+                        </p>
+                    </div>
+                    <div id="footer_logo" class="d-none d-lg-block col-lg-12">
+                        <div class="footerlogo_item d-none d-lg-block">
+                            <img src="images/gdacs_icons/partners/ec.png" width="90" height="70" alt="" /></div>
+                        <div class="footerlogo_item d-none d-lg-block">
+                            <img src="images/gdacs_icons/partners/ocha.png" width="90" height="70" alt="" /></div>
+                        <div class="footerlogo_item d-none d-lg-block">
+                            <img src="images/gdacs_icons/partners/unitar.png" width="90" height="70" alt="" /></div>
+                        <div class="footerlogo_item d-none d-lg-block">
+                            <img src="images/gdacs_icons/partners/unosat.png" width="90" height="70" alt="" /></div>
+                    </div>
+                </div>
+                
+            </div>
+
+        </div>
+        <script type="text/javascript">
+
+            $(function () {
+                if (window.innerWidth < 768) {
+                    $("#nopadding").addClass('container-fluid').removeClass('container');
+                    //document.getElementById("position_news").style.width = '100%';
+                    //document.getElementById("position_news").style.paddingLeft = '15px';
+                    //document.getElementById("position_news").style.paddingright = '15px';
+
+                    var x = document.getElementsByClassName("alert_item_name");
+                    var i;
+                    for (i = 0; i < x.length; i++) {
+                        x[i].style.paddingLeft = "0px";
+                    }
+
+                    $("div.alert_item_name").each(function (o, elt) {
+                        var newElt = $("<span class='alert_item_name'/>");
+                        Array.prototype.slice.call(elt.attributes).forEach(function (a) {
+                            newElt.attr(a.name, a.value);
+                        });
+                        $(elt).wrapInner(newElt).children(0).unwrap();
+                    });
+
+                    $("div.alert_item_attribute").each(function (o, elt) {
+                        var newElt = $("<span class='alert_item_attribute'/>");
+                        Array.prototype.slice.call(elt.attributes).forEach(function (a) {
+                            newElt.attr(a.name, a.value);
+                        });
+                        $(elt).wrapInner(newElt).children(0).unwrap();
+                    });
+
+
+                }
+            });
+
+            $(window).resize(function () {
+
+                if (window.innerWidth < 991) {
+                    $("#nopadding").addClass('container-fluid').removeClass('container');
+                    //document.getElementById("position_news").style.width = '100%';
+                    //document.getElementById("position_news").style.paddingLeft = '15px';
+                    //document.getElementById("position_news").style.paddingRight = '15px';
+
+                    //function myFunction() {
+                    var x = document.getElementsByClassName("alert_item_name");
+                    var i;
+                    for (i = 0; i < x.length; i++) {
+                        x[i].style.paddingLeft = "0px";
+                    }
+                    //}
+
+                    $("div.alert_item_name").each(function (o, elt) {
+                        var newElt = $("<span class='alert_item_name'/>");
+                        Array.prototype.slice.call(elt.attributes).forEach(function (a) {
+                            newElt.attr(a.name, a.value);
+                        });
+                        $(elt).wrapInner(newElt).children(0).unwrap();
+                    });
+
+                    $("div.alert_item_attribute").each(function (o, elt) {
+                        var newElt = $("<span class='alert_item_attribute'/>");
+                        Array.prototype.slice.call(elt.attributes).forEach(function (a) {
+                            newElt.attr(a.name, a.value);
+                        });
+                        $(elt).wrapInner(newElt).children(0).unwrap();
+                    });
+
+                }
+                else {
+                    $("#nopadding").addClass('container').removeClass('container-fluid');
+                    //document.getElementById("position_news").style.width = '80%';
+                    //document.getElementById("position_news").style.paddingLeft = '0px';
+                    //document.getElementById("position_news").style.paddingRight = '0px';
+
+                    $("span.alert_item_name").each(function (o, elt) {
+                        var newElt = $("<div class='alert_item_name' />");
+                        Array.prototype.slice.call(elt.attributes).forEach(function (a) {
+                            newElt.attr(a.name, a.value);
+                        });
+                        $(elt).wrapInner(newElt).children(0).unwrap();
+                    });
+
+                    $("span.alert_item_attribute").each(function (o, elt) {
+                        var newElt = $("<div class='alert_item_attribute' />");
+                        Array.prototype.slice.call(elt.attributes).forEach(function (a) {
+                            newElt.attr(a.name, a.value);
+                        });
+                        $(elt).wrapInner(newElt).children(0).unwrap();
+                    });
+                }
+            });
+
+
+        </script>
+
+        <!--
+<script type="text/javascript">
+
+var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+</script>
+<script type="text/javascript">
+try {
+var pageTracker = _gat._getTracker("UA-298127-1");
+pageTracker._setDomainName(".gdacs.org");
+pageTracker._setLocalRemoteServerMode();
+pageTracker._trackPageview();
+} catch(err) {}</script>
+-->
+<script type="text/javascript">
+    const observer = new MutationObserver((mutations) => {
+        if (document.contains(document.querySelector("div.analytics.wt.wt-analytics"))) {
+            observer.disconnect()
+            setTimeout(() => {
+                if ($wt.analytics.isTrackable()) {
+                    $wt.trackPageView()
+                }
+            }, 100)
+        }
+    })
+    observer.observe(document, { attributes: false, childList: true, characterData: false, subtree: true })
+</script>
+</body>
+</html>

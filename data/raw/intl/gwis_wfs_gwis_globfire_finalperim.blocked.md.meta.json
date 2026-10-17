@@ -1,0 +1,14 @@
+{
+  "source_url": "https://maps.effis.emergency.copernicus.eu/gwis?service=WFS&version=1.0.0&request=GetFeature&typeName=gwis.globfire.finalperim&outputFormat=application%2Fjson&bbox=128.2%2C35.9%2C129.6%2C36.8&srsName=EPSG%3A4326&TIME=2025-03-21%2F2025-04-05",
+  "final_url": "https://maps.effis.emergency.copernicus.eu/gwis?service=WFS&version=1.0.0&request=GetFeature&typeName=gwis.globfire.finalperim&outputFormat=application%2Fjson&bbox=128.2%2C35.9%2C129.6%2C36.8&srsName=EPSG%3A4326&TIME=2025-03-21%2F2025-04-05",
+  "fetched_at_utc": "2026-10-17T00:47:15.747224+00:00",
+  "licence_or_terms": null,
+  "row_count": null,
+  "caveat": "Expected JSON; source returned a non-JSON response.",
+  "http_status": 200,
+  "content_type": "text/xml; charset=UTF-8",
+  "request_body": null,
+  "attempts": [],
+  "public_tokens_redacted": false,
+  "sha256": "ed91cc092f3b4d3fc03f51c7b5a91c152b3bd4045904bb5d556180d8084f39ac"
+}

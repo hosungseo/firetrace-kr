@@ -77,7 +77,9 @@ export interface FireEvent {
   numbers?: Record<string, number | string>
   sources: EventSource[]
   official?: boolean
-  t?: number // minutes since t0, filled on load
+  t?: number // minutes since t0, filled on load (event time; day-precision events sit at day start)
+  tv?: number // minutes from which the record counts as known (day-precision → end of that day)
+  retro?: boolean // post-hoc analysis published later than its event time
 }
 
 // [minutes since t0, title, outlet, url, region indexes]

@@ -1,0 +1,19 @@
+{
+  "source_url": "https://api.reliefweb.int/v2/reports?appname=firetrace-kr&query%5Bvalue%5D=Korea+wildfire&filter%5Bfield%5D=date.created&filter%5Bvalue%5D%5Bfrom%5D=2025-03-21T00%3A00%3A00%2B00%3A00&filter%5Bvalue%5D%5Bto%5D=2025-04-30T00%3A00%3A00%2B00%3A00&fields%5Binclude%5D%5B%5D=title&fields%5Binclude%5D%5B%5D=date&fields%5Binclude%5D%5B%5D=source&fields%5Binclude%5D%5B%5D=url&limit=50",
+  "final_url": "https://api.reliefweb.int/v2/reports?appname=firetrace-kr&query%5Bvalue%5D=Korea+wildfire&filter%5Bfield%5D=date.created&filter%5Bvalue%5D%5Bfrom%5D=2025-03-21T00%3A00%3A00%2B00%3A00&filter%5Bvalue%5D%5Bto%5D=2025-04-30T00%3A00%3A00%2B00%3A00&fields%5Binclude%5D%5B%5D=title&fields%5Binclude%5D%5B%5D=date&fields%5Binclude%5D%5B%5D=source&fields%5Binclude%5D%5B%5D=url&limit=50",
+  "fetched_at_utc": "2026-10-17T00:48:51.470596+00:00",
+  "licence_or_terms": null,
+  "row_count": null,
+  "caveat": "HTTP 403; see exact response below.",
+  "http_status": 403,
+  "content_type": "application/json",
+  "request_body": null,
+  "attempts": [
+    {
+      "status": 403,
+      "error": "HTTP Error 403: Forbidden"
+    }
+  ],
+  "public_tokens_redacted": false,
+  "sha256": "a2ce892b4f1140f8f6e4c21e5410c8a91b6aa729a1b3525113d120fdf8589b54"
+}

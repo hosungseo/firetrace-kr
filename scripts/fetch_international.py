@@ -43,9 +43,9 @@ def blocked(name, data, meta, reason):
     sidecar(p, meta, None, reason)
 
 
-def request(name, url, ext='json', terms=None):
+def request(name, url, ext='json', terms=None, *, body=None):
     prefix = name.split('_')[0]
-    data, meta = fetch(url, terms=terms or TERMS.get(prefix), max_bytes=50_000_000,
+    data, meta = fetch(url, body, terms=terms or TERMS.get(prefix), max_bytes=50_000_000,
                        min_interval=6 if prefix == 'gdelt' else 0.6,
                        max_attempts=1, timeout=30)
     path = RAW / (name + '.' + ext)
@@ -59,6 +59,8 @@ def request(name, url, ext='json', terms=None):
             parsed = json.loads(data)
         except (ValueError, UnicodeDecodeError):
             error = 'Expected JSON; source returned a non-JSON response.'
+    elif ext == 'xml' and b'ServiceException' in data:
+        error = 'OGC service exception; see exact response below.'
     elif ext == 'png' and not data.startswith(b'\x89PNG\r\n\x1a\n'):
         error = 'Expected PNG; source returned an OGC exception or other non-PNG response.'
     if ext == 'json' and parsed is None:
@@ -73,10 +75,12 @@ def request(name, url, ext='json', terms=None):
     if isinstance(parsed, list):
         count = len(parsed)
     elif isinstance(parsed, dict):
-        for key in ('features', 'articles', 'data', 'timeline', 'links'):
+        for key in ('features', 'articles', 'data', 'timeline', 'links', 'results', 'products'):
             if isinstance(parsed.get(key), list):
                 count = len(parsed[key])
                 break
+        if parsed.get('type') == 'Feature':
+            count = 1
     sidecar(path, meta, count)
     if error:
         blocked(name, data, meta, error)
@@ -116,11 +120,14 @@ def gdacs():
     for feature in selected:
         prop = feature['properties']
         event = prop['eventid']
-        request(f'gdacs_{event}_detail', prop['url']['details'])
+        detail, _, _ = request(f'gdacs_{event}_detail', prop['url']['details'])
         for episode in range(1, int(prop['episodeid']) + 1):
             query = urlencode(dict(eventtype='WF', eventid=event, episodeid=episode))
-            request(f'gdacs_{event}_episode_{episode}', base + 'events/geteventdata?' + query)
+            endpoint = (detail or {}).get('properties', {}).get('episodes', [])[episode - 1]['details']
+            episode_data, _, _ = request(f'gdacs_{event}_episode_{episode}', endpoint)
             request(f'gdacs_{event}_geometry_{episode}', base + 'polygons/getgeometry?' + query)
+            for i, impact in enumerate((episode_data or {}).get('properties', {}).get('impacts') or []):
+                request(f'gdacs_{event}_episode_{episode}_impact_{i}', impact['resource']['impact'])
 
 
 def gwis():
@@ -150,22 +157,47 @@ def gwis():
         p.update(request='GetFeatureInfo', query_layers=layer, info_format='application/json',
                  x=490, y=350, feature_count=100)
         request('gwis_info_' + layer.replace('.', '_'), base + urlencode(p))
+    request('gwis_wfs_schema', base + urlencode(dict(service='WFS', version='1.0.0',
+            request='DescribeFeatureType', typeName='nrt.ba.poly')), 'xml')
+    request('gwis_wfs_gml', base + urlencode(dict(service='WFS', version='1.0.0',
+            request='GetFeature', typeName='nrt.ba.poly', outputFormat='GML2', bbox=BBOX,
+            srsName='EPSG:4326', maxFeatures=5000)), 'xml')
+    request('gwis_burnt_technical', 'https://gwis.jrc.ec.europa.eu/about-gwis/technical-background/burnt-areas', 'html')
+    request('gwis_license', 'https://gwis.jrc.ec.europa.eu/about-gwis/data-license', 'html')
 
 
 def imagery():
+    deadline = time.monotonic() + 25 * 60
     endpoints = [
         ('maxar_catalog', 'https://maxar-opendata.s3.amazonaws.com/events/catalog.json', 'json'),
         ('maxar_home', 'https://www.maxar.com/open-data', 'html'),
         ('ems_home', 'https://rapidmapping.emergency.copernicus.eu/', 'html'),
         ('unosat_home', 'https://unosat.org/products/', 'html'),
         ('nasa_154083', 'https://earthobservatory.nasa.gov/images/154083/outbreak-of-fire-across-south-korea', 'html'),
+        ('ems_app', 'https://cems-mapping-website.s3.amazonaws.com/static/datastats/assets/main-B_pdTgP9.js', 'js'),
+        ('ems_all_activations', 'https://mapping.emergency.copernicus.eu/activations/api/activations/?limit=2000&offset=0', 'json'),
+        ('ems_korea', 'https://mapping.emergency.copernicus.eu/activations/api/activations/?q=Korea&limit=100&offset=0', 'json'),
+        ('ems_terms', 'https://mapping.emergency.copernicus.eu/terms-and-conditions/', 'html'),
+        ('unosat_app', 'https://unosat.org/static/js/main.66fefde9.chunk.js', 'js'),
+        ('unosat_products', 'https://unosat.org/our_products', 'json'),
+        ('unosat_terms', 'https://www.unitar.org/legal', 'html'),
+        ('nasa_search', 'https://science.nasa.gov/wp-json/wp/v2/search?search=Korea&per_page=100', 'json'),
+        ('nasa_154142', 'https://science.nasa.gov/earth/earth-observatory/south-korea-charred-by-fire-154142/', 'html'),
+        ('nasa_154083_image', 'https://assets.science.nasa.gov/content/dam/science/esd/eo/images/imagerecords/154000/154083/southkoreafires_amo_20250322_lrg.jpg', 'jpg'),
+        ('nasa_154142_image', 'https://assets.science.nasa.gov/content/dam/science/esd/eo/images/imagerecords/154000/154142/skoreaburnscar_oli2_20250404_lrg.jpg', 'jpg'),
+        ('nasa_terms', 'https://www.nasa.gov/nasa-brand-center/images-and-media/', 'html'),
+        ('gibs_usage', 'https://nasa-gibs.github.io/gibs-api-docs/access-basics/', 'html'),
     ]
     for name, url, ext in endpoints:
+        if time.monotonic() >= deadline:
+            break
         request(name, url, ext)
+    request('unosat_korea', 'https://unosat.org/our_products/', body={
+        'region':['Korea (the Republic of)'], 'date_from':'2025-03-01',
+        'date_to':'2025-04-30', 'title':'', 'is_active':False,'is_charter':None})
 
 
 def gibs():
-    from PIL import Image, ImageStat
     layers = ['VIIRS_SNPP_CorrectedReflectance_TrueColor',
               'VIIRS_NOAA20_CorrectedReflectance_TrueColor',
               'MODIS_Terra_CorrectedReflectance_TrueColor',
@@ -185,12 +217,22 @@ def gibs():
                 nonblank = None
                 size = None
                 if is_jpeg:
-                    try:
-                        im = Image.open(io.BytesIO(data)); im.load()
-                        size = list(im.size)
-                        nonblank = max(ImageStat.Stat(im.convert('RGB')).stddev) > 1
-                    except (ValueError, OSError):
-                        is_jpeg = False
+                    # JPEG SOF dimensions, without third-party image libraries.
+                    pos = 2
+                    while pos + 9 < len(data):
+                        if data[pos] != 255:
+                            break
+                        marker = data[pos + 1]
+                        length = int.from_bytes(data[pos + 2:pos + 4], 'big')
+                        if marker in (192, 193, 194):
+                            size = [int.from_bytes(data[pos + 7:pos + 9], 'big'),
+                                    int.from_bytes(data[pos + 5:pos + 7], 'big')]
+                            break
+                        if length < 2:
+                            break
+                        pos += length + 2
+                    # Requested >2 KiB test is a blank-tile proxy, not a pixel/cloud mask.
+                    nonblank = len(data) > 2048 and size == [256, 256]
                 available = meta['http_status'] == 200 and is_jpeg and len(data) > 2048 and nonblank is True
                 row = dict(layer=layer, date=dt, zoom=8, row=tile_row, col=219, url=url,
                            http_status=meta['http_status'], bytes=len(data), jpeg=is_jpeg,
@@ -203,7 +245,7 @@ def gibs():
                 print('GIBS', layer, dt, tile_row, available, len(data), flush=True)
     path = RAW / 'gibs_availability.json'
     write_json(path, {'bbox': [128.2,35.9,129.6,36.8], 'tests': rows,
-                      'caveat': 'Requested tile row 98 covers 37.71859–38.82259 N, outside study bbox. Added row 100 (35.46067–36.59789 N). Tiles sample part of bbox, not full coverage; nonblank is pixel stddev > 1 and JPEG > 2 KiB.'})
+                      'caveat': 'Requested tile row 98 covers 37.71859–38.82259 N, outside study bbox. Added row 100 (35.46067–36.59789 N). Tiles sample part of bbox, not full coverage; nonblank uses the requested JPEG > 2 KiB proxy plus SOF dimensions, not a decoded pixel/cloud mask.'})
     sidecar(path, {'source_url': [r['url'] for r in rows], 'fetched_at_utc': utc_now(),
                    'licence_or_terms': None}, len(rows))
 
@@ -215,6 +257,7 @@ def reliefweb():
     p += [('fields[include][]', k) for k in ['title', 'date', 'source', 'url']]
     p += [('limit', 50)]
     request('reliefweb_reports', 'https://api.reliefweb.int/v1/reports?' + urlencode(p))
+    request('reliefweb_reports_v2', 'https://api.reliefweb.int/v2/reports?' + urlencode(p))
 
 
 if __name__ == '__main__':

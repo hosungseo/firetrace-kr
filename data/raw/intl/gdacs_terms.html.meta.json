@@ -1,0 +1,14 @@
+{
+  "source_url": "https://www.gdacs.org/About/termofuse.aspx",
+  "final_url": "https://www.gdacs.org/About/termofuse.aspx",
+  "fetched_at_utc": "2026-10-17T00:51:47.079697+00:00",
+  "licence_or_terms": null,
+  "row_count": null,
+  "caveat": "Research response cache; row_count is null for HTML/JS/binary or unknown. No reuse licence inferred.",
+  "http_status": 200,
+  "content_type": "text/html; charset=utf-8",
+  "request_body": null,
+  "attempts": [],
+  "public_tokens_redacted": true,
+  "sha256": "e10bee3059dd54bbe7433b81d0e1505b4840cef1c6610fe5de27fc1e1f9680e5"
+}

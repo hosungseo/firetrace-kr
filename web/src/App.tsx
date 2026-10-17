@@ -19,7 +19,7 @@ export default function App() {
   const [tab, setTab] = useState<'overview' | 'events' | 'news' | 'sources'>('overview')
   const [selected, setSelected] = useState<string | null>(null)
   const [basemap, setBasemap] = useState<Basemap>('terrain')
-  const [layers, setLayers] = useState<Layers>({ smoke: true, emd: true, stations: true, burned: true, active: true, wind: true, events: true, terrain: true })
+  const [layers, setLayers] = useState<Layers>({ smoke: false, emd: true, stations: true, burned: true, active: true, wind: true, events: true, terrain: true })
 
   useEffect(() => {
     fetch('data/fire.json')
@@ -30,7 +30,20 @@ export default function App() {
       })
     fetch('data/events.json')
       .then((r) => (r.ok ? r.json() : []))
-      .then((list: FireEvent[]) => setEvents(list.map((e) => ({ ...e, t: toMinutes(e.time) })).sort((a, b) => a.t! - b.t!)))
+      .then((list: FireEvent[]) =>
+        setEvents(
+          list
+            .map((e) => {
+              const t = toMinutes(e.time)
+              // A day-precision record is only "known" once that day is over; a later-published analysis is retro.
+              const tv = e.time_precision === 'day' ? Math.floor(t / 1440) * 1440 + 1439 : t
+              const pub = e.sources.map((s) => s.published).filter(Boolean).sort()[0]
+              const retro = !!pub && toMinutes(pub + 'T00:00:00+09:00') - t > 1440
+              return { ...e, t, tv, retro }
+            })
+            .sort((a, b) => a.t! - b.t!),
+        ),
+      )
       .catch(() => setEvents([]))
     fetch('data/news.json')
       .then((r) => (r.ok ? r.json() : null))
@@ -85,7 +98,8 @@ export default function App() {
       .filter((g) => g.t >= T_MIN && g.t <= T_MAX)
       .sort((a, b) => b.v - a.v)
       .slice(0, 3)
-    return { peak, peakFrom, gust, minRh, obsGusts, final: data.area[data.area.length - 1] }
+    const inWindow = data.area.filter((a) => a.t <= T_MAX)
+    return { peak, peakFrom, gust, minRh, obsGusts, final: inWindow[inWindow.length - 1] }
   }, [data])
 
   useEffect(() => {
@@ -100,7 +114,7 @@ export default function App() {
   const curArea = [...data.area].reverse().find((a) => a.t <= tm)
   const sel = events.find((e) => e.id === selected)
   const officialStats = events.filter((e) => e.type === 'official_stat')
-  const seen = events.filter((e) => (e.t ?? 0) <= tm)
+  const seen = events.filter((e) => (e.tv ?? e.t ?? 0) <= tm)
   const recentNews = news ? news.articles.filter((a) => a[0] <= tm && a[0] > tm - 60).reverse() : []
   const hitEmd = emd ? emd.features.map((f) => f.properties).filter((p) => p.first_hit != null && p.first_hit <= tm) : []
   const exposure = { n: hitEmd.length, total: hitEmd.reduce((a, p) => a + (p.total ?? 0), 0), old: hitEmd.reduce((a, p) => a + (p.age70plus ?? 0), 0) }
@@ -144,10 +158,10 @@ export default function App() {
           </div>
           <div className="map-legend">
             <div>
-              <i className="sw active" /> 최근 12시간 위성 열점
+              <i className="sw active" /> 최근 12시간 탐지 열점
             </div>
             <div>
-              <i className="sw burned" /> 그 이전 열점(연소 흔적)
+              <i className="sw burned" /> 12시간 이전 탐지 열점
             </div>
             <div>
               <i className="sw wind">➜</i> 바람 (ERA5 재분석, 길이·진하기 = 풍속)
@@ -163,12 +177,12 @@ export default function App() {
             </div>
             {localFires.length > 0 && (
               <div>
-                <i className="sw kfs" /> 산림청 발생 기록 (읍면 중심)
+                <i className="sw kfs" /> 산림청 발생 기록 (위치 근사: 읍면 중심)
               </div>
             )}
             {emd && (
               <div>
-                <i className="sw emd" /> 읍면동 (진할수록 70세 이상 비율↑, 주황 = 열점 닿음)
+                <i className="sw emd" /> 읍면동 (진할수록 70세 이상 비율↑, 주황 = 열점 탐지됨)
               </div>
             )}
             {events.length > 0 && (
@@ -182,11 +196,11 @@ export default function App() {
             <div className="now-grid">
               <div>
                 <b>{activeCount.toLocaleString()}</b>
-                <span>활성 열점</span>
+                <span>최근 12h 탐지</span>
               </div>
               <div>
                 <b>{curArea ? curArea.area_ha.toLocaleString() : 0}</b>
-                <span>누적 ha</span>
+                <span>격자 환산 ha</span>
               </div>
               <div>
                 <b>
@@ -206,7 +220,8 @@ export default function App() {
             </div>
             {emd && (
               <div className="exposure">
-                불이 닿은 읍면동 <b>{exposure.n}</b>곳 · 주민 <b>{exposure.total.toLocaleString()}</b>명 · 70세 이상 <b>{exposure.old.toLocaleString()}</b>명
+                열점 탐지 읍면동 <b>{exposure.n}</b>곳 · 해당 지역 주민등록 인구 <b>{exposure.total.toLocaleString()}</b>명 · 70세 이상 <b>{exposure.old.toLocaleString()}</b>명
+                <div className="exposure-note">2025년 3월 기준. 실제 피해·노출·대피 인원이 아닙니다.{activeCount === 0 ? ' 최근 탐지 없음 ≠ 진화 완료.' : ''}</div>
               </div>
             )}
           </div>
@@ -233,10 +248,10 @@ export default function App() {
               <h3>레이어</h3>
               {(
                 [
-                  ['active', '활성 열점'],
-                  ['burned', '연소 흔적'],
+                  ['active', '최근 12시간 탐지 열점'],
+                  ['burned', '12시간 이전 탐지 열점'],
                   ['wind', '바람장 (재분석)'],
-                  ['smoke', '연기 PM2.5 (CAMS)'],
+                  ['smoke', 'PM2.5 (CAMS 모델, 기본 꺼짐)'],
                   ['stations', '기상청 관측소'],
                   ['events', '보도·공식 기록·발생 기록'],
                   ['emd', '읍면동 경계·인구'],
@@ -255,13 +270,13 @@ export default function App() {
                 <dd>{fmt(data.meta.first_detection.t)}</dd>
                 <dt>위성 열점</dt>
                 <dd>{data.meta.hotspot_count.toLocaleString()}개 (VIIRS 2기 + MODIS)</dd>
-                <dt>열점 누적 면적</dt>
-                <dd>{stats.final.area_ha.toLocaleString()} ha (하한 추정)</dd>
-                <dt>가장 빨랐던 구간</dt>
+                <dt>열점 격자 환산</dt>
+                <dd>{stats.final.area_ha.toLocaleString()} ha (375m 격자 × 14ha, 3/28까지)</dd>
+                <dt>신규 격자 최대 구간</dt>
                 <dd>
                   {fmt(stats.peakFrom)} → {fmt(stats.peak.t)}
                   <br />
-                  <b className="hot">{Math.round(stats.peak.rate_ha_h ?? 0).toLocaleString()} ha/h</b>
+                  <b className="hot">{Math.round(stats.peak.rate_ha_h ?? 0).toLocaleString()} ha/h</b> <small>사후 계산 · 위성 통과 간격 기준</small>
                 </dd>
               </dl>
               <button className="jump" onClick={() => setT(stats.peakFrom)}>
@@ -300,8 +315,8 @@ export default function App() {
                     </button>
                   ))}
                   <p className="note">
-                    산림청은 의성 산불을 <b>2건</b>으로 기록합니다. 안평면 괴산리(11:24, 원인 '기타') 46,575ha와 안계면 용기리(14:40, 농산부산물소각) 52,707ha. 두 건의
-                    합이 공식 피해면적 99,289ha입니다.
+                    산림청은 의성 산불을 <b>2건</b>으로 기록합니다. 안평면 괴산리(11:24, 원인 '기타') 46,575.2ha와 안계면 용기리(14:40, 농산부산물소각) 52,707.3ha.
+                    두 건의 합은 99,282.5ha로, 4/18 발표 잠정 피해면적 99,289ha와 6.5ha 차이가 납니다(집계 기준 미확인).
                   </p>
                 </>
               )}
@@ -318,8 +333,8 @@ export default function App() {
                 </>
               )}
               <p className="note">
-                열점 면적은 위성이 지나간 시각(하루 2~4회)에 375m 화소로 잡힌 불만 셉니다. 연기·구름에 가린 곳이 빠져서 공식 피해 면적보다 작게
-                나옵니다.
+                열점 격자 환산 면적은 위성이 지나간 시각(하루 2~4회)에 375m 화소로 잡힌 자리를 세어 14ha씩 더한 값입니다. 가려진 곳은 빠지고 화소 일부만 탄 곳은
+                통째로 들어가므로 실제 연소면적의 상한도 하한도 아닙니다. 신규 격자 증가율은 위성 통과 간격에 좌우되는 사후 지표입니다.
               </p>
             </div>
           )}
@@ -348,12 +363,13 @@ export default function App() {
               )}
               <ol className="ev-list">
                 {events.map((e) => (
-                  <li key={e.id} className={`${(e.t ?? 0) <= tm ? 'past' : 'future'} ${e.id === selected ? 'sel' : ''}`}>
+                  <li key={e.id} className={`${(e.tv ?? e.t ?? 0) <= tm ? 'past' : 'future'} ${e.id === selected ? 'sel' : ''}`}>
                     <button onClick={() => selectEvent(e.id)}>
                       <span className="ev-t">{eventLabel(e.time, e.time_precision)}</span>
                       <span className="ev-title">
                         {e.official && <span className="dot" />}
                         {e.title}
+                        {e.retro && <span className="chip">사후 분석</span>}
                       </span>
                     </button>
                   </li>
@@ -396,7 +412,8 @@ export default function App() {
                   <b>NASA FIRMS</b> 위성 열점 (VIIRS S-NPP·NOAA-20 375m, MODIS 1km, 표준처리 아카이브)
                 </li>
                 <li>
-                  <b>Open-Meteo</b> ERA5 재분석 기상, 0.1° 격자 84개 지점, 시간별 풍속·풍향·돌풍·습도
+                  <b>Open-Meteo</b> ERA5 재분석(models=era5, 원해상도 0.25°)을 0.1° 간격 84개 지점으로 요청. 시간별 풍속·풍향·돌풍·습도. 격자 평균값이라 관측소
+                  순간풍속과 다름
                 </li>
                 <li>
                   <b>기상청 ASOS</b> 종관기상관측 6개 지점(의성·안동·청송·영덕·봉화·포항) 시간자료·일 최대순간풍속 (공공데이터포털)
@@ -405,7 +422,7 @@ export default function App() {
                   <b>NASA GIBS</b> 당일 위성 영상 (VIIRS Suomi-NPP 트루컬러, 오후 1시 30분경 통과, 날짜는 슬라이더를 따름)
                 </li>
                 <li>
-                  <b>CAMS (ECMWF)</b> 대기조성 재분석 PM2.5·AOD, Open-Meteo 경유. 해상도 약 40km라 연기 덩어리의 위치·세기만 참고
+                  <b>CAMS (ECMWF)</b> 전지구 대기조성 예측 제품(약 40km, 3시간)을 Open-Meteo가 보간. PM2.5는 산불 외 발생원 포함. 기본 꺼짐
                 </li>
                 <li>
                   <b>AWS Terrain Tiles</b> 고도 → 3D 지형·음영기복·등고선(브라우저에서 생성, 지형 2배 과장) · <b>Esri</b> 위성영상
@@ -469,7 +486,7 @@ export default function App() {
             +1h
           </button>
         </div>
-        <Timeline data={data} news={news} events={events} fires={localFires} t={tm} onSeek={setT} onSelectEvent={selectEvent} />
+        <Timeline data={data} news={news} events={events} fires={localFires} showSmoke={layers.smoke} t={tm} onSeek={setT} onSelectEvent={selectEvent} />
       </footer>
     </div>
   )

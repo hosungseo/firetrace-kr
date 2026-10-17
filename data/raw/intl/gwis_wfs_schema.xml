@@ -1,0 +1,33 @@
+<?xml version='1.0' encoding="UTF-8" ?>
+<schema
+   targetNamespace="http://mapserver.gis.umn.edu/mapserver" 
+   xmlns:ms="http://mapserver.gis.umn.edu/mapserver" 
+   xmlns:ogc="http://www.opengis.net/ogc"
+   xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+   xmlns="http://www.w3.org/2001/XMLSchema"
+   xmlns:gml="http://www.opengis.net/gml"
+   elementFormDefault="qualified" version="0.1" >
+
+  <import namespace="http://www.opengis.net/gml"
+          schemaLocation="http://schemas.opengis.net/gml/2.1.2/feature.xsd" />
+
+  <element name="nrt.ba.poly" 
+           type="ms:nrt.ba.polyType" 
+           substitutionGroup="gml:_Feature" />
+
+  <complexType name="nrt.ba.polyType">
+    <complexContent>
+      <extension base="gml:AbstractFeatureType">
+        <sequence>
+          <element name="msGeometry" type="gml:GeometryPropertyType" minOccurs="0" maxOccurs="1"/>
+          <element name="id" minOccurs="0" type="string"/>
+          <element name="fire_id" minOccurs="0" type="string"/>
+          <element name="initialdate" minOccurs="0" type="string"/>
+          <element name="finaldate" minOccurs="0" type="string"/>
+          <element name="area" minOccurs="0" type="string"/>
+        </sequence>
+      </extension>
+    </complexContent>
+  </complexType>
+
+</schema>

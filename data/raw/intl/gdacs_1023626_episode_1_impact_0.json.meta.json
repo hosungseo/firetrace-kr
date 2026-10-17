@@ -1,0 +1,14 @@
+{
+  "source_url": "https://www.gdacs.org/gdacsapi/api/export/getimpact?id=665886",
+  "final_url": "https://www.gdacs.org/gdacsapi/api/export/getimpact?id=665886",
+  "fetched_at_utc": "2026-10-17T00:53:06.639328+00:00",
+  "licence_or_terms": null,
+  "row_count": null,
+  "caveat": "Research response cache; row_count is null for HTML/JS/binary or unknown. No reuse licence inferred.",
+  "http_status": 200,
+  "content_type": "application/json; charset=utf-8",
+  "request_body": null,
+  "attempts": [],
+  "public_tokens_redacted": false,
+  "sha256": "7521badd10053dc53ae071957bc7dcad88b8c0620ade61e05e0e47376c66fbf9"
+}

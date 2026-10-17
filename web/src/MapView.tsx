@@ -136,7 +136,7 @@ function eventGeoJSON(events: FireEvent[]) {
       .map((e) => ({
         type: 'Feature' as const,
         geometry: { type: 'Point' as const, coordinates: [e.lon!, e.lat!] },
-        properties: { id: e.id, t: e.t ?? 0, title: e.title },
+        properties: { id: e.id, t: e.tv ?? e.t ?? 0, title: e.title },
       })),
   }
 }
@@ -183,8 +183,8 @@ export default function MapView({ basemap, data, events, emd, kfs, t, layers, se
       },
       center: [129.0, 36.38],
       zoom: 9.2,
-      pitch: 55,
-      bearing: -12,
+      pitch: 50,
+      bearing: -8,
       maxPitch: 75,
       attributionControl: { compact: true, customAttribution: 'Fire: NASA FIRMS · Weather: Open-Meteo (ERA5) · DEM: AWS Terrain Tiles' },
     })
@@ -342,7 +342,7 @@ export default function MapView({ basemap, data, events, emd, kfs, t, layers, se
         type: 'circle',
         source: 'kfs',
         paint: {
-          'circle-radius': ['interpolate', ['linear'], ['get', 'area'], 1, 5, 50000, 11],
+          'circle-radius': 6,
           'circle-color': '#8a2a0c',
           'circle-stroke-color': '#fff',
           'circle-stroke-width': 2,
@@ -432,7 +432,7 @@ export default function MapView({ basemap, data, events, emd, kfs, t, layers, se
         `<b>${st.name}</b> ${ws != null ? ws.toFixed(1) : '–'}<small>m/s</small> · ${st.rh[hi] ?? '–'}%`
       el.classList.toggle('strong', (ws ?? 0) >= 6)
     })
-    map.setTerrain(layers.terrain ? { source: 'dem', exaggeration: sat ? 1.6 : 2.0 } : null)
+    map.setTerrain(layers.terrain ? { source: 'dem', exaggeration: sat ? 1.4 : 1.6 } : null)
   }
 
   // Daily imagery is a raster source whose URL carries the date; swap source + layer when the date changes

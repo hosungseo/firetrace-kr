@@ -1,0 +1,14 @@
+{
+  "source_url": "https://unosat.org/static/js/main.66fefde9.chunk.js",
+  "final_url": "https://unosat.org/static/js/main.66fefde9.chunk.js",
+  "fetched_at_utc": "2026-10-17T00:49:07.192130+00:00",
+  "licence_or_terms": null,
+  "row_count": null,
+  "caveat": "Research response cache; row_count is null for HTML/JS/binary or unknown. No reuse licence inferred.",
+  "http_status": 200,
+  "content_type": "application/javascript",
+  "request_body": null,
+  "attempts": [],
+  "public_tokens_redacted": false,
+  "sha256": "ebb2deb9e21767d553b971cb9b391df565bacf8811ef83f179d8157f894d4c80"
+}

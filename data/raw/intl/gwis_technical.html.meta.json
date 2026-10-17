@@ -1,0 +1,14 @@
+{
+  "source_url": "https://gwis.jrc.ec.europa.eu/about-gwis/technical-background",
+  "final_url": "https://gwis.jrc.ec.europa.eu/about-gwis/technical-background",
+  "fetched_at_utc": "2026-10-17T00:49:11.863463+00:00",
+  "licence_or_terms": null,
+  "row_count": null,
+  "caveat": "Research response cache; row_count is null for HTML/JS/binary or unknown. No reuse licence inferred.",
+  "http_status": 200,
+  "content_type": "text/html; charset=utf-8",
+  "request_body": null,
+  "attempts": [],
+  "public_tokens_redacted": false,
+  "sha256": "3f23c4be5460251928a64a83744568dec90cfe6fc22a8c809be8a6420adbeded"
+}
