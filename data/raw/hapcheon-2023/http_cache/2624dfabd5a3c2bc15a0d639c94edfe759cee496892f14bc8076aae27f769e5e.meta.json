@@ -1,6 +1,0 @@
-{
-  "source": "firms",
-  "source_url": "https://firms.modaps.eosdis.nasa.gov/api/area/csv/[REDACTED]/VIIRS_NOAA20_SP/127.499402,34.939704,128.699402,36.139704/1/2023-03-12",
-  "http_status": 200,
-  "fetched_at_utc": "2026-10-17T01:39:07.377115+00:00"
-}

@@ -11,3 +11,6 @@ data/raw/.rate-*
 # Large HTTP caches (regenerable)
 data/raw/public_cache/
 data/raw/article_text/
+data/raw/evidence/
+data/raw/*/http_cache/
+data/raw/*/evidence/

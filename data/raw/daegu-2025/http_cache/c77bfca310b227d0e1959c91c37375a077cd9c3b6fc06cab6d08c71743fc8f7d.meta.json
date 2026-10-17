@@ -1,6 +1,0 @@
-{
-  "source": "data_go_kr",
-  "source_url": "https://apis.data.go.kr/1741000/admmSexdAgePpltn/selectAdmmSexdAgePpltn?serviceKey=[REDACTED]&pageNo=1&numOfRows=1000&type=JSON&year=2025&month=04&statsYm=202504&srchFrYm=202504&srchToYm=202504&admmCd=2723000000&lv=3&regSeCd=1",
-  "http_status": 200,
-  "fetched_at_utc": "2026-10-17T01:56:30.937803+00:00"
-}

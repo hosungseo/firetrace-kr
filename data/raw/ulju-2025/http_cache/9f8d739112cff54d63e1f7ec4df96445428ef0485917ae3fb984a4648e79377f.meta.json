@@ -1,6 +1,0 @@
-{
-  "source": "firms",
-  "source_url": "https://firms.modaps.eosdis.nasa.gov/api/area/csv/[REDACTED]/VIIRS_SNPP_SP/128.656115,34.817224,129.856115,36.017224/3/2025-03-26",
-  "http_status": 200,
-  "fetched_at_utc": "2026-10-17T01:40:47.739304+00:00"
-}

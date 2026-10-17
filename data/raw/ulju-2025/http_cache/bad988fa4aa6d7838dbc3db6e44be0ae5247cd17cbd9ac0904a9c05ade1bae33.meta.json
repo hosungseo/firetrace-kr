@@ -1,6 +1,0 @@
-{
-  "source": "naver",
-  "source_url": "https://openapi.naver.com/v1/search/news.json?query=%EC%9A%B8%EC%A3%BC%EA%B5%B0+%EC%82%B0%EB%B6%88+%ED%99%95%EC%82%B0&display=100&start=301&sort=sim",
-  "http_status": 200,
-  "fetched_at_utc": "2026-10-17T01:55:56.603389+00:00"
-}

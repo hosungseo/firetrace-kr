@@ -198,7 +198,7 @@ export default function App() {
     <div className="app">
       <header className="topbar">
         <div className="brand">
-          <span className="logo">▲</span> 산불 추적 <span className="sub">위성·기상·보도 종합 분석</span>
+          <span className="logo">▲</span> 산불추적기 <span className="sub">위성·기상·보도 종합 분석</span>
         </div>
         <div className="incident">
           {registry && registry.length > 1 ? (
