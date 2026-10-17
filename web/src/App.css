@@ -274,3 +274,8 @@
 .sw.forest { border-radius: 2px; background: linear-gradient(90deg, #a59168 50%, #c1dc07 50%); }
 .spread-lead { font-size: 12px; line-height: 1.55; margin: 0 0 6px; }
 .sw.spread { border-radius: 2px; background: linear-gradient(90deg, #ffd166, #c2261b 60%, #5c0a28); }
+.sw.gk2a { background: #06b6d4; opacity: .8; }
+.reach-chart { width: 100%; height: 64px; margin-top: 6px; cursor: pointer; }
+.reach-chart polyline { fill: none; stroke: #06b6d4; stroke-width: 1.8; }
+.reach-chart circle { fill: #06b6d4; stroke: #fff; stroke-width: 1.2; }
+.reach-chart text { font-size: 9px; fill: var(--ink-3); }

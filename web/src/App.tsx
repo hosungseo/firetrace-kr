@@ -3,7 +3,7 @@ import MapView, { type Basemap, type Layers } from './MapView'
 import Timeline from './Timeline'
 import Response from './Response'
 import EmdDetail from './EmdDetail'
-import type { EmdCollection, FfasData, FireData, FireEvent, ForestTypeData, SpreadData, FullMentionsData, GdacsData, GwisData, KfsData, MentionsData, NewsData, OfficialData, ResponseData } from './types'
+import type { EmdCollection, FfasData, FireData, FireEvent, ForestTypeData, Gk2aData, SpreadData, FullMentionsData, GdacsData, GwisData, KfsData, MentionsData, NewsData, OfficialData, ResponseData } from './types'
 import { ACTIVE_WINDOW, T_MAX, T_MIN, compass, eventLabel, fmt, fmtDay, hourIndex, setIncident, toMinutes } from './time'
 import './App.css'
 
@@ -51,13 +51,14 @@ export default function App() {
   const [ffas, setFfas] = useState<FfasData | null>(null)
   const [forest, setForest] = useState<ForestTypeData | null>(null)
   const [spread, setSpread] = useState<SpreadData | null>(null)
+  const [gk2a, setGk2a] = useState<Gk2aData | null>(null)
   const [t, setT] = useState(T_MIN + 13 * 60)
   const [playing, setPlaying] = useState(false)
   const [speed, setSpeed] = useState(1)
   const [tab, setTab] = useState<'overview' | 'response' | 'emd' | 'events' | 'news' | 'compare' | 'sources'>('overview')
   const [selected, setSelected] = useState<string | null>(null)
   const [basemap, setBasemap] = useState<Basemap>('terrain')
-  const [layers, setLayers] = useState<Layers>({ gwis: true, smoke: false, emd: true, stations: true, burned: true, active: true, wind: true, events: true, terrain: true, situation: true, forest: false, spread: true })
+  const [layers, setLayers] = useState<Layers>({ gwis: true, smoke: false, emd: true, stations: true, burned: true, active: true, wind: true, events: true, terrain: true, situation: true, forest: false, spread: true, gk2a: true })
 
   // Registry → incident (from URL hash) → per-incident data directory
   useEffect(() => {
@@ -83,7 +84,7 @@ export default function App() {
   useEffect(() => {
     if (!incident) return
     setIncident(incident.t0, incident.display_days)
-    setData(null); setEvents([]); setNews(null); setEmd(null); setKfs(null); setResp(null); setGwis(null); setGdacs(null); setIntlNews(null); setOfficial(null); setMentions(null); setFull(null); setFfas(null); setForest(null); setSpread(null)
+    setData(null); setEvents([]); setNews(null); setEmd(null); setKfs(null); setResp(null); setGwis(null); setGdacs(null); setIntlNews(null); setOfficial(null); setMentions(null); setFull(null); setFfas(null); setForest(null); setSpread(null); setGk2a(null)
     setSelected(null); setFocusCode(null); setPlaying(false)
     json<FireData>(base + 'fire.json').then((d) => {
       if (!d) return
@@ -116,6 +117,7 @@ export default function App() {
     json<FfasData>(base + 'ffas.json').then(setFfas)
     json<ForestTypeData>(base + 'forest_type.json').then(setForest)
     json<SpreadData>(base + 'spread.json').then(setSpread)
+    json<Gk2aData>(base + 'gk2a.json').then(setGk2a)
     json<{ gdelt_volume?: { series: [number, number, string][] } }>(base + 'intl_news.json').then(setIntlNews)
   }, [incident, base])
 
@@ -228,7 +230,7 @@ export default function App() {
 
       <main className="body">
         <section className="stage">
-          <MapView key={incident.id} view={{ center: incident.center, zoom: incident.zoom }} basemap={basemap} data={data} events={events} emd={emd} kfs={kfs?.fires ?? []} gwis={gwis} ffas={ffas} forest={forest} spread={spread} dataBase={base} focusCode={focusCode} onFocusEmd={focusEmd} t={tm} layers={layers} selected={selected} onSelectEvent={selectEvent} />
+          <MapView key={incident.id} view={{ center: incident.center, zoom: incident.zoom }} basemap={basemap} data={data} events={events} emd={emd} kfs={kfs?.fires ?? []} gwis={gwis} ffas={ffas} forest={forest} spread={spread} gk2a={gk2a} dataBase={base} focusCode={focusCode} onFocusEmd={focusEmd} t={tm} layers={layers} selected={selected} onSelectEvent={selectEvent} />
           <div className="basemap-switch" role="radiogroup" aria-label="배경지도">
             {(
               [
@@ -270,6 +272,11 @@ export default function App() {
             {gwis && (
               <div>
                 <i className="sw gwis" /> JRC GWIS 화재 둘레 추정 (MODIS·VIIRS)
+              </div>
+            )}
+            {gk2a && layers.gk2a && gk2a.pixels.length > 0 && (
+              <div>
+                <i className="sw gk2a" /> 천리안 2A 산불탐지(2km, 최근 30분) · 하늘색 선 = 발화점에서 가장 멀리 간 불의 경로
               </div>
             )}
             {spread && layers.spread && spread.summary.major > 0 && (
@@ -358,6 +365,7 @@ export default function App() {
               <h3>레이어</h3>
               {(
                 [
+                  ['gk2a', '천리안 2A 10분 산불탐지·선두 경로'],
                   ['spread', '확산 경로 (도달 시각·전진 화살표)'],
                   ['active', '최근 12시간 탐지 열점'],
                   ['burned', '12시간 이전 탐지 열점'],
@@ -377,6 +385,53 @@ export default function App() {
                   {label}
                 </label>
               ))}
+
+              {gk2a && gk2a.reach.length > 0 && (() => {
+                const first = gk2a.pixels.reduce((m, p) => Math.min(m, p[2]), Infinity)
+                const last = gk2a.reach[gk2a.reach.length - 1]
+                const maxKm = last[1]
+                const t0r = gk2a.reach[0][0]
+                const t1r = last[0]
+                const W = 280, H = 64
+                const x = (v: number) => ((v - t0r) / Math.max(1, t1r - t0r)) * W
+                const y = (v: number) => H - (v / Math.max(1, maxKm)) * (H - 6) - 3
+                const now = gk2a.reach.filter((r) => r[0] <= tm).pop()
+                const reported = ffas?.members.find((m) => m.matched)?.reported
+                const f = gk2a.fastest_hour
+                return (
+                  <>
+                    <h3>천리안 2A로 본 10분 경로</h3>
+                    <dl className="facts">
+                      <dt>첫 탐지</dt>
+                      <dd>
+                        {fmt(first)}
+                        {reported && <small> · 신고 {fmt(toMinutes(reported))}</small>}
+                        {data && <small> · 극궤도 위성 {fmt(data.meta.first_detection.t)}</small>}
+                      </dd>
+                      <dt>지금까지 도달</dt>
+                      <dd>{now ? `발화점에서 ${now[1].toFixed(1)} km` : '아직 탐지 없음'}</dd>
+                      {f && (
+                        <>
+                          <dt>가장 빨랐던 1시간</dt>
+                          <dd>
+                            <button className="link-row" onClick={() => setT(f.t_from)}>
+                              <b className="hot">{f.kmh.toFixed(1)} km/h</b> · {fmt(f.t_from)} → {fmt(f.t_to)} ({f.km_from.toFixed(0)} → {f.km_to.toFixed(0)} km)
+                            </button>
+                          </dd>
+                        </>
+                      )}
+                    </dl>
+                    <svg className="reach-chart" viewBox={`0 0 ${W} ${H}`} onClick={(e) => { const r = e.currentTarget.getBoundingClientRect(); setT(Math.round(t0r + ((e.clientX - r.left) / r.width) * (t1r - t0r))) }}>
+                      <polyline points={gk2a.reach.map((r) => `${x(r[0])},${y(r[1])}`).join(' ')} />
+                      {now && <circle cx={x(now[0])} cy={y(now[1])} r={3.5} />}
+                      <text x={2} y={10}>{maxKm.toFixed(0)} km</text>
+                    </svg>
+                    <p className="note top">
+                      정지궤도 천리안위성 2A호가 10분마다 찍은 산불탐지 화소(2km)입니다. 하늘색 선은 매 시각 발화점에서 가장 멀리 있던 불의 위치를 이은 것이라, 극궤도 위성의 12시간 공백을 메웁니다. 구름이 가리거나 불이 작으면 놓치고, 화소가 2km라 위치 오차가 그만큼 있습니다. 받은 프레임 {gk2a.frames_available}/{gk2a.frames_total}.
+                    </p>
+                  </>
+                )
+              })()}
 
               {spread && spread.summary.major > 0 && (
                 <>
@@ -785,6 +840,9 @@ export default function App() {
                 </li>
                 <li>
                   <b>산림청 임상도</b> (map.forest.go.kr 1:5,000 나무지도) 사건 범위를 한 장으로 받아 범례 색으로 숲 종류를 역분류했습니다. 2026-02 갱신 현재판이라 피해지가 이미 미립목지로 바뀐 사건이 있습니다
+                </li>
+                <li>
+                  <b>천리안위성 2A호 산불탐지</b> 기상청 API허브(AMI L2 FF, 한반도 2km, 10분). 신뢰도 하·중·상만, 60분 안 2회 이상 탐지, VIIRS 칸 3km 안 화소만 사용. 원자료는 승인 이용자 제한이라 게시하지 않고 탐지 위치·시각만 씁니다
                 </li>
                 <li>
                   <b>확산 경로</b> FIRMS VIIRS 375m 칸의 첫 탐지 시각으로 도달 시각을 그리고, 통과 사이 새로 탄 칸의 전진 벡터를 ERA5 바람과 비교했습니다. 관측 간격이 약 12시간이라 경로·속도는 하한 추정입니다

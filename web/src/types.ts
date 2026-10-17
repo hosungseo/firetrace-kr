@@ -299,3 +299,16 @@ export interface SpreadData {
   cells: [number, number, number][]
   summary: { heads: number; heads_with_wind_45: number; major: number; vectors_1km: number; with_wind_45: number; km_share_with_wind_45: number | null; longest: SpreadVector | null; fastest: SpreadVector | null }
 }
+
+export interface Gk2aData {
+  source: string
+  method: string
+  ignition: [number, number]
+  frames_total: number
+  frames_available: number
+  pixels: [number, number, number][]
+  frames: [number, number[]][]
+  head: [number, number, number, number][]
+  reach: [number, number][]
+  fastest_hour: { t_from: number; t_to: number; kmh: number; km_from: number; km_to: number } | null
+}

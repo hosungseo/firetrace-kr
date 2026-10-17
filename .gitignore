@@ -18,3 +18,6 @@ data/raw/*/evidence/
 
 # Large reference PDFs (산불통계연보, re-downloadable from fd.forest.go.kr/ffas/data/<year>_fire_static.pdf)
 data/raw/kfs_docs/
+
+# GK2A raw files (KMA API허브, restricted licence: keep local)
+data/raw/gk2a/

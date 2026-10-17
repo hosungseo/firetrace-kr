@@ -5,7 +5,7 @@ import 'maplibre-gl/dist/maplibre-gl.css'
 import mlcontour from 'maplibre-contour'
 // maplibre v6 resolves its worker next to import.meta.url, which the bundle doesn't ship; emit it as an asset.
 import workerUrl from 'maplibre-gl/dist/maplibre-gl-worker.mjs?url'
-import type { EmdCollection, FfasData, FireData, FireEvent, ForestTypeData, GwisData, KfsFire, SpreadData } from './types'
+import type { EmdCollection, FfasData, FireData, FireEvent, ForestTypeData, GwisData, Gk2aData, KfsFire, SpreadData } from './types'
 import { ACTIVE_WINDOW, T_MAX, fmt, hourIndex, kstDate, toMinutes } from './time'
 
 export interface Layers {
@@ -21,6 +21,7 @@ export interface Layers {
   situation: boolean
   forest: boolean
   spread: boolean
+  gk2a: boolean
 }
 
 export type Basemap = 'terrain' | 'night' | 'satellite' | 'daily'
@@ -36,6 +37,7 @@ interface Props {
   ffas: FfasData | null
   forest: ForestTypeData | null
   spread: SpreadData | null
+  gk2a: Gk2aData | null
   dataBase: string
   focusCode: string | null
   onFocusEmd: (code: string) => void
@@ -158,7 +160,7 @@ function eventGeoJSON(events: FireEvent[]) {
   }
 }
 
-export default function MapView({ view, basemap, data, events, emd, kfs, gwis, ffas, forest, spread, dataBase, focusCode, onFocusEmd, t, layers, selected, onSelectEvent }: Props) {
+export default function MapView({ view, basemap, data, events, emd, kfs, gwis, ffas, forest, spread, gk2a, dataBase, focusCode, onFocusEmd, t, layers, selected, onSelectEvent }: Props) {
   const el = useRef<HTMLDivElement>(null)
   const mapRef = useRef<maplibregl.Map | null>(null)
   const ready = useRef(false)
@@ -166,8 +168,8 @@ export default function MapView({ view, basemap, data, events, emd, kfs, gwis, f
   const dailyKey = useRef('')
   const stationEls = useRef<HTMLDivElement[]>([])
   const popup = useRef<maplibregl.Popup | null>(null)
-  const latest = useRef({ t, layers, events, selected, basemap, emd, kfs, gwis, ffas, forest, spread })
-  latest.current = { t, layers, events, selected, basemap, emd, kfs, gwis, ffas, forest, spread }
+  const latest = useRef({ t, layers, events, selected, basemap, emd, kfs, gwis, ffas, forest, spread, gk2a })
+  latest.current = { t, layers, events, selected, basemap, emd, kfs, gwis, ffas, forest, spread, gk2a }
 
   useEffect(() => {
     const map = new maplibregl.Map({
@@ -300,6 +302,29 @@ export default function MapView({ view, basemap, data, events, emd, kfs, gwis, f
           'line-color': ['match', ['get', 'kind'], 'fire_line', '#e8361c', '#6b7280'],
           'line-width': ['match', ['get', 'kind'], 'fire_line', 2.6, 1.6],
           'line-opacity': 0.95,
+        },
+      })
+      // GK2A geostationary fire pixels (2 km, every 10 min) and the leading-edge track
+      map.addSource('gk2a', { type: 'geojson', data: { type: 'FeatureCollection', features: [] } })
+      map.addLayer({
+        id: 'gk2a-track',
+        type: 'line',
+        source: 'gk2a',
+        filter: ['==', ['geometry-type'], 'LineString'],
+        layout: { 'line-join': 'round', 'line-cap': 'round' },
+        paint: { 'line-color': '#06b6d4', 'line-width': 3, 'line-opacity': 0.9 },
+      })
+      map.addLayer({
+        id: 'gk2a-px',
+        type: 'circle',
+        source: 'gk2a',
+        filter: ['==', ['geometry-type'], 'Point'],
+        paint: {
+          'circle-radius': ['interpolate', ['exponential', 2], ['zoom'], 8, 2.5, 12, 18],
+          'circle-color': '#06b6d4',
+          'circle-opacity': ['case', ['get', 'now'], 0.75, 0.3],
+          'circle-stroke-color': '#fff',
+          'circle-stroke-width': ['case', ['get', 'now'], 1, 0],
         },
       })
       // Front-advance vectors between satellite passes
@@ -481,6 +506,8 @@ export default function MapView({ view, basemap, data, events, emd, kfs, gwis, f
       })
 
       map.moveLayer('arrival', 'active')
+      map.moveLayer('gk2a-px')
+      map.moveLayer('gk2a-track')
       map.moveLayer('spread-line')
       map.moveLayer('spread-head')
       ready.current = true
@@ -492,7 +519,7 @@ export default function MapView({ view, basemap, data, events, emd, kfs, gwis, f
 
   function apply(map: maplibregl.Map) {
     if (!ready.current) return
-    const { t, layers, events, selected, basemap, emd, kfs, ffas, forest, spread } = latest.current
+    const { t, layers, events, selected, basemap, emd, kfs, ffas, forest, spread, gk2a } = latest.current
     const b = BASE[basemap]
     if (emd) (map.getSource('emd') as GeoJSONSource).setData(emd as never)
     if (gwis) (map.getSource('gwis') as GeoJSONSource).setData(gwis as never)
@@ -508,6 +535,8 @@ export default function MapView({ view, basemap, data, events, emd, kfs, gwis, f
       ;(map.getSource('spread') as GeoJSONSource).setData(spreadGeoJSON(spread, t))
     }
     for (const id of ['arrival', 'spread-line', 'spread-head']) map.setLayoutProperty(id, 'visibility', layers.spread ? 'visible' : 'none')
+    if (gk2a) (map.getSource('gk2a') as GeoJSONSource).setData(gk2aGeoJSON(gk2a, t))
+    for (const id of ['gk2a-track', 'gk2a-px']) map.setLayoutProperty(id, 'visibility', layers.gk2a ? 'visible' : 'none')
     if (map.getLayer('forest')) map.setLayoutProperty('forest', 'visibility', layers.forest ? 'visible' : 'none')
     ;(map.getSource('kfs') as GeoJSONSource).setData(kfsGeoJSON(kfs))
     map.setFilter('emd-hit', ['<=', ['coalesce', ['get', 'first_hit'], 1e9], t])
@@ -610,7 +639,7 @@ export default function MapView({ view, basemap, data, events, emd, kfs, gwis, f
   useEffect(() => {
     if (mapRef.current) apply(mapRef.current)
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [t, layers, events, selected, basemap, emd, kfs, gwis, ffas, forest, spread])
+  }, [t, layers, events, selected, basemap, emd, kfs, gwis, ffas, forest, spread, gk2a])
 
 
   // Highlight + fly to a 읍면동 chosen in the response tab
@@ -676,4 +705,26 @@ function spreadGeoJSON(sp: SpreadData, t: number) {
     ]
   })
   return { type: 'FeatureCollection' as const, features } as never
+}
+
+// Pixels active within the last 30 minutes (latest frame highlighted) and the leading-edge track so far
+function gk2aGeoJSON(g: Gk2aData, t: number) {
+  const recent = g.frames.filter(([ft]) => ft <= t && ft > t - 30)
+  const lastT = recent.length ? recent[recent.length - 1][0] : -1
+  const now = new Set(recent.length ? recent[recent.length - 1][1] : [])
+  const ids = new Set(recent.flatMap(([, a]) => a))
+  const pts = [...ids].map((i) => ({
+    type: 'Feature' as const,
+    properties: { now: now.has(i), t: lastT },
+    geometry: { type: 'Point' as const, coordinates: [g.pixels[i][0], g.pixels[i][1]] },
+  }))
+  // track: head positions where the reach envelope grew
+  const track: number[][] = [g.ignition]
+  let best = -1
+  for (const [ht, lon, lat, km] of g.head) {
+    if (ht > t) break
+    if (km > best + 0.5) { track.push([lon, lat]); best = km }
+  }
+  const line = track.length > 1 ? [{ type: 'Feature' as const, properties: {}, geometry: { type: 'LineString' as const, coordinates: track } }] : []
+  return { type: 'FeatureCollection' as const, features: [...line, ...pts] } as never
 }
