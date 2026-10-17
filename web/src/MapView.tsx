@@ -3,6 +3,8 @@ import * as maplibregl from 'maplibre-gl'
 import type { GeoJSONSource, MapLayerMouseEvent } from 'maplibre-gl'
 import 'maplibre-gl/dist/maplibre-gl.css'
 import mlcontour from 'maplibre-contour'
+// maplibre v6 resolves its worker next to import.meta.url, which the bundle doesn't ship; emit it as an asset.
+import workerUrl from 'maplibre-gl/dist/maplibre-gl-worker.mjs?url'
 import type { EmdCollection, FfasData, FireData, FireEvent, ForestTypeData, GwisData, KfsFire } from './types'
 import { ACTIVE_WINDOW, T_MAX, fmt, hourIndex, kstDate, toMinutes } from './time'
 
@@ -40,6 +42,8 @@ interface Props {
   selected: string | null
   onSelectEvent: (id: string) => void
 }
+
+maplibregl.setWorkerUrl(workerUrl)
 
 const IMAGERY = 'https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}'
 const DEM = 'https://s3.amazonaws.com/elevation-tiles-prod/terrarium/{z}/{x}/{y}.png'
