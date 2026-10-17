@@ -10,6 +10,10 @@ const IGN = gk.ignition
 const km = (a, b) => Math.hypot((b[0] - a[0]) * 111.32 * Math.cos(((a[1] + b[1]) / 2) * Math.PI / 180), (b[1] - a[1]) * 110.57)
 const bearing = (a, b) => (Math.atan2((b[0] - a[0]) * Math.cos(((a[1] + b[1]) / 2) * Math.PI / 180), b[1] - a[1]) * 180 / Math.PI + 360) % 360
 const headAt = (t) => [...gk.head].reverse().find((h) => h[0] <= t)
+// monotone leading edge: the head entry with the largest reach so far (never steps back)
+const lead = []; let bestH = null
+for (const h of gk.head) { if (!bestH || h[3] > bestH[3]) bestH = h; lead.push([h[0], bestH[1], bestH[2], bestH[3]]) }
+const leadAt = (t) => [...lead].reverse().find((h) => h[0] <= t) ?? lead[0]
 const reachAt = (t) => [...gk.reach].reverse().find((r) => r[0] <= t)?.[1] ?? 0
 const lerp = (a, b, k) => a + (b - a) * k
 const lerpAng = (a, b, k) => a + ((((b - a) % 360) + 540) % 360 - 180) * k
@@ -69,12 +73,12 @@ for (let pass = 0; pass < 2; pass++) {
     let target
     if (f < A.f1) { const k = f / A.f1; target = { lon: lerp(128.70, 128.76, k), lat: lerp(36.37, 36.40, k), zoom: lerp(9.9, 9.7, k), pitch: 50, bearing: lerp(-18, 4, k) } }
     else if (f < B.f1) {
-      const h = headAt(t + 20) ?? headAt(t); const prev = headAt(t - 90) ?? h
+      const h = leadAt(t + 15); const prev = leadAt(t - 90)
       if (h && prev && km(prev.slice(1, 3), h.slice(1, 3)) > 1.2) bear = lerpAng(bear, bearing(prev.slice(1, 3), h.slice(1, 3)), 0.08)
       const fwd = 1.4 / 110.57; const lon = h[1] + Math.sin(bear * Math.PI / 180) * fwd / Math.cos(h[2] * Math.PI / 180); const lat = h[2] + Math.cos(bear * Math.PI / 180) * fwd
       target = { lon, lat, zoom: 10.25, pitch: 58, bearing: bear }
     } else { target = { lon: 128.87, lat: 36.43, zoom: 9.0, pitch: 46, bearing: 0 } }
-    const k = f < A.f1 ? 0.07 : f < B.f1 ? 0.16 : 0.045
+    const k = f < A.f1 ? 0.07 : f < B.f1 ? 0.12 : 0.045
     cam = { lon: lerp(cam.lon, target.lon, k), lat: lerp(cam.lat, target.lat, k), zoom: lerp(cam.zoom, target.zoom, k), pitch: lerp(cam.pitch, target.pitch, k), bearing: lerpAng(cam.bearing, target.bearing, k) }
     if (pass === 0 && f % 6) continue
     const [dd, hh] = fmtT(t); const reach = reachAt(t); const prevR = reachAt(t - 60)
@@ -88,6 +92,7 @@ for (let pass = 0; pass < 2; pass++) {
     }, { cam, t, dd, hh, reach, adv: reach - prevR, showDist: f >= 70 })
     await idle()
     if (pass === 1) await page.screenshot({ path: OUT + `f${String(f).padStart(4, '0')}.png`, type: 'png' })
+    if (pass === 1 && f >= B.f0 && f < B.f1 && f % 15 === 0) { const L = leadAt(t); const pt = await page.evaluate((ll) => { const p = window.__map.project(ll); return [Math.round(p.x), Math.round(p.y)] }, [L[1], L[2]]); console.log('lead on screen', f, hh, pt.join(',')) }
     if (pass === 1 && f % 60 === 0) console.log('frame', f, hh, reach.toFixed(1))
   }
   cam = { lon: 128.70, lat: 36.37, zoom: 9.9, pitch: 50, bearing: -18 }; bear = 75
