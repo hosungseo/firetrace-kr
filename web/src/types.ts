@@ -31,6 +31,7 @@ export interface FrontWeather {
   rain: number
   lat: number
   lon: number
+  pm25?: number | null
 }
 
 export interface Station {
@@ -52,6 +53,7 @@ export interface FireData {
   area: AreaPoint[]
   weather: { hours: number[]; grid: GridPoint[]; front: FrontWeather[] }
   stations: Station[]
+  smoke: { lat: number; lon: number; pm25: (number | null)[]; aod: (number | null)[] }[]
   meta: { first_detection: { lon: number; lat: number; t: number }; hotspot_count: number; cell_km2: number }
 }
 

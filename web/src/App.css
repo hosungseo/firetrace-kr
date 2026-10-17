@@ -20,7 +20,7 @@
 .sw.event { background: var(--event); border: 2px solid #fff; outline: 1px solid #ccc; }
 .now-card { position: absolute; right: 12px; top: 12px; background: rgba(251,250,247,.94); border-radius: 10px; padding: 10px 12px; box-shadow: 0 1px 6px rgba(0,0,0,.18); min-width: 260px; }
 .now-time { font-size: 12px; color: var(--ink-2); margin-bottom: 6px; font-variant-numeric: tabular-nums; }
-.now-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; }
+.now-grid { display: grid; gap: 10px; }
 .now-grid b { display: block; font-size: 17px; font-variant-numeric: tabular-nums; }
 .now-grid b small { font-size: 11px; color: var(--ink-3); font-weight: 500; }
 .now-grid span { font-size: 10.5px; color: var(--ink-3); }
@@ -156,3 +156,9 @@
 :root[data-theme='dark'] .emd-popup .maplibregl-popup-content { background: #1a191f; color: #ecebf0; }
 :root[data-theme='dark'] .emd-popup .maplibregl-popup-tip { border-top-color: #1a191f; border-bottom-color: #1a191f; }
 :root[data-theme='dark'] .fire-tick { fill: #ff8a5b; stroke: #15141a; }
+
+/* smoke */
+.sw.smoke { background: radial-gradient(circle, #5c5046 0%, rgba(92,80,70,0) 70%); }
+.pm-line { fill: none; stroke: #6b5d50; stroke-width: 2; }
+:root[data-theme='dark'] .pm-line { stroke: #b9a898; }
+.now-grid { grid-template-columns: repeat(5, 1fr); }

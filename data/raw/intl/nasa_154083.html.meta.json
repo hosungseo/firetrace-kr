@@ -1,0 +1,14 @@
+{
+  "source_url": "https://earthobservatory.nasa.gov/images/154083/outbreak-of-fire-across-south-korea",
+  "final_url": "https://science.nasa.gov/earth/earth-observatory/outbreak-of-fire-across-south-korea-154083/",
+  "fetched_at_utc": "2026-10-17T00:42:25.014748+00:00",
+  "licence_or_terms": null,
+  "row_count": null,
+  "caveat": "Research response cache; row_count is null for HTML/JS/binary or unknown. No reuse licence inferred.",
+  "http_status": 200,
+  "content_type": "text/html; charset=UTF-8",
+  "request_body": null,
+  "attempts": [],
+  "public_tokens_redacted": true,
+  "sha256": "90e6a736cfd6855a328f2850d4d477b374f1ca2e21ada3aa3b4429414f4a6afb"
+}

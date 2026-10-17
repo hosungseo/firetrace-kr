@@ -19,7 +19,7 @@ export default function App() {
   const [tab, setTab] = useState<'overview' | 'events' | 'news' | 'sources'>('overview')
   const [selected, setSelected] = useState<string | null>(null)
   const [basemap, setBasemap] = useState<Basemap>('terrain')
-  const [layers, setLayers] = useState<Layers>({ emd: true, stations: true, burned: true, active: true, wind: true, events: true, terrain: true })
+  const [layers, setLayers] = useState<Layers>({ smoke: true, emd: true, stations: true, burned: true, active: true, wind: true, events: true, terrain: true })
 
   useEffect(() => {
     fetch('data/fire.json')
@@ -89,7 +89,7 @@ export default function App() {
   }, [data])
 
   useEffect(() => {
-    document.documentElement.dataset.theme = basemap === 'night' ? 'dark' : 'light'
+    document.documentElement.dataset.theme = basemap === 'night' || basemap === 'daily' ? 'dark' : 'light'
   }, [basemap])
 
   if (!data || !stats) return <div className="loading">데이터 불러오는 중…</div>
@@ -134,6 +134,7 @@ export default function App() {
                 ['terrain', '지형'],
                 ['night', '밤'],
                 ['satellite', '위성'],
+                ['daily', '당일 위성'],
               ] as const
             ).map(([k, label]) => (
               <button key={k} className={basemap === k ? 'on' : ''} onClick={() => setBasemap(k)} role="radio" aria-checked={basemap === k}>
@@ -150,6 +151,9 @@ export default function App() {
             </div>
             <div>
               <i className="sw wind">➜</i> 바람 (ERA5 재분석, 길이·진하기 = 풍속)
+            </div>
+            <div>
+              <i className="sw smoke" /> 연기 (CAMS PM2.5, 진할수록 짙음)
             </div>
             <div>
               <i className="sw stn-key" /> 기상청 관측소 (시간 풍속·습도)
@@ -195,6 +199,10 @@ export default function App() {
                 <b>{Math.round(fw.rh)}%</b>
                 <span>습도</span>
               </div>
+              <div>
+                <b>{fw.pm25 != null ? Math.round(fw.pm25) : '–'}</b>
+                <span>PM2.5 µg/m³</span>
+              </div>
             </div>
             {emd && (
               <div className="exposure">
@@ -228,6 +236,7 @@ export default function App() {
                   ['active', '활성 열점'],
                   ['burned', '연소 흔적'],
                   ['wind', '바람장 (재분석)'],
+                  ['smoke', '연기 PM2.5 (CAMS)'],
                   ['stations', '기상청 관측소'],
                   ['events', '보도·공식 기록·발생 기록'],
                   ['emd', '읍면동 경계·인구'],
@@ -391,6 +400,12 @@ export default function App() {
                 </li>
                 <li>
                   <b>기상청 ASOS</b> 종관기상관측 6개 지점(의성·안동·청송·영덕·봉화·포항) 시간자료·일 최대순간풍속 (공공데이터포털)
+                </li>
+                <li>
+                  <b>NASA GIBS</b> 당일 위성 영상 (VIIRS Suomi-NPP 트루컬러, 오후 1시 30분경 통과, 날짜는 슬라이더를 따름)
+                </li>
+                <li>
+                  <b>CAMS (ECMWF)</b> 대기조성 재분석 PM2.5·AOD, Open-Meteo 경유. 해상도 약 40km라 연기 덩어리의 위치·세기만 참고
                 </li>
                 <li>
                   <b>AWS Terrain Tiles</b> 고도 → 3D 지형·음영기복·등고선(브라우저에서 생성, 지형 2배 과장) · <b>Esri</b> 위성영상

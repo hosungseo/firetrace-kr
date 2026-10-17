@@ -41,6 +41,7 @@ export default function Timeline({ data, news, events, fires, t, onSeek, onSelec
   const maxRate = Math.max(...area.map((a) => a.rate_ha_h ?? 0))
   const obs = data.stations.flatMap((st) => st.daily_gust.filter((g) => g.t >= T_MIN && g.t <= T_MAX).map((g) => ({ ...g, name: st.name })))
   const maxWind = Math.ceil(Math.max(...front.map((f) => f.gust), ...obs.map((g) => g.v)) / 5) * 5
+  const maxPm = Math.ceil(Math.max(50, ...front.map((f) => f.pm25 ?? 0)) / 50) * 50
 
   const rows = useMemo(() => {
     const y = (v: number, max: number) => ROW_H - 8 - (v / max) * (ROW_H - 18)
@@ -70,6 +71,7 @@ export default function Timeline({ data, news, events, fires, t, onSeek, onSelec
       ws: line('ws', maxWind),
       gust: line('gust', maxWind),
       rh: line('rh', 100),
+      pm: front.map((f, i) => `${i ? 'L' : 'M'}${x(f.t).toFixed(1)},${y(f.pm25 ?? 0, maxPm).toFixed(1)}`).join(' '),
       y,
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -89,7 +91,7 @@ export default function Timeline({ data, news, events, fires, t, onSeek, onSelec
   const newsHourly = news?.hourly.filter(([m]) => m >= T_MIN && m < T_MAX) ?? []
   const maxNews = Math.max(1, ...newsHourly.map(([, n]) => n))
   const curNews = newsHourly.find(([m]) => m <= hv && hv < m + 60)?.[1] ?? 0
-  const totalH = 26 + ROW_H * 5 + 22
+  const totalH = 26 + ROW_H * 6 + 22
   const rowY = (i: number) => 26 + i * ROW_H
 
   return (
@@ -228,8 +230,23 @@ export default function Timeline({ data, news, events, fires, t, onSeek, onSelec
           <path d={rows.rh} className="rh-line" />
         </g>
 
-        {/* row 5: press volume */}
+        {/* row 5: smoke PM2.5 at the fire front */}
         <g transform={`translate(0,${rowY(4)})`}>
+          <text x={8} y={18} className="row-label">
+            연기 PM2.5 (CAMS)
+          </text>
+          <text x={8} y={36} className="row-value">
+            {fw?.pm25 != null ? `${Math.round(fw.pm25)} µg/m³` : '–'}
+          </text>
+          <line x1={LABEL_W} x2={LABEL_W + plotW} y1={rows.y(75, maxPm)} y2={rows.y(75, maxPm)} className="threshold" />
+          <text x={LABEL_W + plotW - 2} y={rows.y(75, maxPm) - 3} className="axis" textAnchor="end">
+            매우나쁨 75
+          </text>
+          <path d={rows.pm} className="pm-line" />
+        </g>
+
+        {/* row 6: press volume */}
+        <g transform={`translate(0,${rowY(5)})`}>
           <text x={8} y={18} className="row-label">
             보도량 (시간당)
           </text>

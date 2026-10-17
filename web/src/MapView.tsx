@@ -7,6 +7,7 @@ import type { EmdCollection, FireData, FireEvent, KfsFire } from './types'
 import { ACTIVE_WINDOW, fmt, hourIndex } from './time'
 
 export interface Layers {
+  smoke: boolean
   emd: boolean
   stations: boolean
   burned: boolean
@@ -16,7 +17,7 @@ export interface Layers {
   terrain: boolean
 }
 
-export type Basemap = 'terrain' | 'night' | 'satellite'
+export type Basemap = 'terrain' | 'night' | 'satellite' | 'daily'
 
 interface Props {
   basemap: Basemap
@@ -32,6 +33,11 @@ interface Props {
 
 const IMAGERY = 'https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}'
 const DEM = 'https://s3.amazonaws.com/elevation-tiles-prod/terrarium/{z}/{x}/{y}.png'
+// NASA GIBS daily true-colour imagery (VIIRS on Suomi-NPP, ~13:30 local overpass). Keyless WMTS.
+const GIBS = (date: string) =>
+  `https://gibs.earthdata.nasa.gov/wmts/epsg3857/best/VIIRS_SNPP_CorrectedReflectance_TrueColor/default/${date}/GoogleMapsCompatible_Level9/{z}/{y}/{x}.jpg`
+// KST calendar date for a timeline minute (t0 = 2025-03-21)
+const kstDate = (t: number) => `2025-03-${String(21 + Math.floor(t / 1440)).padStart(2, '0')}`
 
 // Shared DEM for terrain, hillshade and client-side contour generation.
 const demSource = new mlcontour.DemSource({ url: DEM, encoding: 'terrarium', maxzoom: 14, worker: true, cacheSize: 200 })
@@ -48,6 +54,7 @@ const BASE = {
   terrain: { bg: '#e7dfd0', shadow: '#4a3a28', highlight: '#fffaf0', accent: '#b9a07a', exag: 0.55, contour: '#7a5f41', burned: '#3b0d06', burnedOp: 0.8, arrow: ['#1d4f8f', '#2b7dd6', '#0b5fd0'], halo: 'rgba(255,255,255,0.85)' },
   night: { bg: '#15141a', shadow: '#000000', highlight: '#5d5a66', accent: '#26242c', exag: 0.75, contour: '#6c6878', burned: '#6e2410', burnedOp: 0.85, arrow: ['#b8c8e0', '#9fd0ff', '#4aa8ff'], halo: 'rgba(0,0,0,0.7)' },
   satellite: { bg: '#000', shadow: '#2a1a0a', highlight: '#ffffff', accent: '#000000', exag: 0.35, contour: '#ffffff', burned: '#3b0d06', burnedOp: 0.75, arrow: ['#e6f1fb', '#9fd0ff', '#4aa8ff'], halo: 'rgba(10,20,40,0.75)' },
+  daily: { bg: '#0b0d12', shadow: '#000000', highlight: '#ffffff', accent: '#000000', exag: 0.25, contour: '#ffffff', burned: '#5a1a0c', burnedOp: 0.55, arrow: ['#e6f1fb', '#9fd0ff', '#4aa8ff'], halo: 'rgba(10,20,40,0.75)' },
 } as const
 
 function arrowImage(): ImageData {
@@ -96,6 +103,18 @@ function windGeoJSON(data: FireData, t: number) {
   }
 }
 
+function smokeGeoJSON(data: FireData, t: number) {
+  const i = hourIndex(t)
+  return {
+    type: 'FeatureCollection' as const,
+    features: data.smoke.map((p) => ({
+      type: 'Feature' as const,
+      geometry: { type: 'Point' as const, coordinates: [p.lon, p.lat] },
+      properties: { pm: p.pm25[i] ?? 0 },
+    })),
+  }
+}
+
 function kfsGeoJSON(kfs: KfsFire[]) {
   return {
     type: 'FeatureCollection' as const,
@@ -127,6 +146,7 @@ export default function MapView({ basemap, data, events, emd, kfs, t, layers, se
   const mapRef = useRef<maplibregl.Map | null>(null)
   const ready = useRef(false)
   const hillshadeKey = useRef('')
+  const dailyKey = useRef('')
   const stationEls = useRef<HTMLDivElement[]>([])
   const popup = useRef<maplibregl.Popup | null>(null)
   const latest = useRef({ t, layers, events, selected, basemap, emd, kfs })
@@ -185,6 +205,20 @@ export default function MapView({ basemap, data, events, emd, kfs, t, layers, se
           'line-color': BASE.terrain.contour,
           'line-opacity': ['case', ['>', ['get', 'level'], 0], 0.7, 0.3],
           'line-width': ['case', ['>', ['get', 'level'], 0], 1.1, 0.5],
+        },
+      })
+
+      map.addSource('smoke', { type: 'geojson', data: smokeGeoJSON(data, latest.current.t) })
+      map.addLayer({
+        id: 'smoke',
+        type: 'circle',
+        source: 'smoke',
+        paint: {
+          'circle-radius': ['interpolate', ['linear'], ['zoom'], 8, 16, 11, 64],
+          'circle-color': ['interpolate', ['linear'], ['get', 'pm'], 35, '#b3a797', 150, '#7a6c5e', 400, '#4a3f36'],
+          'circle-opacity': ['interpolate', ['linear'], ['get', 'pm'], 25, 0, 75, 0.18, 300, 0.38],
+          'circle-blur': 1,
+          'circle-pitch-alignment': 'map',
         },
       })
 
@@ -356,9 +390,14 @@ export default function MapView({ basemap, data, events, emd, kfs, t, layers, se
     map.setFilter('emd-hit', ['<=', ['coalesce', ['get', 'first_hit'], 1e9], t])
     map.setFilter('kfs', ['<=', ['get', 't'], t])
     map.setPaintProperty('emd-line', 'line-color', basemap === 'night' ? '#b7a8e8' : basemap === 'satellite' ? '#e9e2ff' : '#5a4a8a')
-    const sat = basemap === 'satellite'
-    map.setLayoutProperty('imagery', 'visibility', sat ? 'visible' : 'none')
+    const sat = basemap === 'satellite' || basemap === 'daily'
+    map.setLayoutProperty('imagery', 'visibility', basemap === 'satellite' ? 'visible' : 'none')
+    ensureDaily(map, basemap === 'daily' ? kstDate(t) : null)
     map.setLayoutProperty('contours', 'visibility', sat ? 'none' : 'visible')
+    ;(map.getSource('smoke') as GeoJSONSource).setData(smokeGeoJSON(data, t))
+    map.setLayoutProperty('smoke', 'visibility', layers.smoke && basemap !== 'daily' ? 'visible' : 'none')
+    map.setPaintProperty('emd-fill', 'fill-opacity', basemap === 'daily' ? 0 : 1)
+    map.setPaintProperty('emd-hit', 'fill-opacity', basemap === 'daily' ? 0.06 : 0.16)
     map.setPaintProperty('contours', 'line-color', b.contour)
     ensureHillshade(map, basemap, sunAzimuth(t))
     map.setPaintProperty('burned', 'circle-color', b.burned)
@@ -396,6 +435,19 @@ export default function MapView({ basemap, data, events, emd, kfs, t, layers, se
     map.setTerrain(layers.terrain ? { source: 'dem', exaggeration: sat ? 1.6 : 2.0 } : null)
   }
 
+  // Daily imagery is a raster source whose URL carries the date; swap source + layer when the date changes
+  // (raster layers are cached by the terrain pass too, so a plain setTiles would not repaint).
+  function ensureDaily(map: maplibregl.Map, date: string | null) {
+    const key = date ?? ''
+    if (dailyKey.current === key) return
+    dailyKey.current = key
+    if (map.getLayer('daily')) map.removeLayer('daily')
+    if (map.getSource('daily')) map.removeSource('daily')
+    if (!date) return
+    map.addSource('daily', { type: 'raster', tiles: [GIBS(date)], tileSize: 256, maxzoom: 9, attribution: 'Daily imagery: NASA GIBS / VIIRS SNPP' })
+    map.addLayer({ id: 'daily', type: 'raster', source: 'daily', paint: { 'raster-fade-duration': 0 } }, 'hillshade')
+  }
+
   // With terrain enabled MapLibre bakes the hillshade into the terrain pass, so paint updates
   // on the existing layer never show. Rebuild the layer when its look (basemap or sun) changes.
   function ensureHillshade(map: maplibregl.Map, basemap: Basemap, azimuth: number) {
@@ -428,6 +480,7 @@ export default function MapView({ basemap, data, events, emd, kfs, t, layers, se
     if (mapRef.current) apply(mapRef.current)
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [t, layers, events, selected, basemap, emd, kfs])
+
 
   useEffect(() => {
     const ev = events.find((e) => e.id === selected)

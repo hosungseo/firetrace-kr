@@ -1,0 +1,8 @@
+{
+ "source": "Open-Meteo Air Quality API (CAMS global atmospheric composition, ECMWF), https://open-meteo.com/en/docs/air-quality-api",
+ "fetched_utc": "2026-10-17T00:41:13.194681+00:00",
+ "period": "2025-03-21~31 hourly KST",
+ "points": 84,
+ "licence": "CC BY 4.0 (Open-Meteo); CAMS data \u00a9 ECMWF, Copernicus licence",
+ "caveat": "CAMS global ~40 km (0.4\u00b0) resolution resampled to 0.1\u00b0 grid; smoke magnitude is model-based, not measured"
+}

@@ -35,7 +35,8 @@ def write_json(path, value):
     path.write_text(json.dumps(value, ensure_ascii=False, indent=2) + "\n")
 
 
-def fetch(url, body=None, *, terms=None, row_count=None, max_bytes=200_000_000):
+def fetch(url, body=None, *, terms=None, row_count=None, max_bytes=200_000_000,
+          min_interval=0.6, max_attempts=3, timeout=45):
     """Cache successful AND failed responses. Retry transient failures with backoff."""
     global _last_request
     payload = None if body is None else json.dumps(body, ensure_ascii=False).encode()
@@ -66,12 +67,12 @@ def fetch(url, body=None, *, terms=None, row_count=None, max_bytes=200_000_000):
     if payload is not None:
         headers["Content-Type"] = "application/json; charset=UTF-8"
     attempts = []
-    for attempt in range(3):
+    for attempt in range(max_attempts):
         # Shared across sequential requests; scripts should not run concurrently.
-        time.sleep(max(0, 0.6 - (time.monotonic() - _last_request)))
+        time.sleep(max(0, min_interval - (time.monotonic() - _last_request)))
         _last_request = time.monotonic()
         try:
-            with urllib.request.urlopen(urllib.request.Request(url, payload, headers), timeout=45) as res:
+            with urllib.request.urlopen(urllib.request.Request(url, payload, headers), timeout=timeout) as res:
                 data = res.read(max_bytes + 1)
                 if len(data) > max_bytes:
                     raise ValueError("Response exceeds configured download size cap")
@@ -81,13 +82,13 @@ def fetch(url, body=None, *, terms=None, row_count=None, max_bytes=200_000_000):
             data = exc.read(max_bytes + 1)
             status, final_url, content_type = exc.code, exc.url, exc.headers.get("Content-Type")
             attempts.append({"status": status, "error": str(exc)})
-            if status not in (429, 500, 502, 503, 504) or attempt == 2:
+            if status not in (429, 500, 502, 503, 504) or attempt == max_attempts - 1:
                 break
         except (urllib.error.URLError, TimeoutError) as exc:
             data = str(exc).encode()
             status, final_url, content_type = None, url, "text/plain"
             attempts.append({"status": None, "error": str(exc)})
-            if attempt == 2:
+            if attempt == max_attempts - 1:
                 break
         time.sleep(2 ** (attempt + 1))
     redacted = redact_public_tokens(data, content_type)

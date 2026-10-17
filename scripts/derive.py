@@ -105,9 +105,17 @@ for stn, name in kma["stations"].items():
                      "rh": [num(h["hm"]) for h in hrs], "ta": [num(h["ta"]) for h in hrs],
                      "rn": [num(h["rn"]) for h in hrs], "daily_gust": gusts})
 
+# 5) CAMS smoke (PM2.5 / AOD) on the same grid, plus the value at the fire front
+cams = json.load(open("data/raw/cams_grid.json"))
+smoke = [{"lat": p["lat"], "lon": p["lon"], "pm25": p["hourly"]["pm2_5"], "aod": p["hourly"]["aerosol_optical_depth"]} for p in cams]
+for i, f in enumerate(front):
+    g = min(smoke, key=lambda p: (p["lat"] - f["lat"]) ** 2 + (p["lon"] - f["lon"]) ** 2)
+    f["pm25"] = g["pm25"][i] if i < len(g["pm25"]) else None
+
 out = {"t0": T0.isoformat(), "hotspots": hotspots, "area": series,
        "weather": {"hours": hours, "grid": grid, "front": front},
        "stations": stations,
+       "smoke": smoke,
        "meta": {"first_detection": {"lon": first[0], "lat": first[1], "t": first[2]},
                 "hotspot_count": len(hotspots), "cell_km2": CELL_KM2}}
 for p in ("data/derived/fire.json", "web/public/data/fire.json"):
