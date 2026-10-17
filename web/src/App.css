@@ -315,3 +315,46 @@
 .legend-btn { position: absolute; left: 12px; bottom: 34px; z-index: 2; background: rgba(251,250,247,.94); border: 1px solid var(--line); border-radius: 4px; padding: 4px 10px; font-size: 12px; color: var(--ink-2); box-shadow: 0 1px 4px rgba(0,0,0,.12); cursor: pointer; }
 .map-legend { bottom: 66px; }
 .map-legend[hidden] { display: none; }
+
+/* UX pass 2026-10-18 */
+.layers-btn { position: absolute; left: 12px; top: 150px; z-index: 3; background: var(--surface); border: 0; border-radius: 8px; box-shadow: 0 1px 4px rgba(0,0,0,.2); padding: 6px 12px; font-size: 12px; color: var(--ink-2); cursor: pointer; }
+.layers-btn.on { background: var(--ink); color: var(--surface); }
+.layers-pop { position: absolute; left: 12px; top: 186px; z-index: 3; background: var(--surface); border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,.15); padding: 6px 12px 10px; width: 220px; max-height: calc(100% - 200px); overflow-y: auto; }
+.layers-pop h4 { margin: 8px 0 2px; font-size: 10.5px; font-weight: 700; color: var(--ink-3); text-transform: uppercase; letter-spacing: 1px; }
+.layers-pop .toggle { font-size: 12px; padding: 3px 0; }
+.tabs { overflow-x: auto; scrollbar-width: none; }
+.tabs button { flex: 1 0 auto; white-space: nowrap; padding: 10px 8px; }
+.tab-badge { display: inline-block; margin-left: 3px; min-width: 16px; padding: 0 4px; border-radius: 8px; background: #ebe8e0; color: var(--ink-2); font-size: 10px; line-height: 15px; font-weight: 600; font-variant-numeric: tabular-nums; }
+.tabs button.on .tab-badge { background: var(--accent); color: #fff; }
+.hc-grid { grid-template-columns: repeat(3, 1fr); }
+.head-card { min-width: 320px; }
+.controls .more { margin-top: auto; color: var(--ink-2); }
+:root[data-theme='dark'] .layers-pop, :root[data-theme='dark'] .layers-btn:not(.on) { background: #23211e; color: #ddd6cb; }
+
+@media (max-width: 760px) {
+  .app { height: auto; min-height: 100vh; grid-template-rows: 44px auto auto; }
+  .body { grid-template-columns: 1fr; grid-template-rows: 58vh auto; }
+  .stage { height: 58vh; }
+  .panel { max-height: none; }
+  .pane { overflow: visible; }
+  .dock { position: sticky; bottom: 0; z-index: 4; }
+  .now-card { left: 8px; right: 8px; top: 8px; min-width: 0; padding: 8px 10px; }
+  .now-card .now-grid { gap: 6px; }
+  .now-card .now-grid b { font-size: 14px; }
+  .basemap-switch { top: auto; bottom: 12px; left: 8px; }
+  .layers-btn { top: auto; bottom: 12px; left: auto; right: 8px; }
+  .layers-pop { top: auto; bottom: 50px; left: auto; right: 8px; max-height: 50vh; }
+  .legend-btn { display: none; }
+  .map-legend { display: none; }
+  .head-card { bottom: 52px; left: 8px; right: 8px; transform: none; width: auto; padding: 8px 10px; }
+  .hc-grid b { font-size: 15px; }
+  .hc-src { display: none; }
+}
+.tabs button { padding: 10px 6px; font-size: 12px; }
+@media (max-width: 760px) {
+  .dock .timeline { max-height: 92px; overflow: hidden; }
+  .dock .controls { padding: 6px 8px; }
+  .now-card { left: 48px; }
+  .maplibregl-ctrl-attrib { font-size: 9px; max-width: 55%; }
+}
+.kbd-hint { float: right; font-weight: 500; text-transform: none; letter-spacing: 0; color: var(--ink-3); font-size: 10.5px; }

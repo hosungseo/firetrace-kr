@@ -55,6 +55,8 @@ export default function App() {
   const [flyTarget, setFlyTarget] = useState<FlyTarget | null>(null)
   const [chase, setChase] = useState(false)
   const [legendOpen, setLegendOpen] = useState(false)
+  const [layersOpen, setLayersOpen] = useState(false)
+  const [chartsOpen, setChartsOpen] = useState(false)
   const [t, setT] = useState(T_MIN + 13 * 60)
   const [playing, setPlaying] = useState(false)
   const [speed, setSpeed] = useState(1)
@@ -217,6 +219,32 @@ export default function App() {
     return { t: h[0], lon: h[1], lat: h[2], km: h[3], reach: nowReach?.[1] ?? h[3], kmh: prev && nowReach ? Math.max(0, nowReach[1] - prev[1]) : null, ws: g.ws[i], wd: g.wd[i], rh: g.rh[i] }
   }, [gk2a, data, t])
 
+  // Keyboard: Space play/pause · ←/→ ±1h (Shift ±10min) · 1–9 scenes · L layers · Esc close
+  const sceneRef = useRef(scenes)
+  useEffect(() => { sceneRef.current = scenes }, [scenes])
+  useEffect(() => {
+    const onKey = (e: KeyboardEvent) => {
+      const el = e.target as HTMLElement
+      if (el && (el.tagName === 'INPUT' || el.tagName === 'SELECT' || el.tagName === 'TEXTAREA' || el.isContentEditable)) return
+      if (e.metaKey || e.ctrlKey || e.altKey) return
+      const step = e.shiftKey ? 10 : 60
+      if (e.key === ' ') { e.preventDefault(); setPlaying((p) => !p) }
+      else if (e.key === 'ArrowRight') { e.preventDefault(); setT((v) => Math.min(T_MAX, Math.round(v) + step)) }
+      else if (e.key === 'ArrowLeft') { e.preventDefault(); setT((v) => Math.max(T_MIN, Math.round(v) - step)) }
+      else if (/^[1-9]$/.test(e.key)) {
+        const sc = sceneRef.current[Number(e.key) - 1]
+        if (sc) {
+          setPlaying(false); setChase(false); setTab('overview')
+          setT(Math.max(T_MIN, Math.min(T_MAX, sc.t)))
+          setFlyTarget({ key: Date.now(), center: sc.center, zoom: sc.zoom, pitch: sc.pitch, bearing: sc.bearing })
+        }
+      } else if (e.key === 'l' || e.key === 'L') setLayersOpen((o) => !o)
+      else if (e.key === 'Escape') { setLayersOpen(false); setLegendOpen(false); setChase(false) }
+    }
+    addEventListener('keydown', onKey)
+    return () => removeEventListener('keydown', onKey)
+  }, [])
+
   if (!incident || !data || !stats) return <div className="loading">데이터 불러오는 중…</div>
 
   const tm = Math.round(t)
@@ -295,6 +323,31 @@ export default function App() {
               </button>
             ))}
           </div>
+          <button className={`layers-btn ${layersOpen ? 'on' : ''}`} onClick={() => setLayersOpen((o) => !o)} aria-expanded={layersOpen}>
+            레이어
+          </button>
+          {layersOpen && (
+            <div className="layers-pop">
+              {(
+                [
+                  ['불과 위성', [['gk2a', '천리안 2A 10분 탐지·선두'], ['spread', '확산 경로·피해 범위'], ['active', '최근 12시간 열점'], ['burned', '그 이전 열점'], ['situation', '산림청 상황도'], ['gwis', 'JRC GWIS 둘레']]],
+                  ['날씨', [['wind', '바람장 (재분석)'], ['stations', '기상청 관측소'], ['smoke', 'PM2.5 (CAMS)']]],
+                  ['땅과 사람', [['emd', '읍면동·인구'], ['forest', '숲 종류 (임상도)'], ['terrain', '3D 지형']]],
+                  ['기록', [['events', '보도·공식·발생 기록']]],
+                ] as const
+              ).map(([group, items]) => (
+                <div key={group}>
+                  <h4>{group}</h4>
+                  {items.map(([k, label]) => (
+                    <label key={k} className="toggle">
+                      <input type="checkbox" checked={layers[k]} onChange={(e) => setLayers({ ...layers, [k]: e.target.checked })} />
+                      {label}
+                    </label>
+                  ))}
+                </div>
+              ))}
+            </div>
+          )}
           <button className="legend-btn" onClick={() => setLegendOpen((o) => !o)}>{legendOpen ? '범례 닫기' : '범례'}</button>
           <div className="map-legend" hidden={!legendOpen}>
             <div>
@@ -380,10 +433,6 @@ export default function App() {
                   <span>선두 바람(재분석)</span>
                   <b>{head.ws.toFixed(1)}<small> m/s {compass((head.wd + 180) % 360)}향</small></b>
                 </div>
-                <div>
-                  <span>습도</span>
-                  <b>{Math.round(head.rh)}<small> %</small></b>
-                </div>
               </div>
               <div className="hc-actions">
                 <button className={chase ? 'on' : ''} onClick={() => setChase((c) => !c)}>{chase ? '따라가는 중' : '따라가기'}</button>
@@ -434,14 +483,15 @@ export default function App() {
                 ['overview', '개요'],
                 ['response', '기록 대조'],
                 ['emd', focused ? focused.properties.emd : '읍면동'],
-                ['events', `기록 ${events.length ? `(${seen.length}/${events.length})` : ''}`],
-                ['news', `보도 ${news ? `(${recentNews.length})` : ''}`],
-                ...(registry && registry.length > 1 ? ([['compare', '사건 비교']] as const) : []),
+                ['events', '기록', events.length ? `${seen.length}` : ''],
+                ['news', '보도', news ? `${recentNews.length}` : ''],
+                ...(registry && registry.length > 1 ? ([['compare', '비교']] as const) : []),
                 ['sources', '출처'],
               ] as const
-            ).map(([k, label]) => (
-              <button key={k} className={tab === k ? 'on' : ''} onClick={() => setTab(k)}>
+            ).map(([k, label, badge]: readonly string[]) => (
+              <button key={k} className={tab === k ? 'on' : ''} onClick={() => setTab(k as typeof tab)}>
                 {label}
+                {badge ? <span className="tab-badge">{badge}</span> : null}
               </button>
             ))}
           </nav>
@@ -450,7 +500,7 @@ export default function App() {
             <div className="pane">
               {scenes.length > 0 && (
                 <>
-                  <h3>주요 장면</h3>
+                  <h3>주요 장면 <span className="kbd-hint">숫자키 1~{Math.min(9, scenes.length)}</span></h3>
                   <ol className="scenes">
                     {scenes.map((sc) => (
                       <li key={sc.label}>
@@ -464,29 +514,6 @@ export default function App() {
                   </ol>
                 </>
               )}
-              <h3>레이어</h3>
-              {(
-                [
-                  ['gk2a', '천리안 2A 10분 산불탐지·선두 경로'],
-                  ['spread', '확산 경로 (도달 시각·전진 화살표)'],
-                  ['active', '최근 12시간 탐지 열점'],
-                  ['burned', '12시간 이전 탐지 열점'],
-                  ['wind', '바람장 (재분석)'],
-                  ['smoke', 'PM2.5 (CAMS 모델, 기본 꺼짐)'],
-                  ['stations', '기상청 관측소'],
-                  ['events', '보도·공식 기록·발생 기록'],
-                  ['emd', '읍면동 경계·인구'],
-                  ['gwis', 'JRC GWIS 화재 둘레 추정'],
-                  ['situation', '산림청 상황도 (마지막 공개본)'],
-                  ['forest', '숲 종류 (임상도, 현재판)'],
-                  ['terrain', '3D 지형'],
-                ] as const
-              ).map(([k, label]) => (
-                <label key={k} className="toggle">
-                  <input type="checkbox" checked={layers[k]} onChange={(e) => setLayers({ ...layers, [k]: e.target.checked })} />
-                  {label}
-                </label>
-              ))}
 
               {gk2a && gk2a.reach.length > 0 && (() => {
                 const first = gk2a.pixels.reduce((m, p) => Math.min(m, p[2]), Infinity)
@@ -1012,7 +1039,7 @@ export default function App() {
 
       <footer className="dock">
         <div className="controls">
-          <button className="play" onClick={() => setPlaying(!playing)} aria-label={playing ? '정지' : '재생'}>
+          <button className="play" onClick={() => setPlaying(!playing)} aria-label={playing ? '정지' : '재생'} title="Space 재생·정지 · ←/→ 1시간(Shift 10분) · 1~9 주요 장면 · L 레이어">
             {playing ? '❚❚' : '▶'}
           </button>
           <button
@@ -1028,8 +1055,11 @@ export default function App() {
           <button className="step" onClick={() => setT(Math.min(T_MAX, tm + 60))}>
             +1h
           </button>
+          <button className="step more" onClick={() => setChartsOpen((o) => !o)} aria-expanded={chartsOpen}>
+            {chartsOpen ? '차트 접기' : '차트 더보기'}
+          </button>
         </div>
-        <Timeline data={data} news={news} events={events} fires={localFires} official={official} showSmoke={layers.smoke} t={tm} onSeek={setT} onSelectEvent={selectEvent} />
+        <Timeline expanded={chartsOpen} data={data} news={news} events={events} fires={localFires} official={official} showSmoke={layers.smoke} t={tm} onSeek={setT} onSelectEvent={selectEvent} />
       </footer>
     </div>
   )

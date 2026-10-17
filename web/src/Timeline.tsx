@@ -9,6 +9,7 @@ interface Props {
   fires: KfsFire[]
   official: OfficialData | null
   showSmoke: boolean
+  expanded: boolean
   t: number
   onSeek: (t: number) => void
   onSelectEvent: (id: string) => void
@@ -16,7 +17,7 @@ interface Props {
 
 const LABEL_W = 132
 const PAD_R = 16
-const ROW_H = 62
+const ROW_H = 54
 
 function useWidth<T extends HTMLElement>() {
   const ref = useRef<T>(null)
@@ -29,7 +30,7 @@ function useWidth<T extends HTMLElement>() {
   return [ref, w] as const
 }
 
-export default function Timeline({ data, news, events, fires, official, showSmoke, t, onSeek, onSelectEvent }: Props) {
+export default function Timeline({ data, news, events, fires, official, showSmoke, expanded, t, onSeek, onSelectEvent }: Props) {
   const [ref, width] = useWidth<HTMLDivElement>()
   const [hover, setHover] = useState<number | null>(null)
   const dragging = useRef(false)
@@ -97,9 +98,14 @@ export default function Timeline({ data, news, events, fires, official, showSmok
   const curNews = newsHourly.find(([m]) => m <= t && t < m + 60)?.[1] ?? 0
   const cont = official?.series.containment_pct.filter((o) => o.t >= T_MIN && o.t <= T_MAX) ?? []
   const curCont = [...cont].reverse().find((o) => o.t <= t)
-  const nRows = (showSmoke ? 6 : 5) + (cont.length ? 1 : 0)
+  // Compact by default: area, wind, humidity; the rest behind 차트 더보기
+  const order = expanded
+    ? ['area', 'rate', 'wind', 'rh', ...(showSmoke ? ['pm'] : []), ...(cont.length ? ['cont'] : []), 'news']
+    : ['area', 'wind', 'rh', ...(showSmoke ? ['pm'] : [])]
+  const nRows = order.length
   const totalH = 26 + ROW_H * nRows + 22
-  const rowY = (i: number) => 26 + i * ROW_H
+  const rowY = (k: string) => 26 + order.indexOf(k) * ROW_H
+  const on = (k: string) => order.includes(k)
 
   return (
     <div className="timeline" ref={ref}>
@@ -172,7 +178,7 @@ export default function Timeline({ data, news, events, fires, official, showSmok
         ))}
 
         {/* row 1: cumulative area */}
-        <g transform={`translate(0,${rowY(0)})`}>
+        <g transform={`translate(0,${rowY('area')})`}>
           <text x={8} y={18} className="row-label">
             열점 격자 환산 면적
           </text>
@@ -184,7 +190,8 @@ export default function Timeline({ data, news, events, fires, official, showSmok
         </g>
 
         {/* row 2: spread rate */}
-        <g transform={`translate(0,${rowY(1)})`}>
+        {on('rate') && (
+        <g transform={`translate(0,${rowY('rate')})`}>
           <text x={8} y={18} className="row-label">
             신규 탐지 격자 <tspan className="muted">(관측 구간·사후)</tspan>
           </text>
@@ -199,9 +206,10 @@ export default function Timeline({ data, news, events, fires, official, showSmok
             </rect>
           ))}
         </g>
+        )}
 
         {/* row 3: wind */}
-        <g transform={`translate(0,${rowY(2)})`}>
+        <g transform={`translate(0,${rowY('wind')})`}>
           <text x={8} y={18} className="row-label">
             바람 <tspan className="legend-ws">━풍속</tspan> <tspan className="legend-gust">┅돌풍</tspan> <tspan className="legend-obs">●관측</tspan>
           </text>
@@ -223,7 +231,7 @@ export default function Timeline({ data, news, events, fires, official, showSmok
         </g>
 
         {/* row 4: humidity */}
-        <g transform={`translate(0,${rowY(3)})`}>
+        <g transform={`translate(0,${rowY('rh')})`}>
           <text x={8} y={18} className="row-label">
             상대습도
           </text>
@@ -238,8 +246,8 @@ export default function Timeline({ data, news, events, fires, official, showSmok
         </g>
 
         {/* row 5 (optional): CAMS PM2.5 near the detection centroid */}
-        {showSmoke && (
-        <g transform={`translate(0,${rowY(4)})`}>
+        {on('pm') && (
+        <g transform={`translate(0,${rowY('pm')})`}>
           <text x={8} y={18} className="row-label">
             PM2.5 (CAMS 모델, 약 40km)
           </text>
@@ -255,8 +263,8 @@ export default function Timeline({ data, news, events, fires, official, showSmok
         )}
 
         {/* official containment announcements */}
-        {cont.length > 0 && (
-          <g transform={`translate(0,${rowY(nRows - 2)})`}>
+        {on('cont') && (
+          <g transform={`translate(0,${rowY('cont')})`}>
             <text x={8} y={18} className="row-label">
               발표 진화율 <tspan className="muted">(보도·공식)</tspan>
             </text>
@@ -281,7 +289,8 @@ export default function Timeline({ data, news, events, fires, official, showSmok
         )}
 
         {/* last row: collected-article count */}
-        <g transform={`translate(0,${rowY(nRows - 1)})`}>
+        {on('news') && (
+        <g transform={`translate(0,${rowY('news')})`}>
           <text x={8} y={18} className="row-label">
             수집 기사 수 <tspan className="muted">(표본·시간당)</tspan>
           </text>
@@ -293,6 +302,7 @@ export default function Timeline({ data, news, events, fires, official, showSmok
             return <rect key={m} x={x(m)} width={Math.max(1, x(m + 60) - x(m) - 0.5)} y={ROW_H - 8 - h} height={h} className="news-bar" />
           })}
         </g>
+        )}
 
         {/* hover crosshair */}
         {hover != null && <line x1={x(hover)} x2={x(hover)} y1={18} y2={totalH - 18} className="hover-line" />}
