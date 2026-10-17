@@ -1,7 +1,7 @@
 import { useEffect, useMemo, useRef, useState } from 'react'
 import MapView, { type Basemap, type Layers } from './MapView'
 import Timeline from './Timeline'
-import type { FireData, FireEvent, NewsData } from './types'
+import type { EmdCollection, FireData, FireEvent, KfsData, NewsData } from './types'
 import { ACTIVE_WINDOW, T_MAX, T_MIN, compass, eventLabel, fmt, hourIndex, toMinutes } from './time'
 import './App.css'
 
@@ -11,13 +11,15 @@ export default function App() {
   const [data, setData] = useState<FireData | null>(null)
   const [events, setEvents] = useState<FireEvent[]>([])
   const [news, setNews] = useState<NewsData | null>(null)
+  const [emd, setEmd] = useState<EmdCollection | null>(null)
+  const [kfs, setKfs] = useState<KfsData | null>(null)
   const [t, setT] = useState(T_MIN + 13 * 60)
   const [playing, setPlaying] = useState(false)
   const [speed, setSpeed] = useState(1)
   const [tab, setTab] = useState<'overview' | 'events' | 'news' | 'sources'>('overview')
   const [selected, setSelected] = useState<string | null>(null)
   const [basemap, setBasemap] = useState<Basemap>('terrain')
-  const [layers, setLayers] = useState<Layers>({ stations: true, burned: true, active: true, wind: true, events: true, terrain: true })
+  const [layers, setLayers] = useState<Layers>({ emd: true, stations: true, burned: true, active: true, wind: true, events: true, terrain: true })
 
   useEffect(() => {
     fetch('data/fire.json')
@@ -34,6 +36,14 @@ export default function App() {
       .then((r) => (r.ok ? r.json() : null))
       .then(setNews)
       .catch(() => setNews(null))
+    fetch('data/emd.json')
+      .then((r) => (r.ok ? r.json() : null))
+      .then(setEmd)
+      .catch(() => setEmd(null))
+    fetch('data/kfs_fires.json')
+      .then((r) => (r.ok ? r.json() : null))
+      .then(setKfs)
+      .catch(() => setKfs(null))
   }, [])
 
   // playback
@@ -92,6 +102,10 @@ export default function App() {
   const officialStats = events.filter((e) => e.type === 'official_stat')
   const seen = events.filter((e) => (e.t ?? 0) <= tm)
   const recentNews = news ? news.articles.filter((a) => a[0] <= tm && a[0] > tm - 60).reverse() : []
+  const hitEmd = emd ? emd.features.map((f) => f.properties).filter((p) => p.first_hit != null && p.first_hit <= tm) : []
+  const exposure = { n: hitEmd.length, total: hitEmd.reduce((a, p) => a + (p.total ?? 0), 0), old: hitEmd.reduce((a, p) => a + (p.age70plus ?? 0), 0) }
+  const AREA = ['의성', '안동', '청송', '영양', '영덕']
+  const localFires = kfs ? kfs.fires.filter((f) => f.si === '경북' && AREA.includes(f.gungu) && f.t >= T_MIN && f.t <= T_MAX) : []
 
   const selectEvent = (id: string) => {
     const e = events.find((x) => x.id === id)
@@ -113,7 +127,7 @@ export default function App() {
 
       <main className="body">
         <section className="stage">
-          <MapView basemap={basemap} data={data} events={events} t={tm} layers={layers} selected={selected} onSelectEvent={selectEvent} />
+          <MapView basemap={basemap} data={data} events={events} emd={emd} kfs={kfs?.fires ?? []} t={tm} layers={layers} selected={selected} onSelectEvent={selectEvent} />
           <div className="basemap-switch" role="radiogroup" aria-label="배경지도">
             {(
               [
@@ -143,6 +157,16 @@ export default function App() {
             <div>
               <i className="sw origin" /> 첫 위성 탐지 지점
             </div>
+            {localFires.length > 0 && (
+              <div>
+                <i className="sw kfs" /> 산림청 발생 기록 (읍면 중심)
+              </div>
+            )}
+            {emd && (
+              <div>
+                <i className="sw emd" /> 읍면동 (진할수록 70세 이상 비율↑, 주황 = 열점 닿음)
+              </div>
+            )}
             {events.length > 0 && (
               <div>
                 <i className="sw event" /> 보도·공식 기록
@@ -172,6 +196,11 @@ export default function App() {
                 <span>습도</span>
               </div>
             </div>
+            {emd && (
+              <div className="exposure">
+                불이 닿은 읍면동 <b>{exposure.n}</b>곳 · 주민 <b>{exposure.total.toLocaleString()}</b>명 · 70세 이상 <b>{exposure.old.toLocaleString()}</b>명
+              </div>
+            )}
           </div>
         </section>
 
@@ -200,7 +229,8 @@ export default function App() {
                   ['burned', '연소 흔적'],
                   ['wind', '바람장 (재분석)'],
                   ['stations', '기상청 관측소'],
-                  ['events', '보도·공식 기록'],
+                  ['events', '보도·공식 기록·발생 기록'],
+                  ['emd', '읍면동 경계·인구'],
                   ['terrain', '3D 지형'],
                 ] as const
               ).map(([k, label]) => (
@@ -248,6 +278,24 @@ export default function App() {
                   {Math.round(stats.minRh.rh)}% · {fmt(stats.minRh.t)}
                 </dd>
               </dl>
+
+              {localFires.length > 0 && (
+                <>
+                  <h3>산림청 발생 기록 (5개 시군)</h3>
+                  {localFires.map((f) => (
+                    <button key={f.start + f.jibun} className="stat-row" onClick={() => setT(f.t)}>
+                      <span>
+                        {fmt(f.t)} {f.gungu} {f.emd} {f.ri} · {f.cause}
+                      </span>
+                      <small>{f.area_ha >= 1000 ? `${Math.round(f.area_ha).toLocaleString()} ha` : `${f.area_ha} ha`}</small>
+                    </button>
+                  ))}
+                  <p className="note">
+                    산림청은 의성 산불을 <b>2건</b>으로 기록합니다. 안평면 괴산리(11:24, 원인 '기타') 46,575ha와 안계면 용기리(14:40, 농산부산물소각) 52,707ha. 두 건의
+                    합이 공식 피해면적 99,289ha입니다.
+                  </p>
+                </>
+              )}
 
               {officialStats.length > 0 && (
                 <>
@@ -353,6 +401,28 @@ export default function App() {
                 <li>
                   <b>언론·정부 발표</b> 원문 링크와 인용문 포함, 공식 기록은 파란 점
                 </li>
+                <li>
+                  <b>산림청 산불발생통계</b> 건별 발생·진화 일시, 지번, 원인, 피해면적 (공공데이터포털). 좌표가 없어 읍면 중심에 표시
+                </li>
+                <li>
+                  <b>행정안전부 주민등록 인구</b> 2025년 3월 읍면동 거주자, 연령대별 (공공데이터포털)
+                </li>
+                <li>
+                  <b>읍면동 경계</b> 통계청 SGIS 행정동 경계(공공누리 1유형)를 vuski/admdongkor가 가공(CC BY 4.0), 2025-01-01판, 50m 단순화
+                </li>
+              </ul>
+              <h3>구하지 못한 자료</h3>
+              <ul>
+                <li>
+                  <b>재난문자 발송 이력</b>: 국민재난안전포털 아카이브는 최근 7일만 검색되고 2025년 3월은 "데이터가 존재하지 않습니다"로 응답. 재난안전데이터
+                  공유플랫폼 API는 키 승인 대기. 그래서 재난문자 시각은 보도 기록에 의존합니다.
+                </li>
+                <li>
+                  <b>기상특보 이력</b>(강풍·건조): 공공데이터포털 특보 API는 최근 6일만 제공. 기상청 API허브 키 필요.
+                </li>
+                <li>
+                  <b>산불위험지수</b>: 공개 API가 2025년 2월까지만 제공.
+                </li>
               </ul>
               <h3>주의</h3>
               <ul>
@@ -384,7 +454,7 @@ export default function App() {
             +1h
           </button>
         </div>
-        <Timeline data={data} news={news} events={events} t={tm} onSeek={setT} onSelectEvent={selectEvent} />
+        <Timeline data={data} news={news} events={events} fires={localFires} t={tm} onSeek={setT} onSelectEvent={selectEvent} />
       </footer>
     </div>
   )

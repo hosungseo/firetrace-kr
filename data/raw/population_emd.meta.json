@@ -1,0 +1,8 @@
+{
+ "source": "행정안전부 행정동(읍면동)별 성별·연령별 주민등록 인구 API (data.go.kr 1741000/admmSexdAgePpltn)",
+ "fetched_utc": "2026-10-16T23:53:24.473758",
+ "period": "2025-03",
+ "rows": 67,
+ "licence": "공공누리 제1유형 (data.go.kr 표기 기준)",
+ "caveat": "lv=3 읍면동 단위, regSeCd=1 거주자"
+}

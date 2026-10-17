@@ -1,0 +1,254 @@
+{
+  "source_url": "https://map.forest.go.kr/forest/",
+  "source_urls": [
+    "https://map.forest.go.kr/forest/",
+    "https://www.forest.go.kr/kfsweb/kfi/kfs/gis/forestMapIntro.do?mn=NKFS_02_04_03_01_01",
+    "https://map.forest.go.kr/forest/js/gis/config.js?version=2020.03.17.002",
+    "https://map.forest.go.kr/forest/js/supermapgis/mapinit.js?version=2020.03.17.002",
+    "https://map.forest.go.kr/forest/js/supermapgis/FgisMapFunction.js?version=2020.03.17.002",
+    "https://map.forest.go.kr/forest/js/supermapgis/SuperMap.js?version=2020.03.17.002",
+    "https://map.forest.go.kr/gis1/iserver/services.json",
+    "https://map.forest.go.kr/forest/js/gis/router.js?version=2020.03.17.002",
+    "https://map.forest.go.kr/forest/js/common/g_common.js?version=2020.03.17.002",
+    "https://map.forest.go.kr/forest/js/gis/common.js?version=2020.03.17.002",
+    "https://www.data.go.kr/tcs/dss/selectDataSetList.do?keyword=%EC%9E%84%EC%83%81%EB%8F%84",
+    "https://www.data.go.kr/data/15093362/fileData.do",
+    "https://www.data.go.kr/data/3045619/fileData.do",
+    "https://www.data.go.kr/data/95566/linkedData.do",
+    "https://www.data.go.kr/data/96010/linkedData.do",
+    "https://map.forest.go.kr/gis1/iserver/services/map-forest/wms111?SERVICE=WMS&REQUEST=GetCapabilities",
+    "https://map.forest.go.kr/gis1/arcgis/rest/services?f=pjson",
+    "https://map.forest.go.kr/gis1/iserver/services/fgisApi/restjsr.json",
+    "https://map.forest.go.kr/forest/js/modules/app.js",
+    "https://map.forest.go.kr/forest/js/modules/mapViewer.js",
+    "https://map.forest.go.kr/forest/js/modules/ui.js",
+    "https://map.forest.go.kr/forest/js/modules/toc.js",
+    "https://map.forest.go.kr/forest/js/modules/forestMapSearch.js",
+    "https://map.forest.go.kr/forest/js/supermapgis/SuperMapDataService.js?version=2020.03.17.002",
+    "https://map.forest.go.kr/gis1/iserver/services/map-fdms/wms111?SERVICE=WMS&VERSION=1.1.1&REQUEST=GetCapabilities",
+    "https://map.forest.go.kr/gis1/iserver/services/map-fdms/rest/maps.json",
+    "https://map.forest.go.kr/gis1/iserver/services/map-fdms/rest/maps/TB_FGIS_C5_IM5000.json",
+    "https://www.bigdata-forest.kr/product/FRT001003",
+    "https://map.forest.go.kr/gis1/iserver/services/map-fdms/wms111?SERVICE=WMS&VERSION=1.1.1&REQUEST=GetMap&LAYERS=TB_FGIS_C5_IM5000&STYLES=&SRS=EPSG%3A4326&BBOX=128.60%2C36.30%2C128.70%2C36.40&WIDTH=256&HEIGHT=256&FORMAT=image%2Fpng"
+  ],
+  "fetched_at_utc": "2026-10-17T00:02:27.173353+00:00",
+  "research_started_at_utc": "2026-10-16T23:54:53.442673+00:00",
+  "research_completed_at_utc": "2026-10-17T00:06:20.235049+00:00",
+  "licence_or_terms": {
+    "FGIS": "copyrights korea forest service. 2013; no independent tile reuse licence found",
+    "data.go.kr/15093362": "이용허락범위 제한 없음",
+    "data.go.kr/3045619": "이용허락범위 제한 없음",
+    "data.go.kr linked products": "이용허락범위 field blank; product terms not verified"
+  },
+  "row_count": null,
+  "caveat": "Research notes, not an extracted forest dataset. No SHP/GeoJSON acquired. Candidate WMS returned error HTML, not verified WMS. Linked product failed at transport level. Dataset layer/CRS and historical fuel classification remain unverified.",
+  "verified_getcapabilities_url": null,
+  "verified_wms_layer_name": null,
+  "verified_wms_crs": null,
+  "verified_without_key_getmap": null,
+  "observations": [
+    {
+      "source_url": "https://map.forest.go.kr/forest/",
+      "fetched_at_utc": "2026-10-16T23:54:53.442673+00:00",
+      "http_status": 200,
+      "content_type": "text/html; charset=UTF-8",
+      "licence_or_terms": "copyrights korea forest service. 2013 (map footer). 본 지도서비스는 법적효력이 없으므로, 해당기관에 연락하셔서 확인하시기 바랍니다. No independent tile/data licence found on this page."
+    },
+    {
+      "source_url": "https://www.forest.go.kr/kfsweb/kfi/kfs/gis/forestMapIntro.do?mn=NKFS_02_04_03_01_01",
+      "fetched_at_utc": "2026-10-16T23:54:53.726420+00:00",
+      "http_status": 404,
+      "content_type": "text/html; charset=utf-8",
+      "licence_or_terms": null
+    },
+    {
+      "source_url": "https://map.forest.go.kr/forest/js/gis/config.js?version=2020.03.17.002",
+      "fetched_at_utc": "2026-10-16T23:55:20.803440+00:00",
+      "http_status": 200,
+      "content_type": "text/javascript;charset=UTF-8",
+      "licence_or_terms": "copyrights korea forest service. 2013 (map footer). 본 지도서비스는 법적효력이 없으므로, 해당기관에 연락하셔서 확인하시기 바랍니다. No independent tile/data licence found on this page."
+    },
+    {
+      "source_url": "https://map.forest.go.kr/forest/js/supermapgis/mapinit.js?version=2020.03.17.002",
+      "fetched_at_utc": "2026-10-16T23:55:21.204577+00:00",
+      "http_status": 200,
+      "content_type": "text/javascript;charset=UTF-8",
+      "licence_or_terms": "copyrights korea forest service. 2013 (map footer). 본 지도서비스는 법적효력이 없으므로, 해당기관에 연락하셔서 확인하시기 바랍니다. No independent tile/data licence found on this page."
+    },
+    {
+      "source_url": "https://map.forest.go.kr/forest/js/supermapgis/FgisMapFunction.js?version=2020.03.17.002",
+      "fetched_at_utc": "2026-10-16T23:55:52.186428+00:00",
+      "http_status": 200,
+      "content_type": "text/javascript;charset=UTF-8",
+      "licence_or_terms": "copyrights korea forest service. 2013 (map footer). 본 지도서비스는 법적효력이 없으므로, 해당기관에 연락하셔서 확인하시기 바랍니다. No independent tile/data licence found on this page."
+    },
+    {
+      "source_url": "https://map.forest.go.kr/forest/js/supermapgis/SuperMap.js?version=2020.03.17.002",
+      "fetched_at_utc": "2026-10-16T23:56:20.367140+00:00",
+      "http_status": 200,
+      "content_type": "text/javascript;charset=UTF-8",
+      "licence_or_terms": "copyrights korea forest service. 2013 (map footer). 본 지도서비스는 법적효력이 없으므로, 해당기관에 연락하셔서 확인하시기 바랍니다. No independent tile/data licence found on this page."
+    },
+    {
+      "source_url": "https://map.forest.go.kr/gis1/iserver/services.json",
+      "fetched_at_utc": "2026-10-16T23:56:20.898876+00:00",
+      "http_status": 200,
+      "content_type": "text/html",
+      "licence_or_terms": "copyrights korea forest service. 2013 (map footer). 본 지도서비스는 법적효력이 없으므로, 해당기관에 연락하셔서 확인하시기 바랍니다. No independent tile/data licence found on this page."
+    },
+    {
+      "source_url": "https://map.forest.go.kr/forest/js/gis/router.js?version=2020.03.17.002",
+      "fetched_at_utc": "2026-10-16T23:57:08.141339+00:00",
+      "http_status": 200,
+      "content_type": "text/javascript;charset=UTF-8",
+      "licence_or_terms": "copyrights korea forest service. 2013 (map footer). 본 지도서비스는 법적효력이 없으므로, 해당기관에 연락하셔서 확인하시기 바랍니다. No independent tile/data licence found on this page."
+    },
+    {
+      "source_url": "https://map.forest.go.kr/forest/js/common/g_common.js?version=2020.03.17.002",
+      "fetched_at_utc": "2026-10-16T23:57:21.712143+00:00",
+      "http_status": 200,
+      "content_type": "text/javascript;charset=UTF-8",
+      "licence_or_terms": "copyrights korea forest service. 2013 (map footer). 본 지도서비스는 법적효력이 없으므로, 해당기관에 연락하셔서 확인하시기 바랍니다. No independent tile/data licence found on this page."
+    },
+    {
+      "source_url": "https://map.forest.go.kr/forest/js/gis/common.js?version=2020.03.17.002",
+      "fetched_at_utc": "2026-10-16T23:57:22.293645+00:00",
+      "http_status": 200,
+      "content_type": "text/javascript;charset=UTF-8",
+      "licence_or_terms": "copyrights korea forest service. 2013 (map footer). 본 지도서비스는 법적효력이 없으므로, 해당기관에 연락하셔서 확인하시기 바랍니다. No independent tile/data licence found on this page."
+    },
+    {
+      "source_url": "https://www.data.go.kr/tcs/dss/selectDataSetList.do?keyword=%EC%9E%84%EC%83%81%EB%8F%84",
+      "fetched_at_utc": "2026-10-16T23:57:24.505314+00:00",
+      "http_status": 200,
+      "content_type": "text/html;charset=UTF-8",
+      "licence_or_terms": null
+    },
+    {
+      "source_url": "https://www.data.go.kr/data/15093362/fileData.do",
+      "fetched_at_utc": "2026-10-16T23:58:54.487735+00:00",
+      "http_status": 200,
+      "content_type": "text/html;charset=UTF-8",
+      "licence_or_terms": "이용허락범위 제한 없음 (catalogue field)."
+    },
+    {
+      "source_url": "https://www.data.go.kr/data/3045619/fileData.do",
+      "fetched_at_utc": "2026-10-16T23:58:55.367759+00:00",
+      "http_status": 200,
+      "content_type": "text/html;charset=UTF-8",
+      "licence_or_terms": "이용허락범위 제한 없음 (catalogue field)."
+    },
+    {
+      "source_url": "https://www.data.go.kr/data/95566/linkedData.do",
+      "fetched_at_utc": "2026-10-16T23:58:55.897060+00:00",
+      "http_status": 200,
+      "content_type": "text/html;charset=UTF-8",
+      "licence_or_terms": null
+    },
+    {
+      "source_url": "https://www.data.go.kr/data/96010/linkedData.do",
+      "fetched_at_utc": "2026-10-16T23:58:56.774544+00:00",
+      "http_status": 200,
+      "content_type": "text/html;charset=UTF-8",
+      "licence_or_terms": null
+    },
+    {
+      "source_url": "https://map.forest.go.kr/gis1/iserver/services/map-forest/wms111?SERVICE=WMS&REQUEST=GetCapabilities",
+      "fetched_at_utc": "2026-10-16T23:59:04.520364+00:00",
+      "http_status": 200,
+      "content_type": "text/html",
+      "licence_or_terms": "copyrights korea forest service. 2013 (map footer). 본 지도서비스는 법적효력이 없으므로, 해당기관에 연락하셔서 확인하시기 바랍니다. No independent tile/data licence found on this page."
+    },
+    {
+      "source_url": "https://map.forest.go.kr/gis1/arcgis/rest/services?f=pjson",
+      "fetched_at_utc": "2026-10-16T23:59:05.201168+00:00",
+      "http_status": 200,
+      "content_type": "text/html",
+      "licence_or_terms": "copyrights korea forest service. 2013 (map footer). 본 지도서비스는 법적효력이 없으므로, 해당기관에 연락하셔서 확인하시기 바랍니다. No independent tile/data licence found on this page."
+    },
+    {
+      "source_url": "https://map.forest.go.kr/gis1/iserver/services/fgisApi/restjsr.json",
+      "fetched_at_utc": "2026-10-16T23:59:05.848090+00:00",
+      "http_status": 200,
+      "content_type": "text/html",
+      "licence_or_terms": "copyrights korea forest service. 2013 (map footer). 본 지도서비스는 법적효력이 없으므로, 해당기관에 연락하셔서 확인하시기 바랍니다. No independent tile/data licence found on this page."
+    },
+    {
+      "source_url": "https://map.forest.go.kr/forest/js/modules/app.js",
+      "fetched_at_utc": "2026-10-16T23:59:13.785789+00:00",
+      "http_status": 200,
+      "content_type": "text/javascript;charset=UTF-8",
+      "licence_or_terms": "copyrights korea forest service. 2013 (map footer). 본 지도서비스는 법적효력이 없으므로, 해당기관에 연락하셔서 확인하시기 바랍니다. No independent tile/data licence found on this page."
+    },
+    {
+      "source_url": "https://map.forest.go.kr/forest/js/modules/mapViewer.js",
+      "fetched_at_utc": "2026-10-16T23:59:14.342766+00:00",
+      "http_status": 200,
+      "content_type": "text/javascript;charset=UTF-8",
+      "licence_or_terms": "copyrights korea forest service. 2013 (map footer). 본 지도서비스는 법적효력이 없으므로, 해당기관에 연락하셔서 확인하시기 바랍니다. No independent tile/data licence found on this page."
+    },
+    {
+      "source_url": "https://map.forest.go.kr/forest/js/modules/ui.js",
+      "fetched_at_utc": "2026-10-16T23:59:24.235716+00:00",
+      "http_status": 200,
+      "content_type": "text/javascript;charset=UTF-8",
+      "licence_or_terms": "copyrights korea forest service. 2013 (map footer). 본 지도서비스는 법적효력이 없으므로, 해당기관에 연락하셔서 확인하시기 바랍니다. No independent tile/data licence found on this page."
+    },
+    {
+      "source_url": "https://map.forest.go.kr/forest/js/modules/toc.js",
+      "fetched_at_utc": "2026-10-16T23:59:24.847309+00:00",
+      "http_status": 200,
+      "content_type": "text/javascript;charset=UTF-8",
+      "licence_or_terms": "copyrights korea forest service. 2013 (map footer). 본 지도서비스는 법적효력이 없으므로, 해당기관에 연락하셔서 확인하시기 바랍니다. No independent tile/data licence found on this page."
+    },
+    {
+      "source_url": "https://map.forest.go.kr/forest/js/modules/forestMapSearch.js",
+      "fetched_at_utc": "2026-10-16T23:59:25.564169+00:00",
+      "http_status": 200,
+      "content_type": "text/javascript;charset=UTF-8",
+      "licence_or_terms": "copyrights korea forest service. 2013 (map footer). 본 지도서비스는 법적효력이 없으므로, 해당기관에 연락하셔서 확인하시기 바랍니다. No independent tile/data licence found on this page."
+    },
+    {
+      "source_url": "https://map.forest.go.kr/forest/js/supermapgis/SuperMapDataService.js?version=2020.03.17.002",
+      "fetched_at_utc": "2026-10-16T23:59:26.199594+00:00",
+      "http_status": 200,
+      "content_type": "text/javascript;charset=UTF-8",
+      "licence_or_terms": "copyrights korea forest service. 2013 (map footer). 본 지도서비스는 법적효력이 없으므로, 해당기관에 연락하셔서 확인하시기 바랍니다. No independent tile/data licence found on this page."
+    },
+    {
+      "source_url": "https://map.forest.go.kr/gis1/iserver/services/map-fdms/wms111?SERVICE=WMS&VERSION=1.1.1&REQUEST=GetCapabilities",
+      "fetched_at_utc": "2026-10-17T00:01:15.572972+00:00",
+      "http_status": 200,
+      "content_type": "text/html",
+      "licence_or_terms": "copyrights korea forest service. 2013 (map footer). 본 지도서비스는 법적효력이 없으므로, 해당기관에 연락하셔서 확인하시기 바랍니다. No independent tile/data licence found on this page."
+    },
+    {
+      "source_url": "https://map.forest.go.kr/gis1/iserver/services/map-fdms/rest/maps.json",
+      "fetched_at_utc": "2026-10-17T00:01:16.134052+00:00",
+      "http_status": 200,
+      "content_type": "text/html",
+      "licence_or_terms": "copyrights korea forest service. 2013 (map footer). 본 지도서비스는 법적효력이 없으므로, 해당기관에 연락하셔서 확인하시기 바랍니다. No independent tile/data licence found on this page."
+    },
+    {
+      "source_url": "https://map.forest.go.kr/gis1/iserver/services/map-fdms/rest/maps/TB_FGIS_C5_IM5000.json",
+      "fetched_at_utc": "2026-10-17T00:01:16.775917+00:00",
+      "http_status": 200,
+      "content_type": "text/html",
+      "licence_or_terms": "copyrights korea forest service. 2013 (map footer). 본 지도서비스는 법적효력이 없으므로, 해당기관에 연락하셔서 확인하시기 바랍니다. No independent tile/data licence found on this page."
+    },
+    {
+      "source_url": "https://www.bigdata-forest.kr/product/FRT001003",
+      "fetched_at_utc": "2026-10-17T00:01:44.480979+00:00",
+      "http_status": null,
+      "content_type": "text/plain",
+      "licence_or_terms": null
+    },
+    {
+      "source_url": "https://map.forest.go.kr/gis1/iserver/services/map-fdms/wms111?SERVICE=WMS&VERSION=1.1.1&REQUEST=GetMap&LAYERS=TB_FGIS_C5_IM5000&STYLES=&SRS=EPSG%3A4326&BBOX=128.60%2C36.30%2C128.70%2C36.40&WIDTH=256&HEIGHT=256&FORMAT=image%2Fpng",
+      "fetched_at_utc": "2026-10-17T00:02:27.173353+00:00",
+      "http_status": 200,
+      "content_type": "text/html",
+      "licence_or_terms": "copyrights korea forest service. 2013 (map footer). 본 지도서비스는 법적효력이 없으므로, 해당기관에 연락하셔서 확인하시기 바랍니다. No independent tile/data licence found on this page."
+    }
+  ]
+}

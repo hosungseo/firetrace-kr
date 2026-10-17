@@ -1,0 +1,30 @@
+{
+  "t0": "2025-03-21T00:00:00+09:00",
+  "columns": [
+    "t",
+    "sender",
+    "level",
+    "text",
+    "regions"
+  ],
+  "time_unit": "minutes; fractional minutes retain seconds",
+  "row_count": 0,
+  "source_url": "https://www.safekorea.go.kr/safekorea-kor/ctim/cmsg/calamitySms.do",
+  "fetched_at_utc": "2026-10-17T00:01:04.230719+00:00",
+  "licence_or_terms": "© 2026 Ministry of the Interior and Safety. All rights reserved (page footer). No separate data reuse licence found on this archive page.",
+  "complete": false,
+  "actual_send_count": null,
+  "count_per_day_collected": {
+    "2025-03-22": 0,
+    "2025-03-23": 0,
+    "2025-03-24": 0,
+    "2025-03-25": 0,
+    "2025-03-26": 0,
+    "2025-03-27": 0,
+    "2025-03-28": 0,
+    "2025-03-29": 0,
+    "2025-03-30": 0
+  },
+  "count_per_sender_collected": [],
+  "caveat": "Empty retrieval is NOT evidence of zero historical sends. Legacy JSP/JS/JSON routes redirect to new homepage; new archive returns no 2025 rows while recent control works. History completeness cannot be established. No press-reported send is substituted for an official SMS record."
+}

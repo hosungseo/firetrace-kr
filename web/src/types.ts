@@ -87,3 +87,42 @@ export interface NewsData {
   articles: Article[]
   meta: { count: number; source: string }
 }
+
+export interface EmdProps {
+  sido: string
+  sigungu: string
+  emd: string
+  code: string
+  total: number | null
+  age70plus: number | null
+  age70share: number | null
+  first_hit: number | null
+  hotspots: number
+}
+
+export interface EmdCollection {
+  type: 'FeatureCollection'
+  features: { type: 'Feature'; properties: EmdProps; geometry: { type: 'Polygon' | 'MultiPolygon'; coordinates: unknown } }[]
+}
+
+export interface KfsFire {
+  si: string
+  gungu: string
+  emd: string
+  ri: string
+  jibun: string
+  start: string
+  end: string
+  t: number
+  t_end: number
+  cause: string
+  area_ha: number
+  lonlat: [number, number] | null
+}
+
+export interface KfsData {
+  source: string
+  count: number
+  fires: KfsFire[]
+  note: string
+}

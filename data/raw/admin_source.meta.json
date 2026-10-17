@@ -1,0 +1,50 @@
+{
+  "source_url": "https://raw.githubusercontent.com/vuski/admdongkor/7360288277dfd12d74e54b959c59bdd66f852e3a/ver20250101/HangJeongDong_ver20250101.geojson",
+  "commit_url": "https://github.com/vuski/admdongkor/commit/7360288277dfd12d74e54b959c59bdd66f852e3a",
+  "licence_url": "https://github.com/vuski/admdongkor/blob/master/LICENSE-DATA",
+  "fetched_at_utc": "2026-10-16T23:56:16.561001+00:00",
+  "licence_or_terms": "CC BY 4.0 (vuski/admdongkor processed data); upstream Statistics Korea SGIS: KOGL Type 1, attribution required.",
+  "attribution": "본 데이터는 통계청 통계지리정보서비스(SGIS, https://sgis.kostat.go.kr)에서 공공누리 제1유형으로 개방한 행정동 경계를 가공한 것이며(가공: vuski/admdongkor, https://github.com/vuski/admdongkor), CC BY 4.0으로 배포됩니다.",
+  "row_count": 65,
+  "national_source_row_count": 3555,
+  "verified_sigungu_codes": {
+    "안동시": [
+      "47170"
+    ],
+    "영덕군": [
+      "47770"
+    ],
+    "영양군": [
+      "47760"
+    ],
+    "의성군": [
+      "47730"
+    ],
+    "청송군": [
+      "47750"
+    ]
+  },
+  "count_per_sigungu": {
+    "안동시": 24,
+    "영덕군": 9,
+    "영양군": 6,
+    "의성군": 18,
+    "청송군": 8
+  },
+  "source_version": "2025-01-01",
+  "simplification_tolerance_metres": 50,
+  "next_snapshot_crosscheck": {
+    "source_url": "https://raw.githubusercontent.com/vuski/admdongkor/master/ver20250401/HangJeongDong_ver20250401.geojson",
+    "fetched_at_utc": "2026-10-17T00:02:40.613550+00:00",
+    "row_count": 65,
+    "name_code_match": true,
+    "geometry_match": true
+  },
+  "derived_bytes": 152423,
+  "caveat": [
+    "January 2025 snapshot. Repository's next 2025-04-01 changelog only lists a 2025-03-10 Jeonju merger, outside this study area. No listed study-area change during March.",
+    "code is the source's 10-digit MOIS adm_cd2, not the 8-digit Statistics Korea adm_cd.",
+    "Independent ring Douglas-Peucker in local metric, rounded to six decimals; shared-edge topology is not guaranteed. Display boundaries, not survey/legal boundaries.",
+    "Licence is from the repository's current LICENSE-DATA and README retrieved on the fetch date; preserve SGIS and vuski attribution."
+  ]
+}

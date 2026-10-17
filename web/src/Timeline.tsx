@@ -1,11 +1,12 @@
 import { useEffect, useMemo, useRef, useState } from 'react'
-import type { FireData, FireEvent, NewsData } from './types'
+import type { FireData, FireEvent, KfsFire, NewsData } from './types'
 import { T_MAX, T_MIN, eventLabel, fmt, hourIndex } from './time'
 
 interface Props {
   data: FireData
   news: NewsData | null
   events: FireEvent[]
+  fires: KfsFire[]
   t: number
   onSeek: (t: number) => void
   onSelectEvent: (id: string) => void
@@ -26,7 +27,7 @@ function useWidth<T extends HTMLElement>() {
   return [ref, w] as const
 }
 
-export default function Timeline({ data, news, events, t, onSeek, onSelectEvent }: Props) {
+export default function Timeline({ data, news, events, fires, t, onSeek, onSelectEvent }: Props) {
   const [ref, width] = useWidth<HTMLDivElement>()
   const [hover, setHover] = useState<number | null>(null)
   const dragging = useRef(false)
@@ -144,6 +145,22 @@ export default function Timeline({ data, news, events, t, onSeek, onSelectEvent 
             </rect>
           ) : null,
         )}
+
+        {fires.map((f) => (
+          <polygon
+            key={f.start + f.jibun}
+            points={`${x(f.t)},6 ${x(f.t) + 5},20 ${x(f.t) - 5},20`}
+            className="fire-tick"
+            onPointerDown={(ev) => {
+              ev.stopPropagation()
+              onSeek(f.t)
+            }}
+          >
+            <title>
+              산림청 발생 기록 {fmt(f.t)} {f.gungu} {f.emd} · {f.area_ha} ha
+            </title>
+          </polygon>
+        ))}
 
         {/* row 1: cumulative area */}
         <g transform={`translate(0,${rowY(0)})`}>

@@ -1,0 +1,13 @@
+{
+  "source_url": "https://www.safekorea.go.kr/safekorea-kor/ctim/cmsg/calamitySms.do",
+  "fetched_at_utc": "2026-10-17T00:01:04.230719+00:00",
+  "licence_or_terms": "© 2026 Ministry of the Interior and Safety. All rights reserved (page footer). No separate data reuse licence found on this archive page.",
+  "row_count": 8,
+  "caveat": "Research comparison table: 7 existing alert/evacuation events plus e35 detail-only 17:05 mention; 5 minute-level send/order mentions cannot be verified. Existing press records were read locally, not refetched.",
+  "derived_from": [
+    "data/raw/events.json",
+    "data/raw/disaster_sms.json",
+    "data/raw/disaster_sms.meta.json"
+  ],
+  "generated_at_utc": "2026-10-17T00:06:20.233057+00:00"
+}

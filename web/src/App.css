@@ -143,3 +143,16 @@
 :root[data-theme='dark'] .ev-tick { fill: #8a8794; }
 :root[data-theme='dark'] .maplibregl-ctrl-group { background: var(--surface); }
 :root[data-theme='dark'] .maplibregl-ctrl-group button { filter: invert(1) hue-rotate(180deg); }
+
+/* 읍면동 + 산림청 records */
+.sw.kfs { background: #8a2a0c; border: 2px solid #fff; outline: 1px solid #999; }
+.sw.emd { background: rgba(96,70,150,.35); border: 1px solid #5a4a8a; border-radius: 2px; }
+.exposure { margin-top: 8px; padding-top: 6px; border-top: 1px solid var(--line); font-size: 11.5px; color: var(--ink-2); }
+.exposure b { color: var(--ink); font-variant-numeric: tabular-nums; }
+.fire-tick { fill: #8a2a0c; stroke: #fff; stroke-width: 1; cursor: pointer; }
+.emd-popup .maplibregl-popup-content { font: 12px/1.5 'Pretendard Variable', Pretendard, sans-serif; color: #1d1a16; padding: 8px 10px; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,.25); }
+.emd-popup .maplibregl-popup-content .hit { color: #c2410c; font-weight: 600; }
+.emd-popup .maplibregl-popup-content small { color: #8f877b; }
+:root[data-theme='dark'] .emd-popup .maplibregl-popup-content { background: #1a191f; color: #ecebf0; }
+:root[data-theme='dark'] .emd-popup .maplibregl-popup-tip { border-top-color: #1a191f; border-bottom-color: #1a191f; }
+:root[data-theme='dark'] .fire-tick { fill: #ff8a5b; stroke: #15141a; }

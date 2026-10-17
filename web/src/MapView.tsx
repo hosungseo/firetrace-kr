@@ -3,10 +3,11 @@ import * as maplibregl from 'maplibre-gl'
 import type { GeoJSONSource, MapLayerMouseEvent } from 'maplibre-gl'
 import 'maplibre-gl/dist/maplibre-gl.css'
 import mlcontour from 'maplibre-contour'
-import type { FireData, FireEvent } from './types'
-import { ACTIVE_WINDOW, hourIndex } from './time'
+import type { EmdCollection, FireData, FireEvent, KfsFire } from './types'
+import { ACTIVE_WINDOW, fmt, hourIndex } from './time'
 
 export interface Layers {
+  emd: boolean
   stations: boolean
   burned: boolean
   active: boolean
@@ -21,6 +22,8 @@ interface Props {
   basemap: Basemap
   data: FireData
   events: FireEvent[]
+  emd: EmdCollection | null
+  kfs: KfsFire[]
   t: number
   layers: Layers
   selected: string | null
@@ -93,6 +96,19 @@ function windGeoJSON(data: FireData, t: number) {
   }
 }
 
+function kfsGeoJSON(kfs: KfsFire[]) {
+  return {
+    type: 'FeatureCollection' as const,
+    features: kfs
+      .filter((f) => f.lonlat)
+      .map((f, i) => ({
+        type: 'Feature' as const,
+        geometry: { type: 'Point' as const, coordinates: f.lonlat! },
+        properties: { i, t: f.t, area: f.area_ha },
+      })),
+  }
+}
+
 function eventGeoJSON(events: FireEvent[]) {
   return {
     type: 'FeatureCollection' as const,
@@ -106,14 +122,15 @@ function eventGeoJSON(events: FireEvent[]) {
   }
 }
 
-export default function MapView({ basemap, data, events, t, layers, selected, onSelectEvent }: Props) {
+export default function MapView({ basemap, data, events, emd, kfs, t, layers, selected, onSelectEvent }: Props) {
   const el = useRef<HTMLDivElement>(null)
   const mapRef = useRef<maplibregl.Map | null>(null)
   const ready = useRef(false)
   const hillshadeKey = useRef('')
   const stationEls = useRef<HTMLDivElement[]>([])
-  const latest = useRef({ t, layers, events, selected, basemap })
-  latest.current = { t, layers, events, selected, basemap }
+  const popup = useRef<maplibregl.Popup | null>(null)
+  const latest = useRef({ t, layers, events, selected, basemap, emd, kfs })
+  latest.current = { t, layers, events, selected, basemap, emd, kfs }
 
   useEffect(() => {
     const map = new maplibregl.Map({
@@ -170,6 +187,42 @@ export default function MapView({ basemap, data, events, t, layers, selected, on
           'line-width': ['case', ['>', ['get', 'level'], 0], 1.1, 0.5],
         },
       })
+
+      // 읍면동: population choropleth (70+ share), boundary lines, and a fire-coloured fill once a hotspot has landed inside
+      map.addSource('emd', { type: 'geojson', data: { type: 'FeatureCollection', features: [] } })
+      map.addLayer({
+        id: 'emd-fill',
+        type: 'fill',
+        source: 'emd',
+        paint: {
+          'fill-color': ['interpolate', ['linear'], ['coalesce', ['get', 'age70share'], 0], 0.15, 'rgba(96,70,150,0.03)', 0.45, 'rgba(96,70,150,0.28)'],
+        },
+      })
+      map.addLayer({
+        id: 'emd-hit',
+        type: 'fill',
+        source: 'emd',
+        paint: { 'fill-color': '#e8551b', 'fill-opacity': 0.16 },
+        filter: ['<=', ['coalesce', ['get', 'first_hit'], 1e9], -1],
+      })
+      map.addLayer({
+        id: 'emd-line',
+        type: 'line',
+        source: 'emd',
+        paint: { 'line-color': '#5a4a8a', 'line-width': 0.6, 'line-opacity': 0.45 },
+      })
+      popup.current = new maplibregl.Popup({ closeButton: false, closeOnClick: false, offset: 10, className: 'emd-popup' })
+      map.on('mousemove', 'emd-fill', (e: MapLayerMouseEvent) => {
+        const p = e.features?.[0]?.properties as Record<string, unknown> | undefined
+        if (!p || !latest.current.layers.emd) return
+        const share = typeof p.age70share === 'number' ? `${Math.round(p.age70share * 100)}%` : '–'
+        const hit = typeof p.first_hit === 'number' && p.first_hit <= latest.current.t ? `열점 첫 관측 ${fmt(p.first_hit)}` : '아직 열점 없음'
+        popup.current!
+          .setLngLat(e.lngLat)
+          .setHTML(`<b>${p.sigungu} ${p.emd}</b><br>주민 ${(p.total as number)?.toLocaleString() ?? '–'}명 · 70세 이상 ${share}<br><span class="${hit.startsWith('열점') ? 'hit' : ''}">${hit}</span>`)
+          .addTo(map)
+      })
+      map.on('mouseleave', 'emd-fill', () => popup.current?.remove())
 
       map.addSource('hotspots', { type: 'geojson', data: hotspotGeoJSON(data) })
       map.addLayer({
@@ -249,6 +302,30 @@ export default function MapView({ basemap, data, events, t, layers, selected, on
           'circle-stroke-width': 2,
         },
       })
+      map.addSource('kfs', { type: 'geojson', data: kfsGeoJSON(latest.current.kfs) })
+      map.addLayer({
+        id: 'kfs',
+        type: 'circle',
+        source: 'kfs',
+        paint: {
+          'circle-radius': ['interpolate', ['linear'], ['get', 'area'], 1, 5, 50000, 11],
+          'circle-color': '#8a2a0c',
+          'circle-stroke-color': '#fff',
+          'circle-stroke-width': 2,
+        },
+      })
+      map.on('click', 'kfs', (e: MapLayerMouseEvent) => {
+        const i = e.features?.[0]?.properties?.i as number | undefined
+        const f = i != null ? latest.current.kfs[i] : undefined
+        if (!f) return
+        new maplibregl.Popup({ offset: 12, className: 'emd-popup' })
+          .setLngLat(f.lonlat!)
+          .setHTML(`<b>산림청 발생 기록</b><br>${f.gungu} ${f.emd} ${f.ri} ${f.jibun}<br>${fmt(f.t)} 발생 · ${fmt(f.t_end)} 진화<br>원인 ${f.cause} · 피해 ${f.area_ha.toLocaleString()} ha<br><small>위치는 읍면 중심(지번 미지오코딩)</small>`)
+          .addTo(map)
+      })
+      map.on('mouseenter', 'kfs', () => (map.getCanvas().style.cursor = 'pointer'))
+      map.on('mouseleave', 'kfs', () => (map.getCanvas().style.cursor = ''))
+
       map.on('click', 'events', (e: MapLayerMouseEvent) => {
         const id = e.features?.[0]?.properties?.id
         if (id) onSelectEvent(String(id))
@@ -272,8 +349,13 @@ export default function MapView({ basemap, data, events, t, layers, selected, on
 
   function apply(map: maplibregl.Map) {
     if (!ready.current) return
-    const { t, layers, events, selected, basemap } = latest.current
+    const { t, layers, events, selected, basemap, emd, kfs } = latest.current
     const b = BASE[basemap]
+    if (emd) (map.getSource('emd') as GeoJSONSource).setData(emd as never)
+    ;(map.getSource('kfs') as GeoJSONSource).setData(kfsGeoJSON(kfs))
+    map.setFilter('emd-hit', ['<=', ['coalesce', ['get', 'first_hit'], 1e9], t])
+    map.setFilter('kfs', ['<=', ['get', 't'], t])
+    map.setPaintProperty('emd-line', 'line-color', basemap === 'night' ? '#b7a8e8' : basemap === 'satellite' ? '#e9e2ff' : '#5a4a8a')
     const sat = basemap === 'satellite'
     map.setLayoutProperty('imagery', 'visibility', sat ? 'visible' : 'none')
     map.setLayoutProperty('contours', 'visibility', sat ? 'none' : 'visible')
@@ -297,6 +379,8 @@ export default function MapView({ basemap, data, events, t, layers, selected, on
     map.setLayoutProperty('active-glow', 'visibility', vis(layers.active))
     map.setLayoutProperty('wind', 'visibility', vis(layers.wind))
     map.setLayoutProperty('events', 'visibility', vis(layers.events))
+    map.setLayoutProperty('kfs', 'visibility', vis(layers.events))
+    for (const id of ['emd-fill', 'emd-hit', 'emd-line']) map.setLayoutProperty(id, 'visibility', vis(layers.emd))
     const hi = hourIndex(t)
     data.stations.forEach((st, k) => {
       const el = stationEls.current[k]
@@ -343,7 +427,7 @@ export default function MapView({ basemap, data, events, t, layers, selected, on
   useEffect(() => {
     if (mapRef.current) apply(mapRef.current)
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [t, layers, events, selected, basemap])
+  }, [t, layers, events, selected, basemap, emd, kfs])
 
   useEffect(() => {
     const ev = events.find((e) => e.id === selected)
