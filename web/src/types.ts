@@ -312,4 +312,5 @@ export interface Gk2aData {
   head: [number, number, number, number][]
   reach: [number, number][]
   fastest_hour: { t_from: number; t_to: number; kmh: number; km_from: number; km_to: number } | null
+  emd_first?: Record<string, number>
 }

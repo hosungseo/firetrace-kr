@@ -817,7 +817,7 @@ export default function App() {
             </div>
           )}
 
-          {tab === 'response' && resp && <Response data={resp} full={full} emdNames={Object.fromEntries((emd?.features ?? []).map((f) => [f.properties.code, `${f.properties.sigungu.replace(/[시군]$/, '')} ${f.properties.emd}`]))} t={tm} onSeek={(v) => setT(Math.max(T_MIN, Math.min(T_MAX, v)))} onFocusEmd={(c) => setFocusCode(c)} />}
+          {tab === 'response' && resp && <Response data={resp} full={full} gk2aFirst={gk2a?.emd_first ?? null} emdNames={Object.fromEntries((emd?.features ?? []).map((f) => [f.properties.code, `${f.properties.sigungu.replace(/[시군]$/, '')} ${f.properties.emd}`]))} t={tm} onSeek={(v) => setT(Math.max(T_MIN, Math.min(T_MAX, v)))} onFocusEmd={(c) => setFocusCode(c)} />}
           {tab === 'emd' && (
             <div className="pane">
               {focused ? (

@@ -21,3 +21,8 @@ data/raw/kfs_docs/
 
 # GK2A raw files (KMA API허브, restricted licence: keep local)
 data/raw/gk2a/
+
+# full-quality demo render (share version is committed)
+docs/firetrace-demo-15s.mp4
+video/.hyperframes/
+video/renders/

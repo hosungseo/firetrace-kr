@@ -1,0 +1,116 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=1920, height=1080" />
+    <title>산불추적기 15초 시연</title>
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/gsap.min.js"></script>
+    <style>
+      @font-face { font-family: "Pretendard"; src: url("assets/PretendardVariable.woff2") format("woff2"); font-weight: 100 900; }
+      body { margin: 0; background: #1e1c19; font-family: "Pretendard", sans-serif; }
+      #root { position: relative; width: 100%; height: 100%; overflow: hidden; background: #1e1c19; }
+      .vw { position: absolute; inset: 0; transform-origin: 42% 55%; }
+      .vw video { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+      .cap-clip { position: absolute; inset: 0; pointer-events: none; }
+      .cap { position: absolute; left: 230px; top: 64px; width: 900px; background: rgba(30, 28, 25, 0.92); color: #fff; border-radius: 6px; padding: 22px 28px 24px; box-shadow: 0 8px 28px rgba(0, 0, 0, 0.28); border-left: 6px solid #d84c2e; }
+      .kicker { font-size: 22px; font-weight: 600; color: #f0a48f; letter-spacing: 0.5px; }
+      .title { font-size: 46px; font-weight: 800; line-height: 1.22; margin-top: 6px; letter-spacing: -0.5px; }
+      .title b { color: #ff8a5c; font-weight: 800; }
+      .sub { font-size: 22px; color: #c9c2b6; margin-top: 10px; line-height: 1.4; }
+      .big { font-size: 84px; font-weight: 900; color: #22d3ee; line-height: 1; margin-top: 12px; font-variant-numeric: tabular-nums; letter-spacing: -1px; }
+      .big small { font-size: 34px; font-weight: 700; color: #a5f3fc; margin-left: 8px; }
+      #w4 { transform-origin: 100% 8.3%; }
+      .ring2 { position: absolute; left: 1668px; top: 138px; width: 214px; height: 276px; border: 4px solid #22d3ee; border-radius: 10px; box-shadow: 0 0 24px rgba(34, 211, 238, 0.7); }
+      .ring { position: absolute; left: 614px; top: 714px; width: 372px; height: 134px; border: 4px solid #22d3ee; border-radius: 10px; box-shadow: 0 0 24px rgba(34, 211, 238, 0.7); }
+      #flash { position: absolute; inset: 0; background: #fff; opacity: 0; pointer-events: none; }
+      #endcard { position: absolute; inset: 0; background: #1e1c19; display: flex; flex-direction: column; align-items: center; justify-content: center; color: #fff; }
+      .logo { font-size: 104px; font-weight: 900; letter-spacing: -2px; display: flex; align-items: center; gap: 26px; }
+      .tri { width: 0; height: 0; border-left: 46px solid transparent; border-right: 46px solid transparent; border-bottom: 80px solid #d84c2e; }
+      .url { font-size: 44px; font-weight: 600; color: #ff8a5c; margin-top: 22px; }
+      .srcs { font-size: 24px; color: #9e9a92; margin-top: 30px; letter-spacing: 0.3px; }
+    </style>
+  </head>
+  <body>
+    <div id="root" data-composition-id="main" data-start="0" data-width="1920" data-height="1080" data-duration="15">
+      <!-- footage (real screen capture of the app) -->
+      <div class="vw" id="w1"><video id="v1" src="assets/s1_overview.mp4" data-start="0" data-duration="2.6" muted playsinline data-track-index="0"></video></div>
+      <div class="vw" id="w2"><video id="v2" src="assets/s2_fly.mp4" data-start="2.6" data-duration="3.5" muted playsinline data-track-index="0"></video></div>
+      <div class="vw" id="w3"><video id="v3" src="assets/s3_chase.mp4" data-start="6.1" data-duration="4.83" muted playsinline data-track-index="0"></video></div>
+      <div class="vw" id="w4"><video id="v4" src="assets/s4_records.mp4" data-start="10.93" data-duration="2.6" muted playsinline data-track-index="0"></video></div>
+
+      <!-- captions -->
+      <section class="cap-clip clip" data-start="0.15" data-duration="2.35" data-track-index="1">
+        <div class="cap" id="c1">
+          <div class="kicker">산불추적기 · 2025 경북 산불</div>
+          <div class="title">위성으로 다시 본 의성 산불</div>
+        </div>
+      </section>
+      <section class="cap-clip clip" data-start="2.75" data-duration="3.25" data-track-index="1">
+        <div class="cap" id="c2">
+          <div class="kicker">3월 25일 17:20</div>
+          <div class="title">불이 바람을 타고 <b>동쪽으로</b> 달린다</div>
+          <div class="sub">카메라가 확산 방향을 따라 돈다 · 주요 장면 4</div>
+        </div>
+      </section>
+      <section class="cap-clip clip" data-start="6.2" data-duration="4.65" data-track-index="1">
+        <div class="cap" id="c3">
+          <div class="kicker">천리안위성 2A호 · 10분마다</div>
+          <div class="title">불의 선두를 따라간다</div>
+          <div class="big" id="c3big">15.6<small>km/h</small></div>
+          <div class="sub">가장 빨랐던 1시간 · 극궤도 위성 12시간 공백 사이</div>
+        </div>
+        <div class="ring" id="ring"></div>
+      </section>
+      <section class="cap-clip clip" data-start="11.0" data-duration="2.5" data-track-index="1">
+        <div class="cap" id="c4">
+          <div class="kicker">기록 대조 · 읍면동별 첫 탐지</div>
+          <div class="title">보도된 진입 시각과 <b>1시간 안</b></div>
+          <div class="sub">같은 읍면동을 극궤도 위성은 3~9시간 늦게 봤다</div>
+        </div>
+        <div class="ring2" id="ring2"></div>
+      </section>
+
+      <!-- end card -->
+      <section class="clip" id="endcard" data-start="13.53" data-duration="1.47" data-track-index="2">
+        <div class="logo" id="logo"><div class="tri"></div><span>산불추적기</span></div>
+        <div class="url" id="url">seohosung.com/firetrace</div>
+        <div class="srcs" id="srcs">NASA FIRMS · 천리안위성 2A호 · 산림청 · 기상청</div>
+      </section>
+
+      <div id="flash"></div>
+    </div>
+    <script>
+      const tl = gsap.timeline({ paused: true });
+      // gentle push-in on each footage block
+      tl.fromTo("#w1", { scale: 1.0 }, { scale: 1.06, duration: 2.6, ease: "none" }, 0);
+      tl.fromTo("#w2", { scale: 1.02 }, { scale: 1.0, duration: 3.5, ease: "none" }, 2.6);
+      tl.fromTo("#w3", { scale: 1.0 }, { scale: 1.04, duration: 4.83, ease: "none" }, 6.1);
+      tl.fromTo("#w4", { scale: 1.0 }, { scale: 2.2, duration: 0.9, ease: "power3.inOut" }, 11.05);
+      tl.fromTo("#ring2", { opacity: 0, scale: 1.12 }, { opacity: 1, scale: 1, duration: 0.35, ease: "power2.out" }, 12.0);
+      tl.to("#ring2", { opacity: 0.4, duration: 0.35, yoyo: true, repeat: 3, ease: "sine.inOut" }, 12.35);
+      // captions slide in
+      [["#c1", 0.15], ["#c2", 2.75], ["#c3", 6.2], ["#c4", 11.0]].forEach(([s, t]) => {
+        tl.fromTo(s, { x: -60, opacity: 0 }, { x: 0, opacity: 1, duration: 0.45, ease: "power3.out" }, t);
+      });
+      tl.to("#c1", { opacity: 0, duration: 0.25 }, 2.3);
+      tl.to("#c2", { opacity: 0, duration: 0.25 }, 5.75);
+      tl.to("#c3", { opacity: 0, duration: 0.25 }, 10.6);
+      tl.to("#c4", { opacity: 0, duration: 0.2 }, 13.3);
+      // the big number lands
+      tl.fromTo("#c3big", { scale: 0.6, opacity: 0, transformOrigin: "0% 60%" }, { scale: 1, opacity: 1, duration: 0.5, ease: "back.out(2)" }, 6.75);
+      // highlight ring on the fire-head card, 3 finite pulses
+      tl.fromTo("#ring", { opacity: 0, scale: 1.15 }, { opacity: 1, scale: 1, duration: 0.35, ease: "power2.out" }, 6.9);
+      tl.to("#ring", { opacity: 0.35, duration: 0.45, ease: "sine.inOut", yoyo: true, repeat: 5 }, 7.3);
+      // cut flashes
+      [2.6, 6.1, 10.93].forEach((t) => {
+        tl.fromTo("#flash", { opacity: 0.0 }, { opacity: 0.55, duration: 0.06, ease: "none" }, t - 0.06);
+        tl.to("#flash", { opacity: 0, duration: 0.22, ease: "power2.out" }, t);
+      });
+      // end card
+      tl.fromTo("#logo", { y: 30, opacity: 0 }, { y: 0, opacity: 1, duration: 0.45, ease: "power3.out" }, 13.6);
+      tl.fromTo("#url", { y: 20, opacity: 0 }, { y: 0, opacity: 1, duration: 0.4, ease: "power3.out" }, 13.85);
+      tl.fromTo("#srcs", { opacity: 0 }, { opacity: 1, duration: 0.4 }, 14.05);
+      window.__timelines["main"] = tl;
+    </script>
+  </body>
+</html>

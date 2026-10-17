@@ -82,10 +82,25 @@ def main():
         if j is None: break
         rate = (reach[j][1] - r) / ((reach[j][0] - t) / 60)
         if fast is None or rate > fast['kmh']: fast = {'t_from': t, 't_to': reach[j][0], 'kmh': round(rate, 2), 'km_from': r, 'km_to': reach[j][1]}
+    # First GK2A pixel (centre) inside each 읍면동 polygon, for the 기록 대조 tab
+    def inside(pt, poly):
+        c = False
+        for ring in poly:
+            for i in range(len(ring)):
+                (x1, y1), (x2, y2) = ring[i], ring[i - 1]
+                if (y1 > pt[1]) != (y2 > pt[1]) and pt[0] < (x2 - x1) * (pt[1] - y1) / (y2 - y1) + x1: c = not c
+        return c
+    emd_first = {}
+    emd_path = pub / 'emd.json'
+    if emd_path.exists():
+        for feat in json.loads(emd_path.read_text())['features']:
+            g = feat['geometry']; polys = g['coordinates'] if g['type'] == 'MultiPolygon' else [g['coordinates']]
+            ts = [p[2] for p in pixels if any(inside(p, pl) for pl in polys)]
+            if ts: emd_first[feat['properties']['code']] = min(ts)
     doc = {'source': '기상청 API허브 천리안위성 2A호 AMI L2 산불탐지(FF), 한반도 2km, 10분 간격',
            'method': f'신뢰도 하·중·상 탐지만(산업 열원 제외), 60분 안에 2번 이상 잡힌 화소만, 이 사건 VIIRS 칸에서 {NEAR_KM:g}km 안의 화소만 사용. 화소마다 그때 타고 있던 가장 가까운 발화점(산림청 기록)에 배정하고, 머리 = 프레임마다 주 발화점 소속 화소 중 발화점에서 가장 먼 것, 도달 = 그 최댓값의 누적',
            'ignition': ign, 'frames_total': len(frames), 'frames_available': sum(1 for v in frames.values() if v is not None),
-           'pixels': pixels, 'owners': owners, 'ignitions': [[ti, ll, addr] for ti, ll, addr in ign_t], 'frames': out_frames, 'head': head, 'reach': reach, 'fastest_hour': fast}
+           'pixels': pixels, 'owners': owners, 'ignitions': [[ti, ll, addr] for ti, ll, addr in ign_t], 'frames': out_frames, 'head': head, 'reach': reach, 'fastest_hour': fast, 'emd_first': emd_first}
     (pub / 'gk2a.json').write_text(json.dumps(doc, ensure_ascii=False, separators=(',', ':')))
     print(a.incident, len(pixels), 'pixels', len(out_frames), 'active frames', 'max reach', best and round(best, 1), 'km', 'fastest', fast)
 

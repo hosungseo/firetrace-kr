@@ -8,6 +8,7 @@ interface Props {
   t: number
   onSeek: (t: number) => void
   onFocusEmd: (code: string) => void
+  gk2aFirst: Record<string, number> | null
 }
 
 const AX_W = 230
@@ -41,7 +42,7 @@ function ClaimLine({ label, c, cls }: { label: string; c: SlimClaim | null; cls:
   )
 }
 
-function Pair({ q, t, auto, onSeek, onFocusEmd }: { q: ResponsePair; t: number; auto: FullMentionsData['by_emd'][string] | null; onSeek: (t: number) => void; onFocusEmd: (c: string) => void }) {
+function Pair({ q, t, auto, gk, onSeek, onFocusEmd }: { q: ResponsePair; t: number; auto: FullMentionsData['by_emd'][string] | null; gk: number | null; onSeek: (t: number) => void; onFocusEmd: (c: string) => void }) {
   const sat = q.satellite.t
   const satSensor = sat != null && q.satellite.viirs === sat ? 'VIIRS' : sat != null && q.satellite.modis === sat ? 'MODIS' : ''
   return (
@@ -75,6 +76,7 @@ function Pair({ q, t, auto, onSeek, onFocusEmd }: { q: ResponsePair; t: number; 
         {q.spread?.t != null && <polygon points={`${px(q.spread.t)},5 ${px(q.spread.t) + 5},16 ${px(q.spread.t) - 5},16`} className="rp-spread" />}
         {q.response?.t != null && <rect x={px(q.response.t) - 4} y={8} width={8} height={10} className="rp-response" />}
         {sat != null && <circle cx={px(sat)} cy={13} r={5} className={`rp-sat ${satSensor.toLowerCase()}`} />}
+        {gk != null && <rect x={px(gk) - 4} y={9} width={8} height={8} transform={`rotate(45 ${px(gk)} 13)`} className="rp-gk2a" />}
         {t >= W0 && t <= W1 && <line x1={px(t)} x2={px(t)} y1={2} y2={24} className="rp-now" />}
       </svg>
       <ClaimLine label="진입 기록" c={q.spread} cls="spread" />
@@ -85,6 +87,12 @@ function Pair({ q, t, auto, onSeek, onFocusEmd }: { q: ResponsePair; t: number; 
         <span className="rp-time">{sat != null ? fmt(sat) : '없음'}</span>
         <span className="rp-meta">{satSensor} · 읍면동 경계 안 첫 열점(관측 시각)</span>
       </div>
+      <div className="rp-claim gk2a">
+        <span className="rp-sym" />
+        <span className="rp-label">천리안 첫 탐지</span>
+        <span className="rp-time">{gk != null ? fmt(gk) : '없음'}</span>
+        <span className="rp-meta">정지궤도 10분 · 2km 화소 중심이 읍면동 안</span>
+      </div>
       <div className="rp-gaps">
         <span>
           진입 보도→행정 기록 <b>{signed(q.gap_response_minus_spread) ?? `불가(${q.gap_reason})`}</b>
@@ -92,6 +100,11 @@ function Pair({ q, t, auto, onSeek, onFocusEmd }: { q: ResponsePair; t: number; 
         <span>
           진입 보도→위성 <b>{signed(q.gap_satellite_minus_spread) ?? '불가'}</b>
         </span>
+        {gk != null && q.spread?.t != null && (
+          <span>
+            진입 보도→천리안 <b>{signed(gk - q.spread.t)}</b>
+          </span>
+        )}
         <span>
           행정 기록→위성 <b>{signed(q.gap_satellite_minus_response) ?? '불가'}</b>
         </span>
@@ -119,8 +132,14 @@ function Pair({ q, t, auto, onSeek, onFocusEmd }: { q: ResponsePair; t: number; 
   )
 }
 
-export default function Response({ data, full, emdNames, t, onSeek, onFocusEmd }: Props) {
+export default function Response({ data, full, emdNames, t, onSeek, onFocusEmd, gk2aFirst }: Props) {
   const ts = data.pairs.flatMap((q) => [q.spread?.t, q.response?.t, q.satellite.t]).filter((v): v is number => v != null)
+  // One comparison per 읍면동: how far each satellite's first sighting sits from the entry report
+  const cmp = [...new Map([...data.pairs].filter((q) => q.spread?.t != null).sort((a, b) => b.spread!.t! - a.spread!.t!).map((q) => [q.code, q])).values()].map((q) => ({
+    name: `${q.sigungu.replace(/[시군]$/, '')} ${q.emd}`,
+    polar: q.satellite.t != null ? q.satellite.t - q.spread!.t! : null,
+    geo: gk2aFirst?.[q.code] != null ? gk2aFirst[q.code] - q.spread!.t! : null,
+  }))
   W0 = Math.min(...ts) - 360
   W1 = Math.max(...ts) + 360
   return (
@@ -134,9 +153,30 @@ export default function Response({ data, full, emdNames, t, onSeek, onFocusEmd }
         <span className="spread">▲ 진입 기록</span>
         <span className="response">■ 행정 기록(대피명령·재난문자)</span>
         <span className="satellite">● 위성 첫 탐지</span>
+        {gk2aFirst && <span className="gk2a">◆ 천리안 첫 탐지</span>}
       </div>
+      {gk2aFirst && cmp.some((c) => c.geo != null) && (
+        <div className="rp-cmp">
+          <b>진입 보도 대비 첫 위성 탐지</b> <small style={{ display: 'inline' }}>(읍면동별 가장 이른 진입 보도 기준)</small>
+          <table>
+            <thead>
+              <tr><th>읍면동</th><th>극궤도(12시간 간격)</th><th>천리안(10분)</th></tr>
+            </thead>
+            <tbody>
+              {cmp.map((c) => (
+                <tr key={c.name}>
+                  <td>{c.name}</td>
+                  <td>{signed(c.polar) ?? '–'}</td>
+                  <td className={c.geo != null && Math.abs(c.geo) <= 60 ? 'close' : ''}>{signed(c.geo) ?? '–'}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+          <small>보도 시각도 ‘쯤’ 근사라 ±수십 분은 같은 시각으로 봐야 합니다. 천리안은 2km 화소라 발화지 근처 읍면동은 경계에 걸려 일찍 잡힐 수 있습니다(예: 점곡면).</small>
+        </div>
+      )}
       {data.pairs.map((q, i) => (
-        <Pair key={i} q={q} t={t} auto={full?.by_emd[q.code] ?? null} onSeek={onSeek} onFocusEmd={onFocusEmd} />
+        <Pair key={i} q={q} t={t} auto={full?.by_emd[q.code] ?? null} gk={gk2aFirst?.[q.code] ?? null} onSeek={onSeek} onFocusEmd={onFocusEmd} />
       ))}
       {full && (
         <>
