@@ -4,7 +4,7 @@ import type { GeoJSONSource, MapLayerMouseEvent } from 'maplibre-gl'
 import 'maplibre-gl/dist/maplibre-gl.css'
 import mlcontour from 'maplibre-contour'
 import type { EmdCollection, FireData, FireEvent, GwisData, KfsFire } from './types'
-import { ACTIVE_WINDOW, fmt, hourIndex } from './time'
+import { ACTIVE_WINDOW, fmt, hourIndex, kstDate } from './time'
 
 export interface Layers {
   gwis: boolean
@@ -21,6 +21,7 @@ export interface Layers {
 export type Basemap = 'terrain' | 'night' | 'satellite' | 'daily'
 
 interface Props {
+  view: { center: [number, number]; zoom: number }
   basemap: Basemap
   data: FireData
   events: FireEvent[]
@@ -40,8 +41,7 @@ const DEM = 'https://s3.amazonaws.com/elevation-tiles-prod/terrarium/{z}/{x}/{y}
 // NASA GIBS daily true-colour imagery (VIIRS on Suomi-NPP, ~13:30 local overpass). Keyless WMTS.
 const GIBS = (date: string) =>
   `https://gibs.earthdata.nasa.gov/wmts/epsg3857/best/VIIRS_SNPP_CorrectedReflectance_TrueColor/default/${date}/GoogleMapsCompatible_Level9/{z}/{y}/{x}.jpg`
-// KST calendar date for a timeline minute (t0 = 2025-03-21)
-const kstDate = (t: number) => `2025-03-${String(21 + Math.floor(t / 1440)).padStart(2, '0')}`
+
 
 // Shared DEM for terrain, hillshade and client-side contour generation.
 const demSource = new mlcontour.DemSource({ url: DEM, encoding: 'terrarium', maxzoom: 14, worker: true, cacheSize: 200 })
@@ -97,7 +97,7 @@ function hotspotGeoJSON(data: FireData) {
 }
 
 function windGeoJSON(data: FireData, t: number) {
-  const i = hourIndex(t)
+  const i = hourIndex(t, data.weather.grid[0]?.ws.length)
   return {
     type: 'FeatureCollection' as const,
     features: data.weather.grid.map((p) => ({
@@ -110,7 +110,7 @@ function windGeoJSON(data: FireData, t: number) {
 }
 
 function smokeGeoJSON(data: FireData, t: number) {
-  const i = hourIndex(t)
+  const i = hourIndex(t, data.smoke[0]?.pm25.length)
   return {
     type: 'FeatureCollection' as const,
     features: data.smoke.map((p) => ({
@@ -147,7 +147,7 @@ function eventGeoJSON(events: FireEvent[]) {
   }
 }
 
-export default function MapView({ basemap, data, events, emd, kfs, gwis, focusCode, onFocusEmd, t, layers, selected, onSelectEvent }: Props) {
+export default function MapView({ view, basemap, data, events, emd, kfs, gwis, focusCode, onFocusEmd, t, layers, selected, onSelectEvent }: Props) {
   const el = useRef<HTMLDivElement>(null)
   const mapRef = useRef<maplibregl.Map | null>(null)
   const ready = useRef(false)
@@ -187,8 +187,8 @@ export default function MapView({ basemap, data, events, emd, kfs, gwis, focusCo
           { id: 'hillshade', type: 'hillshade', source: 'hillshadeDem', paint: { 'hillshade-exaggeration': 0.35, 'hillshade-shadow-color': '#2a1a0a' } },
         ],
       },
-      center: [129.0, 36.38],
-      zoom: 9.2,
+      center: view.center,
+      zoom: view.zoom,
       pitch: 50,
       bearing: -8,
       maxPitch: 75,
@@ -466,7 +466,7 @@ export default function MapView({ basemap, data, events, emd, kfs, gwis, focusCo
     map.setLayoutProperty('events', 'visibility', vis(layers.events))
     map.setLayoutProperty('kfs', 'visibility', vis(layers.events))
     for (const id of ['emd-fill', 'emd-hit', 'emd-line']) map.setLayoutProperty(id, 'visibility', vis(layers.emd))
-    const hi = hourIndex(t)
+    const hi = hourIndex(t, data.stations[0]?.ws.length)
     data.stations.forEach((st, k) => {
       const el = stationEls.current[k]
       if (!el) return

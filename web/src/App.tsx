@@ -4,12 +4,37 @@ import Timeline from './Timeline'
 import Response from './Response'
 import EmdDetail from './EmdDetail'
 import type { EmdCollection, FireData, FireEvent, GdacsData, GwisData, KfsData, MentionsData, NewsData, OfficialData, ResponseData } from './types'
-import { ACTIVE_WINDOW, T_MAX, T_MIN, compass, eventLabel, fmt, hourIndex, toMinutes } from './time'
+import { ACTIVE_WINDOW, T_MAX, T_MIN, compass, eventLabel, fmt, hourIndex, setIncident, toMinutes } from './time'
 import './App.css'
 
 const SPEEDS = [60, 180, 360] // simulated minutes per second
 
+export interface Incident {
+  id: string
+  name: string
+  short: string
+  start: string
+  end: string
+  t0: string
+  display_days: number
+  center: [number, number]
+  zoom: number
+  bbox?: number[]
+  sido?: string
+  sigungu: string[]
+  reviewed?: boolean
+  files?: string[]
+  stats?: Record<string, number>
+}
+// Fallback registry used until data/incidents.json exists (single-incident layout at data/).
+const FALLBACK: Incident = { id: 'uiseong-2025', name: '2025 경북 산불 (의성 발화 → 안동·청송·영양·영덕)', short: '의성 2025', start: '2025-03-22', end: '2025-03-31', t0: '2025-03-21T00:00:00+09:00', display_days: 8, center: [129.0, 36.38], zoom: 9.2, sigungu: ['의성군', '안동시', '청송군', '영양군', '영덕군'], reviewed: true }
+const idFromHash = () => decodeURIComponent(location.hash.replace(/^#/, '')) || null
+const json = <T,>(url: string) => fetch(url).then((r) => (r.ok ? (r.json() as Promise<T>) : null)).catch(() => null)
+
 export default function App() {
+  const [registry, setRegistry] = useState<Incident[] | null>(null)
+  const [incident, setIncidentState] = useState<Incident | null>(null)
+  const [base, setBase] = useState('data/')
   const [data, setData] = useState<FireData | null>(null)
   const [events, setEvents] = useState<FireEvent[]>([])
   const [news, setNews] = useState<NewsData | null>(null)
@@ -30,67 +55,61 @@ export default function App() {
   const [basemap, setBasemap] = useState<Basemap>('terrain')
   const [layers, setLayers] = useState<Layers>({ gwis: true, smoke: false, emd: true, stations: true, burned: true, active: true, wind: true, events: true, terrain: true })
 
+  // Registry → incident (from URL hash) → per-incident data directory
   useEffect(() => {
-    fetch('data/fire.json')
-      .then((r) => r.json())
-      .then((d: FireData) => {
-        setData(d)
-        setT(d.meta.first_detection.t)
-      })
-    fetch('data/events.json')
-      .then((r) => (r.ok ? r.json() : []))
-      .then((list: FireEvent[]) =>
-        setEvents(
-          list
-            .map((e) => {
-              const t = toMinutes(e.time)
-              // A day-precision record is only "known" once that day is over; a later-published analysis is retro.
-              const tv = e.time_precision === 'day' ? Math.floor(t / 1440) * 1440 + 1439 : t
-              const pub = e.sources.map((s) => s.published).filter(Boolean).sort()[0]
-              const retro = !!pub && toMinutes(pub + 'T00:00:00+09:00') - t > 1440
-              return { ...e, t, tv, retro }
-            })
-            .sort((a, b) => a.t! - b.t!),
-        ),
-      )
-      .catch(() => setEvents([]))
-    fetch('data/news.json')
-      .then((r) => (r.ok ? r.json() : null))
-      .then(setNews)
-      .catch(() => setNews(null))
-    fetch('data/emd.json')
-      .then((r) => (r.ok ? r.json() : null))
-      .then(setEmd)
-      .catch(() => setEmd(null))
-    fetch('data/kfs_fires.json')
-      .then((r) => (r.ok ? r.json() : null))
-      .then(setKfs)
-      .catch(() => setKfs(null))
-    fetch('data/response.json')
-      .then((r) => (r.ok ? r.json() : null))
-      .then(setResp)
-      .catch(() => setResp(null))
-    fetch('data/intl_burned.json')
-      .then((r) => (r.ok ? r.json() : null))
-      .then(setGwis)
-      .catch(() => setGwis(null))
-    fetch('data/intl_gdacs.json')
-      .then((r) => (r.ok ? r.json() : null))
-      .then(setGdacs)
-      .catch(() => setGdacs(null))
-    fetch('data/official.json')
-      .then((r) => (r.ok ? r.json() : null))
-      .then(setOfficial)
-      .catch(() => setOfficial(null))
-    fetch('data/mentions_snippets.json')
-      .then((r) => (r.ok ? r.json() : null))
-      .then(setMentions)
-      .catch(() => setMentions(null))
-    fetch('data/intl_news.json')
-      .then((r) => (r.ok ? r.json() : null))
-      .then(setIntlNews)
-      .catch(() => setIntlNews(null))
+    json<{ incidents: Incident[] }>('data/incidents.json').then((reg) => {
+      const list = reg?.incidents?.length ? reg.incidents : [FALLBACK]
+      setRegistry(list)
+      const pick = list.find((i) => i.id === idFromHash()) ?? list.find((i) => i.id === 'uiseong-2025') ?? list[0]
+      setIncidentState(pick)
+      setBase(reg?.incidents?.length ? `data/${pick.id}/` : 'data/')
+    })
+    const onHash = () => setRegistry((list) => {
+      const pick = list?.find((i) => i.id === idFromHash())
+      if (pick) {
+        setIncidentState(pick)
+        setBase(`data/${pick.id}/`)
+      }
+      return list
+    })
+    addEventListener('hashchange', onHash)
+    return () => removeEventListener('hashchange', onHash)
   }, [])
+
+  useEffect(() => {
+    if (!incident) return
+    setIncident(incident.t0, incident.display_days)
+    setData(null); setEvents([]); setNews(null); setEmd(null); setKfs(null); setResp(null); setGwis(null); setGdacs(null); setIntlNews(null); setOfficial(null); setMentions(null)
+    setSelected(null); setFocusCode(null); setPlaying(false)
+    json<FireData>(base + 'fire.json').then((d) => {
+      if (!d) return
+      setData(d)
+      setT(d.meta.first_detection.t)
+    })
+    json<FireEvent[]>(base + 'events.json').then((list) =>
+      setEvents(
+        (list ?? [])
+          .map((e) => {
+            const t = toMinutes(e.time)
+            // A day-precision record is only "known" once that day is over; a later-published analysis is retro.
+            const tv = e.time_precision === 'day' ? Math.floor(t / 1440) * 1440 + 1439 : t
+            const pub = e.sources.map((s) => s.published).filter(Boolean).sort()[0]
+            const retro = !!pub && toMinutes(pub + 'T00:00:00+09:00') - t > 1440
+            return { ...e, t, tv, retro }
+          })
+          .sort((a, b) => a.t! - b.t!),
+      ),
+    )
+    json<NewsData>(base + 'news.json').then(setNews)
+    json<EmdCollection>(base + 'emd.json').then(setEmd)
+    json<KfsData>(base + 'kfs_fires.json').then(setKfs)
+    json<ResponseData>(base + 'response.json').then(setResp)
+    json<GwisData>(base + 'intl_burned.json').then(setGwis)
+    json<GdacsData>(base + 'intl_gdacs.json').then(setGdacs)
+    json<OfficialData>(base + 'official.json').then(setOfficial)
+    json<MentionsData>(base + 'mentions_snippets.json').then(setMentions)
+    json<{ gdelt_volume?: { series: [number, number, string][] } }>(base + 'intl_news.json').then(setIntlNews)
+  }, [incident, base])
 
   // playback
   const last = useRef<number | null>(null)
@@ -139,10 +158,10 @@ export default function App() {
     document.documentElement.dataset.theme = basemap === 'night' || basemap === 'daily' ? 'dark' : 'light'
   }, [basemap])
 
-  if (!data || !stats) return <div className="loading">데이터 불러오는 중…</div>
+  if (!incident || !data || !stats) return <div className="loading">데이터 불러오는 중…</div>
 
   const tm = Math.round(t)
-  const fw = data.weather.front[hourIndex(tm)]
+  const fw = data.weather.front[hourIndex(tm, data.weather.front.length)]
   const activeCount = data.hotspots.filter((h) => h[2] <= tm && h[2] > tm - ACTIVE_WINDOW).length
   const curArea = [...data.area].reverse().find((a) => a.t <= tm)
   const sel = events.find((e) => e.id === selected)
@@ -151,8 +170,8 @@ export default function App() {
   const recentNews = news ? news.articles.filter((a) => a[0] <= tm && a[0] > tm - 60).reverse() : []
   const hitEmd = emd ? emd.features.map((f) => f.properties).filter((p) => p.first_hit != null && p.first_hit <= tm) : []
   const exposure = { n: hitEmd.length, total: hitEmd.reduce((a, p) => a + (p.total ?? 0), 0), old: hitEmd.reduce((a, p) => a + (p.age70plus ?? 0), 0) }
-  const AREA = ['의성', '안동', '청송', '영양', '영덕']
-  const localFires = kfs ? kfs.fires.filter((f) => f.si === '경북' && AREA.includes(f.gungu) && f.t >= T_MIN && f.t <= T_MAX) : []
+  const AREA = incident.sigungu.map((n) => n.replace(/[시군구]$/, ''))
+  const localFires = kfs ? kfs.fires.filter((f) => AREA.includes(f.gungu) && f.t >= T_MIN && f.t <= T_MAX) : []
 
   const focusEmd = (code: string) => {
     setFocusCode(code)
@@ -179,14 +198,29 @@ export default function App() {
         <div className="brand">
           <span className="logo">▲</span> 산불 추적 <span className="sub">위성·기상·보도 종합 분석</span>
         </div>
-        <div className="incident">2025 경북 산불 (의성 발화 → 안동·청송·영양·영덕)</div>
-        <div className="period">2025.3.22 – 3.28</div>
+        <div className="incident">
+          {registry && registry.length > 1 ? (
+            <select value={incident.id} onChange={(e) => (location.hash = e.target.value)} aria-label="산불 선택">
+              {registry.map((i) => (
+                <option key={i.id} value={i.id}>
+                  {i.name}
+                </option>
+              ))}
+            </select>
+          ) : (
+            incident.name
+          )}
+        </div>
+        <div className="period">
+          {incident.start.replace(/-0?/g, '.').slice(0)} – {incident.end.slice(5).replace(/-0?/, '.').replace(/^0?/, '')}
+          {incident.reviewed && <span className="badge-r">보도 검토본</span>}
+        </div>
         <div className="clock">{fmt(tm)}</div>
       </header>
 
       <main className="body">
         <section className="stage">
-          <MapView basemap={basemap} data={data} events={events} emd={emd} kfs={kfs?.fires ?? []} gwis={gwis} focusCode={focusCode} onFocusEmd={focusEmd} t={tm} layers={layers} selected={selected} onSelectEvent={selectEvent} />
+          <MapView key={incident.id} view={{ center: incident.center, zoom: incident.zoom }} basemap={basemap} data={data} events={events} emd={emd} kfs={kfs?.fires ?? []} gwis={gwis} focusCode={focusCode} onFocusEmd={focusEmd} t={tm} layers={layers} selected={selected} onSelectEvent={selectEvent} />
           <div className="basemap-switch" role="radiogroup" aria-label="배경지도">
             {(
               [
@@ -367,10 +401,12 @@ export default function App() {
                       <small>{f.area_ha >= 1000 ? `${Math.round(f.area_ha).toLocaleString()} ha` : `${f.area_ha} ha`}</small>
                     </button>
                   ))}
+                  {incident.id === 'uiseong-2025' && (
                   <p className="note">
                     산림청은 의성 산불을 <b>2건</b>으로 기록합니다. 안평면 괴산리(11:24, 원인 '기타') 46,575.2ha와 안계면 용기리(14:40, 농산부산물소각) 52,707.3ha.
                     두 건의 합은 99,282.5ha로, 4/18 발표 잠정 피해면적 99,289ha와 6.5ha 차이가 납니다(집계 기준 미확인).
                   </p>
+                  )}
                 </>
               )}
 

@@ -1,5 +1,5 @@
 import type { EmdProps, FireData, KfsFire, MentionEmd, ResponseData, SlimClaim } from './types'
-import { fmt, hourIndex } from './time'
+import { fmt, fmtDay, hourIndex, kst } from './time'
 
 interface Props {
   p: EmdProps
@@ -15,11 +15,13 @@ interface Props {
 const ACTION_KO: Record<string, string> = { spread: '확산', evacuation: '대피', alert: '재난문자', control: '통제', containment: '진화', casualty: '인명' }
 const DEC = ['0', '10', '20', '30', '40', '50', '60', '70', '80', '90', '100+']
 
+const g0len = (d: FireData) => d.weather.grid[0]?.ws.length ?? Infinity
+
 export default function EmdDetail({ p, centroid, data, resp, mentions, kfs, t, onSeek }: Props) {
   const row = resp?.rows.find((r) => r.code === p.code)
   const claims: SlimClaim[] = row?.claims ?? []
   const fires = kfs.filter((f) => f.si === '경북' && p.sigungu.startsWith(f.gungu) && p.emd.startsWith(f.emd))
-  const hi = hourIndex(t)
+  const hi = hourIndex(t, g0len(data))
   const st = [...data.stations].sort((a, b) => (a.lon - centroid[0]) ** 2 + (a.lat - centroid[1]) ** 2 - ((b.lon - centroid[0]) ** 2 + (b.lat - centroid[1]) ** 2))[0]
   const km = st ? Math.round(Math.hypot((st.lon - centroid[0]) * 89, (st.lat - centroid[1]) * 111)) : null
   const g = data.weather.grid.reduce((a, b) => ((b.lat - centroid[1]) ** 2 + (b.lon - centroid[0]) ** 2 < (a.lat - centroid[1]) ** 2 + (a.lon - centroid[0]) ** 2 ? b : a))
@@ -90,9 +92,9 @@ export default function EmdDetail({ p, centroid, data, resp, mentions, kfs, t, o
         {p.daily && p.daily.length > 0 && (
           <div className="ed-days">
             {p.daily.map(([d, n]) => (
-              <div key={d} className="ed-day" title={`3/${21 + d / 1440}: 열점 ${n}개`}>
+              <div key={d} className="ed-day" title={`${fmtDay(d)}: 열점 ${n}개`}>
                 <i style={{ height: `${(n / maxDaily) * 100}%` }} className={d < t ? 'past' : ''} />
-                <span>{21 + d / 1440}일</span>
+                <span>{kst(d).d}일</span>
               </div>
             ))}
           </div>

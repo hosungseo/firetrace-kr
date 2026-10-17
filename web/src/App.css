@@ -242,3 +242,5 @@
 .chip-btn.hit { background: #f5dcc8; }
 .chip-btn.on { outline: 2px solid var(--event); }
 :root[data-theme='dark'] .chip-btn.hit { background: #4a2a1a; }
+.incident select { font: inherit; font-size: 13px; color: var(--ink); background: var(--surface); border: 1px solid var(--line); border-radius: 6px; padding: 3px 6px; max-width: 420px; }
+.badge-r { margin-left: 6px; background: var(--event); color: #fff; border-radius: 4px; padding: 1px 5px; font-size: 10px; }

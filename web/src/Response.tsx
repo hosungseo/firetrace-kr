@@ -1,5 +1,5 @@
 import type { ResponseData, ResponsePair, SlimClaim } from './types'
-import { fmt } from './time'
+import { fmt, fmtDay } from './time'
 
 interface Props {
   data: ResponseData
@@ -8,11 +8,10 @@ interface Props {
   onFocusEmd: (code: string) => void
 }
 
-// Mini axis window: 3/24 12:00 → 3/26 06:00 covers every reviewed pair.
-const W0 = 3 * 1440 + 12 * 60
-const W1 = 5 * 1440 + 6 * 60
 const AX_W = 230
-
+// Mini axis window: from 6 h before the earliest reviewed record to 6 h after the latest.
+let W0 = 0
+let W1 = 1440
 const px = (m: number) => Math.max(0, Math.min(AX_W, ((m - W0) / (W1 - W0)) * AX_W))
 const signed = (v: number | null | undefined) => (v == null ? null : `${v > 0 ? '+' : ''}${v}분`)
 const prec = (c: SlimClaim | null) => (c ? `${c.precision === 'hour' ? '시 단위' : c.precision === 'minute' ? '분 단위' : '시각 미상'}${c.approximate ? '·근사' : ''}` : '')
@@ -65,10 +64,10 @@ function Pair({ q, t, onSeek, onFocusEmd }: { q: ResponsePair; t: number; onSeek
         onSeek(Math.round(W0 + ((e.clientX - r.left) / AX_W) * (W1 - W0)))
       }}>
         <line x1={0} x2={AX_W} y1={13} y2={13} className="rp-base" />
-        {[4 * 1440, 5 * 1440].map((d) => (
+        {Array.from({ length: Math.floor(W1 / 1440) - Math.floor(W0 / 1440) }, (_, i) => (Math.floor(W0 / 1440) + 1 + i) * 1440).map((d) => (
           <g key={d}>
             <line x1={px(d)} x2={px(d)} y1={6} y2={20} className="rp-day" />
-            <text x={px(d) + 2} y={25} className="rp-tick">3/{21 + d / 1440}</text>
+            <text x={px(d) + 2} y={25} className="rp-tick">{fmtDay(d)}</text>
           </g>
         ))}
         {q.spread?.t != null && <polygon points={`${px(q.spread.t)},5 ${px(q.spread.t) + 5},16 ${px(q.spread.t) - 5},16`} className="rp-spread" />}
@@ -106,6 +105,9 @@ function Pair({ q, t, onSeek, onFocusEmd }: { q: ResponsePair; t: number; onSeek
 }
 
 export default function Response({ data, t, onSeek, onFocusEmd }: Props) {
+  const ts = data.pairs.flatMap((q) => [q.spread?.t, q.response?.t, q.satellite.t]).filter((v): v is number => v != null)
+  W0 = Math.min(...ts) - 360
+  W1 = Math.max(...ts) + 360
   return (
     <div className="pane response">
       <p className="rp-intro">

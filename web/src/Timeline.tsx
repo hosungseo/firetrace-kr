@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useRef, useState } from 'react'
 import type { FireData, FireEvent, KfsFire, NewsData, OfficialData } from './types'
-import { T_MAX, T_MIN, eventLabel, fmt, hourIndex } from './time'
+import { T_MAX, T_MIN, eventLabel, fmt, fmtDay, hourIndex } from './time'
 
 interface Props {
   data: FireData
@@ -79,13 +79,13 @@ export default function Timeline({ data, news, events, fires, official, showSmok
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [plotW, data])
 
-  const days = Array.from({ length: 8 }, (_, i) => T_MIN + i * 1440)
+  const days = Array.from({ length: Math.round((T_MAX - T_MIN) / 1440) + 1 }, (_, i) => T_MIN + i * 1440)
   // Row values always describe the selected time t; hovering only moves the crosshair/tooltip.
-  const fw = data.weather.front[hourIndex(t)]
+  const fw = data.weather.front[hourIndex(t, data.weather.front.length)]
   const curArea = [...area].reverse().find((a) => a.t <= t)
   // Only windows that have fully elapsed at t are reported (the rate is a post-hoc per-window figure).
   const lastDone = [...area].reverse().find((a, i, arr) => a.t <= t && i < arr.length - 1)
-  const hoverFw = hover != null ? data.weather.front[hourIndex(hover)] : null
+  const hoverFw = hover != null ? data.weather.front[hourIndex(hover, data.weather.front.length)] : null
 
   const handle = (e: React.PointerEvent<SVGSVGElement>) => {
     const r = e.currentTarget.getBoundingClientRect()
@@ -124,7 +124,7 @@ export default function Timeline({ data, news, events, fires, official, showSmok
           <g key={d}>
             <line x1={x(d)} x2={x(d)} y1={18} y2={totalH - 18} className="grid" />
             <text x={x(d) + 4} y={totalH - 4} className="tick">
-              3/{21 + d / 1440}
+              {fmtDay(d)}
             </text>
           </g>
         ))}
