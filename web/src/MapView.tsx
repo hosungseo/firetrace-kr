@@ -564,11 +564,13 @@ export default function MapView({ view, basemap, data, events, emd, kfs, gwis, f
     map.setFilter('situation', ['<=', ['get', 't'], t])
     map.setLayoutProperty('situation', 'visibility', layers.situation ? 'visible' : 'none')
     ensureForest(map, forest)
+    // With the GK2A layer on, arrival times and the outline follow the 10-minute hybrid timing
+    const hyb = layers.gk2a && gk2a?.cells_hybrid?.length === spread?.cells.length ? gk2a : null
     if (spread) {
-      ;(map.getSource('arrival') as GeoJSONSource).setData(arrivalGeoJSON(spread, t))
+      ;(map.getSource('arrival') as GeoJSONSource).setData(arrivalGeoJSON(spread, t, hyb))
       ;(map.getSource('spread') as GeoJSONSource).setData(spreadGeoJSON(spread, t))
     }
-    if (spread) (map.getSource('perimeter') as GeoJSONSource).setData(perimeterGeoJSON(spread, t))
+    if (spread) (map.getSource('perimeter') as GeoJSONSource).setData(perimeterGeoJSON(spread, t, hyb))
     for (const id of ['perimeter-fill', 'perimeter-line', 'arrival', 'spread-glow', 'spread-line', 'spread-sep', 'spread-head']) map.setLayoutProperty(id, 'visibility', layers.spread ? 'visible' : 'none')
     if (gk2a) (map.getSource('gk2a') as GeoJSONSource).setData(gk2aGeoJSON(gk2a, t))
     for (const id of ['gk2a-track', 'gk2a-px']) map.setLayoutProperty(id, 'visibility', layers.gk2a ? 'visible' : 'none')
@@ -728,13 +730,15 @@ function situationGeoJSON(ffas: FfasData) {
   } as never
 }
 
-function arrivalGeoJSON(sp: SpreadData, t: number) {
+function arrivalGeoJSON(sp: SpreadData, t: number, hyb: Gk2aData | null) {
   const [dx, dy] = sp.cell_deg.map((d) => d / 2)
-  const t0 = sp.cells[0]?.[2] ?? 0
-  const span = Math.max(1, (sp.cells[sp.cells.length - 1]?.[2] ?? 1) - t0)
+  const times = hyb?.cells_hybrid ?? sp.cells.map((c) => c[2])
+  const t0 = Math.min(...times)
+  const span = Math.max(1, Math.max(...times) - t0)
   return {
     type: 'FeatureCollection' as const,
     features: sp.cells
+      .map(([x, y], i) => [x, y, times[i]] as [number, number, number])
       .filter((c) => c[2] <= t)
       .map(([x, y, tc]) => ({
         type: 'Feature' as const,
@@ -779,7 +783,8 @@ function gk2aGeoJSON(g: Gk2aData, t: number) {
   return { type: 'FeatureCollection' as const, features: [...line, ...pts] } as never
 }
 
-function perimeterGeoJSON(sp: SpreadData, t: number) {
-  const p = [...sp.perimeters].reverse().find((x) => x.t <= t)
+function perimeterGeoJSON(sp: SpreadData, t: number, hyb: Gk2aData | null) {
+  const list = hyb?.perimeters_hybrid ?? sp.perimeters
+  const p = [...list].reverse().find((x) => x.t <= t)
   return { type: 'FeatureCollection' as const, features: p ? [{ type: 'Feature' as const, properties: {}, geometry: { type: 'MultiPolygon' as const, coordinates: p.coordinates } }] : [] } as never
 }

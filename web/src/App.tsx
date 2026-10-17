@@ -219,6 +219,12 @@ export default function App() {
     return { t: h[0], lon: h[1], lat: h[2], km: h[3], reach: nowReach?.[1] ?? h[3], kmh: prev && nowReach ? Math.max(0, nowReach[1] - prev[1]) : null, ws: g.ws[i], wd: g.wd[i], rh: g.rh[i] }
   }, [gk2a, data, t])
 
+  // Dev-only hook for scripted captures (video/capture*.mjs)
+  useEffect(() => {
+    if (!import.meta.env.DEV) return
+    ;(window as unknown as { __ft: unknown }).__ft = { setT, setLayers, setBasemap, setPlaying, setChase, setFlyTarget, setTab }
+  }, [])
+
   // Keyboard: Space play/pause · ←/→ ±1h (Shift ±10min) · 1–9 scenes · L layers · Esc close
   const sceneRef = useRef(scenes)
   useEffect(() => { sceneRef.current = scenes }, [scenes])
@@ -385,7 +391,7 @@ export default function App() {
             )}
             {spread && layers.spread && spread.perimeters.length > 0 && (
               <div>
-                <i className="sw perim" /> 피해 범위(위성 열점 375m 칸을 이어 그린 추정 경계, 통과 시각 기준)
+                <i className="sw perim" /> 피해 범위(위성 열점 375m 칸 경계{layers.gk2a && gk2a?.cells_hybrid ? ', 시각은 천리안 10분 탐지로 보정' : ', 통과 시각 기준'})
               </div>
             )}
             {spread && layers.spread && spread.summary.major > 0 && (
@@ -589,7 +595,7 @@ export default function App() {
                       </button>
                     ))}
                   <p className="note">
-                    색 칸 = 위성이 처음 불을 본 시각(노랑 → 진홍, 375m 칸). 화살표 = 직전 통과 이후 새로 탄 칸(1.5km 안에서 이어진 묶음)에서 이전 불과 가장 먼 칸까지, 굵은 것이 통과별 머리, 회색은 별도 발화. VIIRS 위성 2기가 거의 같은 시각에 지나가 관측이 약 12시간 간격이라, 화살표는 그 사이 어딘가로 불이 갔다는 뜻이지 실제 경로·속도가 아닙니다(속도는 최소값). 3km 넘는 화살표는 중간 경로가 관측되지 않은 구간입니다.
+                    색 칸 = 위성이 처음 불을 본 시각(노랑 → 진홍, 375m 칸). 천리안 레이어가 켜져 있으면 칸 모양은 그대로 두고 시각만 천리안이 더 일찍 본 경우 그 시각으로 앞당깁니다(10분 단위). 화살표 = 직전 통과 이후 새로 탄 칸(1.5km 안에서 이어진 묶음)에서 이전 불과 가장 먼 칸까지, 굵은 것이 통과별 머리, 회색은 별도 발화. VIIRS 위성 2기가 거의 같은 시각에 지나가 관측이 약 12시간 간격이라, 화살표는 그 사이 어딘가로 불이 갔다는 뜻이지 실제 경로·속도가 아닙니다(속도는 최소값). 3km 넘는 화살표는 중간 경로가 관측되지 않은 구간입니다.
                   </p>
                 </>
               )}

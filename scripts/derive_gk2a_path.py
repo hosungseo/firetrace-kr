@@ -12,6 +12,7 @@ Outputs web/public/data/<id>/gk2a.json:
 import argparse, json, math
 from datetime import datetime, timedelta, timezone
 from pathlib import Path
+from derive_spread import perimeter
 
 ROOT = Path(__file__).resolve().parents[1]
 NEAR_KM = 3.0
@@ -97,10 +98,35 @@ def main():
             g = feat['geometry']; polys = g['coordinates'] if g['type'] == 'MultiPolygon' else [g['coordinates']]
             ts = [p[2] for p in pixels if any(inside(p, pl) for pl in polys)]
             if ts: emd_first[feat['properties']['code']] = min(ts)
+    # Hybrid arrival: VIIRS 375 m cells keep the footprint; a cell's time becomes the earlier of its
+    # VIIRS first pass and the first detection of the GK2A pixel covering it (within 1.6 km).
+    dlon, dlat = spread['cell_deg']
+    gidx = {}
+    for i, p in enumerate(pixels): gidx.setdefault((round(p[0] / .02), round(p[1] / .02)), []).append(i)
+    hybrid, changed = [], 0
+    for lon_c, lat_c, tv in spread['cells']:
+        tg = None
+        for dy in (-1, 0, 1):
+            for dx in (-1, 0, 1):
+                for i in gidx.get((round(lon_c / .02) + dx, round(lat_c / .02) + dy), []):
+                    if km(pixels[i], (lon_c, lat_c)) <= 1.6 and (tg is None or pixels[i][2] < tg): tg = pixels[i][2]
+        th = min(tv, tg) if tg is not None else tv
+        if th < tv: changed += 1
+        hybrid.append(th)
+    cell_of = lambda lon_c, lat_c: (round(lat_c / dlat), round(lon_c / dlon))
+    times = sorted(set(hybrid)); steps, last_n = [], 0
+    total = len(hybrid)
+    for tt in range(int(times[0] // 60 * 60), int(times[-1]) + 60, 60):   # hourly, only when the set grew ≥ 1 %
+        n = sum(1 for h in hybrid if h <= tt)
+        if n - last_n >= max(5, total * .01) or (tt >= times[-1] and n != last_n):
+            cells_now = [cell_of(c[0], c[1]) for c, h in zip(spread['cells'], hybrid) if h <= tt]
+            steps.append({'t': tt, 'cells': n, 'coordinates': perimeter(cells_now, dlon, dlat)}); last_n = n
     doc = {'source': '기상청 API허브 천리안위성 2A호 AMI L2 산불탐지(FF), 한반도 2km, 10분 간격',
            'method': f'신뢰도 하·중·상 탐지만(산업 열원 제외), 60분 안에 2번 이상 잡힌 화소만, 이 사건 VIIRS 칸에서 {NEAR_KM:g}km 안의 화소만 사용. 화소마다 그때 타고 있던 가장 가까운 발화점(산림청 기록)에 배정하고, 머리 = 프레임마다 주 발화점 소속 화소 중 발화점에서 가장 먼 것, 도달 = 그 최댓값의 누적',
            'ignition': ign, 'frames_total': len(frames), 'frames_available': sum(1 for v in frames.values() if v is not None),
-           'pixels': pixels, 'owners': owners, 'ignitions': [[ti, ll, addr] for ti, ll, addr in ign_t], 'frames': out_frames, 'head': head, 'reach': reach, 'fastest_hour': fast, 'emd_first': emd_first}
+           'pixels': pixels, 'owners': owners, 'ignitions': [[ti, ll, addr] for ti, ll, addr in ign_t], 'frames': out_frames, 'head': head, 'reach': reach, 'fastest_hour': fast, 'emd_first': emd_first,
+           'hybrid_note': f'VIIRS 375m 칸 {total}개 중 {changed}개의 도달 시각을 천리안 탐지(1.6km 안 화소의 첫 탐지)로 앞당김. 모양은 VIIRS, 시각은 둘 중 이른 것',
+           'cells_hybrid': hybrid, 'perimeters_hybrid': steps}
     (pub / 'gk2a.json').write_text(json.dumps(doc, ensure_ascii=False, separators=(',', ':')))
     print(a.incident, len(pixels), 'pixels', len(out_frames), 'active frames', 'max reach', best and round(best, 1), 'km', 'fastest', fast)
 
