@@ -2,7 +2,8 @@ import { useEffect, useMemo, useRef, useState } from 'react'
 import MapView, { type Basemap, type Layers } from './MapView'
 import Timeline from './Timeline'
 import Response from './Response'
-import type { EmdCollection, FireData, FireEvent, GdacsData, GwisData, KfsData, NewsData, ResponseData } from './types'
+import EmdDetail from './EmdDetail'
+import type { EmdCollection, FireData, FireEvent, GdacsData, GwisData, KfsData, MentionsData, NewsData, OfficialData, ResponseData } from './types'
 import { ACTIVE_WINDOW, T_MAX, T_MIN, compass, eventLabel, fmt, hourIndex, toMinutes } from './time'
 import './App.css'
 
@@ -19,10 +20,12 @@ export default function App() {
   const [gdacs, setGdacs] = useState<GdacsData | null>(null)
   const [intlNews, setIntlNews] = useState<{ gdelt_volume?: { series: [number, number, string][] } } | null>(null)
   const [focusCode, setFocusCode] = useState<string | null>(null)
+  const [official, setOfficial] = useState<OfficialData | null>(null)
+  const [mentions, setMentions] = useState<MentionsData | null>(null)
   const [t, setT] = useState(T_MIN + 13 * 60)
   const [playing, setPlaying] = useState(false)
   const [speed, setSpeed] = useState(1)
-  const [tab, setTab] = useState<'overview' | 'response' | 'events' | 'news' | 'sources'>('overview')
+  const [tab, setTab] = useState<'overview' | 'response' | 'emd' | 'events' | 'news' | 'sources'>('overview')
   const [selected, setSelected] = useState<string | null>(null)
   const [basemap, setBasemap] = useState<Basemap>('terrain')
   const [layers, setLayers] = useState<Layers>({ gwis: true, smoke: false, emd: true, stations: true, burned: true, active: true, wind: true, events: true, terrain: true })
@@ -75,6 +78,14 @@ export default function App() {
       .then((r) => (r.ok ? r.json() : null))
       .then(setGdacs)
       .catch(() => setGdacs(null))
+    fetch('data/official.json')
+      .then((r) => (r.ok ? r.json() : null))
+      .then(setOfficial)
+      .catch(() => setOfficial(null))
+    fetch('data/mentions_snippets.json')
+      .then((r) => (r.ok ? r.json() : null))
+      .then(setMentions)
+      .catch(() => setMentions(null))
     fetch('data/intl_news.json')
       .then((r) => (r.ok ? r.json() : null))
       .then(setIntlNews)
@@ -143,6 +154,18 @@ export default function App() {
   const AREA = ['의성', '안동', '청송', '영양', '영덕']
   const localFires = kfs ? kfs.fires.filter((f) => f.si === '경북' && AREA.includes(f.gungu) && f.t >= T_MIN && f.t <= T_MAX) : []
 
+  const focusEmd = (code: string) => {
+    setFocusCode(code)
+    setTab('emd')
+  }
+  const focused = emd?.features.find((f) => f.properties.code === focusCode)
+  const centroidOf = (geom: { coordinates: unknown }): [number, number] => {
+    const pts: number[][] = []
+    const walk = (c: unknown) => (Array.isArray(c) && typeof c[0] === 'number' ? pts.push(c as number[]) : Array.isArray(c) && c.forEach(walk))
+    walk(geom.coordinates)
+    return [pts.reduce((a, p) => a + p[0], 0) / pts.length, pts.reduce((a, p) => a + p[1], 0) / pts.length]
+  }
+
   const selectEvent = (id: string) => {
     const e = events.find((x) => x.id === id)
     setSelected(id)
@@ -163,7 +186,7 @@ export default function App() {
 
       <main className="body">
         <section className="stage">
-          <MapView basemap={basemap} data={data} events={events} emd={emd} kfs={kfs?.fires ?? []} gwis={gwis} focusCode={focusCode} t={tm} layers={layers} selected={selected} onSelectEvent={selectEvent} />
+          <MapView basemap={basemap} data={data} events={events} emd={emd} kfs={kfs?.fires ?? []} gwis={gwis} focusCode={focusCode} onFocusEmd={focusEmd} t={tm} layers={layers} selected={selected} onSelectEvent={selectEvent} />
           <div className="basemap-switch" role="radiogroup" aria-label="배경지도">
             {(
               [
@@ -260,6 +283,7 @@ export default function App() {
               [
                 ['overview', '개요'],
                 ['response', '대응 시차'],
+                ['emd', focused ? focused.properties.emd : '읍면동'],
                 ['events', `기록 ${events.length ? `(${seen.length}/${events.length})` : ''}`],
                 ['news', `보도 ${news ? `(${recentNews.length})` : ''}`],
                 ['sources', '출처'],
@@ -361,6 +385,42 @@ export default function App() {
                   ))}
                 </>
               )}
+              {official && (
+                <>
+                  <h3>발표 수치 vs 위성 (같은 시각)</h3>
+                  <table className="cmp-table">
+                    <thead>
+                      <tr>
+                        <th>발표 시각</th>
+                        <th>진화율</th>
+                        <th>영향구역</th>
+                        <th>열점 격자</th>
+                        <th>12h 탐지</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {official.series.impact_area_ha
+                        .filter((o) => o.t <= T_MAX)
+                        .map((o) => {
+                          const c = [...official.series.containment_pct].reverse().find((q) => q.t <= o.t)
+                          const a = [...data.area].reverse().find((q) => q.t <= o.t)
+                          const n = data.hotspots.filter((h) => h[2] <= o.t && h[2] > o.t - ACTIVE_WINDOW).length
+                          return (
+                            <tr key={o.id} onClick={() => selectEvent(o.id)}>
+                              <td>{fmt(o.t)}</td>
+                              <td>{c ? `${c.v}%` : '–'}</td>
+                              <td>{o.v.toLocaleString()}</td>
+                              <td>{a ? a.area_ha.toLocaleString() : 0}</td>
+                              <td>{n.toLocaleString()}</td>
+                            </tr>
+                          )
+                        })}
+                    </tbody>
+                  </table>
+                  <p className="note">영향구역·진화율은 발표 당시 수치(경북 또는 전국, 발표 주체별 기준 상이). 열점 격자는 그 시각까지의 위성 누적, 12h 탐지는 직전 12시간 열점 수.</p>
+                </>
+              )}
+
               {gdacs && gdacs.episodes.length > 0 && (
                 <>
                   <h3>국제 기관 기록</h3>
@@ -405,7 +465,35 @@ export default function App() {
             </div>
           )}
 
-          {tab === 'response' && resp && <Response data={resp} t={tm} onSeek={(v) => setT(Math.max(T_MIN, Math.min(T_MAX, v)))} onFocusEmd={setFocusCode} />}
+          {tab === 'response' && resp && <Response data={resp} t={tm} onSeek={(v) => setT(Math.max(T_MIN, Math.min(T_MAX, v)))} onFocusEmd={(c) => setFocusCode(c)} />}
+          {tab === 'emd' && (
+            <div className="pane">
+              {focused ? (
+                <EmdDetail
+                  p={focused.properties}
+                  centroid={centroidOf(focused.geometry)}
+                  data={data}
+                  resp={resp}
+                  mentions={mentions?.by_emd[focused.properties.code] ?? null}
+                  kfs={kfs?.fires ?? []}
+                  t={tm}
+                  onSeek={(v) => setT(Math.max(T_MIN, Math.min(T_MAX, v)))}
+                />
+              ) : (
+                <p className="note top">지도에서 읍면동을 클릭하거나 아래에서 고르세요.</p>
+              )}
+              <h3>읍면동 ({emd?.features.length ?? 0})</h3>
+              <p className="rp-norecord">
+                {[...(emd?.features ?? [])]
+                  .sort((a, b) => (a.properties.first_hit ?? 1e9) - (b.properties.first_hit ?? 1e9))
+                  .map((f) => (
+                    <button key={f.properties.code} className={`chip-btn ${f.properties.first_hit != null ? 'hit' : ''} ${f.properties.code === focusCode ? 'on' : ''}`} onClick={() => setFocusCode(f.properties.code)}>
+                      {f.properties.sigungu.replace(/[시군]$/, '')} {f.properties.emd}
+                    </button>
+                  ))}
+              </p>
+            </div>
+          )}
           {tab === 'response' && !resp && <div className="pane"><p className="note">대응 시차 자료가 없습니다.</p></div>}
 
           {tab === 'events' && (
@@ -564,7 +652,7 @@ export default function App() {
             +1h
           </button>
         </div>
-        <Timeline data={data} news={news} events={events} fires={localFires} showSmoke={layers.smoke} t={tm} onSeek={setT} onSelectEvent={selectEvent} />
+        <Timeline data={data} news={news} events={events} fires={localFires} official={official} showSmoke={layers.smoke} t={tm} onSeek={setT} onSelectEvent={selectEvent} />
       </footer>
     </div>
   )

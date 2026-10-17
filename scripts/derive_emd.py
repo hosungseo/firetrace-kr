@@ -37,11 +37,12 @@ for f in admin["features"]:
     geom = src_by_code.get(p["code"], f["geometry"])
     xs = [c[0] for poly in rings(geom) for c in poly[0]]; ys = [c[1] for poly in rings(geom) for c in poly[0]]
     bbox = (min(xs), min(ys), max(xs), max(ys))
-    first, first_v, first_m, count = None, None, None, 0
-    for lon, lat, t, frp, sat in fire["hotspots"]:
+    first, first_v, first_m, count, daily = None, None, None, 0, {}
+    for lon, lat, t, frp, sat, *_ in fire["hotspots"]:
         if not (bbox[0] <= lon <= bbox[2] and bbox[1] <= lat <= bbox[3]): continue
         if any(inside((lon, lat), poly) for poly in rings(geom)):
             count += 1
+            daily[t // 1440] = daily.get(t // 1440, 0) + 1
             if first is None or t < first: first = t
             if sat == "MODIS":
                 if first_m is None or t < first_m: first_m = t
@@ -50,6 +51,8 @@ for f in admin["features"]:
     p["first_viirs"] = first_v      # VIIRS 375 m
     p["first_modis"] = first_m      # MODIS ~1 km
     p["hotspots"] = count
+    p["daily"] = [[d * 1440, n] for d, n in sorted(daily.items())]   # hotspot detections per KST day
+    p["decades"] = pr["decades"] if pr else None                       # residents by age decade (0s..100s)
 json.dump(admin, open("web/public/data/emd.json", "w"), ensure_ascii=False, separators=(",", ":"))
 hit = [f["properties"] for f in admin["features"] if f["properties"]["first_hit"] is not None]
 print(len(admin["features"]), "emd;", unmatched, "without population;", len(hit), "touched by hotspots")

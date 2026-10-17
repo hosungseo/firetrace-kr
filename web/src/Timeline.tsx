@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useRef, useState } from 'react'
-import type { FireData, FireEvent, KfsFire, NewsData } from './types'
+import type { FireData, FireEvent, KfsFire, NewsData, OfficialData } from './types'
 import { T_MAX, T_MIN, eventLabel, fmt, hourIndex } from './time'
 
 interface Props {
@@ -7,6 +7,7 @@ interface Props {
   news: NewsData | null
   events: FireEvent[]
   fires: KfsFire[]
+  official: OfficialData | null
   showSmoke: boolean
   t: number
   onSeek: (t: number) => void
@@ -28,7 +29,7 @@ function useWidth<T extends HTMLElement>() {
   return [ref, w] as const
 }
 
-export default function Timeline({ data, news, events, fires, showSmoke, t, onSeek, onSelectEvent }: Props) {
+export default function Timeline({ data, news, events, fires, official, showSmoke, t, onSeek, onSelectEvent }: Props) {
   const [ref, width] = useWidth<HTMLDivElement>()
   const [hover, setHover] = useState<number | null>(null)
   const dragging = useRef(false)
@@ -94,7 +95,9 @@ export default function Timeline({ data, news, events, fires, showSmoke, t, onSe
   const newsHourly = news?.hourly.filter(([m]) => m >= T_MIN && m < T_MAX) ?? []
   const maxNews = Math.max(1, ...newsHourly.map(([, n]) => n))
   const curNews = newsHourly.find(([m]) => m <= t && t < m + 60)?.[1] ?? 0
-  const nRows = showSmoke ? 6 : 5
+  const cont = official?.series.containment_pct.filter((o) => o.t >= T_MIN && o.t <= T_MAX) ?? []
+  const curCont = [...cont].reverse().find((o) => o.t <= t)
+  const nRows = (showSmoke ? 6 : 5) + (cont.length ? 1 : 0)
   const totalH = 26 + ROW_H * nRows + 22
   const rowY = (i: number) => 26 + i * ROW_H
 
@@ -249,6 +252,32 @@ export default function Timeline({ data, news, events, fires, showSmoke, t, onSe
           </text>
           <path d={rows.pm} className="pm-line" />
         </g>
+        )}
+
+        {/* official containment announcements */}
+        {cont.length > 0 && (
+          <g transform={`translate(0,${rowY(nRows - 2)})`}>
+            <text x={8} y={18} className="row-label">
+              발표 진화율 <tspan className="muted">(보도·공식)</tspan>
+            </text>
+            <text x={8} y={36} className="row-value">
+              {curCont ? `${curCont.v}%` : '–'}
+            </text>
+            <path
+              d={cont.map((o, i) => `${i ? 'L' : 'M'}${x(o.t).toFixed(1)},${rows.y(o.v, 100).toFixed(1)}`).join(' ')}
+              className="cont-line"
+            />
+            {cont.map((o) => (
+              <circle key={o.id} cx={x(o.t)} cy={rows.y(o.v, 100)} r={3.2} className={`cont-dot ${o.official ? 'official' : ''}`} onPointerDown={(ev) => { ev.stopPropagation(); onSelectEvent(o.id) }}>
+                <title>
+                  {fmt(o.t)} {o.v}% · {o.title}
+                </title>
+              </circle>
+            ))}
+            <text x={LABEL_W + plotW - 2} y={rows.y(100, 100) + 9} className="axis" textAnchor="end">
+              100%
+            </text>
+          </g>
         )}
 
         {/* last row: collected-article count */}

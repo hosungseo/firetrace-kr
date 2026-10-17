@@ -1,5 +1,5 @@
-// [lon, lat, minutes since t0 (KST), FRP MW, satellite]
-export type Hotspot = [number, number, number, number, string]
+// [lon, lat, minutes since t0 (KST), FRP MW, satellite, confidence (l/n/h or 0-100), brightness K]
+export type Hotspot = [number, number, number, number, string, string | number | null, number]
 
 export interface AreaPoint {
   t: number
@@ -101,7 +101,11 @@ export interface EmdProps {
   age70plus: number | null
   age70share: number | null
   first_hit: number | null
+  first_viirs?: number | null
+  first_modis?: number | null
   hotspots: number
+  daily?: [number, number][]
+  decades?: number[] | null
 }
 
 export interface EmdCollection {
@@ -185,4 +189,31 @@ export interface GwisData {
 export interface GdacsData {
   episodes: { eventid: string; episodeid: string; t_minutes: string | number; alert_level: string; affected_population: string | number; polygon_date: string; severity: string }[]
   meta: Record<string, unknown>
+}
+
+export interface OfficialPoint {
+  t: number
+  v: number
+  key: string
+  id: string
+  precision?: string
+  official: boolean
+  title: string
+  outlet: string | null
+}
+export interface OfficialData {
+  series: Record<'containment_pct' | 'impact_area_ha' | 'fireline_km' | 'deaths' | 'evacuees', OfficialPoint[]>
+  county_containment: { t: number; id: string; pct: Record<string, number> }[]
+  note: string
+}
+export interface MentionEmd {
+  count: Record<string, number>
+  first: Record<string, number>
+  hourly: [number, number][]
+  samples: { t: number; title: string; desc: string; url: string; actions: string[] }[]
+  articles: number
+}
+export interface MentionsData {
+  by_emd: Record<string, MentionEmd>
+  meta: { source: string; articles_scanned: number; records: number; caveat: string }
 }

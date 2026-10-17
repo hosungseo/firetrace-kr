@@ -32,8 +32,9 @@ for c in cells:
     if len(members) > len(best):
         best = members
 fire = sorted(best, key=minutes)
+# [lon, lat, t, frp, satellite, confidence (VIIRS l/n/h, MODIS 0-100), brightness K]
 hotspots = [[round(float(r["longitude"]), 4), round(float(r["latitude"]), 4), minutes(r),
-             round(float(r["frp"]), 1), SAT[r["source"]]] for r in fire]
+             round(float(r["frp"]), 1), SAT[r["source"]], r.get("confidence"), round(float(r.get("bright_ti4") or r.get("brightness") or 0))] for r in fire]
 
 # 2) cumulative burned-area estimate from VIIRS pixels (375 m) rasterised on a ~375 m grid
 DLAT = 0.375 / 111.0

@@ -1,0 +1,45 @@
+{
+  "generated_at_utc": "2026-10-17T01:32:07.898560+00:00",
+  "time_base": "2025-03-21T00:00:00+09:00",
+  "time_unit": "minutes",
+  "target_articles": 4376,
+  "article_outcomes": {
+    "success": 163,
+    "short_body_paywall_or_js": 17,
+    "not_attempted_time_cap": 4196
+  },
+  "sentence_occurrences_before_dedupe": 43,
+  "sentences_kept": 38,
+  "records": 50,
+  "records_per_action": {
+    "spread": 37,
+    "evacuation": 20,
+    "alert": 3,
+    "control": 4,
+    "containment": 1
+  },
+  "emd_covered": 2,
+  "unmapped": 0,
+  "unresolved_time_records": 4,
+  "dedupe": "Exact whitespace-normalized sentences; earliest publication; copies = distinct original URLs including keeper.",
+  "selection": "One record per (sentence, EMD); multiple aliases of one EMD coalesced. Unmapped landmarks retain separate records.",
+  "time_selection": "Nearest clock to any occurrence of the record place; tie picks first; all clocks retained in time_mentions.",
+  "date_selection": "Last explicit NN일 before clock wins; otherwise nearest following day; nearest publication month when month absent. Relative day then publication day.",
+  "uncertainty": "Unqualified 1–12시 without daypart => event_time/t null. No inferred PM from publication time.",
+  "mapping": {
+    "괴산리": "안평면",
+    "현하리": "길안면",
+    "백자리": "길안면",
+    "하회리": "풍천면",
+    "철파리": "의성읍",
+    "고운사": "단촌면",
+    "점곡휴게소": "점곡면"
+  },
+  "caveats": [
+    "Sentence co-occurrence is not a verified event/action/time/place relation.",
+    "first is earliest extracted nominal time, not first actual event or official response.",
+    "Unknown landmark locations remain unmapped; no sigungu-to-EMD fanout.",
+    "Earliest publication may predate an updated version of the fetched body.",
+    "No body is replaced with title, description, or a Naver copy."
+  ]
+}

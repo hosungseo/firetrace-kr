@@ -28,6 +28,7 @@ interface Props {
   kfs: KfsFire[]
   gwis: GwisData | null
   focusCode: string | null
+  onFocusEmd: (code: string) => void
   t: number
   layers: Layers
   selected: string | null
@@ -85,10 +86,12 @@ function arrowImage(): ImageData {
 function hotspotGeoJSON(data: FireData) {
   return {
     type: 'FeatureCollection' as const,
-    features: data.hotspots.map(([lon, lat, t, frp, sat]) => ({
+    features: data.hotspots.map((h) => ({
+      ...(([lon, lat, t, frp, sat]) => ({
       type: 'Feature' as const,
       geometry: { type: 'Point' as const, coordinates: [lon, lat] },
-      properties: { t, frp, sat },
+      properties: { t, frp, sat, conf: h[5] ?? '', bright: h[6] ?? 0 },
+      }))(h as unknown as [number, number, number, number, string]),
     })),
   }
 }
@@ -144,7 +147,7 @@ function eventGeoJSON(events: FireEvent[]) {
   }
 }
 
-export default function MapView({ basemap, data, events, emd, kfs, gwis, focusCode, t, layers, selected, onSelectEvent }: Props) {
+export default function MapView({ basemap, data, events, emd, kfs, gwis, focusCode, onFocusEmd, t, layers, selected, onSelectEvent }: Props) {
   const el = useRef<HTMLDivElement>(null)
   const mapRef = useRef<maplibregl.Map | null>(null)
   const ready = useRef(false)
@@ -260,6 +263,13 @@ export default function MapView({ basemap, data, events, emd, kfs, gwis, focusCo
           .addTo(map)
       })
       map.on('mouseleave', 'emd-fill', () => popup.current?.remove())
+      map.on('click', 'emd-fill', (e: MapLayerMouseEvent) => {
+        // hotspots / events / kfs are drawn above and handle their own clicks; only react when nothing else is under the cursor
+        const top = map.queryRenderedFeatures(e.point, { layers: ['active', 'burned', 'events', 'kfs'] })
+        if (top.length) return
+        const code = e.features?.[0]?.properties?.code
+        if (code) onFocusEmd(String(code))
+      })
 
       // JRC GWIS near-real-time fire perimeter estimates (MODIS 1 km + VIIRS 375 m) — an independent agency's outline
       map.addSource('gwis', { type: 'geojson', data: { type: 'FeatureCollection', features: [] } })
@@ -367,6 +377,20 @@ export default function MapView({ basemap, data, events, emd, kfs, gwis, focusCo
           'circle-stroke-width': 2,
         },
       })
+      for (const id of ['active', 'burned']) {
+        map.on('click', id, (e: MapLayerMouseEvent) => {
+          const q = e.features?.[0]?.properties as Record<string, unknown> | undefined
+          if (!q) return
+          const conf = typeof q.conf === 'number' ? `${q.conf}%` : ({ l: '낮음', n: '보통', h: '높음' } as Record<string, string>)[String(q.conf)] ?? String(q.conf)
+          new maplibregl.Popup({ offset: 8, className: 'emd-popup' })
+            .setLngLat(e.lngLat)
+            .setHTML(`<b>위성 열점</b><br>${fmt(q.t as number)} · ${q.sat}<br>FRP ${q.frp} MW · 밝기 ${q.bright} K · 신뢰도 ${conf}<br><small>${q.sat === 'MODIS' ? '약 1 km 화소' : '375 m 화소'} 중심점</small>`)
+            .addTo(map)
+        })
+        map.on('mouseenter', id, () => (map.getCanvas().style.cursor = 'pointer'))
+        map.on('mouseleave', id, () => (map.getCanvas().style.cursor = ''))
+      }
+
       map.on('click', 'kfs', (e: MapLayerMouseEvent) => {
         const i = e.features?.[0]?.properties?.i as number | undefined
         const f = i != null ? latest.current.kfs[i] : undefined
