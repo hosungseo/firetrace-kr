@@ -112,7 +112,7 @@ def resolve_clock(sentence, match, published):
             hour = hour % 12 + 12
             if part == '밤' and (int(match[2]) == 12 or int(match[2]) <= 5):
                 hour = int(match[2]) % 12
-        elif 1 <= hour <= 12 and not part:
+        elif 1 <= hour <= 12 and not part and not (len(match[2]) == 2 and match[2].startswith('0')):
             reason = 'ambiguous_meridiem'
     if day is None:
         reason = 'invalid_date'
@@ -222,8 +222,8 @@ def extract():
             'dedupe':'Exact whitespace-normalized sentences; earliest publication; copies = distinct original URLs including keeper.',
             'selection':'One record per (sentence, EMD); multiple aliases of one EMD coalesced. Unmapped landmarks retain separate records.',
             'time_selection':'Nearest clock to any occurrence of the record place; tie picks first; all clocks retained in time_mentions.',
-            'date_selection':'Last explicit NN일 before clock wins; otherwise nearest following day; nearest publication month when month absent. Relative day then publication day.',
-            'uncertainty':'Unqualified 1–12시 without daypart => event_time/t null. No inferred PM from publication time.',
+            'date_selection':'Last explicit NN일 before clock wins; otherwise nearest following day; nearest publication month when month absent (지난 constrains past dates). Relative day then publication day.',
+            'uncertainty':'Unqualified 1–12시 without daypart => event_time/t null, except zero-padded 01–09시 (24-hour notation). No inferred PM from publication time.',
             'mapping':ALIASES,
             'caveats':['Sentence co-occurrence is not a verified event/action/time/place relation.',
                        'first is earliest extracted nominal time, not first actual event or official response.',
@@ -255,7 +255,10 @@ def extract():
                         'samples':[{k:(r[k][:220] if k=='sentence' else r[k]) for k in ('t','sentence','url','outlet','actions')} for r in samples[:12]]}
     webmeta = {**meta,'hourly_unit':'t_hour_start in MINUTES since time_base; floor(t/60)*60. n counts deduplicated EMD records, once regardless of action count.',
                'count_unit':'Deduplicated sentence/EMD records per action, including unresolved times.'}
-    write_json(out_dir(load())/'mentions.json',{'by_emd':by_emd,'unmapped':meta['unmapped'],'meta':webmeta})
+    web_output = {'by_emd':by_emd,'unmapped':meta['unmapped'],'meta':webmeta}
+    # Retain the requested export alongside the repository's incident output.
+    for destination in {ROOT/'web/public/data/mentions.json', out_dir(load())/'mentions.json'}:
+        write_json(destination, web_output)
     # Stable random inspection queue; judgement is authored after reading bodies.
     rng = random.Random(20250321)
     sample = rng.sample(list(enumerate(records)),min(30,len(records)))

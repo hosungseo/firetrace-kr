@@ -1,5 +1,5 @@
 {
-  "generated_at_utc": "2026-10-17T01:52:21.668374+00:00",
+  "generated_at_utc": "2026-10-17T02:19:42.010683+00:00",
   "time_base": "2025-03-21T00:00:00+09:00",
   "time_unit": "minutes",
   "admin_source": "web/public/data/uiseong-2025/admin.json",
@@ -9,30 +9,30 @@
     "landmark_only_articles": 1226
   },
   "article_outcomes": {
-    "success": 1849,
-    "short_body_paywall_or_js": 322,
-    "http_error": 2,
-    "not_attempted_time_cap": 2203
+    "short_body_paywall_or_js": 1431,
+    "success": 2940,
+    "http_error": 4,
+    "fetch_or_parse_error": 1
   },
-  "sentence_occurrences_before_dedupe": 1041,
-  "sentences_kept": 869,
-  "records": 1262,
+  "sentence_occurrences_before_dedupe": 1494,
+  "sentences_kept": 1249,
+  "records": 1760,
   "records_per_action": {
-    "spread": 698,
-    "evacuation": 560,
-    "alert": 166,
-    "control": 77,
-    "containment": 122,
-    "casualty": 71
+    "spread": 946,
+    "evacuation": 762,
+    "alert": 211,
+    "control": 95,
+    "containment": 181,
+    "casualty": 154
   },
-  "emd_covered": 39,
-  "unmapped": 79,
-  "unresolved_time_records": 30,
+  "emd_covered": 44,
+  "unmapped": 146,
+  "unresolved_time_records": 68,
   "dedupe": "Exact whitespace-normalized sentences; earliest publication; copies = distinct original URLs including keeper.",
   "selection": "One record per (sentence, EMD); multiple aliases of one EMD coalesced. Unmapped landmarks retain separate records.",
   "time_selection": "Nearest clock to any occurrence of the record place; tie picks first; all clocks retained in time_mentions.",
-  "date_selection": "Last explicit NN일 before clock wins; otherwise nearest following day; nearest publication month when month absent. Relative day then publication day.",
-  "uncertainty": "Unqualified 1–12시 without daypart => event_time/t null. No inferred PM from publication time.",
+  "date_selection": "Last explicit NN일 before clock wins; otherwise nearest following day; nearest publication month when month absent (지난 constrains past dates). Relative day then publication day.",
+  "uncertainty": "Unqualified 1–12시 without daypart => event_time/t null, except zero-padded 01–09시 (24-hour notation). No inferred PM from publication time.",
   "mapping": {
     "괴산리": "안평면",
     "현하리": "길안면",
@@ -49,5 +49,16 @@
     "Earliest publication may predate an updated version of the fetched body.",
     "No body is replaced with title, description, or a Naver copy.",
     "Fetches follow input order; a time cap may underrepresent later publications."
-  ]
+  ],
+  "fetch_summary": {
+    "elapsed_seconds": 2623.31,
+    "fetch_cap_seconds": 2700,
+    "cap_reached": false,
+    "outcomes": {
+      "short_body_paywall_or_js": 1431,
+      "success": 2940,
+      "http_error": 4,
+      "fetch_or_parse_error": 1
+    }
+  }
 }

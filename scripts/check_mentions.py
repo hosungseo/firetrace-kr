@@ -26,6 +26,7 @@ def fixtures():
         ('어제 자정 길안면 대피', '2025-03-31T00:00:00+09:00', 'previous_day'),
         ('3월 25일 오후 6시47분 석보면 대피', '2025-03-25T18:47:00+09:00', 'explicit_day'),
         ('4월 31일 오후 3시 길안면 확산', None, 'unknown'),
+        ('27일 09시 길안면 대피', '2025-03-27T09:00:00+09:00', 'explicit_day'),
         ('이날 29시 길안면 확산', None, 'article_day'),
     ]
     for sentence, expected, basis in cases:
@@ -55,7 +56,8 @@ def fixtures():
 def outputs():
     records = json.loads((ROOT/'data/raw/mentions_auto.json').read_text())
     meta = json.loads((ROOT/'data/raw/mentions_auto.meta.json').read_text())
-    web = json.loads((out_dir(load())/'mentions.json').read_text())
+    web = json.loads((ROOT/'web/public/data/mentions.json').read_text())
+    assert web == json.loads((out_dir(load())/'mentions.json').read_text())
     codes,names = place_index()
     assert len(records) == meta['records']
     assert len({r['sentence'] for r in records}) == meta['sentences_kept']

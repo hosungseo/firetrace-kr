@@ -167,3 +167,59 @@ python3 scripts/verify_incidents.py
   의성은 기존 36.4도 기준 격자 정의를 유지하고 다른 사건은 중심 위도를 사용한다. 또한
   `population_touched`는 해당 읍면동 전체 주민 합계로 실제 피해·대피 인구가 아니다.
   신규 사건에 수동 검토 기록을 복제하지 않는다. `events.json`·`response.json`은 검토된 사건에만 존재한다.
+
+
+## 2026-10-17 기사 본문 기반 시각·지명 문장 추출 (Codex)
+
+- `scripts/fetch_article_text.py`는 Naver 기사 11,483개 중 제목+설명에 65개 읍면동 이름이 있는
+  3,150개와 추가 랜드마크만 있는 1,226개, 총 **4,376개 원 URL**을 수집했다.
+  기존 `scripts/public_data_http.py`의 캐시·백오프를 사용하고 요청 시작 사이를 최소 0.51초로 제한했다.
+  수집은 **43분 43.31초**로 45분 상한 안에 모두 완료했다. 연결 초기화 예외 1건도 별도 오류 캐시로 보존했다.
+- 원 응답은 `data/raw/public_cache/`의 4,376개 body/meta 쌍, 추출 본문은
+  `data/raw/article_text/<sha256(url)>.txt`와 `.meta.json`에 있다.
+  URL·최종 URL·HTTP 상태·UTC 수집 시각·문자 수·제외 사유와 전체 목록은 `article_text/manifest.json`에 있다.
+  `<p>`, `<article>`, article 계열 컨테이너를 표준 라이브러리로 파싱하며
+  명시적인 본문 ID/itemprop을 우선해 추천 기사 혼입을 줄였다.
+  **최종 성공 2,940개**, **300자 미만 본문 1,431개**, **HTTP/전송 실패 5개**, 미시도 0개다.
+  짧은 본문에는 사진 단신도 있으며 전부 유료벽 또는 JS 차단이라고 단정하지 않는다.
+- `scripts/extract_mentions.py` → `data/raw/mentions_auto.json`와 `.meta.json`,
+  `web/public/data/mentions.json`. 본문에서 지명·시각·지정 행동 키워드가 함께 있는 문장을 뽑았다.
+  동일 문장은 전재 URL 사이에서 합치고 가장 이른 게시 기사를 남겼다. `copies`는 보존 기사까지 포함한
+  서로 다른 원 URL 수이며 `copy_urls`와 다중 시각 `time_mentions`도 보존했다.
+  **중복 제거 문장 1,249개, 지명별 레코드 1,760개, 읍면동 44/65곳**이다.
+  행동별 레코드는 spread 946, evacuation 762, alert 211, control 95, containment 181, casualty 154로,
+  여러 행동이 한 레코드에 함께 있어 합계는 레코드 수보다 크다. 미매핑 146개, 시각 null 68개다.
+- 시간 기준은 **2025-03-21T00:00:00+09:00 이후 분**이다. 명시적 NN일, 상대 날짜, 기사 게시일 순으로 해석한다.
+  오전·오후 근거가 없는 1–12시는 null로 남기되 01–09시는 24시간제 표기로 읽는다.
+  한 문장에 시각이 여럿이면 지명에 가장 가까운 시각을 선택하므로 문법적인 사건 연결을 보장하지 않는다.
+  명시된 리·랜드마크 매핑만 사용하며 시군 전체를 각 읍면동으로 복제하지 않는다.
+  시군 이름만 있는 문장은 필수 지명 조건을 충족하지 않아 제외한다.
+  작업 도중 다른 세션에서 admin.json이 `web/public/data/uiseong-2025/`로 이동하여,
+  원 경로가 없으면 이동 경로를 읽게 했고 원본과 내용 해시가 같음을 확인했다.
+  요청된 웹 결과는 `web/public/data/mentions.json`에 생성하고, 현재 incident 경로에도 같은 결과를 저장한다.
+- 웹 `first`는 **가장 이른 추출 명목 시각**이며 실제 최초 진입·대응 시각이 아니다.
+  `count`는 시각 미상도 포함한 중복 제거 레코드 수이고, `hourly`는 시각을 아는 레코드를 행동 수와 무관하게
+  1번씩 세며 `[분 단위 정시 시작 t, 건수]`로 저장한다. 각 읍면동 표본은 최대 12개·문장 최대 220자다.
+- `data/raw/mentions_quality.md`에 seed `20250321`로 무작위 추출한 30개를 본문 맥락과 함께 검토했다.
+  **장소·행동·시각 결합 추정 정밀도 20/30 = 66.7%**다. 발화→확산 시각 오연결,
+  자정 직후 기사의 전날 문맥 누락, 대피 목적지·지명 부분 문자열, 서로 다른 사건의 시각 혼합이 주요 실패다.
+  자동 후보를 수동 정답 사건으로 바꾸지 않았다. 통제 안내≠통제 시작, 발견≠사망,
+  랜드마크 근접≠진입이고, 최초 게시 시각은 수정 본문이 그때 존재했음을 보증하지 않는다.
+  표본·판정 메타데이터는 `mentions_quality_sample.json`, `mentions_quality.meta.json`에 있다.
+
+재현 및 검증(모두 Python 표준 라이브러리만 사용):
+
+```sh
+python3 scripts/fetch_article_text.py --minutes 45
+python3 scripts/fetch_article_text.py --reextract
+python3 scripts/extract_mentions.py
+python3 scripts/check_mentions.py
+```
+
+기존 캐시를 재사용하며 `--reextract`와 추출·검증 단계는 네트워크를 사용하지 않는다.
+`data/raw/mentions_verification.json`에 경계 사례 21개, 출력·본문·캐시 대조,
+가장 이른 전재 기사 선택, 오프라인 재현성과 입력 내용 보존 검증을 기록했다.
+이 작업에서는 git commit을 실행하지 않았다.
+
+### 기사 본문 문장 추출 정리 (2026-10-17)
+- `scripts/derive_mentions_clean.py <incident>`: Codex 추출(`data/raw/mentions_auto.json`, 1,760건)에서 발화 시각이 다른 읍면동 문장에 붙은 58건을 걸러 `web/public/data/uiseong-2025/mentions.json` 재생성. 앱의 읍면동 상세·대응 시차 탭에 "자동 추출 후보(표본 정밀도 66.7%)"로만 표시.

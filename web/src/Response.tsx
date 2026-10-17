@@ -1,8 +1,10 @@
-import type { ResponseData, ResponsePair, SlimClaim } from './types'
+import type { FullMentionsData, ResponseData, ResponsePair, SlimClaim } from './types'
 import { fmt, fmtDay } from './time'
 
 interface Props {
   data: ResponseData
+  full: FullMentionsData | null
+  emdNames: Record<string, string>
   t: number
   onSeek: (t: number) => void
   onFocusEmd: (code: string) => void
@@ -39,7 +41,7 @@ function ClaimLine({ label, c, cls }: { label: string; c: SlimClaim | null; cls:
   )
 }
 
-function Pair({ q, t, onSeek, onFocusEmd }: { q: ResponsePair; t: number; onSeek: (t: number) => void; onFocusEmd: (c: string) => void }) {
+function Pair({ q, t, auto, onSeek, onFocusEmd }: { q: ResponsePair; t: number; auto: FullMentionsData['by_emd'][string] | null; onSeek: (t: number) => void; onFocusEmd: (c: string) => void }) {
   const sat = q.satellite.t
   const satSensor = sat != null && q.satellite.viirs === sat ? 'VIIRS' : sat != null && q.satellite.modis === sat ? 'MODIS' : ''
   return (
@@ -95,6 +97,19 @@ function Pair({ q, t, onSeek, onFocusEmd }: { q: ResponsePair; t: number; onSeek
         </span>
         {q.approximate && <span className="rp-approx">‘께·쯤’ 근사 시각 포함</span>}
       </div>
+      {auto && (
+        <div className="rp-auto">
+          본문 자동 추출 최초:{' '}
+          {(['spread', 'evacuation', 'alert', 'control'] as const)
+            .filter((k) => auto.first[k] != null)
+            .map((k) => (
+              <button key={k} className="link-row inline" onClick={() => onSeek(auto.first[k]!)}>
+                {({ spread: '확산', evacuation: '대피', alert: '문자', control: '통제' } as Record<string, string>)[k]} {fmt(auto.first[k]!, false)}
+              </button>
+            ))}
+          <small> (미검토 후보)</small>
+        </div>
+      )}
       {q.spatial !== 'emd' && (
         <div className="rp-note">
           {q.spatial === 'route_endpoint_to_emd' ? '도로 통제 구간의 끝점을 읍면과 연결한 비교' : '특정 리·시설 기록을 읍면 단위 위성 관측과 비교'}
@@ -104,7 +119,7 @@ function Pair({ q, t, onSeek, onFocusEmd }: { q: ResponsePair; t: number; onSeek
   )
 }
 
-export default function Response({ data, t, onSeek, onFocusEmd }: Props) {
+export default function Response({ data, full, emdNames, t, onSeek, onFocusEmd }: Props) {
   const ts = data.pairs.flatMap((q) => [q.spread?.t, q.response?.t, q.satellite.t]).filter((v): v is number => v != null)
   W0 = Math.min(...ts) - 360
   W1 = Math.max(...ts) + 360
@@ -120,8 +135,40 @@ export default function Response({ data, t, onSeek, onFocusEmd }: Props) {
         <span className="satellite">● 위성 첫 탐지</span>
       </div>
       {data.pairs.map((q, i) => (
-        <Pair key={i} q={q} t={t} onSeek={onSeek} onFocusEmd={onFocusEmd} />
+        <Pair key={i} q={q} t={t} auto={full?.by_emd[q.code] ?? null} onSeek={onSeek} onFocusEmd={onFocusEmd} />
       ))}
+      {full && (
+        <>
+          <h3>자동 추출 후보 (검토 전, {Object.keys(full.by_emd).length}개 읍면동)</h3>
+          <p className="note">기사 본문 문장에서 기계로 뽑은 가장 이른 시각입니다. 표본 정밀도 약 67%. 위성 첫 탐지와 함께 두어 확인 순서를 정하는 용도이며, 시차를 발표하면 안 됩니다.</p>
+          <table className="cmp-table rp-cand">
+            <thead>
+              <tr>
+                <th>읍면동</th>
+                <th>확산</th>
+                <th>대피</th>
+                <th>문자</th>
+                <th>위성</th>
+              </tr>
+            </thead>
+            <tbody>
+              {Object.entries(full.by_emd)
+                .map(([code, m]) => ({ code, m, name: emdNames[code] ?? code, sat: data.rows.find((r) => r.code === code)?.satellite.t ?? data.no_record.find((r) => r.code === code)?.first_hit ?? null }))
+                .filter((r) => r.m.first.spread != null || r.m.first.evacuation != null || r.m.first.alert != null)
+                .sort((a, b) => (Math.min(a.m.first.spread ?? 1e9, a.m.first.evacuation ?? 1e9, a.m.first.alert ?? 1e9)) - (Math.min(b.m.first.spread ?? 1e9, b.m.first.evacuation ?? 1e9, b.m.first.alert ?? 1e9)))
+                .map((r) => (
+                  <tr key={r.code} onClick={() => onFocusEmd(r.code)}>
+                    <td>{r.name}</td>
+                    <td>{r.m.first.spread != null ? fmt(r.m.first.spread) : '–'}</td>
+                    <td>{r.m.first.evacuation != null ? fmt(r.m.first.evacuation) : '–'}</td>
+                    <td>{r.m.first.alert != null ? fmt(r.m.first.alert) : '–'}</td>
+                    <td>{r.sat != null ? fmt(r.sat) : '–'}</td>
+                  </tr>
+                ))}
+            </tbody>
+          </table>
+        </>
+      )}
       <h3>열점은 탐지됐지만 읍면 단위 기록을 찾지 못한 곳 ({data.no_record.length})</h3>
       <p className="rp-norecord">
         {data.no_record.map((r) => (

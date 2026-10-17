@@ -126,6 +126,26 @@ def extract_body(data, content_type=''):
     return parser.result()
 
 
+def cache_uncaught_transport_error(url, error, fetched_at_utc=None):
+    """Cache transport errors (e.g. connection resets) not caught by shared fetch."""
+    key = hashlib.sha256((url + '\0').encode()).hexdigest()
+    cp = http.CACHE / (key + '.body')
+    cm = cp.with_suffix('.meta.json')
+    if cp.exists() and cm.exists():
+        return
+    http.CACHE.mkdir(parents=True, exist_ok=True)
+    data = str(error).encode()
+    cp.write_bytes(data)
+    http.write_json(cm, {'source_url':url,'final_url':url,'http_status':None,
+                        'fetched_at_utc':fetched_at_utc or http.utc_now(),
+                        'content_type':'text/plain','request_body':None,
+                        'licence_or_terms':None,'row_count':None,
+                        'attempts':[{'status':None,'error':str(error)}],
+                        'public_tokens_redacted':False,
+                        'sha256':hashlib.sha256(data).hexdigest(),
+                        'caveat':'Transport failure; body contains exception text, not a server response.'})
+
+
 def reextract_cached_bodies():
     """Refresh this run's text outputs from raw cache, without HTTP requests."""
     updated = 0
@@ -220,6 +240,7 @@ def main():
             path.write_text('')
             http.write_json(mp, result)
         except Exception as exc:
+            cache_uncaught_transport_error(url, exc)
             result = {'url':url,'final_url':None,'http_status':None,'fetched_at_utc':http.utc_now(),
                       'chars':0,'outcome':'fetch_or_parse_error','error':str(exc)}
             path.write_text('')

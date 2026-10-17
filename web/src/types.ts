@@ -217,3 +217,16 @@ export interface MentionsData {
   by_emd: Record<string, MentionEmd>
   meta: { source: string; articles_scanned: number; records: number; caveat: string }
 }
+
+// Full-text sentence extraction (Codex): one record per (sentence, 읍면동); ~67% place/action/time precision on a 30-sample check
+export interface FullMentionEmd {
+  first: Record<string, number | null>
+  count: Record<string, number>
+  hourly: [number, number][]
+  samples: { t: number | null; sentence: string; url: string; outlet: string; actions: string[] }[]
+}
+export interface FullMentionsData {
+  by_emd: Record<string, FullMentionEmd>
+  unmapped: number
+  meta: Record<string, unknown>
+}

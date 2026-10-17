@@ -1,0 +1,54 @@
+{
+  "generated_at_utc": "2026-10-17T02:19:43.445704+00:00",
+  "boundary_cases_passed": 21,
+  "outputs_checked": {
+    "records": 1760,
+    "sentences": 1249,
+    "emd_covered": 44
+  },
+  "http_cache_pairs": 4376,
+  "article_text_meta_pairs": 4376,
+  "all_targets_attempted": true,
+  "fetch_under_45_minutes": true,
+  "fetch_elapsed_seconds": 2623.31,
+  "article_outcomes": {
+    "short_body_paywall_or_js": 1431,
+    "success": 2940,
+    "http_error": 4,
+    "fetch_or_parse_error": 1
+  },
+  "offline_reproducible_records": true,
+  "offline_reproducible_web_except_generation_time": true,
+  "stable_quality_sample": true,
+  "mentions_auto_sha256": "12bf2a60fa0f4772ced4a80dfaec18f1f210027bec88ecb097ffb5618099f7e7",
+  "source_inputs": {
+    "web/public/data/admin.json": {
+      "current_path": "web/public/data/uiseong-2025/admin.json",
+      "sha256": "84562901e3f2e8bd1c270a615cdaed434594ed693fe7090a8247d0bb9a90e3cf",
+      "unchanged_content": true
+    },
+    "data/raw/naver_news.json": {
+      "current_path": "data/raw/naver_news.json",
+      "sha256": "dda218abdc25571508f9c254ec7b1fbdf895d100a0c9b8eed04e62dcbc55f7a1",
+      "unchanged_content": true
+    },
+    "data/raw/claims_review.md": {
+      "current_path": "data/raw/claims_review.md",
+      "sha256": "23b7cf5138ea71c062a1861c1fe719d07d7d844542957608d1fe4643433749e4",
+      "unchanged_content": true
+    },
+    "scripts/public_data_http.py": {
+      "current_path": "scripts/public_data_http.py",
+      "sha256": "0388cdc3abc0c75d7e04a3ac4831fec73664c3af137279cc6edb00f0885f32a5",
+      "unchanged_content": true
+    }
+  },
+  "readme_append_only": true,
+  "readme_before_sha256": "db9dde39246909a03c862278de27604e62423cfa87573638fca0b921c0e1f66f",
+  "readme_appended_bytes": 4721,
+  "notes": [
+    "Other active sessions moved files and committed interim artifacts during this task; their changes were preserved.",
+    "No git commit command was run by this task.",
+    "All checks are offline; no extra HTTP requests after fetching finished."
+  ]
+}

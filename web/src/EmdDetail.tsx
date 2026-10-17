@@ -1,4 +1,4 @@
-import type { EmdProps, FireData, KfsFire, MentionEmd, ResponseData, SlimClaim } from './types'
+import type { EmdProps, FireData, FullMentionEmd, KfsFire, MentionEmd, ResponseData, SlimClaim } from './types'
 import { fmt, fmtDay, hourIndex, kst } from './time'
 
 interface Props {
@@ -7,6 +7,7 @@ interface Props {
   data: FireData
   resp: ResponseData | null
   mentions: MentionEmd | null
+  full: FullMentionEmd | null
   kfs: KfsFire[]
   t: number
   onSeek: (t: number) => void
@@ -17,7 +18,7 @@ const DEC = ['0', '10', '20', '30', '40', '50', '60', '70', '80', '90', '100+']
 
 const g0len = (d: FireData) => d.weather.grid[0]?.ws.length ?? Infinity
 
-export default function EmdDetail({ p, centroid, data, resp, mentions, kfs, t, onSeek }: Props) {
+export default function EmdDetail({ p, centroid, data, resp, mentions, full, kfs, t, onSeek }: Props) {
   const row = resp?.rows.find((r) => r.code === p.code)
   const claims: SlimClaim[] = row?.claims ?? []
   const fires = kfs.filter((f) => f.si === '경북' && p.sigungu.startsWith(f.gungu) && p.emd.startsWith(f.emd))
@@ -152,8 +153,61 @@ export default function EmdDetail({ p, centroid, data, resp, mentions, kfs, t, o
         ))}
       </section>
 
+      {full && (
+        <section>
+          <h3>기사 본문 문장 (자동 추출 · 표본 정밀도 약 67%)</h3>
+          <table className="ed-table">
+            <thead>
+              <tr>
+                <th>행위어</th>
+                <th>문장</th>
+                <th>가장 이른 사건 시각</th>
+              </tr>
+            </thead>
+            <tbody>
+              {Object.entries(full.first)
+                .filter(([k]) => (full.count[k] ?? 0) > 0)
+                .sort((a, b) => (a[1] ?? 1e9) - (b[1] ?? 1e9))
+                .map(([k, v]) => (
+                  <tr key={k}>
+                    <td>{ACTION_KO[k] ?? k}</td>
+                    <td>{full.count[k]}</td>
+                    <td>
+                      {v != null ? (
+                        <button className="link-row" onClick={() => onSeek(v)}>
+                          {fmt(v)}
+                        </button>
+                      ) : (
+                        '시각 미상'
+                      )}
+                    </td>
+                  </tr>
+                ))}
+            </tbody>
+          </table>
+          <ul className="ed-sentences">
+            {[...full.samples]
+              .sort((a, b) => (a.t ?? 1e9) - (b.t ?? 1e9))
+              .slice(0, 8)
+              .map((r, i) => (
+                <li key={i} className={r.t != null && r.t <= t ? 'past' : ''}>
+                  <span className="ed-st">{r.t != null ? fmt(r.t) : '시각 미상'}</span>
+                  <span className="ed-sent">{r.sentence.length > 180 ? r.sentence.slice(0, 180) + '…' : r.sentence}</span>
+                  <small>
+                    {r.actions.map((a) => ACTION_KO[a] ?? a).join('·')} ·{' '}
+                    <a href={r.url} target="_blank" rel="noreferrer">
+                      {r.outlet.replace(/^www\./, '')} ↗
+                    </a>
+                  </small>
+                </li>
+              ))}
+          </ul>
+          <p className="note">문장 안의 시각·지명·행위어를 기계로 묶은 후보입니다. 30건 표본 검토에서 20건이 맞았습니다(다른 사건의 시각이 붙거나 날짜가 어긋나는 경우가 있음). 확정 기록이 아니라 확인할 단서로 쓰세요.</p>
+        </section>
+      )}
+
       <section>
-        <h3>보도 언급 (자동 추출·미검토)</h3>
+        <h3>보도 언급 (요약문 기반·미검토)</h3>
         {!mentions ? (
           <p className="note">이 읍면동을 언급한 기사 요약이 없습니다.</p>
         ) : (

@@ -3,7 +3,7 @@ import MapView, { type Basemap, type Layers } from './MapView'
 import Timeline from './Timeline'
 import Response from './Response'
 import EmdDetail from './EmdDetail'
-import type { EmdCollection, FireData, FireEvent, GdacsData, GwisData, KfsData, MentionsData, NewsData, OfficialData, ResponseData } from './types'
+import type { EmdCollection, FireData, FireEvent, FullMentionsData, GdacsData, GwisData, KfsData, MentionsData, NewsData, OfficialData, ResponseData } from './types'
 import { ACTIVE_WINDOW, T_MAX, T_MIN, compass, eventLabel, fmt, fmtDay, hourIndex, setIncident, toMinutes } from './time'
 import './App.css'
 
@@ -47,6 +47,7 @@ export default function App() {
   const [focusCode, setFocusCode] = useState<string | null>(null)
   const [official, setOfficial] = useState<OfficialData | null>(null)
   const [mentions, setMentions] = useState<MentionsData | null>(null)
+  const [full, setFull] = useState<FullMentionsData | null>(null)
   const [t, setT] = useState(T_MIN + 13 * 60)
   const [playing, setPlaying] = useState(false)
   const [speed, setSpeed] = useState(1)
@@ -79,7 +80,7 @@ export default function App() {
   useEffect(() => {
     if (!incident) return
     setIncident(incident.t0, incident.display_days)
-    setData(null); setEvents([]); setNews(null); setEmd(null); setKfs(null); setResp(null); setGwis(null); setGdacs(null); setIntlNews(null); setOfficial(null); setMentions(null)
+    setData(null); setEvents([]); setNews(null); setEmd(null); setKfs(null); setResp(null); setGwis(null); setGdacs(null); setIntlNews(null); setOfficial(null); setMentions(null); setFull(null)
     setSelected(null); setFocusCode(null); setPlaying(false)
     json<FireData>(base + 'fire.json').then((d) => {
       if (!d) return
@@ -108,6 +109,7 @@ export default function App() {
     json<GdacsData>(base + 'intl_gdacs.json').then(setGdacs)
     json<OfficialData>(base + 'official.json').then(setOfficial)
     json<MentionsData>(base + 'mentions_snippets.json').then(setMentions)
+    json<FullMentionsData>(base + 'mentions.json').then(setFull)
     json<{ gdelt_volume?: { series: [number, number, string][] } }>(base + 'intl_news.json').then(setIntlNews)
   }, [incident, base])
 
@@ -502,7 +504,7 @@ export default function App() {
             </div>
           )}
 
-          {tab === 'response' && resp && <Response data={resp} t={tm} onSeek={(v) => setT(Math.max(T_MIN, Math.min(T_MAX, v)))} onFocusEmd={(c) => setFocusCode(c)} />}
+          {tab === 'response' && resp && <Response data={resp} full={full} emdNames={Object.fromEntries((emd?.features ?? []).map((f) => [f.properties.code, `${f.properties.sigungu.replace(/[시군]$/, '')} ${f.properties.emd}`]))} t={tm} onSeek={(v) => setT(Math.max(T_MIN, Math.min(T_MAX, v)))} onFocusEmd={(c) => setFocusCode(c)} />}
           {tab === 'emd' && (
             <div className="pane">
               {focused ? (
@@ -512,6 +514,7 @@ export default function App() {
                   data={data}
                   resp={resp}
                   mentions={mentions?.by_emd[focused.properties.code] ?? null}
+                  full={full?.by_emd[focused.properties.code] ?? null}
                   kfs={kfs?.fires ?? []}
                   t={tm}
                   onSeek={(v) => setT(Math.max(T_MIN, Math.min(T_MAX, v)))}
@@ -662,6 +665,9 @@ export default function App() {
                 </li>
                 <li>
                   <b>언론·정부 발표</b> 원문 링크와 인용문 포함, 공식 기록은 파란 점. 대응 시차 탭은 70건을 179개 주장으로 나눠 수동 검토한 결과
+                </li>
+                <li>
+                  <b>기사 본문 문장 추출</b> 2,940개 기사 본문에서 시각·읍면동·행위어가 한 문장에 있는 1,760건(44개 읍면동). 30건 표본 검토 정밀도 66.7%. 후보이지 확정 기록이 아님
                 </li>
                 <li>
                   <b>EC JRC GWIS</b> 근실시간 화재 둘레 추정(MODIS 1km·VIIRS 375m 열점 기반, CC BY 4.0) · <b>GDACS</b> 재난 경보·영향 인구 자동 추정

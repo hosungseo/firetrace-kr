@@ -247,3 +247,13 @@
 .cmp-inc td:first-child { white-space: nowrap; }
 .cmp-inc tr.on td { background: #eef2fd; font-weight: 600; }
 :root[data-theme='dark'] .cmp-inc tr.on td { background: #26304a; }
+.ed-sentences { list-style: none; padding: 0; margin: 6px 0 0; }
+.ed-sentences li { padding: 5px 0; border-bottom: 1px solid var(--line); font-size: 11.5px; opacity: .55; }
+.ed-sentences li.past { opacity: 1; }
+.ed-st { display: inline-block; font-variant-numeric: tabular-nums; color: var(--ink-2); margin-right: 6px; font-size: 11px; }
+.ed-sent { line-height: 1.45; }
+.ed-sentences small { display: block; color: var(--ink-3); font-size: 10.5px; }
+.ed-sentences a { color: var(--event); text-decoration: none; }
+.rp-auto { font-size: 11px; color: var(--ink-2); margin-top: 4px; }
+.link-row.inline { display: inline; padding: 0 6px 0 0; font-size: 11px; color: var(--ink-2); text-decoration: underline dotted; }
+.rp-cand td { font-size: 10.5px; }
