@@ -14,3 +14,4 @@ data/raw/article_text/
 data/raw/evidence/
 data/raw/*/http_cache/
 data/raw/*/evidence/
+.omc/
