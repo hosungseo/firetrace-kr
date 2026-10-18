@@ -63,7 +63,7 @@ export default function App() {
   const [tab, setTab] = useState<'overview' | 'response' | 'emd' | 'events' | 'news' | 'compare' | 'sources'>('overview')
   const [selected, setSelected] = useState<string | null>(null)
   const [basemap, setBasemap] = useState<Basemap>('terrain')
-  const [layers, setLayers] = useState<Layers>({ gwis: true, smoke: false, emd: true, stations: true, burned: true, active: true, wind: true, events: true, terrain: true, situation: true, forest: false, spread: true, gk2a: true })
+  const [layers, setLayers] = useState<Layers>({ gwis: true, smoke: false, emd: true, stations: true, burned: true, active: true, wind: true, events: true, terrain: true, situation: true, forest: false, spread: true, gk2a: true, gk2aRaw: false })
 
   // Registry → incident (from URL hash) → per-incident data directory
   useEffect(() => {
@@ -336,7 +336,7 @@ export default function App() {
             <div className="layers-pop">
               {(
                 [
-                  ['불과 위성', [['gk2a', '천리안 2A 10분 탐지·선두'], ['spread', '확산 경로·피해 범위'], ['active', '최근 12시간 열점'], ['burned', '그 이전 열점'], ['situation', '산림청 상황도'], ['gwis', 'JRC GWIS 둘레']]],
+                  ['불과 위성', [['gk2a', '천리안 2A 10분 탐지·선두'], ['gk2aRaw', '천리안 화소 그대로 (2km, 비교용)'], ['spread', '확산 경로·피해 범위'], ['active', '최근 12시간 열점'], ['burned', '그 이전 열점'], ['situation', '산림청 상황도'], ['gwis', 'JRC GWIS 둘레']]],
                   ['날씨', [['wind', '바람장 (재분석)'], ['stations', '기상청 관측소'], ['smoke', 'PM2.5 (CAMS)']]],
                   ['땅과 사람', [['emd', '읍면동·인구'], ['forest', '숲 종류 (임상도)'], ['terrain', '3D 지형']]],
                   ['기록', [['events', '보도·공식·발생 기록']]],
@@ -382,6 +382,11 @@ export default function App() {
             {gwis && (
               <div>
                 <i className="sw gwis" /> JRC GWIS 화재 둘레 추정 (MODIS·VIIRS)
+              </div>
+            )}
+            {gk2a && layers.gk2aRaw && (
+              <div>
+                <i className="sw gk2a-raw" /> 천리안 화소 그대로(2km 칸 누적) · 면적이 실제보다 크게 나옵니다
               </div>
             )}
             {gk2a && layers.gk2a && gk2a.pixels.length > 0 && (
@@ -542,6 +547,12 @@ export default function App() {
                         {fmt(first)}
                         {reported && <small> · 신고 {fmt(toMinutes(reported))}</small>}
                         {data && <small> · 극궤도 위성 {fmt(data.meta.first_detection.t)}</small>}
+                      </dd>
+                      <dt>천리안 화소 면적</dt>
+                      <dd>
+                        {(gk2a.pixels.filter((p) => p[2] <= tm).length * 400).toLocaleString()} ha
+                        <small> · 2km 화소를 그대로 칠하면. 지도(VIIRS 375m 칸, 천리안 시각) {gk2a.cells_hybrid ? Math.round(gk2a.cells_hybrid.filter((h) => h <= tm).length * 14.0625).toLocaleString() : data ? Math.round([...data.area].reverse().find((a) => a.t <= tm)?.area_ha ?? 0).toLocaleString() : '–'} ha</small>
+                        <button className="link-row" onClick={() => setLayers({ ...layers, gk2aRaw: !layers.gk2aRaw })}>{layers.gk2aRaw ? '비교 보기 끄기' : '지도에서 비교해 보기 →'}</button>
                       </dd>
                       <dt>지금까지 도달</dt>
                       <dd>{now ? `발화점에서 ${now[1].toFixed(1)} km` : '아직 탐지 없음'}</dd>

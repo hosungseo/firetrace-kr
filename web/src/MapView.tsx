@@ -22,6 +22,7 @@ export interface Layers {
   forest: boolean
   spread: boolean
   gk2a: boolean
+  gk2aRaw: boolean
 }
 
 export interface FlyTarget {
@@ -390,6 +391,10 @@ export default function MapView({ view, basemap, data, events, emd, kfs, gwis, f
         filter: ['==', ['get', 'code'], ''],
       })
 
+      // Comparison view: cumulative GK2A pixels drawn as raw 2 km squares
+      map.addSource('gk2a-raw', { type: 'geojson', data: { type: 'FeatureCollection', features: [] } })
+      map.addLayer({ id: 'gk2a-raw-fill', type: 'fill', source: 'gk2a-raw', paint: { 'fill-color': '#06b6d4', 'fill-opacity': 0.22 } })
+      map.addLayer({ id: 'gk2a-raw-line', type: 'line', source: 'gk2a-raw', paint: { 'line-color': '#06b6d4', 'line-width': 1, 'line-opacity': 0.7 } })
       // Burned-area outline traced from cumulative 375 m cells at each satellite pass
       map.addSource('perimeter', { type: 'geojson', data: { type: 'FeatureCollection', features: [] } })
       map.addLayer({ id: 'perimeter-fill', type: 'fill', source: 'perimeter', paint: { 'fill-color': 'rgba(139,43,34,0.45)' } })
@@ -574,6 +579,8 @@ export default function MapView({ view, basemap, data, events, emd, kfs, gwis, f
     for (const id of ['perimeter-fill', 'perimeter-line', 'arrival', 'spread-glow', 'spread-line', 'spread-sep', 'spread-head']) map.setLayoutProperty(id, 'visibility', layers.spread ? 'visible' : 'none')
     if (gk2a) (map.getSource('gk2a') as GeoJSONSource).setData(gk2aGeoJSON(gk2a, t))
     for (const id of ['gk2a-track', 'gk2a-px']) map.setLayoutProperty(id, 'visibility', layers.gk2a ? 'visible' : 'none')
+    if (gk2a && layers.gk2aRaw) (map.getSource('gk2a-raw') as GeoJSONSource).setData(gk2aRawGeoJSON(gk2a, t))
+    for (const id of ['gk2a-raw-fill', 'gk2a-raw-line']) map.setLayoutProperty(id, 'visibility', layers.gk2aRaw ? 'visible' : 'none')
     if (map.getLayer('forest')) map.setLayoutProperty('forest', 'visibility', layers.forest ? 'visible' : 'none')
     ;(map.getSource('kfs') as GeoJSONSource).setData(kfsGeoJSON(kfs))
     map.setFilter('emd-hit', ['<=', ['coalesce', ['get', 'first_hit'], 1e9], t])
@@ -787,4 +794,18 @@ function perimeterGeoJSON(sp: SpreadData, t: number, hyb: Gk2aData | null) {
   const list = hyb?.perimeters_hybrid ?? sp.perimeters
   const p = [...list].reverse().find((x) => x.t <= t)
   return { type: 'FeatureCollection' as const, features: p ? [{ type: 'Feature' as const, properties: {}, geometry: { type: 'MultiPolygon' as const, coordinates: p.coordinates } }] : [] } as never
+}
+
+// 2 km x 2 km square around each GK2A pixel centre first seen by time t
+function gk2aRawGeoJSON(g: Gk2aData, t: number) {
+  const dy = 1 / 110.57
+  return {
+    type: 'FeatureCollection' as const,
+    features: g.pixels
+      .filter((p) => p[2] <= t)
+      .map(([x, y]) => {
+        const dx = 1 / (111.32 * Math.cos((y * Math.PI) / 180))
+        return { type: 'Feature' as const, properties: {}, geometry: { type: 'Polygon' as const, coordinates: [[[x - dx, y - dy], [x + dx, y - dy], [x + dx, y + dy], [x - dx, y + dy], [x - dx, y - dy]]] } }
+      }),
+  } as never
 }
